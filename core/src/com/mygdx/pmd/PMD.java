@@ -11,12 +11,10 @@ import com.mygdx.pmd.Screen.DungeonScreen;
 public class PMD extends Game {
 
     public SpriteBatch batch;
-    public BitmapFont font;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-        font = new BitmapFont();
         this.setScreen(new DungeonScreen(this));
     }
 
@@ -28,6 +26,5 @@ public class PMD extends Game {
     public void dispose()
     {
         batch.dispose();
-        font.dispose();
     }
 }

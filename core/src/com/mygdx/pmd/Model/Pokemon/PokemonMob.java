@@ -41,13 +41,13 @@ public class PokemonMob extends Pokemon {
             return;
 
         if (this.isToLeft(this.getNextTile()))
-            this.setCurrentAnimation(animationMap.get("right"));
+            this.right();
         else if (this.isToRight(this.getNextTile()))
-            this.setCurrentAnimation(animationMap.get("left"));
+            this.left();
         else if (this.isAbove(this.getNextTile()))
-            this.setCurrentAnimation(animationMap.get("down"));
+            this.down();
         else if (this.isBelow(this.getNextTile()))
-            this.setCurrentAnimation(animationMap.get("up"));
+            this.up();
     }
 
     public void updateLogic() {
@@ -65,6 +65,7 @@ public class PokemonMob extends Pokemon {
                     return;
                 }
             } else {
+                this.turnToTile(this.playerTile);
                 this.actionState = Action.ATTACKING;
                 this.setTurnState(Turn.COMPLETE);
             }
@@ -89,6 +90,7 @@ public class PokemonMob extends Pokemon {
             this.setTurnState(Turn.COMPLETE);
             this.actionState = Action.IDLE;
             this.setNextTile(null);
+            this.setFacingTile(this.direction);
         }
     }
 

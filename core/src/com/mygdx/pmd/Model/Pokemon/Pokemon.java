@@ -33,6 +33,7 @@ public abstract class Pokemon implements Renderable, Updatable {
     private int startingCol;
 
     public Controller controller;
+    public Direction direction = Direction.SOUTH;
 
     boolean movable;
 
@@ -127,20 +128,17 @@ public abstract class Pokemon implements Renderable, Updatable {
     }
 
     public void turnToTile(Tile tile) {
-        this.setFacingTile(tile);
 
-       /* if (tile.isAbove(currentTile)) {
-            this.setCurrentAnimation(animationMap.get("up"));
-        }
-
+        if (tile.isAbove(currentTile))
+            this.up();
         if (tile.isBelows(currentTile))
-            this.setCurrentAnimation(animationMap.get("up"));
-
+            this.down();
         if (tile.isToLeft(currentTile))
-            this.setCurrentAnimation(animationMap.get("up"));
-
+            this.left();
         if (tile.isToRight(currentTile))
-            this.setCurrentAnimation(animationMap.get("up"));*/
+            this.right();
+
+        this.setFacingTile(this.direction);
     }
 
     public abstract void updatePosition();
@@ -181,26 +179,33 @@ public abstract class Pokemon implements Renderable, Updatable {
     }
 
     public void attack() {
+        if (this.facingTile == null || !this.facingTile.hasAPokemon())
+            return;
+
+        this.facingTile.getCurrentPokemon().takeDamage(1);
         this.setCurrentAnimation(animationMap.get("attack"));
-        if (this.facingTile != null && this.facingTile.hasAPokemon()) {
-            this.facingTile.getCurrentPokemon().takeDamage(1);
-        }
+
         this.actionState = Action.IDLE;
+
     }
 
     public void down() {
+        this.direction = Direction.SOUTH;
         this.setCurrentAnimation(animationMap.get("down"));
     }
 
     public void up() {
+        this.direction = Direction.NORTH;
         this.setCurrentAnimation(animationMap.get("up"));
     }
 
     public void right() {
+        this.direction = Direction.EAST;
         this.setCurrentAnimation(animationMap.get("right"));
     }
 
     public void left() {
+        this.direction = Direction.WEST;
         this.setCurrentAnimation(animationMap.get("left"));
     }
 
@@ -269,6 +274,27 @@ public abstract class Pokemon implements Renderable, Updatable {
         return false;
     }
 
+    public void setFacingTile(Direction direction) {
+        try {
+            switch (direction) {
+                case NORTH:
+                    facingTile = tileBoard[currentTile.getRow() + 1][currentTile.getCol()];
+                    break;
+                case SOUTH:
+                    facingTile = tileBoard[currentTile.getRow() - 1][currentTile.getCol()];
+                    break;
+                case EAST:
+                    facingTile = tileBoard[currentTile.getRow()][currentTile.getCol() + 1];
+                    break;
+                case WEST:
+                    facingTile = tileBoard[currentTile.getRow()][currentTile.getCol() - 1];
+                    break;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void goToTile(Tile nextTile, int speed) {
         if (nextTile == null)
             return;
@@ -328,12 +354,6 @@ public abstract class Pokemon implements Renderable, Updatable {
     public void goToTileImmediately(Tile nextTile) {
         this.setX(nextTile.getX());
         this.setY(nextTile.getY());
-    }
-
-    public void setFacingTile(Tile tile) {
-        if (!(tile instanceof GenericTile))
-            this.facingTile = tile;
-        else this.facingTile = currentTile;
     }
 
     public boolean isLegalToMoveTo(Tile tile) {

@@ -1,4 +1,4 @@
-package com.mygdx.pmd;
+package com.mygdx.pmd.utils;
 
 
 import com.mygdx.pmd.Controller.Controller;

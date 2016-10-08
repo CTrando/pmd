@@ -238,7 +238,7 @@ public abstract class Tile implements Renderable {
 
     public boolean hasAPokemon()
     {
-        if(currentPokemon == null)
+        if(currentPokemon != null)
             return true;
         else return false;
     }

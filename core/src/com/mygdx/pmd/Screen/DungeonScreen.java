@@ -18,7 +18,7 @@ import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.Timer;
+import com.mygdx.pmd.utils.Timer;
 import com.mygdx.pmd.ui.Button;
 import com.mygdx.pmd.ui.Menu;
 import com.mygdx.pmd.utils.PAnimation;
