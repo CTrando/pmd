@@ -1,0 +1,54 @@
+TILE_SPRITES.png
+size: 175, 25
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+debugtilesprite
+  rotate: false
+  xy: 0, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+doortilesprite
+  rotate: false
+  xy: 25, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+generictilesprite
+  rotate: false
+  xy: 50, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+hpathtilesprite
+  rotate: false
+  xy: 75, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+roomtilesprite
+  rotate: false
+  xy: 100, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+stairtilesprite
+  rotate: false
+  xy: 125, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+vpathtilesprite
+  rotate: false
+  xy: 150, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1

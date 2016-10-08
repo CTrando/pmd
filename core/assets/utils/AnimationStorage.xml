@@ -1,0 +1,60 @@
+<AnimationStorage>
+    <Animation name="up">
+        <sprite name="up1"/>
+        <sprite name="up2"/>
+        <sprite name="up3"/>
+        <finalsprite name = "defaultup"/>
+    </Animation>
+    <Animation name = "down">
+        <sprite name ="down1"/>
+        <sprite name ="down2"/>
+        <sprite name ="down3"/>
+        <finalsprite name = "defaultdown"/>
+
+    </Animation>
+    <Animation name = "left">
+        <sprite name = "left1"/>
+        <sprite name = "left2"/>
+        <sprite name = "left3"/>
+        <finalsprite name = "defaultleft"/>
+
+    </Animation>
+    <Animation name = "right">
+        <sprite name = "right1"/>
+        <sprite name = "right2"/>
+        <sprite name = "right3"/>
+        <finalsprite name = "defaultright"/>
+
+    </Animation>
+    <Animation name = "upright">
+        <sprite name = "upright1"/>
+        <sprite name = "upright2"/>
+        <sprite name = "upright3"/>
+        <finalsprite name = "defaultright"/>
+    </Animation>
+    <Animation name = "upleft">
+        <sprite name = "upleft1"/>
+        <sprite name = "upleft2"/>
+        <sprite name = "upleft3"/>
+        <finalsprite name = "defaultright"/>
+    </Animation>
+    <Animation name = "downleft">
+        <sprite name = "downleft1"/>
+        <sprite name = "downleft2"/>
+        <sprite name = "downleft3"/>
+        <finalsprite name = "defaultright"/>
+    </Animation>
+    <Animation name = "downright">
+        <sprite name = "downright1"/>
+        <sprite name = "downright2"/>
+        <sprite name = "downright3"/>
+        <finalsprite name = "defaultright"/>
+    </Animation>
+    <Animation name = "attack">
+        <sprite name = "attack1"/>
+        <sprite name = "attack2"/>
+        <sprite name = "attack3"/>
+        <finalsprite name = "previoussprite"/>
+    </Animation>
+
+</AnimationStorage>

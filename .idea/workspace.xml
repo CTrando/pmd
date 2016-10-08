@@ -5,12 +5,206 @@
       <artifact name="desktop_main:jar" />
     </artifacts-to-build>
   </component>
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/Pokemon.java" line="190" />
-    <bookmark url="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/Pokemon.java" line="327" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="4fb0db5b-6f56-4850-befc-0a9f45c418d3" name="Default" comment="" />
+    <list default="true" id="4fb0db5b-6f56-4850-befc-0a9f45c418d3" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/badlogic.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/g2d/progressive-libgdx.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/issue/bark.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/issue/leaf.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tide/TileSheets/Background01.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tide/TileSheets/Background02.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tide/TileSheets/Background03.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tide/TileSheets/TileSheet01.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled-atlas-processed/tileset/packed.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled-atlas-src/tilesets/tileset1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled-atlas-src/tilesets/tileset2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled-objects/Start.bmp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/external-tilesets/grass_1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/external-tilesets/grass_4.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/external-tilesets/water_1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/hex/hexes.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/isometric_grass_and_water.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/super-koalio/koalio-single.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/super-koalio/koalio.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/super-koalio/tileSet.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/tiles.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/pokemonassets/SQUIRTLE_WALKSHEET.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/pokemonassets/TILE_SPRITES.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/pokemonassets/TREEKO_WALKSHEET.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/ui/uiskin.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/pokemon_sprite_sheets/Treeko_SPRITES.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtledefaultdown.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtledefaultleft.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtledefaultright.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtledefaultup.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtledown1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtledown2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtledown3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtledownleft1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtledownleft2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtledownleft3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtledownright1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtledownright2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtledownright3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleleft1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleleft2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleleft3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleright1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleright2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleright3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleup1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleup2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleup3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleupleft1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleupleft2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleupleft3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleupright1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleupright2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/squirtle_sprites/squirtleupright3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/tile_sprites/debugtilesprite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/tile_sprites/doortilesprite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/tile_sprites/generictilesprite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/tile_sprites/hpathtilesprite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/tile_sprites/roomtilesprite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/tile_sprites/stairtilesprite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/tile_sprites/vpathtilesprite.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoattack1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoattack2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoattack3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekodefaultdown.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekodefaultleft.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekodefaultright.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekodefaultup.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekodown1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekodown2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekodown3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekodownleft1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekodownleft2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekodownleft3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekodownright1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekodownright2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekodownright3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoleft1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoleft2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoleft3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoright1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoright2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoright3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoup1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoup2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoup3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoupleft1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoupleft2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoupleft3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoupright1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoupright2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/rawassets/treeko_sprites/treekoupright3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/i18n/message1.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/i18n/message1_en.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/i18n/message1_it.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/i18n/message2.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/i18n/message2_en.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/i18n/message2_it.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/issue/funky_palm_tree.g3dj.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tide/Map01.tide" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled-atlas-processed/test.tmx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled-atlas-processed/tileset/packed.atlas" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled-atlas-src/test.tmx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled-objects/test-load-mapobjects.tmx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/external-tilesets/grass.tsx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/external-tilesets/grass_1.tsx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/external-tilesets/grass_extended.tsx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/external-tilesets/test_extended.tmx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/external-tilesets/test_original.tmx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/external-tilesets/water.tsx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/isometric_grass_and_water.tmx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/super-koalio/level1.tmx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/tiles.tmx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/maps/tiled/tiles.tsx" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/pokemonassets/SQUIRTLE_WALKSHEET.atlas" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/pokemonassets/TILE_SPRITES.atlas" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/pokemonassets/TREEKO_WALKSHEET.atlas" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/batch.frag" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/batch.vert" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/convolution.frag" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/cubemap-frag.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/cubemap-vert.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/default.frag" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/default.vert" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/depthtocolor.frag" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/distancefield.frag" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/distancefield.vert" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/flat-frag.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/flat-vert.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/flattex-frag.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/flattex-vert.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/gles30sprite.frag" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/gles30sprite.vert" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/projtex-frag.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/projtex-vert.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/shader-fs.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/shader-vs.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/shadowgen-frag.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/shadowgen-vert.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/shadowmap-frag.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/shadowmap-vert.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/texturearray.frag" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/shaders/texturearray.vert" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/ui/MenuStorage.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/ui/default.fnt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/ui/hello.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/ui/uiskin.atlas" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/ui/uiskin.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/assets/utils/AnimationStorage.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/build.gradle" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/BugReports" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Comparators/PokemonDistanceComparator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Controller/Controller.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Controller/TestingController.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/Action.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/Animation.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/Direction.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/Keys.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/MenuID.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/MoveSet.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/PokemonName.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/State.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/Turn.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Interfaces/Collideable.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Interfaces/Entity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Interfaces/Renderable.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Interfaces/Updatable.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/FloorComponent/Floor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/FloorComponent/Room.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Generator/FloorGenerator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Generator/PathGenerator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Generator/RoomGenerator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/Pokemon.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonMob.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonPlayer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/DoorTile.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/GenericTile.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/PathTile.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/PathTileHorizontal.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/PathTileVertical.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/RoomTile.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/StairTile.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/Tile.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/PMD.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Runner/PokemonRunner.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Screen/DungeonScreen.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Timer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/UISimpleTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/ui/Button.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/ui/Menu.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/PAnimation.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/desktop/build.gradle" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/desktop/src/com/mygdx/pmd/desktop/DesktopLauncher.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="PMD.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/core/.gradle/" />
@@ -56,102 +250,36 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DungeonScreen.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Screen/DungeonScreen.java">
+      <file leaf-file-name="Renderable.class" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Interfaces/Renderable.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2958">
-              <caret line="199" column="25" selection-start-line="199" selection-start-column="25" selection-end-line="199" selection-end-column="25" />
-              <folding />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#314#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Pokemon.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/Pokemon.java">
+      <file leaf-file-name="Menu.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/assets/Menu.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="17">
-              <caret line="239" column="0" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
+              <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AnimationStorage.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/assets/utils/AnimationStorage.xml">
+      <file leaf-file-name="PMD.class" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/PMD.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="969">
-              <caret line="57" column="16" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestingController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Controller/TestingController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="25" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Keys.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/Keys.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Controller/Controller.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2822">
-              <caret line="196" column="0" selection-start-line="196" selection-start-column="0" selection-end-line="196" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Timer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Timer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PokemonMob.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonMob.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Action.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/Action.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PokemonPlayer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonPlayer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2193">
-              <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="425">
+              <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#734#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -905,7 +1033,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Runner/PokemonRunner.java" />
         <option value="$PROJECT_DIR$/core/assets/TREEKO_WALKSHEET.txt" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/PokemonType.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/TreekoPokemonPlayer.java" />
@@ -956,6 +1083,7 @@
         <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonMob.java" />
         <option value="$PROJECT_DIR$/core/assets/utils/AnimationStorage.xml" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/Pokemon.java" />
+        <option value="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/PMD.class" />
       </list>
     </option>
   </component>
@@ -973,8 +1101,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-15" />
-    <option name="y" value="364" />
+    <option name="x" value="884" />
+    <option name="y" value="319" />
     <option name="width" value="960" />
     <option name="height" value="860" />
   </component>
@@ -1004,6 +1132,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1018,7 +1147,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
+              <option name="myItemId" value="pmd" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1028,7 +1157,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
+              <option name="myItemId" value="pmd" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -1042,7 +1171,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
+              <option name="myItemId" value="pmd" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -1055,313 +1184,12 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="pmd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pmd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pmd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pmd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Screen" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pmd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TileType" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pmd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pokemon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pmd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pmd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Enumerations" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pmd" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PMD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pokemonassets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1956,11 +1784,12 @@
       <workItem from="1475784009452" duration="53000" />
       <workItem from="1475784133335" duration="2960000" />
       <workItem from="1475889365858" duration="196000" />
+      <workItem from="1475893029125" duration="234000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="189226000" />
+    <option name="totallyTimeSpent" value="189460000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1972,17 +1801,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-15" y="364" width="960" height="860" extended-state="1" />
+    <frame x="884" y="319" width="960" height="860" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.06168831" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3225108" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16233766" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.09307359" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20604396" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1998,7 +1828,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3225108" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7866667" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32683983" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2033,12 +1862,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/core/assets/badlogic.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/zNo.java" />
     <entry file="file://$PROJECT_DIR$/core/assets/ui/hello.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -2058,13 +1881,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
           <caret line="289" column="0" selection-start-line="289" selection-start-column="0" selection-end-line="289" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/assets/Menu.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -2206,7 +2022,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2273,15 +2088,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="986">
           <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding>
-            <element signature="e#1616#1617#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Timer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
+        <state relative-caret-position="323">
           <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding />
         </state>
@@ -2299,7 +2111,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="491">
           <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2351,11 +2162,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/Pokemon.java">
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/Pokemon.java" />
+    <entry file="file://$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Interfaces/Renderable.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#314#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/assets/Menu.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="239" column="0" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
+          <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/PMD.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#734#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
