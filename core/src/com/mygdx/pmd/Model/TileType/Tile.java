@@ -210,24 +210,24 @@ public abstract class Tile implements Renderable {
 
         switch(d)
         {
-            case NORTH:
+            case up:
                 if(Tile.tileExists(tileBoard, row-1, col)) {
                     return tileBoard[row - 1][col];
                 }
                 break;
-            case SOUTH:
+            case down:
                 if(Tile.tileExists(tileBoard, row+1, col))
                 {
                     return tileBoard[row+1][col];
                 }
                 break;
-            case EAST:
+            case right:
                 if(Tile.tileExists(tileBoard, row, col+1))
                 {
                     return tileBoard[row][col+1];
                 }
                 break;
-            case WEST:
+            case left:
                 if(Tile.tileExists(tileBoard, row, col-1))
                 {
                     return tileBoard[row][col-1];
@@ -259,7 +259,6 @@ public abstract class Tile implements Renderable {
     public int getCol() {
         return c;
     }
-
     public void setClassifier(String classifier) {
         this.classifier = classifier;
     }

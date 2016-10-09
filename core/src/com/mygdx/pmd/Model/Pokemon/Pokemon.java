@@ -10,7 +10,6 @@ import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.*;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Interfaces.Updatable;
-import com.mygdx.pmd.Model.TileType.GenericTile;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.Screen.DungeonScreen;
 import com.mygdx.pmd.utils.*;
@@ -33,7 +32,7 @@ public abstract class Pokemon implements Renderable, Updatable {
     private int startingCol;
 
     public Controller controller;
-    public Direction direction = Direction.SOUTH;
+    public Direction direction = Direction.down;
 
     boolean movable;
 
@@ -183,29 +182,29 @@ public abstract class Pokemon implements Renderable, Updatable {
             return;
 
         this.facingTile.getCurrentPokemon().takeDamage(1);
-        this.setCurrentAnimation(animationMap.get("attack"));
+        this.setCurrentAnimation(animationMap.get(direction.toString()+ "attack"));
 
         this.actionState = Action.IDLE;
 
     }
 
     public void down() {
-        this.direction = Direction.SOUTH;
+        this.direction = Direction.down;
         this.setCurrentAnimation(animationMap.get("down"));
     }
 
     public void up() {
-        this.direction = Direction.NORTH;
+        this.direction = Direction.up;
         this.setCurrentAnimation(animationMap.get("up"));
     }
 
     public void right() {
-        this.direction = Direction.EAST;
+        this.direction = Direction.right;
         this.setCurrentAnimation(animationMap.get("right"));
     }
 
     public void left() {
-        this.direction = Direction.WEST;
+        this.direction = Direction.left;
         this.setCurrentAnimation(animationMap.get("left"));
     }
 
@@ -263,6 +262,25 @@ public abstract class Pokemon implements Renderable, Updatable {
         }
     }
 
+    public Array<Tile> getTileNeighbors()
+    {
+        Array<Tile> tileNeighbors = new Array<Tile>();
+        for(int r = currentTile.getRow()-1; r <= currentTile.getRow() +1; r++)
+        {
+            for(int c = currentTile.getCol()-1; c <= currentTile.getCol() +1; c++)
+            {
+                try{
+                    Tile tile = tileBoard[r][c];
+                    if(tile != currentTile)
+                        tileNeighbors.add(tile);
+                } catch(ArrayIndexOutOfBoundsException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return tileNeighbors;
+    }
+
     public Tile getNextTile() {
         return nextTile;
     }
@@ -277,16 +295,16 @@ public abstract class Pokemon implements Renderable, Updatable {
     public void setFacingTile(Direction direction) {
         try {
             switch (direction) {
-                case NORTH:
+                case up:
                     facingTile = tileBoard[currentTile.getRow() + 1][currentTile.getCol()];
                     break;
-                case SOUTH:
+                case down:
                     facingTile = tileBoard[currentTile.getRow() - 1][currentTile.getCol()];
                     break;
-                case EAST:
+                case right:
                     facingTile = tileBoard[currentTile.getRow()][currentTile.getCol() + 1];
                     break;
-                case WEST:
+                case left:
                     facingTile = tileBoard[currentTile.getRow()][currentTile.getCol() - 1];
                     break;
             }

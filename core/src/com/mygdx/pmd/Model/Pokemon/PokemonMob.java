@@ -1,5 +1,6 @@
 package com.mygdx.pmd.Model.Pokemon;
 
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.Action;
 import com.mygdx.pmd.Enumerations.Turn;

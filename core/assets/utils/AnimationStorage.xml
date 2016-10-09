@@ -50,10 +50,28 @@
         <sprite name = "downright3"/>
         <finalsprite name = "defaultright"/>
     </Animation>
-    <Animation name = "attack">
-        <sprite name = "attack1"/>
-        <sprite name = "attack2"/>
-        <sprite name = "attack3"/>
+    <Animation name = "rightattack">
+        <sprite name = "rightattack1"/>
+        <sprite name = "rightattack2"/>
+        <sprite name = "rightattack3"/>
+        <finalsprite name = "previoussprite"/>
+    </Animation>
+    <Animation name = "leftattack">
+        <sprite name = "leftattack1"/>
+        <sprite name = "leftattack2"/>
+        <sprite name = "leftattack3"/>
+        <finalsprite name = "previoussprite"/>
+    </Animation>
+    <Animation name = "downattack">
+        <sprite name = "downattack1"/>
+        <sprite name = "downattack2"/>
+        <sprite name = "downattack3"/>
+        <finalsprite name = "previoussprite"/>
+    </Animation>
+    <Animation name = "upattack">
+        <sprite name = "upattack1"/>
+        <sprite name = "upattack2"/>
+        <sprite name = "upattack3"/>
         <finalsprite name = "previoussprite"/>
     </Animation>
 
