@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Controller.TestingController;
 import com.mygdx.pmd.Enumerations.Keys;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
@@ -59,7 +58,7 @@ public class DungeonScreen implements InputProcessor, Screen {
         batch = game.batch;
 
         this.loadManager();
-        controller = new TestingController(this);
+        controller = new Controller(this);
         this.loadMenus();
         stage = new Stage();
         currentMenu = menuList.get("attackMenu");

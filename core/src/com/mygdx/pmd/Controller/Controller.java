@@ -1,8 +1,12 @@
 package com.mygdx.pmd.Controller;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Comparators.PokemonDistanceComparator;
+import com.mygdx.pmd.Enumerations.PokemonName;
 import com.mygdx.pmd.Enumerations.Turn;
 import com.mygdx.pmd.Enumerations.State;
 import com.mygdx.pmd.Interfaces.Entity;
@@ -18,6 +22,7 @@ import com.mygdx.pmd.Model.TileType.StairTile;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.Screen.DungeonScreen;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -96,6 +101,7 @@ public class Controller {
         loadedArea = new ArrayList<Tile>();
         renderableArea = new ArrayList<Tile>();
 
+        this.loadPokemon();
         priorityPokemon = this.getPokemonPlayer();
     }
 
@@ -104,6 +110,28 @@ public class Controller {
             playerXOffset = (pokemonPlayer.getX() - DungeonScreen.APP_WIDTH / 2);
             playerYOffset = (pokemonPlayer.getY() - DungeonScreen.APP_HEIGHT / 2);
         }
+    }
+
+    public void loadPokemon()
+    {
+        XmlReader xmlReader = new XmlReader();
+        XmlReader.Element root = null;
+        try {
+            root = xmlReader.parse(Gdx.files.internal("utils/PokemonStorage.xml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Array<XmlReader.Element> elementList = root.getChildrenByName("Pokemon");
+        XmlReader.Element player = root.getChildByName("PokemonPlayer");
+        PokemonPlayer pokemonPlayer = new PokemonPlayer(0,0,this, true, Enum.valueOf(PokemonName.class, player.get("name")));
+        this.addEntity(pokemonPlayer);
+        for(XmlReader.Element e: elementList){
+            PokemonName pokemonName = Enum.valueOf(PokemonName.class, e.get("name"));
+            PokemonMob pokemonMob = new PokemonMob(0,0, this, true, pokemonName, State.friendly);
+            this.addEntity(pokemonMob);
+        }
+        this.randomizeAllPokemonLocation();
     }
 
     public ArrayList<Room> getRoomList() {
