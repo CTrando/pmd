@@ -44,7 +44,7 @@ public abstract class Pokemon implements Renderable, Updatable {
     public Tile[][] tileBoard;
 
     private Turn turnState = Turn.COMPLETE;
-    private Turn previousTurnState = Turn.COMPLETE;
+    public Turn previousTurnState = Turn.COMPLETE;
 
     public Action actionState = Action.IDLE;
 
@@ -238,8 +238,7 @@ public abstract class Pokemon implements Renderable, Updatable {
 
     public void update() {
         this.updateAnimation();
-        if (turnState != Turn.COMPLETE)
-            this.updateLogic();
+        this.updateLogic();
     }
 
     public abstract void updateLogic();

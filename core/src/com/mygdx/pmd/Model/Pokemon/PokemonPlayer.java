@@ -16,12 +16,12 @@ public class PokemonPlayer extends Pokemon {
     @Override
     public void updatePosition() {
         if (this.getNextTile() != null) {
-            if (!this.equals(this.getCurrentTile()) && this.getTurnState() == Turn.PENDING)
+            if (!this.equals(this.getCurrentTile()))
                 this.motionLogic(); //explanatory
             else if (this.equals(this.getCurrentTile())) {
                 controller.unfreezeKeys();
                 this.getCurrentTile().playEvents();
-                this.setTurnState(Turn.COMPLETE);
+                //this.setTurnState(Turn.COMPLETE);
                 this.actionState = Action.IDLE;
                 this.setNextTile(null);
             }
@@ -65,7 +65,7 @@ public class PokemonPlayer extends Pokemon {
                 if (this.isLegalToMoveTo(this.getNextTile())) {
                     this.actionState = Action.MOVING;
                     controller.freezeKeys();
-                    this.setTurnState(Turn.PENDING);
+                    this.setTurnState(Turn.COMPLETE);
                     this.setCurrentTile(this.getNextTile());
                 } else {
                     this.setNextTile(null);
@@ -104,11 +104,11 @@ public class PokemonPlayer extends Pokemon {
         }
 
         if (controller.isAPressed && this.getTurnState() == Turn.WAITING) {
-            this.setTurnState(Turn.SKIP);
+            this.setTurnState(Turn.COMPLETE);
         }
 
         if (controller.isAPressed && controller.isSPressed()) {
-            this.setTurnState(Turn.SKIP);
+            this.setTurnState(Turn.COMPLETE);
         }
 
         if (controller.isBPressed) {
@@ -117,15 +117,10 @@ public class PokemonPlayer extends Pokemon {
     }
 
     @Override
-    public void update() {
-        this.updateAnimation();
-        if (this.getTurnState() != Turn.COMPLETE)
-            this.updateLogic();
-    }
-
-    @Override
     public void updateLogic() {
-        this.updateKeyEvents();
+        if(this.getTurnState() != Turn.COMPLETE)
+            this.updateKeyEvents();
+
         switch (this.actionState) {
             case MOVING:
                 this.updatePosition();

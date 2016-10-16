@@ -39,7 +39,7 @@ public class Button extends TextButton {
                 else this.setText("Current Animation: " + "noanimation");
                 break;
             case ACTION:
-                this.setText("Current Action: " + controller.getPokemonPlayer().getTurnState().toString());
+                this.setText("Turn: " + controller.getPokemonPlayer().getTurnState().toString());
                 break;
             case ATTACK:
                 break;

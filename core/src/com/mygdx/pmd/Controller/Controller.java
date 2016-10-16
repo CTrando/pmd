@@ -36,6 +36,8 @@ public class Controller {
     ArrayList<Pokemon> updatePokemonList;
     ArrayList<Pokemon> enemyList;
 
+    private int pokemonCounter;
+
     public ArrayList<Tile> loadedArea;
     public ArrayList<Tile> renderableArea;
 
@@ -75,6 +77,7 @@ public class Controller {
     ArrayList<Updatable> updateList = new ArrayList<Updatable>();
     ArrayList<Tile> roomTileList;
     public Pokemon priorityPokemon;
+    private int pokemonListCounter;
 
     public Controller(DungeonScreen controllerScreen) {
         this.controllerScreen = controllerScreen;
@@ -112,8 +115,7 @@ public class Controller {
         }
     }
 
-    public void loadPokemon()
-    {
+    public void loadPokemon() {
         XmlReader xmlReader = new XmlReader();
         XmlReader.Element root = null;
         try {
@@ -124,18 +126,14 @@ public class Controller {
 
         Array<XmlReader.Element> elementList = root.getChildrenByName("Pokemon");
         XmlReader.Element player = root.getChildByName("PokemonPlayer");
-        PokemonPlayer pokemonPlayer = new PokemonPlayer(0,0,this, true, Enum.valueOf(PokemonName.class, player.get("name")));
+        PokemonPlayer pokemonPlayer = new PokemonPlayer(0, 0, this, true, Enum.valueOf(PokemonName.class, player.get("name")));
         this.addEntity(pokemonPlayer);
-        for(XmlReader.Element e: elementList){
+        for (XmlReader.Element e : elementList) {
             PokemonName pokemonName = Enum.valueOf(PokemonName.class, e.get("name"));
-            PokemonMob pokemonMob = new PokemonMob(0,0, this, true, pokemonName, State.friendly);
+            PokemonMob pokemonMob = new PokemonMob(0, 0, this, true, pokemonName, State.friendly);
             this.addEntity(pokemonMob);
         }
         this.randomizeAllPokemonLocation();
-    }
-
-    public ArrayList<Room> getRoomList() {
-        return roomList;
     }
 
     public PokemonPlayer getPokemonPlayer() {
@@ -148,10 +146,6 @@ public class Controller {
 
     public Tile[][] getTileBoard() {
         return tileBoard;
-    }
-
-    public ArrayList<Tile> getRoomTileList() {
-        return roomTileList;
     }
 
     public Floor getCurrentFloor() {
@@ -188,40 +182,17 @@ public class Controller {
         this.updatePlayerOffset();
         Collections.sort(pokemonList, new PokemonDistanceComparator(this.getPokemonPlayer()));
 
-        priorityPokemon.update();
-
-        if (priorityPokemon.getTurnState() == Turn.COMPLETE) {
-            this.updateLoadedArea();
-            priorityPokemon = pokemonPlayer;
-            for(Pokemon u: pokemonList) {
-                if (u.getTurnState() == Turn.LOCKED) {
-                    if (pokemonPlayer == priorityPokemon)
-                        priorityPokemon = u;
-                    break;
-                }
+        for (Pokemon pokemon : pokemonList) {
+            if (pokemonList.get(pokemonListCounter).getTurnState() == Turn.COMPLETE) {
+                if (pokemonList.get(pokemonListCounter) instanceof PokemonPlayer)
+                    this.updateLoadedArea();
+                pokemonListCounter++;
+                if (pokemonListCounter > pokemonList.size() - 1)
+                    pokemonListCounter = 0;
+                pokemonList.get(pokemonListCounter).setTurnState(Turn.WAITING);
             }
-            if(priorityPokemon == pokemonPlayer)
-                priorityPokemon.setTurnState(Turn.WAITING);
-        }
+            pokemon.update();
 
-        if (priorityPokemon.getTurnState() != Turn.WAITING && priorityPokemon.getTurnState() != Turn.LOCKED) {
-            for (Pokemon u : pokemonList) {
-                if (u != priorityPokemon) {
-                    if (u.getTurnState() == Turn.COMPLETE) {
-                            u.setTurnState(Turn.WAITING);
-                    }
-                }
-            }
-            if (priorityPokemon.getTurnState() == Turn.SKIP)
-                priorityPokemon.setTurnState(Turn.COMPLETE);
-        }
-
-        for (Pokemon u : pokemonList) {
-            if(u != priorityPokemon) {
-                u.updateAnimation();
-                if(u.getTurnState() != Turn.COMPLETE)
-                    u.updateLogic();
-            }
         }
     }
 

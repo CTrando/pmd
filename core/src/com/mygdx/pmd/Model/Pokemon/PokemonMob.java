@@ -51,28 +51,39 @@ public class PokemonMob extends Pokemon {
             this.up();
     }
 
-    public void updateLogic() {
+    public boolean pathFind() {
         this.shortestPath();
-        if(this.getTurnState() == Turn.WAITING) {
+        if (this.getTurnState() == Turn.WAITING) {
             if (solutionNodeList.size() > 0) {
                 this.setNextTile(solutionNodeList.get(0));
                 if (this.isLegalToMoveTo(this.getNextTile())) {
                     this.actionState = Action.MOVING;
-                    this.setTurnState(Turn.PENDING);
+                    this.setTurnState(Turn.COMPLETE);
                     this.setCurrentTile(this.getNextTile());
                 } else {
                     solutionNodeList = new ArrayList<Tile>();
                     this.setNextTile(null);
-                    return;
+                    return false;
                 }
             } else {
+                return false;
+            }
+        } else return false;
+        return true;
+    }
+
+    public void updateLogic() {
+        if (this.getTurnState() != Turn.COMPLETE) {
+            boolean canPathFind = this.pathFind();
+
+            if (!canPathFind) {
                 this.turnToTile(this.playerTile);
                 this.actionState = Action.ATTACKING;
                 this.setTurnState(Turn.COMPLETE);
             }
         }
 
-        switch(this.actionState) {
+        switch (this.actionState) {
             case MOVING:
                 this.updatePosition();
                 break;
@@ -84,7 +95,7 @@ public class PokemonMob extends Pokemon {
 
     @Override
     public void updatePosition() {
-        if (!this.equals(this.getCurrentTile()) && this.getTurnState() == Turn.PENDING)
+        if (!this.equals(this.getCurrentTile()))
             this.movementSpeedLogic(); //explanatory
         else if (this.equals(this.getCurrentTile())) {
             solutionNodeList.remove(this.getCurrentTile());
@@ -99,8 +110,7 @@ public class PokemonMob extends Pokemon {
         if (controller.isSPressed()) {
             this.updateAnimation();
             this.moveFast();
-        }
-        else
+        } else
             this.moveSlow();
     }
 
