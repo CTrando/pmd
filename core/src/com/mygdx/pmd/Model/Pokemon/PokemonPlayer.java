@@ -1,9 +1,11 @@
 package com.mygdx.pmd.Model.Pokemon;
 
+import com.badlogic.gdx.audio.Sound;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.Action;
 import com.mygdx.pmd.Enumerations.Turn;
 import com.mygdx.pmd.Enumerations.PokemonName;
+import com.mygdx.pmd.Screen.DungeonScreen;
 
 public class PokemonPlayer extends Pokemon {
 
@@ -68,6 +70,7 @@ public class PokemonPlayer extends Pokemon {
                     this.setTurnState(Turn.COMPLETE);
                     this.setCurrentTile(this.getNextTile());
                 } else {
+                    controller.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
                     this.setNextTile(null);
                     return;
                 }

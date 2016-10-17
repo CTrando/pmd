@@ -69,6 +69,7 @@ public class Controller {
     public boolean isSpacePressed;
     public boolean isAPressed;
     public boolean isBPressed;
+    public boolean isTPressed;
 
     public boolean keyFrozen = false;
 
@@ -229,6 +230,10 @@ public class Controller {
             if (DungeonScreen.keys.get(Input.Keys.B).get()) {
                 isBPressed = true;
             } else isBPressed = false;
+
+            if(DungeonScreen.keys.get(Input.Keys.T).get()) {
+                isTPressed = true;
+            } else isTPressed = false;
         }
     }
 

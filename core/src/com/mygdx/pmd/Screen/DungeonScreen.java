@@ -2,11 +2,14 @@ package com.mygdx.pmd.Screen;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
@@ -29,10 +32,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class DungeonScreen implements InputProcessor, Screen {
     final PMD game;
     SpriteBatch batch;
+    ShapeRenderer shapeRenderer;
 
-    AssetManager manager;
+    public AssetManager manager;
     public static HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
     public Array<Button> updateButtonList;
+
+    private Music backgroundSound;
 
     InputMultiplexer inputMultiplexer;
 
@@ -56,6 +62,7 @@ public class DungeonScreen implements InputProcessor, Screen {
     public DungeonScreen(final PMD game) {
         this.game = game;
         batch = game.batch;
+        shapeRenderer = new ShapeRenderer();
 
         this.loadManager();
         controller = new Controller(this);
@@ -82,6 +89,10 @@ public class DungeonScreen implements InputProcessor, Screen {
         inputMultiplexer.addProcessor(stage);
 
         Gdx.input.setInputProcessor(inputMultiplexer);
+       /* backgroundSound = Gdx.audio.newMusic(Gdx.files.internal("SFX/background.ogg"));
+        backgroundSound.play();
+        backgroundSound.setLooping(true);*/
+       manager.get("sfx/background.ogg", Music.class).play();
     }
 
     public void switchMenus(String menu)
@@ -129,6 +140,8 @@ public class DungeonScreen implements InputProcessor, Screen {
         manager.load("pokemonassets/TREEKO_WALKSHEET.atlas", TextureAtlas.class);
         manager.load("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class);
         manager.load("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class);
+        manager.load("sfx/background.ogg", Music.class);
+        manager.load("sfx/wallhit.wav", Sound.class);
         manager.finishLoading();
 
         this.loadImages(manager.get("pokemonassets/TREEKO_WALKSHEET.atlas", TextureAtlas.class));
@@ -153,10 +166,20 @@ public class DungeonScreen implements InputProcessor, Screen {
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(camera.combined);
+
+
         batch.begin();
 
-        for (Tile t : controller.renderableArea)
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(1,1,0,1);
+        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+        for (Tile t : controller.renderableArea) {
+            if(controller.isTPressed) {
+                shapeRenderer.rect(t.getX(), t.getY(), Tile.size, Tile.size);
+            }
             t.render(batch);
+        }
+        shapeRenderer.end();
 
         if (isFullView) {
             for (int i = 0; i < controller.getTileBoard().length; i++)

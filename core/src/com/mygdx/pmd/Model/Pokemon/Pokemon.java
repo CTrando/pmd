@@ -261,25 +261,6 @@ public abstract class Pokemon implements Renderable, Updatable {
         }
     }
 
-    public Array<Tile> getTileNeighbors()
-    {
-        Array<Tile> tileNeighbors = new Array<Tile>();
-        for(int r = currentTile.getRow()-1; r <= currentTile.getRow() +1; r++)
-        {
-            for(int c = currentTile.getCol()-1; c <= currentTile.getCol() +1; c++)
-            {
-                try{
-                    Tile tile = tileBoard[r][c];
-                    if(tile != currentTile)
-                        tileNeighbors.add(tile);
-                } catch(ArrayIndexOutOfBoundsException e){
-                    e.printStackTrace();
-                }
-            }
-        }
-        return tileNeighbors;
-    }
-
     public Tile getNextTile() {
         return nextTile;
     }
