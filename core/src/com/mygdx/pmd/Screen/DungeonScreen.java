@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Enumerations.Keys;
+import com.mygdx.pmd.Enumerations.Key;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.TileType.Tile;
@@ -89,10 +89,8 @@ public class DungeonScreen implements InputProcessor, Screen {
         inputMultiplexer.addProcessor(stage);
 
         Gdx.input.setInputProcessor(inputMultiplexer);
-       /* backgroundSound = Gdx.audio.newMusic(Gdx.files.internal("SFX/background.ogg"));
-        backgroundSound.play();
-        backgroundSound.setLooping(true);*/
-       manager.get("sfx/background.ogg", Music.class).play();
+
+       //manager.get("sfx/background.ogg", Music.class).play();
     }
 
     public void switchMenus(String menu)
@@ -135,7 +133,7 @@ public class DungeonScreen implements InputProcessor, Screen {
 
 
     public void loadManager() {
-        manager = new AssetManager();
+        manager = game.manager;
 
         manager.load("pokemonassets/TREEKO_WALKSHEET.atlas", TextureAtlas.class);
         manager.load("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class);
@@ -151,7 +149,7 @@ public class DungeonScreen implements InputProcessor, Screen {
     }
 
     public void loadKeys() {
-        for (Keys key : Keys.values()) {
+        for (Key key : Key.values()) {
             keys.put(key.getValue(), new AtomicBoolean(false));
         }
     }

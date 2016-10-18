@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Comparators.PokemonDistanceComparator;
+import com.mygdx.pmd.Enumerations.Key;
 import com.mygdx.pmd.Enumerations.PokemonName;
 import com.mygdx.pmd.Enumerations.Turn;
 import com.mygdx.pmd.Enumerations.State;
@@ -235,6 +236,10 @@ public class Controller {
                 isTPressed = true;
             } else isTPressed = false;
         }
+    }
+
+    public boolean isKeyPressed(Key key) {
+        return DungeonScreen.keys.get(key.getValue()).get();
     }
 
     public boolean isKeyPressed() {

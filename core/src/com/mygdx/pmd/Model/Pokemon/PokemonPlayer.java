@@ -70,7 +70,6 @@ public class PokemonPlayer extends Pokemon {
                     this.setTurnState(Turn.COMPLETE);
                     this.setCurrentTile(this.getNextTile());
                 } else {
-                    controller.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
                     this.setNextTile(null);
                     return;
                 }

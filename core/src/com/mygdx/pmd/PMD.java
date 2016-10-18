@@ -1,6 +1,7 @@
 package com.mygdx.pmd;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.pmd.Screen.DungeonScreen;
@@ -11,9 +12,11 @@ import com.mygdx.pmd.Screen.DungeonScreen;
 public class PMD extends Game {
 
     public SpriteBatch batch;
+    public AssetManager manager;
 
     @Override
     public void create() {
+        manager = new AssetManager();
         batch = new SpriteBatch();
         this.setScreen(new DungeonScreen(this));
     }

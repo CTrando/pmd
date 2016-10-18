@@ -2,6 +2,7 @@ package com.mygdx.pmd.utils;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.pmd.Enumerations.Key;
 
 /**
  * Created by Cameron on 9/21/2016.
@@ -11,13 +12,14 @@ public class PAnimation {
     public int animationLength;
     public Array<Sprite> animationSprites;
     public int animationCounter = 0;
-    public int eachFrameLength;
+    public int eachFrameLength =1;
     public int frameCounter = 0;
     public Sprite currentSprite;
     public String classifier;
     public Sprite finalSprite;
+    public Key key;
 
-    public PAnimation(String classifier, Array<Sprite> animationSprites, Sprite finalSprite, int animationLength) {
+    public PAnimation(String classifier, Array<Sprite> animationSprites, Sprite finalSprite, int animationLength, Key key) {
         this.classifier = classifier;
         this.animationLength = animationLength;
         this.animationSprites = animationSprites;
@@ -27,6 +29,7 @@ public class PAnimation {
             this.currentSprite = animationSprites.get(frameCounter);
         }
         this.finalSprite = finalSprite;
+        this.key = key;
     }
 
     public void update() {
@@ -34,7 +37,8 @@ public class PAnimation {
 
         if (animationCounter % eachFrameLength == 0) {
             frameCounter++;
-            currentSprite = animationSprites.get(frameCounter % animationSprites.size);
+            if(animationSprites.size >0)
+                currentSprite = animationSprites.get(frameCounter % animationSprites.size);
         }
     }
 

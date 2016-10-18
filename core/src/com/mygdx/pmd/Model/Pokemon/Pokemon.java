@@ -100,12 +100,15 @@ public abstract class Pokemon implements Renderable, Updatable {
             XmlReader.Element root = xmlReader.parse(Gdx.files.internal("utils/AnimationStorage.xml"));
             for (XmlReader.Element element : root.getChildrenByName("Animation")) {
                 String name = element.get("name");
+                Key key = Enum.valueOf(Key.class, element.get("key"));
                 Array<Sprite> spriteArray = new Array<Sprite>();
                 for (XmlReader.Element child : element.getChildrenByName("sprite")) {
-                    spriteArray.add(DungeonScreen.sprites.get(this.pokemonName + child.get("name")));
+                    Sprite sprite = DungeonScreen.sprites.get(this.pokemonName + child.get("name"));
+                    if(sprite != null)
+                        spriteArray.add(sprite);
                 }
                 Sprite finalSprite = DungeonScreen.sprites.get(this.pokemonName + element.getChildByName("finalsprite").get("name"));
-                PAnimation animation = new PAnimation(name, spriteArray, finalSprite, 30);
+                PAnimation animation = new PAnimation(name, spriteArray, finalSprite, 30, key);
                 animationMap.put(name, animation);
             }
         } catch (IOException e) {
@@ -117,8 +120,8 @@ public abstract class Pokemon implements Renderable, Updatable {
         if (currentAnimation != animationMap.get("noanimation")) {
             currentSprite = currentAnimation.getCurrentSprite();
 
-            if (currentAnimation.isFinished()) {
-                if(!controller.isKeyPressed())
+            if(currentAnimation.isFinished()) {
+                if(controller.isKeyPressed(Key.a)) //something needs to be done here to compensate for keys being hit
                     currentSprite = currentAnimation.finalSprite;
                 currentAnimation.clear();
                 this.setCurrentAnimation(animationMap.get("noanimation"));
@@ -157,7 +160,6 @@ public abstract class Pokemon implements Renderable, Updatable {
     }
 
     public void takeDamage(int x) {
-        System.out.println("OWIE");
         this.setHP(this.getHP() - 1);
     }
 

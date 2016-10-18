@@ -1,5 +1,6 @@
 package com.mygdx.pmd.Model.Pokemon;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.Action;
@@ -83,6 +84,7 @@ public class PokemonMob extends Pokemon {
                 if(this.canAttack() != null)
                     this.dealDamage(this.canAttack());
                 this.setCurrentAnimation(animationMap.get(direction.toString() + "attack"));
+                controller.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
             }
         }
 
