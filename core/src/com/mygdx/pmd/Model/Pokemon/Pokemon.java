@@ -89,6 +89,9 @@ public abstract class Pokemon implements Renderable, Updatable {
         if (currentSprite != null) {
             batch.draw(currentSprite, x, y, currentSprite.getWidth(), currentSprite.getHeight());
         }
+        //I've done the previous sprite thing here before and for whatever reason it didn't work out so don't try it
+
+
     }
 
     public void loadAnimations() {
@@ -112,16 +115,13 @@ public abstract class Pokemon implements Renderable, Updatable {
 
     public void updateAnimation() {
         if (currentAnimation != animationMap.get("noanimation")) {
-            currentSprite = currentAnimation.getCurrentSprite(false);
+            currentSprite = currentAnimation.getCurrentSprite();
 
             if (currentAnimation.isFinished()) {
+                if(!controller.isKeyPressed())
+                    currentSprite = currentAnimation.finalSprite;
                 currentAnimation.clear();
-                if (!controller.isKeyPressed()) {
-                    if (currentAnimation.finalSprite != null)
-                        currentSprite = currentAnimation.finalSprite;
-                    else currentSprite = previousAnimation.finalSprite;
-                    this.setCurrentAnimation(animationMap.get("noanimation"));
-                }
+                this.setCurrentAnimation(animationMap.get("noanimation"));
             }
         }
     }
@@ -178,14 +178,20 @@ public abstract class Pokemon implements Renderable, Updatable {
     }
 
     public void attack() {
+        if (currentAnimation.isFinished()) {
+            this.actionState = Action.IDLE;
+            this.setTurnState(Turn.COMPLETE);
+        }
+    }
+
+    public Pokemon canAttack() {
         if (this.facingTile == null || !this.facingTile.hasAPokemon())
-            return;
+            return null;
+        return facingTile.getCurrentPokemon();
+    }
 
-        this.facingTile.getCurrentPokemon().takeDamage(1);
-        this.setCurrentAnimation(animationMap.get(direction.toString()+ "attack"));
-
-        this.actionState = Action.IDLE;
-
+    public void dealDamage(Pokemon pokemon) {
+        pokemon.takeDamage(1);
     }
 
     public void down() {

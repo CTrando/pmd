@@ -73,13 +73,16 @@ public class PokemonMob extends Pokemon {
     }
 
     public void updateLogic() {
-        if (this.getTurnState() != Turn.COMPLETE) {
+        if (this.getTurnState() == Turn.WAITING) {
             boolean canPathFind = this.pathFind();
 
             if (!canPathFind) {
                 this.turnToTile(this.playerTile);
                 this.actionState = Action.ATTACKING;
-                this.setTurnState(Turn.COMPLETE);
+                this.setTurnState(Turn.PENDING);
+                if(this.canAttack() != null)
+                    this.dealDamage(this.canAttack());
+                this.setCurrentAnimation(animationMap.get(direction.toString() + "attack"));
             }
         }
 

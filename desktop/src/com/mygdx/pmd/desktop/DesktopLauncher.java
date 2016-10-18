@@ -8,7 +8,7 @@ import com.mygdx.pmd.PMD;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.foregroundFPS = 30;
+		config.foregroundFPS = 60;
 		config.width = 1080;
 		config.height = 720;
 

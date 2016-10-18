@@ -121,7 +121,7 @@ public class PokemonPlayer extends Pokemon {
 
     @Override
     public void updateLogic() {
-        if(this.getTurnState() != Turn.COMPLETE)
+        if (this.getTurnState() != Turn.COMPLETE)
             this.updateKeyEvents();
 
         switch (this.actionState) {

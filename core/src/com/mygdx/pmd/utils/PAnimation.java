@@ -17,49 +17,42 @@ public class PAnimation {
     public String classifier;
     public Sprite finalSprite;
 
-    public PAnimation(String classifier, Array<Sprite> animationSprites, Sprite finalSprite, int animationLength)
-    {
+    public PAnimation(String classifier, Array<Sprite> animationSprites, Sprite finalSprite, int animationLength) {
         this.classifier = classifier;
         this.animationLength = animationLength;
         this.animationSprites = animationSprites;
-        
-        this.eachFrameLength = animationLength/animationSprites.size;
-        this.currentSprite = animationSprites.get(frameCounter);
+
+        if (animationSprites.size > 0) {
+            this.eachFrameLength = animationLength / animationSprites.size;
+            this.currentSprite = animationSprites.get(frameCounter);
+        }
         this.finalSprite = finalSprite;
     }
 
-    public void update()
-    {
+    public void update() {
         animationCounter++;
 
-        if(animationCounter%eachFrameLength == 0) {
+        if (animationCounter % eachFrameLength == 0) {
             frameCounter++;
-            currentSprite = animationSprites.get(frameCounter%animationSprites.size);
+            currentSprite = animationSprites.get(frameCounter % animationSprites.size);
         }
     }
 
-    public Sprite getCurrentSprite(boolean isLooping)
-    {
-        if(isLooping || !isFinished())
-            this.update();
-
+    public Sprite getCurrentSprite() {
+        this.update();
         return currentSprite;
     }
 
-    public boolean isFinished()
-    {
-        return animationCounter >= animationLength;
+    public boolean isFinished() {
+        return frameCounter >= animationSprites.size;
     }
 
-    public void clear()
-    {
+    public void clear() {
         animationCounter = 0;
         frameCounter = 0;
-        currentSprite = animationSprites.first();
     }
 
-    public String toString()
-    {
+    public String toString() {
         return classifier;
     }
 }

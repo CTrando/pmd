@@ -54,25 +54,28 @@
         <sprite name = "rightattack1"/>
         <sprite name = "rightattack2"/>
         <sprite name = "rightattack3"/>
-        <finalsprite name = "previoussprite"/>
+        <finalsprite name = "defaultright"/>
     </Animation>
     <Animation name = "leftattack">
         <sprite name = "leftattack1"/>
         <sprite name = "leftattack2"/>
         <sprite name = "leftattack3"/>
-        <finalsprite name = "previoussprite"/>
+        <finalsprite name = "defaultleft"/>
     </Animation>
     <Animation name = "downattack">
         <sprite name = "downattack1"/>
         <sprite name = "downattack2"/>
         <sprite name = "downattack3"/>
-        <finalsprite name = "previoussprite"/>
+        <finalsprite name = "defaultdown"/>
     </Animation>
     <Animation name = "upattack">
         <sprite name = "upattack1"/>
         <sprite name = "upattack2"/>
         <sprite name = "upattack3"/>
-        <finalsprite name = "previoussprite"/>
+        <finalsprite name = "defaultup"/>
+    </Animation>
+    <Animation name = "noanimation">
+        <finalsprite name =""/>
     </Animation>
 
 </AnimationStorage>
