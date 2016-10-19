@@ -19,7 +19,7 @@ public class PAnimation {
     public Sprite finalSprite;
     public Key key;
 
-    public PAnimation(String classifier, Array<Sprite> animationSprites, Sprite finalSprite, int animationLength, Key key) {
+    public PAnimation(String classifier, Array<Sprite> animationSprites, Sprite finalSprite, int animationLength) {
         this.classifier = classifier;
         this.animationLength = animationLength;
         this.animationSprites = animationSprites;
@@ -29,7 +29,6 @@ public class PAnimation {
             this.currentSprite = animationSprites.get(frameCounter);
         }
         this.finalSprite = finalSprite;
-        this.key = key;
     }
 
     public void update() {

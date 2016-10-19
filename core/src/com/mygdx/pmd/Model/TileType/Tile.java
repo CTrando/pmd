@@ -4,11 +4,11 @@ package com.mygdx.pmd.Model.TileType;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.pmd.Enumerations.Direction;
-import com.mygdx.pmd.Interfaces.Entity;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Screen.DungeonScreen;
+import com.mygdx.pmd.utils.Entity;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,8 +17,8 @@ import java.util.ArrayList;
  * Created by Cameron on 6/17/2016.
  */
 public abstract class Tile implements Renderable {
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
     private String classifier;
 

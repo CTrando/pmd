@@ -10,7 +10,6 @@ import com.mygdx.pmd.Enumerations.Key;
 import com.mygdx.pmd.Enumerations.PokemonName;
 import com.mygdx.pmd.Enumerations.Turn;
 import com.mygdx.pmd.Enumerations.State;
-import com.mygdx.pmd.Interfaces.Entity;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Interfaces.Updatable;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
@@ -22,6 +21,7 @@ import com.mygdx.pmd.Model.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.Model.TileType.StairTile;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.Screen.DungeonScreen;
+import com.mygdx.pmd.utils.Entity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -164,8 +164,8 @@ public class Controller {
             pokemon.setCurrentTile(random);
             random.addEntity(pokemon);
 
-            pokemon.setX(random.getX());
-            pokemon.setY(random.getY());
+            pokemon.setX(random.x);
+            pokemon.setY(random.y);
 
         }
         this.updatePlayerOffset();

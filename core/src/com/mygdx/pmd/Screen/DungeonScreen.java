@@ -173,7 +173,7 @@ public class DungeonScreen implements InputProcessor, Screen {
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         for (Tile t : controller.renderableArea) {
             if(controller.isTPressed) {
-                shapeRenderer.rect(t.getX(), t.getY(), Tile.size, Tile.size);
+                shapeRenderer.rect(t.x, t.y, Tile.size, Tile.size);
             }
             t.render(batch);
         }

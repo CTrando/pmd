@@ -7,24 +7,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4fb0db5b-6f56-4850-befc-0a9f45c418d3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Enumerations/Keys.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/Keys.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/Key.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/assets/pokemonassets/SQUIRTLE_WALKSHEET.png" afterPath="$PROJECT_DIR$/core/assets/pokemonassets/SQUIRTLE_WALKSHEET.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/assets/pokemonassets/TREEKO_WALKSHEET.png" afterPath="$PROJECT_DIR$/core/assets/pokemonassets/TREEKO_WALKSHEET.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/Entity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/Projectile.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Interfaces/Entity.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Interfaces/Entity.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Controller/Controller.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Controller/Controller.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Interfaces/Renderable.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Interfaces/Renderable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Interfaces/Updatable.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Interfaces/Updatable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Model/Pokemon/Pokemon$1.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Model/Pokemon/Pokemon$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Model/Pokemon/Pokemon.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Model/Pokemon/Pokemon.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Model/Pokemon/PokemonMob$1.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Model/Pokemon/PokemonMob$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Model/Pokemon/PokemonMob.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Model/Pokemon/PokemonMob.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Model/TileType/Tile.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Model/TileType/Tile.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Screen/DungeonScreen.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/Screen/DungeonScreen.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/utils/PAnimation.class" afterPath="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/utils/PAnimation.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/assets/pokemonassets/SQUIRTLE_WALKSHEET.atlas" afterPath="$PROJECT_DIR$/core/assets/pokemonassets/SQUIRTLE_WALKSHEET.atlas" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/assets/pokemonassets/TREEKO_WALKSHEET.atlas" afterPath="$PROJECT_DIR$/core/assets/pokemonassets/TREEKO_WALKSHEET.atlas" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/assets/utils/AnimationStorage.xml" afterPath="$PROJECT_DIR$/core/assets/utils/AnimationStorage.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Controller/Controller.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Controller/Controller.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Interfaces/Renderable.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Interfaces/Renderable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Interfaces/Updatable.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Interfaces/Updatable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/Pokemon.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/Pokemon.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonMob.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonMob.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonPlayer.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonPlayer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/pmd/PMD.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/PMD.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/Tile.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/Tile.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Screen/DungeonScreen.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/Screen/DungeonScreen.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/PAnimation.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/PAnimation.java" />
     </list>
@@ -76,12 +79,22 @@
       <file leaf-file-name="Pokemon.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/Pokemon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+            <state relative-caret-position="5168">
+              <caret line="352" column="23" selection-start-line="352" selection-start-column="23" selection-end-line="352" selection-end-column="23" />
               <folding>
-                <element signature="e#5102#5103#0" expanded="true" />
-                <element signature="e#5146#5147#0" expanded="true" />
+                <element signature="e#10137#10138#0" expanded="true" />
+                <element signature="e#10170#10171#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Tile.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/Tile.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -89,31 +102,18 @@
       <file leaf-file-name="PokemonPlayer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
+            <state relative-caret-position="1122">
               <caret line="71" column="24" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PMD.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/PMD.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="18" column="37" selection-start-line="18" selection-start-column="37" selection-end-line="18" selection-end-column="37" />
-              <folding>
-                <element signature="e#582#583#0" expanded="true" />
-                <element signature="e#612#613#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PokemonMob.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PokemonMob.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonMob.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="86" column="95" selection-start-line="86" selection-start-column="95" selection-end-line="86" selection-end-column="95" />
+            <state relative-caret-position="1258">
+              <caret line="84" column="92" selection-start-line="84" selection-start-column="92" selection-end-line="84" selection-end-column="92" />
               <folding />
             </state>
           </provider>
@@ -122,8 +122,30 @@
       <file leaf-file-name="DungeonScreen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Screen/DungeonScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+            <state relative-caret-position="4012">
+              <caret line="263" column="38" selection-start-line="263" selection-start-column="38" selection-end-line="263" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Projectile.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/Projectile.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="588">
+              <caret line="47" column="86" selection-start-line="47" selection-start-column="86" selection-end-line="47" selection-end-column="86" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PAnimation.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/PAnimation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="21" column="112" selection-start-line="21" selection-start-column="112" selection-end-line="21" selection-end-column="112" />
               <folding />
             </state>
           </provider>
@@ -132,7 +154,7 @@
       <file leaf-file-name="AnimationStorage.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/assets/utils/AnimationStorage.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-134">
+            <state relative-caret-position="680">
               <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
               <folding />
             </state>
@@ -149,34 +171,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Key.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/Key.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PAnimation.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/PAnimation.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="39" column="39" selection-start-line="39" selection-start-column="39" selection-end-line="39" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3553">
-              <caret line="241" column="0" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
-              <folding>
-                <element signature="e#7859#7860#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="4522">
+              <caret line="316" column="28" selection-start-line="316" selection-start-column="28" selection-end-line="316" selection-end-column="28" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -186,8 +186,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -930,8 +930,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/AnimationSprites.java" />
-        <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/BugReports" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/test.java" />
         <option value="$PROJECT_DIR$/core/assets/ui/skins" />
         <option value="$PROJECT_DIR$/core/assets/ui/skin" />
@@ -965,7 +963,6 @@
         <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/Action.java" />
         <option value="$PROJECT_DIR$/core/build/classes/main/com/mygdx/pmd/PMD.class" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/Timer.java" />
-        <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/Tile.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/Direction.java" />
         <option value="$PROJECT_DIR$/core/assets/utils/Pokemon.xml" />
         <option value="$PROJECT_DIR$/core/assets/utils/PokemonStorage.xml" />
@@ -974,13 +971,16 @@
         <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Interfaces/Entity.java" />
         <option value="$PROJECT_DIR$/desktop/src/com/mygdx/pmd/desktop/DesktopLauncher.java" />
         <option value="$PROJECT_DIR$/core/assets/utils/AnimationStorage.xml" />
-        <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Controller/Controller.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/PMD.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Screen/DungeonScreen.java" />
-        <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/Pokemon.java" />
-        <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/PAnimation.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonPlayer.java" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Controller/Controller.java" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/PAnimation.java" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/Entity.java" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/Tile.java" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/Pokemon.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonMob.java" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/Projectile.java" />
       </list>
     </option>
   </component>
@@ -998,8 +998,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="157" />
-    <option name="y" value="190" />
+    <option name="x" value="256" />
+    <option name="y" value="531" />
     <option name="width" value="960" />
     <option name="height" value="1040" />
   </component>
@@ -1185,6 +1185,10 @@
               <option name="myItemId" value="Model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TileType" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1213,6 +1217,58 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Pokemon" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pmd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pmd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pmd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pmd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Interfaces" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1332,9 +1388,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1942,11 +1998,13 @@
       <workItem from="1476745197631" duration="4943000" />
       <workItem from="1476752312365" duration="1106000" />
       <workItem from="1476757340470" duration="1943000" />
+      <workItem from="1476834164696" duration="1532000" />
+      <workItem from="1476851945827" duration="213000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="214676000" />
+    <option name="totallyTimeSpent" value="216421000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1958,7 +2016,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="157" y="190" width="960" height="1040" extended-state="0" />
+    <frame x="256" y="531" width="960" height="1040" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1968,12 +2026,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2444934" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.09307359" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24779736" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30888888" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30888888" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1987,7 +2045,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7866667" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32599118" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32575756" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2019,20 +2077,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/core/assets/pokemonassets/TREEKO_WALKSHEET.atlas">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.4/f0e4d245a67fc96707610a4260a325fa034c93d1/gdx-1.9.4-sources.jar!/com/badlogic/gdx/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/assets/ui/uiskin.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -2143,13 +2187,13 @@
     <entry file="file://$PROJECT_DIR$/core/assets/Menu.json" />
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Runner/PokemonRunner.java" />
     <entry file="file://$PROJECT_DIR$/core/assets/i18n/message1.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="81" selection-start-line="7" selection-start-column="81" selection-end-line="7" selection-end-column="81" />
         </state>
-      </provider>
-      <provider editor-type-id="ResourceBundle">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/UISimpleTest.java">
@@ -2163,13 +2207,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="30" column="14" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/Tile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3944">
-          <caret line="260" column="5" selection-start-line="260" selection-start-column="5" selection-end-line="260" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -2265,13 +2302,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Interfaces/Entity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle" />
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Enumerations/Action.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -2284,7 +2314,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2292,7 +2321,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2300,7 +2328,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
           <caret line="41" column="34" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2315,19 +2342,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding>
-            <element signature="e#728#729#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Controller/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3553">
-          <caret line="241" column="0" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
-          <folding>
-            <element signature="e#7859#7860#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2335,7 +2349,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2343,18 +2356,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="18" column="37" selection-start-line="18" selection-start-column="37" selection-end-line="18" selection-end-column="37" />
-          <folding>
-            <element signature="e#582#583#0" expanded="true" />
-            <element signature="e#612#613#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Screen/DungeonScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2368,44 +2369,87 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/assets/utils/AnimationStorage.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-134">
+        <state relative-caret-position="680">
           <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/PAnimation.java">
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Interfaces/Entity.java" />
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Controller/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="39" column="39" selection-start-line="39" selection-start-column="39" selection-end-line="39" selection-end-column="39" />
+        <state relative-caret-position="4522">
+          <caret line="316" column="28" selection-start-line="316" selection-start-column="28" selection-end-line="316" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="48" selection-start-line="15" selection-start-column="48" selection-end-line="15" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1122">
+          <caret line="71" column="24" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/TileType/Tile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/Pokemon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+        <state relative-caret-position="5168">
+          <caret line="352" column="23" selection-start-line="352" selection-start-column="23" selection-end-line="352" selection-end-column="23" />
           <folding>
-            <element signature="e#5102#5103#0" expanded="true" />
-            <element signature="e#5146#5147#0" expanded="true" />
+            <element signature="e#10137#10138#0" expanded="true" />
+            <element signature="e#10170#10171#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonPlayer.java">
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/PAnimation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="71" column="24" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
+        <state relative-caret-position="323">
+          <caret line="21" column="112" selection-start-line="21" selection-start-column="112" selection-end-line="21" selection-end-column="112" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Screen/DungeonScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4012">
+          <caret line="263" column="38" selection-start-line="263" selection-start-column="38" selection-end-line="263" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/Model/Pokemon/PokemonMob.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="86" column="95" selection-start-line="86" selection-start-column="95" selection-end-line="86" selection-end-column="95" />
+        <state relative-caret-position="1258">
+          <caret line="84" column="92" selection-start-line="84" selection-start-column="92" selection-end-line="84" selection-end-column="92" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/pmd/utils/Projectile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="47" column="86" selection-start-line="47" selection-start-column="86" selection-end-line="47" selection-end-column="86" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

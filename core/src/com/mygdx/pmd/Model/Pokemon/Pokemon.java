@@ -18,10 +18,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Pokemon implements Renderable, Updatable {
+public abstract class Pokemon extends Entity {
     private Tile nextTile;
     private Tile currentTile;
-    private Tile facingTile;
+    public Tile facingTile;
+
+    Array<Projectile> projectiles = new Array<Projectile>();
+
 
     public HashMap<String, PAnimation> animationMap;
 
@@ -89,6 +92,10 @@ public abstract class Pokemon implements Renderable, Updatable {
         if (currentSprite != null) {
             batch.draw(currentSprite, x, y, currentSprite.getWidth(), currentSprite.getHeight());
         }
+
+        for(Projectile p: projectiles) {
+            p.render(batch);
+        }
         //I've done the previous sprite thing here before and for whatever reason it didn't work out so don't try it
 
 
@@ -100,7 +107,6 @@ public abstract class Pokemon implements Renderable, Updatable {
             XmlReader.Element root = xmlReader.parse(Gdx.files.internal("utils/AnimationStorage.xml"));
             for (XmlReader.Element element : root.getChildrenByName("Animation")) {
                 String name = element.get("name");
-                Key key = Enum.valueOf(Key.class, element.get("key"));
                 Array<Sprite> spriteArray = new Array<Sprite>();
                 for (XmlReader.Element child : element.getChildrenByName("sprite")) {
                     Sprite sprite = DungeonScreen.sprites.get(this.pokemonName + child.get("name"));
@@ -108,7 +114,7 @@ public abstract class Pokemon implements Renderable, Updatable {
                         spriteArray.add(sprite);
                 }
                 Sprite finalSprite = DungeonScreen.sprites.get(this.pokemonName + element.getChildByName("finalsprite").get("name"));
-                PAnimation animation = new PAnimation(name, spriteArray, finalSprite, 30, key);
+                PAnimation animation = new PAnimation(name, spriteArray, finalSprite, 30);
                 animationMap.put(name, animation);
             }
         } catch (IOException e) {
@@ -184,6 +190,11 @@ public abstract class Pokemon implements Renderable, Updatable {
             this.actionState = Action.IDLE;
             this.setTurnState(Turn.COMPLETE);
         }
+
+        for(int i = 0; i< projectiles.size; i++){
+            if(projectiles.get(i).hasHit)
+                projectiles.removeIndex(i);
+        }
     }
 
     public Pokemon canAttack() {
@@ -247,6 +258,8 @@ public abstract class Pokemon implements Renderable, Updatable {
     public void update() {
         this.updateAnimation();
         this.updateLogic();
+        for(Projectile p: projectiles)
+            p.update();
     }
 
     public abstract void updateLogic();
@@ -309,35 +322,35 @@ public abstract class Pokemon implements Renderable, Updatable {
             return;
         }
 
-        if (y > nextTile.getY() && x > nextTile.getX()) {
+        if (y > nextTile.y && x > nextTile.x) {
             this.setY(this.getY() - speed);
             this.setX(this.getX() - speed);
-        } else if (y < nextTile.getY() && x > nextTile.getX()) {
+        } else if (y < nextTile.y && x > nextTile.x) {
             this.setY(this.getY() + speed);
             this.setX(this.getX() - speed);
-        } else if (y < nextTile.getY() && x < nextTile.getX()) {
+        } else if (y < nextTile.y && x < nextTile.x) {
             this.setY(this.getY() + speed);
             this.setX(this.getX() + speed);
-        } else if (y > nextTile.getY() && x < nextTile.getX()) {
+        } else if (y > nextTile.y && x < nextTile.x) {
             this.setY(this.getY() - speed);
             this.setX(this.getX() + speed);
-        } else if (y > nextTile.getY()) {
+        } else if (y > nextTile.y) {
             this.setY(this.getY() - speed);
-        } else if (y < nextTile.getY()) {
+        } else if (y < nextTile.y) {
             this.setY(this.getY() + speed);
-        } else if (x < nextTile.getX()) {
+        } else if (x < nextTile.x) {
             this.setX(this.getX() + speed);
-        } else if (x > nextTile.getX()) {
+        } else if (x > nextTile.x) {
             this.setX(this.getX() - speed);
         }
     }
 
     public boolean isToRight(Tile tile) {
-        return x > tile.getX();
+        return x > tile.x;
     }
 
     public boolean isToLeft(Tile tile) {
-        return x < tile.getX();
+        return x < tile.x;
     }
 
     public boolean isAbove(Tile tile) {
@@ -358,8 +371,8 @@ public abstract class Pokemon implements Renderable, Updatable {
     }
 
     public void goToTileImmediately(Tile nextTile) {
-        this.setX(nextTile.getX());
-        this.setY(nextTile.getY());
+        this.setX(nextTile.x);
+        this.setY(nextTile.y);
     }
 
     public boolean isLegalToMoveTo(Tile tile) {

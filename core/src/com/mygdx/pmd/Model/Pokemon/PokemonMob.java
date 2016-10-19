@@ -8,6 +8,7 @@ import com.mygdx.pmd.Enumerations.Turn;
 import com.mygdx.pmd.Enumerations.PokemonName;
 import com.mygdx.pmd.Enumerations.State;
 import com.mygdx.pmd.Model.TileType.Tile;
+import com.mygdx.pmd.utils.Projectile;
 
 import java.util.ArrayList;
 
@@ -81,10 +82,8 @@ public class PokemonMob extends Pokemon {
                 this.turnToTile(this.playerTile);
                 this.actionState = Action.ATTACKING;
                 this.setTurnState(Turn.PENDING);
-                if(this.canAttack() != null)
-                    this.dealDamage(this.canAttack());
                 this.setCurrentAnimation(animationMap.get(direction.toString() + "attack"));
-                controller.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
+                projectiles.add(new Projectile(this.facingTile, this));
             }
         }
 
