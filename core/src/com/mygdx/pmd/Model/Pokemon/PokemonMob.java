@@ -3,11 +3,9 @@ package com.mygdx.pmd.Model.Pokemon;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Enumerations.Action;
-import com.mygdx.pmd.Enumerations.Turn;
-import com.mygdx.pmd.Enumerations.PokemonName;
-import com.mygdx.pmd.Enumerations.State;
+import com.mygdx.pmd.Enumerations.*;
 import com.mygdx.pmd.Model.TileType.Tile;
+import com.mygdx.pmd.utils.Attack;
 import com.mygdx.pmd.utils.Projectile;
 
 import java.util.ArrayList;
@@ -61,6 +59,7 @@ public class PokemonMob extends Pokemon {
                 if (this.isLegalToMoveTo(this.getNextTile())) {
                     this.actionState = Action.MOVING;
                     this.setTurnState(Turn.COMPLETE);
+                    this.setFacingTile(this.direction);
                     this.setCurrentTile(this.getNextTile());
                 } else {
                     solutionNodeList = new ArrayList<Tile>();
@@ -76,39 +75,49 @@ public class PokemonMob extends Pokemon {
 
     public void updateLogic() {
         if (this.getTurnState() == Turn.WAITING) {
-            boolean canPathFind = this.pathFind();
-
-            if (!canPathFind) {
-                this.turnToTile(this.playerTile);
+            if (this.canSee()) {
+                this.turnToTile(tileBoard[getCurrentTile().row][getCurrentTile().col +1]);
+                currentAttack = new Attack(this, AttackType.RANGED);
                 this.actionState = Action.ATTACKING;
                 this.setTurnState(Turn.PENDING);
-                this.setCurrentAnimation(animationMap.get(direction.toString() + "attack"));
-                projectiles.add(new Projectile(this.facingTile, this));
+            }else {
+                boolean canPathFind = this.pathFind();
+
+                if (!canPathFind) {
+                    this.turnToTile(this.playerTile);
+                    this.actionState = Action.ATTACKING;
+                    this.setTurnState(Turn.PENDING);
+                    currentAttack = new Attack(this, AttackType.DIRECT);
+
+                    this.setCurrentAnimation(currentAttack.animation);
+                }
+            }
+
+        }
+    }
+
+    public boolean canSee() {
+        for (int i = 0; i < 4; i++) {
+            try {
+                Tile tile = tileBoard[getCurrentTile().row][getCurrentTile().col + i];
+                if (tile.getCurrentPokemon() != null && tile.getCurrentPokemon() != this)
+                    return true;
+            } catch (ArrayIndexOutOfBoundsException e) {
+                e.printStackTrace();
             }
         }
-
-        switch (this.actionState) {
-            case MOVING:
-                this.updatePosition();
-                break;
-            case ATTACKING:
-                this.attack();
-                break;
-        }
+        return false;
     }
 
     @Override
     public void updatePosition() {
-        if (!this.equals(this.getCurrentTile()))
-            this.movementSpeedLogic(); //explanatory
-        else if (this.equals(this.getCurrentTile())) {
+        if (this.equals(this.getCurrentTile())) {
             solutionNodeList.remove(this.getCurrentTile());
-            this.setTurnState(Turn.COMPLETE);
-            this.actionState = Action.IDLE;
-            this.setNextTile(null);
-            this.setFacingTile(this.direction);
-        }
+            return;
+        } else
+            this.movementSpeedLogic(); //explanatory
     }
+
 
     public void movementSpeedLogic() {
         if (controller.isSPressed()) {
@@ -148,7 +157,7 @@ public class PokemonMob extends Pokemon {
         }
 
         currentTile.setParent(null);
-        Tile backTrack = tileBoard[destination.getRow()][destination.getCol()];
+        Tile backTrack = tileBoard[destination.row][destination.col];
 
         while (backTrack.getParent() != null) {
             backTrack = backTrack.getParent();
@@ -167,33 +176,33 @@ public class PokemonMob extends Pokemon {
         }
 
         try {
-            if (tileBoard[tile.getRow() + 1][tile.getCol()].isWalkable() && !openNodeList.contains(tileBoard[tile.getRow() + 1][tile.getCol()])) {
-                tileBoard[tile.getRow() + 1][tile.getCol()].setParent(tile);
-                openNodeList.add(tileBoard[tile.getRow() + 1][tile.getCol()]);
+            if (tileBoard[tile.row + 1][tile.col].isWalkable() && !openNodeList.contains(tileBoard[tile.row + 1][tile.col])) {
+                tileBoard[tile.row + 1][tile.col].setParent(tile);
+                openNodeList.add(tileBoard[tile.row + 1][tile.col]);
             }
         } catch (ArrayIndexOutOfBoundsException s) {
         }
 
         try {
-            if (tileBoard[tile.getRow() - 1][tile.getCol()].isWalkable() && !openNodeList.contains(tileBoard[tile.getRow() - 1][tile.getCol()])) {
-                openNodeList.add(tileBoard[tile.getRow() - 1][tile.getCol()]);
-                tileBoard[tile.getRow() - 1][tile.getCol()].setParent(tile);
+            if (tileBoard[tile.row - 1][tile.col].isWalkable() && !openNodeList.contains(tileBoard[tile.row - 1][tile.col])) {
+                openNodeList.add(tileBoard[tile.row - 1][tile.col]);
+                tileBoard[tile.row - 1][tile.col].setParent(tile);
             }
         } catch (ArrayIndexOutOfBoundsException s) {
         }
 
         try {
-            if (tileBoard[tile.getRow()][tile.getCol() + 1].isWalkable() && !openNodeList.contains(tileBoard[tile.getRow()][tile.getCol() + 1])) {
-                openNodeList.add(tileBoard[tile.getRow()][tile.getCol() + 1]);
-                tileBoard[tile.getRow()][tile.getCol() + 1].setParent(tile);
+            if (tileBoard[tile.row][tile.col + 1].isWalkable() && !openNodeList.contains(tileBoard[tile.row][tile.col + 1])) {
+                openNodeList.add(tileBoard[tile.row][tile.col + 1]);
+                tileBoard[tile.row][tile.col + 1].setParent(tile);
             }
         } catch (ArrayIndexOutOfBoundsException s) {
         }
 
         try {
-            if (tileBoard[tile.getRow()][tile.getCol() - 1].isWalkable() && !openNodeList.contains(tileBoard[tile.getRow()][tile.getCol() - 1])) {
-                openNodeList.add(tileBoard[tile.getRow()][tile.getCol() - 1]);
-                tileBoard[tile.getRow()][tile.getCol() - 1].setParent(tile);
+            if (tileBoard[tile.row][tile.col - 1].isWalkable() && !openNodeList.contains(tileBoard[tile.row][tile.col - 1])) {
+                openNodeList.add(tileBoard[tile.row][tile.col - 1]);
+                tileBoard[tile.row][tile.col - 1].setParent(tile);
             }
         } catch (ArrayIndexOutOfBoundsException s) {
         }

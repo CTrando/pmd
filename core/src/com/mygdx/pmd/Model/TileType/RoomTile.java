@@ -59,8 +59,8 @@ public class RoomTile extends Tile {
     public boolean isLegal()
     {
         int counter = 0;
-        int row = this.getRow();
-        int col = this.getCol();
+        int row = this.row;
+        int col = this.col;
 
         if(tileExists(tileBoard, row-1, col))
         {

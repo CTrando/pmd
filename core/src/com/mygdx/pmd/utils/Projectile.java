@@ -18,9 +18,13 @@ public class Projectile extends Entity {
     private Pokemon parent;
     private Tile targetTile;
 
+    public Tile currentTile;
+
     private Sprite currentSprite;
 
     public boolean hasHit;
+
+    public Direction direction;
 
     public Projectile(Tile targetTile, Pokemon parent) {
         this.targetTile = targetTile;
@@ -35,18 +39,49 @@ public class Projectile extends Entity {
     }
 
     public Projectile(Direction direction, Pokemon parent) {
+        this.x = parent.getCurrentTile().x;
+        this.y = parent.getCurrentTile().y;
+
+        Array<Sprite> array = new Array<Sprite>();
+        array.add(DungeonScreen.sprites.get("treekodownattack3"));
+        projectileAnimation = new PAnimation("attack", array, null, 10);
+
+        this.direction = direction;
         this.parent = parent;
     }
 
     @Override
     public void update() {
         currentSprite = projectileAnimation.getCurrentSprite();
-        if (this.equalsTile(this.targetTile) && projectileAnimation.isFinished()) {
-            hasHit = true;
-            if (parent.canAttack() != null) {
-                parent.dealDamage(parent.canAttack());
-                parent.controller.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
+        if(targetTile != null) {
+            if (this.equalsTile(this.targetTile) && projectileAnimation.isFinished()) {
+                hasHit = true;
+                if (parent.canAttack() != null) {
+                    parent.dealDamage(parent.canAttack());
+                    parent.controller.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
+                }
             }
+        } else if(direction != null) {
+            switch(direction){
+                case up:
+                    y++; break;
+                case down:
+                    y--; break;
+                case right:
+                    x++; break;
+                case left:
+                    x--; break;
+            }
+
+            currentTile = Tile.getTileAt(x, y, parent.tileBoard);
+            if(currentTile == null)
+                hasHit = true;
+            else if(currentTile.getCurrentPokemon() != null && currentTile.getCurrentPokemon() != parent) {
+                hasHit = true;
+                currentTile.getCurrentPokemon().takeDamage(1);
+            }
+
+
         }
     }
 

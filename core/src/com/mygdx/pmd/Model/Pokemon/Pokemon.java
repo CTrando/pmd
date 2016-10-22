@@ -23,6 +23,8 @@ public abstract class Pokemon extends Entity {
     private Tile currentTile;
     public Tile facingTile;
 
+    public Attack currentAttack;
+
     Array<Projectile> projectiles = new Array<Projectile>();
 
 
@@ -53,7 +55,7 @@ public abstract class Pokemon extends Entity {
 
     private Sprite currentSprite;
 
-    String pokemonName;
+    public String pokemonName;
 
     public State state;
 
@@ -92,10 +94,6 @@ public abstract class Pokemon extends Entity {
         if (currentSprite != null) {
             batch.draw(currentSprite, x, y, currentSprite.getWidth(), currentSprite.getHeight());
         }
-
-        for(Projectile p: projectiles) {
-            p.render(batch);
-        }
         //I've done the previous sprite thing here before and for whatever reason it didn't work out so don't try it
 
 
@@ -110,7 +108,7 @@ public abstract class Pokemon extends Entity {
                 Array<Sprite> spriteArray = new Array<Sprite>();
                 for (XmlReader.Element child : element.getChildrenByName("sprite")) {
                     Sprite sprite = DungeonScreen.sprites.get(this.pokemonName + child.get("name"));
-                    if(sprite != null)
+                    if (sprite != null)
                         spriteArray.add(sprite);
                 }
                 Sprite finalSprite = DungeonScreen.sprites.get(this.pokemonName + element.getChildByName("finalsprite").get("name"));
@@ -126,8 +124,8 @@ public abstract class Pokemon extends Entity {
         if (currentAnimation != animationMap.get("noanimation")) {
             currentSprite = currentAnimation.getCurrentSprite();
 
-            if(currentAnimation.isFinished()) {
-                if(controller.isKeyPressed(Key.a)) //something needs to be done here to compensate for keys being hit
+            if (currentAnimation.isFinished()) {
+                if (controller.isKeyPressed(Key.a)) //something needs to be done here to compensate for keys being hit
                     currentSprite = currentAnimation.finalSprite;
                 currentAnimation.clear();
                 this.setCurrentAnimation(animationMap.get("noanimation"));
@@ -185,15 +183,15 @@ public abstract class Pokemon extends Entity {
         this.y = (int) y;
     }
 
-    public void attack() {
-        if (currentAnimation.isFinished()) {
+    public void updateAttack() {
+        if (currentAttack == null) return;
+
+        currentAttack.update();
+        if(currentAttack.isFinished()) {
+            this.currentAnimation = animationMap.get("noanimation");
             this.actionState = Action.IDLE;
             this.setTurnState(Turn.COMPLETE);
-        }
-
-        for(int i = 0; i< projectiles.size; i++){
-            if(projectiles.get(i).hasHit)
-                projectiles.removeIndex(i);
+            this.currentAttack = null;
         }
     }
 
@@ -258,8 +256,8 @@ public abstract class Pokemon extends Entity {
     public void update() {
         this.updateAnimation();
         this.updateLogic();
-        for(Projectile p: projectiles)
-            p.update();
+        this.updatePosition();
+        this.updateAttack();
     }
 
     public abstract void updateLogic();
@@ -287,7 +285,7 @@ public abstract class Pokemon extends Entity {
     }
 
     public boolean equals(Tile tile) {
-        if (x == tile.getCol() * Tile.size && y == tile.getRow() * Tile.size) {
+        if (x == tile.col * Tile.size && y == tile.row * Tile.size) {
             return true;
         }
         return false;
@@ -297,16 +295,16 @@ public abstract class Pokemon extends Entity {
         try {
             switch (direction) {
                 case up:
-                    facingTile = tileBoard[currentTile.getRow() + 1][currentTile.getCol()];
+                    facingTile = tileBoard[currentTile.row + 1][currentTile.col];
                     break;
                 case down:
-                    facingTile = tileBoard[currentTile.getRow() - 1][currentTile.getCol()];
+                    facingTile = tileBoard[currentTile.row - 1][currentTile.col];
                     break;
                 case right:
-                    facingTile = tileBoard[currentTile.getRow()][currentTile.getCol() + 1];
+                    facingTile = tileBoard[currentTile.row][currentTile.col + 1];
                     break;
                 case left:
-                    facingTile = tileBoard[currentTile.getRow()][currentTile.getCol() - 1];
+                    facingTile = tileBoard[currentTile.row][currentTile.col - 1];
                     break;
             }
         } catch (ArrayIndexOutOfBoundsException e) {

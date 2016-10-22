@@ -109,7 +109,7 @@ public class Room {
         }
 
         int rand = (int)((roomConstraints.size())* Math.random());
-        door = new DoorTile(floor, roomConstraints.get(rand).getRow(), roomConstraints.get(rand).getCol(), this);
+        door = new DoorTile(floor, roomConstraints.get(rand).row, roomConstraints.get(rand).col, this);
         roomConstraints.set(rand, door);
     }
 
@@ -125,7 +125,7 @@ public class Room {
         {
             for(Tile z: other.getRoomConstraints())
             {
-                if(o.getCol() == z.getCol() && o.getRow() == z.getRow())
+                if(o.col == z.col && o.row == z.row)
                 {
                     return true;
                 }

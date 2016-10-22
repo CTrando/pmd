@@ -63,53 +63,53 @@ public class PathGenerator {
         Tile current = one;
         Tile destination = two;
 
-        while (destination.getRow() > current.getRow()) {
-            current = tileBoard[current.getRow() + 1][current.getCol()];
+        while (destination.row > current.row) {
+            current = tileBoard[current.row + 1][current.col];
 
             if (!(current instanceof RoomTile)) {
-                PathTileVertical tempVerticalTile = new PathTileVertical(floor, current.getRow(), current.getCol());
+                PathTileVertical tempVerticalTile = new PathTileVertical(floor, current.row, current.col);
 
                 if (tempVerticalTile.isLegal()) {
-                    tileBoard[current.getRow()][current.getCol()] = tempVerticalTile;
+                    tileBoard[current.row][current.col] = tempVerticalTile;
                     pathList.add(tempVerticalTile);
                 }
             }
         }
 
-        while (destination.getCol() > current.getCol()) {
-            current = tileBoard[current.getRow()][current.getCol() + 1];
+        while (destination.col > current.col) {
+            current = tileBoard[current.row][current.col + 1];
 
             if (!(current instanceof RoomTile)) {
-                PathTileHorizontal tempHorizontalTile = new PathTileHorizontal(floor, current.getRow(), current.getCol());
+                PathTileHorizontal tempHorizontalTile = new PathTileHorizontal(floor, current.row, current.col);
 
                 if (tempHorizontalTile.isLegal()) {
-                    tileBoard[current.getRow()][current.getCol()] = tempHorizontalTile;
+                    tileBoard[current.row][current.col] = tempHorizontalTile;
                     pathList.add(tempHorizontalTile);
                 }
             }
         }
 
-        while (destination.getRow() < current.getRow()) {
-            current = tileBoard[current.getRow() - 1][current.getCol()];
+        while (destination.row < current.row) {
+            current = tileBoard[current.row - 1][current.col];
 
             if (!(current instanceof RoomTile)) {
-                PathTileVertical tempVerticalTile = new PathTileVertical(floor, current.getRow(), current.getCol());
+                PathTileVertical tempVerticalTile = new PathTileVertical(floor, current.row, current.col);
 
                 if (tempVerticalTile.isLegal()) {
-                    tileBoard[current.getRow()][current.getCol()] = tempVerticalTile;
+                    tileBoard[current.row][current.col] = tempVerticalTile;
                     pathList.add(tempVerticalTile);
                 }
             }
         }
 
-        while (destination.getCol() < current.getCol()) {
-            current = tileBoard[current.getRow()][current.getCol() - 1];
+        while (destination.col < current.col) {
+            current = tileBoard[current.row][current.col - 1];
 
             if (!(current instanceof RoomTile)) {
-                PathTileHorizontal tempHorizontalTile = new PathTileHorizontal(floor, current.getRow(), current.getCol());
+                PathTileHorizontal tempHorizontalTile = new PathTileHorizontal(floor, current.row, current.col);
 
                 if (tempHorizontalTile.isLegal()) {
-                    tileBoard[current.getRow()][current.getCol()] = tempHorizontalTile;
+                    tileBoard[current.row][current.col] = tempHorizontalTile;
                     pathList.add(tempHorizontalTile);
                 }
             }
@@ -118,7 +118,7 @@ public class PathGenerator {
 
     public void initializePathList() {
         for (PathTile t : pathList) {
-            tileBoard[t.getRow()][t.getCol()] = t;
+            tileBoard[t.row][t.col] = t;
         }
     }
 
@@ -162,32 +162,32 @@ public class PathGenerator {
             return;
 
         try {
-            if (!(tileBoard[t.getRow() + 1][t.getCol()] instanceof GenericTile) && !processingList.contains(tileBoard[t.getRow()+1][t.getCol()])) {
-                processingList.add(tileBoard[t.getRow() + 1][t.getCol()]);
+            if (!(tileBoard[t.row + 1][t.col] instanceof GenericTile) && !processingList.contains(tileBoard[t.row+1][t.col])) {
+                processingList.add(tileBoard[t.row + 1][t.col]);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             //e.printStackTrace();
         }
 
         try {
-            if (!(tileBoard[t.getRow()][t.getCol() + 1] instanceof GenericTile) && !processingList.contains(tileBoard[t.getRow()][t.getCol()+1])) {
-                processingList.add(tileBoard[t.getRow()][t.getCol() + 1]);
+            if (!(tileBoard[t.row][t.col + 1] instanceof GenericTile) && !processingList.contains(tileBoard[t.row][t.col+1])) {
+                processingList.add(tileBoard[t.row][t.col + 1]);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             //e.printStackTrace();
         }
 
         try {
-            if (!(tileBoard[t.getRow()][t.getCol() - 1] instanceof GenericTile) && !processingList.contains(tileBoard[t.getRow()][t.getCol()-1])) {
-                processingList.add(tileBoard[t.getRow()][t.getCol() - 1]);
+            if (!(tileBoard[t.row][t.col - 1] instanceof GenericTile) && !processingList.contains(tileBoard[t.row][t.col-1])) {
+                processingList.add(tileBoard[t.row][t.col - 1]);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             //e.printStackTrace();
         }
 
         try {
-            if (!(tileBoard[t.getRow() - 1][t.getCol()] instanceof GenericTile) && !processingList.contains(tileBoard[t.getRow()-1][t.getCol()])) {
-                processingList.add(tileBoard[t.getRow() - 1][t.getCol()]);
+            if (!(tileBoard[t.row - 1][t.col] instanceof GenericTile) && !processingList.contains(tileBoard[t.row-1][t.col])) {
+                processingList.add(tileBoard[t.row - 1][t.col]);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
            // e.printStackTrace();

@@ -22,6 +22,7 @@ import com.mygdx.pmd.Model.TileType.StairTile;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.Screen.DungeonScreen;
 import com.mygdx.pmd.utils.Entity;
+import com.mygdx.pmd.utils.Projectile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class Controller {
     public ArrayList<Pokemon> pokemonList;
     ArrayList<Pokemon> updatePokemonList;
     ArrayList<Pokemon> enemyList;
+    public Array<Projectile> projectiles;
 
     private int pokemonCounter;
 
@@ -87,6 +89,7 @@ public class Controller {
         pokemonList = new ArrayList<Pokemon>();
         enemyList = new ArrayList<Pokemon>();
         updatePokemonList = new ArrayList<Pokemon>();
+        projectiles = new Array<Projectile>();
 
         this.windowLength = 2 * 500;
         this.windowWidth = 2 * 500;
@@ -195,6 +198,12 @@ public class Controller {
             }
             pokemon.update();
 
+        }
+
+        for(int i = 0; i< projectiles.size; i++){
+            projectiles.get(i).update();
+            if(projectiles.get(i).hasHit)
+                projectiles.removeIndex(i);
         }
     }
 
@@ -330,13 +339,13 @@ public class Controller {
             renderableRowOffset = 10;
         }
 
-        for (int r = pokemonPlayer.getCurrentTile().getRow() - loadedRowOffset; r <= pokemonPlayer.getCurrentTile().getRow() + loadedRowOffset; r++) {
-            for (int c = pokemonPlayer.getCurrentTile().getCol() - loadedColOffset; c <= pokemonPlayer.getCurrentTile().getCol() + loadedColOffset; c++) { //set this up so it gets it from the controller controller.getLeftRenderBound() etc.
+        for (int r = pokemonPlayer.getCurrentTile().row - loadedRowOffset; r <= pokemonPlayer.getCurrentTile().row + loadedRowOffset; r++) {
+            for (int c = pokemonPlayer.getCurrentTile().col - loadedColOffset; c <= pokemonPlayer.getCurrentTile().col + loadedColOffset; c++) { //set this up so it gets it from the controller controller.getLeftRenderBound() etc.
                 try {
                     tempLoadedArea.add(tileBoard[r][c]);
 
-                    if (r > pokemonPlayer.getCurrentTile().getRow() - renderableRowOffset && r < pokemonPlayer.getCurrentTile().getRow() + renderableRowOffset)
-                        if (c > pokemonPlayer.getCurrentTile().getCol() - renderableColOffset && c < pokemonPlayer.getCurrentTile().getCol() + renderableColOffset)
+                    if (r > pokemonPlayer.getCurrentTile().row - renderableRowOffset && r < pokemonPlayer.getCurrentTile().row + renderableRowOffset)
+                        if (c > pokemonPlayer.getCurrentTile().col - renderableColOffset && c < pokemonPlayer.getCurrentTile().col + renderableColOffset)
                             tempRenderableArea.add(tileBoard[r][c]);
 
                 } catch (ArrayIndexOutOfBoundsException e) {

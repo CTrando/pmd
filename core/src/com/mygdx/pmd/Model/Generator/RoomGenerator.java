@@ -69,7 +69,7 @@ public class RoomGenerator {
     public void placeRoomTiles() {
         for (Room r : roomList) {
             for (Tile rt : r.getRoomConstraints()) {
-                tileBoard[rt.getRow()][rt.getCol()] = rt;
+                tileBoard[rt.row][rt.col] = rt;
                 if(rt instanceof RoomTile)
                     roomTileList.add(rt);
             }

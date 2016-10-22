@@ -3,6 +3,7 @@ package com.mygdx.pmd.Model.TileType;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.Enumerations.Direction;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
@@ -22,8 +23,8 @@ public abstract class Tile implements Renderable {
 
     private String classifier;
 
-    private int r;
-    private int c;
+    public int row;
+    public int col;
 
     private int windowRows;
     private int windowCols;
@@ -59,8 +60,8 @@ public abstract class Tile implements Renderable {
 
         this.y = r * Tile.size;
 
-        this.r = r;
-        this.c = c;
+        this.row = r;
+        this.col = c;
 
         this.windowRows = tileBoard.length;
         this.windowCols = tileBoard[0].length;
@@ -134,8 +135,8 @@ public abstract class Tile implements Renderable {
 
     public double calculateDistance(Tile t)
     {
-        int rowOffset = Math.abs(this.getRow() - t.getRow());
-        int colOffset = Math.abs(this.getCol() - t.getCol());
+        int rowOffset = Math.abs(this.row - t.row);
+        int colOffset = Math.abs(this.col - t.col);
 
         return Math.sqrt(Math.pow(rowOffset, 2) + Math.pow(colOffset,2));
     }
@@ -156,8 +157,8 @@ public abstract class Tile implements Renderable {
 
     public static double calculateDistance(Tile t1, Tile t2)
     {
-        int rowOffset = Math.abs(t1.getRow() - t2.getRow());
-        int colOffset = Math.abs(t1.getCol() - t2.getCol());
+        int rowOffset = Math.abs(t1.row - t2.row);
+        int colOffset = Math.abs(t1.col - t2.col);
 
         return Math.sqrt(Math.pow(rowOffset, 2) + Math.pow(colOffset,2));
     }
@@ -177,8 +178,8 @@ public abstract class Tile implements Renderable {
     {
         ArrayList<Tile> returnTileList = new ArrayList<Tile>();
 
-        int row = t.getRow();
-        int col = t.getCol();
+        int row = t.row;
+        int col = t.col;
 
         if(Tile.tileExists(tileBoard, row+1, col))
         {
@@ -205,8 +206,8 @@ public abstract class Tile implements Renderable {
 
     public static Tile getNextTileOver(Tile[][] tileBoard, Tile t, Direction d)
     {
-        int row = t.getRow();
-        int col = t.getCol();
+        int row = t.row;
+        int col = t.col;
 
         switch(d)
         {
@@ -244,20 +245,20 @@ public abstract class Tile implements Renderable {
     }
 
     public int getX() {
-        return this.getCol()*Tile.size;
+        return this.col*Tile.size;
     }
 
     public int getY() {
-        return this.getRow()*Tile.size;
+        return this.row*Tile.size;
     }
 
 
     public int getRow() {
-        return r;
+        return row;
     }
 
     public int getCol() {
-        return c;
+        return col;
     }
     public void setClassifier(String classifier) {
         this.classifier = classifier;
@@ -331,35 +332,45 @@ public abstract class Tile implements Renderable {
 
     public boolean isAbove(Tile other)
     {
-        if(other.getRow() < this.getRow())
+        if(other.row < this.row)
             return true;
         else return false;
     }
 
     public boolean isBelows(Tile other)
     {
-        if(other.getRow() > this.getRow())
+        if(other.row > this.row)
             return true;
         else return false;
     }
 
     public boolean isToLeft(Tile other)
     {
-        if(other.getCol() > this.getCol())
+        if(other.col > this.col)
             return true;
         else return false;
     }
 
+    public static Tile getTileAt(int x, int y, Tile[][] tileBoard) {
+        Tile retTile = null;
+        try{
+            retTile = tileBoard[y/Tile.size][x/Tile.size];
+        } catch(ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+        return retTile;
+    }
+
     public boolean isToRight(Tile other)
     {
-        if(other.getCol() < this.getCol())
+        if(other.col < this.col)
             return true;
         else return false;
     }
 
     public boolean equals(Tile o)
     {
-        return (this.getRow() == o.getRow() && this.getCol() == o.getCol());
+        return (this.row == o.row && this.col == o.col);
     }
 
     public ArrayList<Entity> getEntityList() {
@@ -368,6 +379,6 @@ public abstract class Tile implements Renderable {
 
     public void print()
     {
-        System.out.println(this.getRow() + "," + this.getCol());
+        System.out.println(this.row + "," + this.col);
     }
 }

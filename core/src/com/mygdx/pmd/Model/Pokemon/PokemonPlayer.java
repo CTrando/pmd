@@ -43,21 +43,21 @@ public class PokemonPlayer extends Pokemon {
         if (controller.isKeyPressed()) {
             try {
                 if (controller.isDownPressed() && controller.isRightPressed()) {
-                    this.setNextTile(tileBoard[this.getCurrentTile().getRow() - 1][this.getCurrentTile().getCol() + 1]);
+                    this.setNextTile(tileBoard[this.getCurrentTile().row - 1][this.getCurrentTile().col + 1]);
                 } else if (controller.isUpPressed() && controller.isRightPressed()) {
-                    this.setNextTile(tileBoard[this.getCurrentTile().getRow() + 1][this.getCurrentTile().getCol() + 1]);
+                    this.setNextTile(tileBoard[this.getCurrentTile().row + 1][this.getCurrentTile().col + 1]);
                 } else if (controller.isUpPressed() && controller.isLeftPressed()) {
-                    this.setNextTile(tileBoard[this.getCurrentTile().getRow() + 1][this.getCurrentTile().getCol() - 1]);
+                    this.setNextTile(tileBoard[this.getCurrentTile().row + 1][this.getCurrentTile().col - 1]);
                 } else if (controller.isDownPressed() && controller.isLeftPressed()) {
-                    this.setNextTile(tileBoard[this.getCurrentTile().getRow() - 1][this.getCurrentTile().getCol() - 1]);
+                    this.setNextTile(tileBoard[this.getCurrentTile().row - 1][this.getCurrentTile().col - 1]);
                 } else if (controller.isDownPressed()) {
-                    this.setNextTile(tileBoard[this.getCurrentTile().getRow() - 1][this.getCurrentTile().getCol()]);
+                    this.setNextTile(tileBoard[this.getCurrentTile().row - 1][this.getCurrentTile().col]);
                 } else if (controller.isLeftPressed()) {
-                    this.setNextTile(tileBoard[this.getCurrentTile().getRow()][this.getCurrentTile().getCol() - 1]);
+                    this.setNextTile(tileBoard[this.getCurrentTile().row][this.getCurrentTile().col - 1]);
                 } else if (controller.isRightPressed()) {
-                    this.setNextTile(tileBoard[this.getCurrentTile().getRow()][this.getCurrentTile().getCol() + 1]);
+                    this.setNextTile(tileBoard[this.getCurrentTile().row][this.getCurrentTile().col + 1]);
                 } else if (controller.isUpPressed()) {
-                    this.setNextTile(tileBoard[this.getCurrentTile().getRow() + 1][this.getCurrentTile().getCol()]);
+                    this.setNextTile(tileBoard[this.getCurrentTile().row + 1][this.getCurrentTile().col]);
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
                 e.printStackTrace();
@@ -122,13 +122,6 @@ public class PokemonPlayer extends Pokemon {
     public void updateLogic() {
         if (this.getTurnState() != Turn.COMPLETE)
             this.updateKeyEvents();
-
-        switch (this.actionState) {
-            case MOVING:
-                this.updatePosition();
-                break;
-
-        }
     }
 
 }

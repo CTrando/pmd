@@ -28,8 +28,8 @@ public class GenericTile extends Tile {
 
     @Override
     public boolean isLegal() {
-        int row = this.getRow();
-        int col = this.getCol();
+        int row = this.row;
+        int col = this.col;
 
         boolean down = false;
         boolean up = false;

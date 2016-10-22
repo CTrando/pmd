@@ -78,8 +78,8 @@ public class Floor implements Renderable, Updatable {
     {
         int rand = (int)Math.random()*roomTileList.size();
         Tile rt = roomTileList.get(rand);
-        StairTile stairTile = new StairTile(this, rt.getRow(), rt.getCol());
-        tileBoard[stairTile.getRow()][stairTile.getCol()] = stairTile;
+        StairTile stairTile = new StairTile(this, rt.row, rt.col);
+        tileBoard[stairTile.row][stairTile.col] = stairTile;
     }
 
     public Tile[][] getTileBoard() {

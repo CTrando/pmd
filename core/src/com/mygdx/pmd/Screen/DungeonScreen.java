@@ -20,6 +20,7 @@ import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.PMD;
+import com.mygdx.pmd.utils.Projectile;
 import com.mygdx.pmd.utils.Timer;
 import com.mygdx.pmd.ui.Button;
 import com.mygdx.pmd.ui.Menu;
@@ -157,13 +158,12 @@ public class DungeonScreen implements InputProcessor, Screen {
     @Override
     public void render(float delta) {
         this.updateCamera();
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.setProjectionMatrix(camera.combined);
 
         for (Button b : currentMenu.updateButtonList) {
             b.update();
         }
-
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.setProjectionMatrix(camera.combined);
 
 
         batch.begin();
@@ -196,6 +196,10 @@ public class DungeonScreen implements InputProcessor, Screen {
                 }
             } else
                 r.render(batch);
+        }
+
+        for (Projectile p : controller.projectiles) {
+            p.render(batch);
         }
 
    //    batch.draw(animation.getCurrentSprite(), 100, 100);

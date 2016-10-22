@@ -16,16 +16,13 @@ public abstract class PathTile extends Tile {
     private int windowRows;
     private int windowCols;
 
-    private int row;
-    private int col;
-
     public PathTile(Floor floor, int row, int col)
     {
         super(floor, row,col);
         this.setWalkable(true);
         this.setSprite(sprite);
-        this.row = row;
-        this.col = col;
+        super.row = row;
+        super.col = col;
         this.tileBoard = this.getTileBoard();
         windowRows = this.getWindowRows();
         windowCols = this.getWindowCols();
@@ -68,8 +65,8 @@ public abstract class PathTile extends Tile {
         return count;
     }
 
-       /* int row = this.getRow();
-        int col = this.getCol();
+       /* int row = this.row;
+        int col = this.col;
 
         int counter = 0;
 
