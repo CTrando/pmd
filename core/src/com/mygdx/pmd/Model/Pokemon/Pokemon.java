@@ -195,11 +195,11 @@ public abstract class Pokemon extends Entity {
         }
     }
 
-    public Pokemon canAttack() {
+   /* public Pokemon canAttack() {
         if (this.facingTile == null || !this.facingTile.hasAPokemon())
             return null;
         return facingTile.getCurrentPokemon();
-    }
+    }*/
 
     public void dealDamage(Pokemon pokemon) {
         pokemon.takeDamage(1);

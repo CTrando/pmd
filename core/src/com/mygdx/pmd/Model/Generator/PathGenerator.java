@@ -36,11 +36,9 @@ public class PathGenerator {
         this.isPathLegal = false;
     }
 
-    public ArrayList<Tile> copyRoomList()
-    {
+    public ArrayList<Tile> copyRoomList() {
         ArrayList<Tile> clone = new ArrayList<Tile>();
-        for(Tile t: floor.getRoomTileList())
-        {
+        for (Tile t : floor.getRoomTileList()) {
             clone.add(t);
         }
         return clone;
@@ -134,35 +132,33 @@ public class PathGenerator {
         processingList.add(starterTile);
 
         while (processingList.size() > 0) {
-            for (int i = 0; i< processingList.size(); i++) {
+            for (int i = 0; i < processingList.size(); i++) {
                 Tile t = processingList.get(i);
 
                 this.evaluateTile(t);
                 processingList.remove(t);
-                if(!checkedOffList.contains(t))
-                checkedOffList.add(t);
+                if (!checkedOffList.contains(t))
+                    checkedOffList.add(t);
             }
         }
 
         roomTileList.removeAll(checkedOffList);
-        if(roomTileList.size() > 0)
-        {
-            random = (int)Math.random()*roomTileList.size();
+        if (roomTileList.size() > 0) {
+            random = (int) Math.random() * roomTileList.size();
             Tile firstTile = roomTileList.get(random);
-            random = (int)Math.random()*checkedOffList.size();
+            random = (int) Math.random() * checkedOffList.size();
             Tile secondTile = checkedOffList.get(random);
             this.makePath(firstTile, secondTile);
-        }
-        else return;
+        } else return;
         this.assertContinuity();
     }
 
     public void evaluateTile(Tile t) {
-        if(checkedOffList.contains(t))
+        if (checkedOffList.contains(t))
             return;
 
         try {
-            if (!(tileBoard[t.row + 1][t.col] instanceof GenericTile) && !processingList.contains(tileBoard[t.row+1][t.col])) {
+            if (!(tileBoard[t.row + 1][t.col] instanceof GenericTile) && !processingList.contains(tileBoard[t.row + 1][t.col])) {
                 processingList.add(tileBoard[t.row + 1][t.col]);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -170,7 +166,7 @@ public class PathGenerator {
         }
 
         try {
-            if (!(tileBoard[t.row][t.col + 1] instanceof GenericTile) && !processingList.contains(tileBoard[t.row][t.col+1])) {
+            if (!(tileBoard[t.row][t.col + 1] instanceof GenericTile) && !processingList.contains(tileBoard[t.row][t.col + 1])) {
                 processingList.add(tileBoard[t.row][t.col + 1]);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -178,7 +174,7 @@ public class PathGenerator {
         }
 
         try {
-            if (!(tileBoard[t.row][t.col - 1] instanceof GenericTile) && !processingList.contains(tileBoard[t.row][t.col-1])) {
+            if (!(tileBoard[t.row][t.col - 1] instanceof GenericTile) && !processingList.contains(tileBoard[t.row][t.col - 1])) {
                 processingList.add(tileBoard[t.row][t.col - 1]);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -186,13 +182,14 @@ public class PathGenerator {
         }
 
         try {
-            if (!(tileBoard[t.row - 1][t.col] instanceof GenericTile) && !processingList.contains(tileBoard[t.row-1][t.col])) {
+            if (!(tileBoard[t.row - 1][t.col] instanceof GenericTile) && !processingList.contains(tileBoard[t.row - 1][t.col])) {
                 processingList.add(tileBoard[t.row - 1][t.col]);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-           // e.printStackTrace();
+            // e.printStackTrace();
         }
     }
+
     public ArrayList<PathTile> getPathList() {
         return pathList;
     }

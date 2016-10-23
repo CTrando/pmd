@@ -16,6 +16,8 @@ public class PokemonMob extends Pokemon {
     ArrayList<Tile> openNodeList;
     ArrayList<Tile> closedNodeList;
 
+    private final int RANGE = 5;
+
     private boolean hasReached = false;
 
     ArrayList<Tile> solutionNodeList;
@@ -75,9 +77,10 @@ public class PokemonMob extends Pokemon {
 
     public void updateLogic() {
         if (this.getTurnState() == Turn.WAITING) {
-            if (this.canSee()) {
-                this.turnToTile(tileBoard[getCurrentTile().row][getCurrentTile().col +1]);
-                currentAttack = new Attack(this, AttackType.RANGED);
+            if (this.canAttack()) {
+                if(this.directAttack()) {}
+                    else this.rangedAttack();
+
                 this.actionState = Action.ATTACKING;
                 this.setTurnState(Turn.PENDING);
             }else {
@@ -96,13 +99,40 @@ public class PokemonMob extends Pokemon {
         }
     }
 
-    public boolean canSee() {
-        for (int i = 0; i < 4; i++) {
+    public boolean rangedAttack() {
+        currentAttack = new Attack(this, AttackType.RANGED);
+        return true;
+    }
+
+    public boolean directAttack() { //TODO Fix the facingtile logic
+        if(this.facingTile != null && this.facingTile.hasAPokemon() && this.facingTile.getCurrentPokemon() != this) {
+            currentAttack = new Attack(this, AttackType.DIRECT);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean canAttack() {
+        for(int i = -1*RANGE; i< RANGE; i++) {
             try {
-                Tile tile = tileBoard[getCurrentTile().row][getCurrentTile().col + i];
-                if (tile.getCurrentPokemon() != null && tile.getCurrentPokemon() != this)
-                    return true;
-            } catch (ArrayIndexOutOfBoundsException e) {
+                Tile tile = tileBoard[getCurrentTile().row+i][getCurrentTile().col];
+                if(tile != this.getCurrentTile())
+                    if(tile.hasAPokemon()) {
+                        return true;
+                    }
+            } catch (ArrayIndexOutOfBoundsException e){
+                e.printStackTrace();
+            }
+        }
+
+        for(int j = -1*RANGE; j< RANGE; j++) {
+            try {
+                Tile tile = tileBoard[getCurrentTile().row][getCurrentTile().col+j];
+                if(tile != this.getCurrentTile())
+                    if(tile.hasAPokemon()) {
+                        return true;
+                    }
+            } catch (ArrayIndexOutOfBoundsException e){
                 e.printStackTrace();
             }
         }

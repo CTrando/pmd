@@ -56,8 +56,8 @@ public class Projectile extends Entity {
         if(targetTile != null) {
             if (this.equalsTile(this.targetTile) && projectileAnimation.isFinished()) {
                 hasHit = true;
-                if (parent.canAttack() != null) {
-                    parent.dealDamage(parent.canAttack());
+                if (this.targetTile.hasAPokemon()) {
+                    parent.dealDamage(targetTile.getCurrentPokemon());
                     parent.controller.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
                 }
             }

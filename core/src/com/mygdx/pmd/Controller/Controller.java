@@ -180,7 +180,6 @@ public class Controller {
             this.randomizePokemonLocation(pokemon);
     }
 
-    //TODO fix this method
     public void update() {
         this.tileBoard = currentFloor.getTileBoard();
         this.updateKeys();
