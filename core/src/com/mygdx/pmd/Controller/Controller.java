@@ -3,6 +3,7 @@ package com.mygdx.pmd.Controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Comparators.PokemonDistanceComparator;
@@ -23,6 +24,7 @@ import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.Screen.DungeonScreen;
 import com.mygdx.pmd.utils.Entity;
 import com.mygdx.pmd.utils.Projectile;
+import junit.framework.TestResult;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +32,6 @@ import java.util.Collections;
 
 public class Controller {
     public DungeonScreen controllerScreen;
-    public boolean isFullView = false;
 
     ArrayList<Renderable> renderList;
     ArrayList<Room> roomList;
@@ -38,8 +39,6 @@ public class Controller {
     ArrayList<Pokemon> updatePokemonList;
     ArrayList<Pokemon> enemyList;
     public Array<Projectile> projectiles;
-
-    private int pokemonCounter;
 
     public ArrayList<Tile> loadedArea;
     public ArrayList<Tile> renderableArea;
@@ -169,7 +168,6 @@ public class Controller {
 
             pokemon.setX(random.x);
             pokemon.setY(random.y);
-
         }
         this.updatePlayerOffset();
         this.updateLoadedArea();
@@ -201,8 +199,11 @@ public class Controller {
 
         for(int i = 0; i< projectiles.size; i++){
             projectiles.get(i).update();
-            if(projectiles.get(i).hasHit)
+            if(projectiles.get(i).hasHit) {
                 projectiles.removeIndex(i);
+                this.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
+
+            }
         }
     }
 
@@ -285,11 +286,11 @@ public class Controller {
 
     public void addEntity(Entity entity) {
         if (entity instanceof Renderable) {
-            renderList.add((Renderable) entity);
+            renderList.add(entity);
         }
 
         if (entity instanceof Updatable) {
-            updateList.add((Updatable) entity);
+            updateList.add(entity);
         }
 
         if (entity instanceof PokemonPlayer) {

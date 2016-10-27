@@ -1,5 +1,6 @@
 package com.mygdx.pmd.utils;
 
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.Enumerations.AttackType;
 import com.mygdx.pmd.Enumerations.PokemonName;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
@@ -13,6 +14,7 @@ public class Attack {
     public PAnimation animation;
     private Pokemon pokemon;
     public AttackType type;
+    public boolean animationFinish;
 
     public Attack(Pokemon pokemon, AttackType type) {
         this.pokemon = pokemon;
@@ -23,8 +25,11 @@ public class Attack {
     }
 
     public void update(){
+        if(isFinished())
+            return;
         counter++;
-        if(this.isFinished()) {
+        if(isFinished()) {
+            animationFinish = false;
             switch(type) {
                 case DIRECT: pokemon.controller.projectiles.add(new Projectile(pokemon.facingTile, pokemon));
                     break;

@@ -187,19 +187,13 @@ public abstract class Pokemon extends Entity {
         if (currentAttack == null) return;
 
         currentAttack.update();
-        if(currentAttack.isFinished()) {
+        if(currentAttack.isFinished() && controller.projectiles.size == 0) {
             this.currentAnimation = animationMap.get("noanimation");
             this.actionState = Action.IDLE;
             this.setTurnState(Turn.COMPLETE);
             this.currentAttack = null;
         }
     }
-
-   /* public Pokemon canAttack() {
-        if (this.facingTile == null || !this.facingTile.hasAPokemon())
-            return null;
-        return facingTile.getCurrentPokemon();
-    }*/
 
     public void dealDamage(Pokemon pokemon) {
         pokemon.takeDamage(1);
@@ -267,6 +261,28 @@ public abstract class Pokemon extends Entity {
         if (this.currentAnimation != null && animation != this.currentAnimation)
             this.previousAnimation = this.currentAnimation;
         this.currentAnimation = animation;
+    }
+
+    public void turnToDirection(Direction d) {
+        Tile tile = null;
+        try{
+            switch(d) {
+                case up:
+                    tile = tileBoard[currentTile.row+1][currentTile.col];
+                    break;
+                case down:
+                    tile = tileBoard[currentTile.row-1][currentTile.col];
+                    break;
+                case left:
+                    tile = tileBoard[currentTile.row][currentTile.col-1];
+                    break;
+                case right:
+                    tile = tileBoard[currentTile.row][currentTile.col+1];
+                    break;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+        }
+        this.turnToTile(tile);
     }
 
     public int getHP() {

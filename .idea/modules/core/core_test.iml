@@ -12,6 +12,7 @@
     <orderEntry type="module" module-name="core_main" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx:1.9.4" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-box2d:1.9.4" level="project" />
+    <orderEntry type="library" name="JUnit" level="application" />
   </component>
   <component name="TestModuleProperties" production-module="core_main" />
 </module>

@@ -77,7 +77,8 @@ public class PokemonMob extends Pokemon {
 
     public void updateLogic() {
         if (this.getTurnState() == Turn.WAITING) {
-            if (this.canAttack()) {
+            if (this.canAttack() != null) {
+                this.turnToDirection(this.canAttack());
                 if(this.directAttack()) {}
                     else this.rangedAttack();
 
@@ -112,13 +113,13 @@ public class PokemonMob extends Pokemon {
         return false;
     }
 
-    public boolean canAttack() {
+    public Direction canAttack() {
         for(int i = -1*RANGE; i< RANGE; i++) {
             try {
                 Tile tile = tileBoard[getCurrentTile().row+i][getCurrentTile().col];
                 if(tile != this.getCurrentTile())
                     if(tile.hasAPokemon()) {
-                        return true;
+                        return i > 0?Direction.up:Direction.down;
                     }
             } catch (ArrayIndexOutOfBoundsException e){
                 e.printStackTrace();
@@ -130,13 +131,13 @@ public class PokemonMob extends Pokemon {
                 Tile tile = tileBoard[getCurrentTile().row][getCurrentTile().col+j];
                 if(tile != this.getCurrentTile())
                     if(tile.hasAPokemon()) {
-                        return true;
+                        return j > 0?Direction.right: Direction.left;
                     }
             } catch (ArrayIndexOutOfBoundsException e){
                 e.printStackTrace();
             }
         }
-        return false;
+        return null;
     }
 
     @Override

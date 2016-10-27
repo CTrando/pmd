@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.Enumerations.Direction;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
+import com.mygdx.pmd.Model.TileType.GenericTile;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.Screen.DungeonScreen;
 
@@ -64,17 +65,17 @@ public class Projectile extends Entity {
         } else if(direction != null) {
             switch(direction){
                 case up:
-                    y++; break;
+                    y+=2; break;
                 case down:
-                    y--; break;
+                    y-=2; break;
                 case right:
-                    x++; break;
+                    x+=2; break;
                 case left:
-                    x--; break;
+                    x-=2; break;
             }
 
             currentTile = Tile.getTileAt(x, y, parent.tileBoard);
-            if(currentTile == null)
+            if(currentTile == null || currentTile instanceof GenericTile)
                 hasHit = true;
             else if(currentTile.getCurrentPokemon() != null && currentTile.getCurrentPokemon() != parent) {
                 hasHit = true;
