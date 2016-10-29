@@ -51,11 +51,12 @@ public class Projectile extends Entity {
         this.parent = parent;
     }
 
+    //TODO alter the projectile to make it have health, and alter the mutator methods for damage and health so that when it reaches 0 it removes itself from the updatelist
     @Override
     public void update() {
         currentSprite = projectileAnimation.getCurrentSprite();
         if(targetTile != null) {
-            if (this.equalsTile(this.targetTile) && projectileAnimation.isFinished()) {
+            if (this.equals(this.targetTile) && projectileAnimation.isFinished()) {
                 hasHit = true;
                 if (this.targetTile.hasAPokemon()) {
                     parent.dealDamage(targetTile.getCurrentPokemon());
@@ -90,5 +91,11 @@ public class Projectile extends Entity {
     public void render(SpriteBatch batch) {
         if (currentSprite != null)
             batch.draw(currentSprite, x, y, currentSprite.getWidth(), currentSprite.getHeight());
+    }
+
+    @Override
+    public boolean isLegalToMoveTo(Tile tile) {
+        if(tile instanceof GenericTile || tile.hasAPokemon()) return false;
+        return true;
     }
 }

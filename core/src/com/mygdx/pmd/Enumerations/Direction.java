@@ -8,9 +8,8 @@ public enum Direction {
     down,
     right,
     left,
-    NORTHEAST,
-    NORTHWEST,
-    SOUTHEAST,
-    SOUTHWEST,
-    NODIRECTION;
+    upleft,
+    upright,
+    downleft,
+    downright;
 }

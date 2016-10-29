@@ -259,7 +259,7 @@ public class DungeonScreen implements InputProcessor, Screen {
     }
 
     public void updateCamera() {
-        camera.position.set(controller.getPokemonPlayer().getX(), controller.getPokemonPlayer().getY(), 0);
+        camera.position.set(controller.getPokemonPlayer().x, controller.getPokemonPlayer().y, 0);
         camera.update();
     }
 

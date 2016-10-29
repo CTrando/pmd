@@ -9,5 +9,7 @@ public enum MenuID {
     DEFAULT,
     ANIMATION,
     ACTION,
-    ATTACK;
+    ATTACK,
+    STATE,
+    DIRECTION;
 }

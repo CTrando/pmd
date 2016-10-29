@@ -6,6 +6,8 @@
 
         <Button text="some other kind of text" classifier="ANIMATION" nextMenu="optionsMenu"/>
         <Button text="more stuff here" classifier="PPHP" nextMenu="healthMenu"/>
+        <Button text = "state" classifier = "STATE" nextMenu = "healthMenu"/>
+        <Button text = "direction" classifier="DIRECTION" nextMenu="healthMenu"/>
     </Menu>
 
     <Menu MenuName="healthMenu" textureatlas="ui/uiskin.atlas" json="ui/uiskin.json">

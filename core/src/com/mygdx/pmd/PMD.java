@@ -23,7 +23,11 @@ public class PMD extends Game {
 
     public void render()
     {
-        super.render();
+        try {
+            super.render();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void dispose()

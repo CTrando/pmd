@@ -1,18 +1,17 @@
 package com.mygdx.pmd.Model.Pokemon;
 
-import com.badlogic.gdx.audio.Sound;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.Action;
+import com.mygdx.pmd.Enumerations.Direction;
 import com.mygdx.pmd.Enumerations.Turn;
 import com.mygdx.pmd.Enumerations.PokemonName;
-import com.mygdx.pmd.Screen.DungeonScreen;
 
 public class PokemonPlayer extends Pokemon {
 
 
     public PokemonPlayer(int x, int y, Controller controller, boolean move, PokemonName pokemonName) {
         super(controller, x, y, move, pokemonName);
-        this.setTurnState(Turn.WAITING);
+        this.turnState =Turn.WAITING;
     }
 
     @Override
@@ -20,26 +19,27 @@ public class PokemonPlayer extends Pokemon {
         if (this.getNextTile() != null) {
             if (!this.equals(this.getCurrentTile()))
                 this.motionLogic(); //explanatory
-            else if (this.equals(this.getCurrentTile())) {
-                controller.unfreezeKeys();
-                this.getCurrentTile().playEvents();
-                //this.setTurnState(Turn.COMPLETE);
+        }
+        if (this.equals(this.getCurrentTile()) && actionState == Action.MOVING) {
+            controller.unfreezeKeys();
+            this.getCurrentTile().playEvents();
+            if (this.getNextTile() == null) //&& !controller.isKeyPressed())
                 this.actionState = Action.IDLE;
-                this.setNextTile(null);
-            }
+            this.setNextTile(null);
         }
     }
+
 
     public void motionLogic() {
         if (this.isWithinArea(controller.loadedArea)) {
             if (controller.isSPressed()) {
                 this.moveFast();
             } else
-                this.goToTile(this.getCurrentTile(), 1);
+                this.moveSlow();
         }
     }
 
-    public void checkInputAndSetNextTile() {
+    public void handleInput() {
         if (controller.isKeyPressed()) {
             try {
                 if (controller.isDownPressed() && controller.isRightPressed()) {
@@ -67,7 +67,7 @@ public class PokemonPlayer extends Pokemon {
                 if (this.isLegalToMoveTo(this.getNextTile())) {
                     this.actionState = Action.MOVING;
                     controller.freezeKeys();
-                    this.setTurnState(Turn.COMPLETE);
+                    this.turnState =Turn.COMPLETE;
                     this.setCurrentTile(this.getNextTile());
                 } else {
                     this.setNextTile(null);
@@ -80,24 +80,24 @@ public class PokemonPlayer extends Pokemon {
 
     public void updateKeyEvents() {
         if (!controller.keyFrozen)
-            this.checkInputAndSetNextTile(); //explanatory
+            this.handleInput(); //explanatory
 
         if (controller.isDownPressed() && controller.isRightPressed()) {
-            this.downRight();
+            this.direction = Direction.downright;
         } else if (controller.isUpPressed() && controller.isRightPressed()) {
-            this.upRight();
+            this.direction = Direction.upright;
         } else if (controller.isUpPressed() && controller.isLeftPressed()) {
-            this.upLeft();
+            this.direction = Direction.upleft;
         } else if (controller.isDownPressed() && controller.isLeftPressed()) {
-            this.downLeft();
+            this.direction = Direction.downleft;
         } else if (controller.isDownPressed()) {
-            this.down();
+            this.direction = Direction.down;
         } else if (controller.isLeftPressed()) {
-            this.left();
+            this.direction = Direction.left;
         } else if (controller.isRightPressed()) {
-            this.right();
+            this.direction = Direction.right;
         } else if (controller.isUpPressed()) {
-            this.up();
+            this.direction = Direction.up;
         }
 
         if (controller.isSpacePressed()) {
@@ -105,12 +105,12 @@ public class PokemonPlayer extends Pokemon {
             controller.getCurrentFloor().getFloorGenerator().controller.randomizeAllPokemonLocation();
         }
 
-        if (controller.isAPressed && this.getTurnState() == Turn.WAITING) {
-            this.setTurnState(Turn.COMPLETE);
+        if (controller.isAPressed && this.turnState == Turn.WAITING) {
+            this.turnState =Turn.COMPLETE;
         }
 
         if (controller.isAPressed && controller.isSPressed()) {
-            this.setTurnState(Turn.COMPLETE);
+            this.turnState =Turn.COMPLETE;
         }
 
         if (controller.isBPressed) {
@@ -120,7 +120,7 @@ public class PokemonPlayer extends Pokemon {
 
     @Override
     public void updateLogic() {
-        if (this.getTurnState() != Turn.COMPLETE)
+        if (this.turnState != Turn.COMPLETE)
             this.updateKeyEvents();
     }
 

@@ -4,6 +4,8 @@ import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Interfaces.Updatable;
 import com.mygdx.pmd.Model.TileType.Tile;
 
+import java.util.ArrayList;
+
 /**
  * Created by Cameron on 10/18/2016.
  */
@@ -11,8 +13,92 @@ public abstract class Entity implements Renderable, Updatable{
     public int x;
     public int y;
 
-    public boolean equalsTile(Tile t)
+    public Tile nextTile;
+    public Tile currentTile;
+
+    public abstract boolean isLegalToMoveTo(Tile tile);
+
+    public boolean equals(Tile tile)
     {
-        return (t.x == x && t.y == y);
+        return (tile.x == x && tile.y == y);
+    }
+
+    public void move(int dx, int dy) {
+        x+=dx;
+        y+=dy;
+    }
+
+    public void goToTile(Tile nextTile, int speed) {
+        if (nextTile == null)
+            return;
+
+        if (this.equals(nextTile)) {
+            return;
+        }
+
+        if (y > nextTile.y && x > nextTile.x) {
+            this.move(-speed, - speed);
+        } else if (y < nextTile.y && x > nextTile.x) {
+            this.move(-speed, speed);
+        } else if (y < nextTile.y && x < nextTile.x) {
+            this.move(speed, speed);
+        } else if (y > nextTile.y && x < nextTile.x) {
+            this.move(speed, -speed);
+        } else if (y > nextTile.y) {
+            this.move(0, -speed);
+        } else if (y < nextTile.y) {
+            this.move(0, speed);
+        } else if (x < nextTile.x) {
+            this.move(speed, 0);
+        } else if (x > nextTile.x) {
+            this.move(-speed, 0);
+        }
+    }
+
+    public void goToTileImmediately(Tile nextTile) {
+        this.x = nextTile.x;
+        this.y = nextTile.y;
+    }
+
+    public void moveSlow() {
+        this.goToTile(nextTile, 1);
+    }
+
+    public void moveFast() {
+        this.goToTileImmediately(currentTile);
+    }
+
+
+    public boolean isWithinArea(ArrayList<Tile> area) {
+        for (Tile t : area) {
+            if (t == this.currentTile) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Tile getNextTile() {
+        return nextTile;
+    }
+
+    public void setNextTile(Tile tile) {
+        this.nextTile = tile;
+    }
+
+    public boolean isToRight(Tile tile) {
+        return x > tile.x;
+    }
+
+    public boolean isToLeft(Tile tile) {
+        return x < tile.x;
+    }
+
+    public boolean isAbove(Tile tile) {
+        return y > tile.getY();
+    }
+
+    public boolean isBelow(Tile tile) {
+        return y < tile.getY();
     }
 }

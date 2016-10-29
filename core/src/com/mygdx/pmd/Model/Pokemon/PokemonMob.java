@@ -44,24 +44,23 @@ public class PokemonMob extends Pokemon {
             return;
 
         if (this.isToLeft(this.getNextTile()))
-            this.right();
+            this.direction = Direction.right;
         else if (this.isToRight(this.getNextTile()))
-            this.left();
+            this.direction = Direction.left;
         else if (this.isAbove(this.getNextTile()))
-            this.down();
+            this.direction = Direction.down;
         else if (this.isBelow(this.getNextTile()))
-            this.up();
+            this.direction = Direction.up;
     }
 
     public boolean pathFind() {
         this.shortestPath();
-        if (this.getTurnState() == Turn.WAITING) {
+        if (this.turnState == Turn.WAITING) {
             if (solutionNodeList.size() > 0) {
                 this.setNextTile(solutionNodeList.get(0));
                 if (this.isLegalToMoveTo(this.getNextTile())) {
                     this.actionState = Action.MOVING;
-                    this.setTurnState(Turn.COMPLETE);
-                    this.setFacingTile(this.direction);
+                    this.turnState =Turn.COMPLETE;
                     this.setCurrentTile(this.getNextTile());
                 } else {
                     solutionNodeList = new ArrayList<Tile>();
@@ -76,24 +75,24 @@ public class PokemonMob extends Pokemon {
     }
 
     public void updateLogic() {
-        if (this.getTurnState() == Turn.WAITING) {
+        if (this.turnState == Turn.WAITING) {
             if (this.canAttack() != null) {
-                this.turnToDirection(this.canAttack());
+                this.turnToTile(this.canAttack());
                 if(this.directAttack()) {}
                     else this.rangedAttack();
 
                 this.actionState = Action.ATTACKING;
-                this.setTurnState(Turn.PENDING);
+                this.turnState =Turn.PENDING;
             }else {
                 boolean canPathFind = this.pathFind();
 
                 if (!canPathFind) {
                     this.turnToTile(this.playerTile);
                     this.actionState = Action.ATTACKING;
-                    this.setTurnState(Turn.PENDING);
+                    this.turnState =Turn.PENDING;
                     currentAttack = new Attack(this, AttackType.DIRECT);
-
-                    this.setCurrentAnimation(currentAttack.animation);
+                } else {
+                    this.turnToTile(solutionNodeList.get(0));
                 }
             }
 
@@ -113,16 +112,15 @@ public class PokemonMob extends Pokemon {
         return false;
     }
 
-    public Direction canAttack() {
+    public Tile canAttack() {
         for(int i = -1*RANGE; i< RANGE; i++) {
             try {
                 Tile tile = tileBoard[getCurrentTile().row+i][getCurrentTile().col];
                 if(tile != this.getCurrentTile())
                     if(tile.hasAPokemon()) {
-                        return i > 0?Direction.up:Direction.down;
+                        return tile;
                     }
             } catch (ArrayIndexOutOfBoundsException e){
-                e.printStackTrace();
             }
         }
 
@@ -131,10 +129,9 @@ public class PokemonMob extends Pokemon {
                 Tile tile = tileBoard[getCurrentTile().row][getCurrentTile().col+j];
                 if(tile != this.getCurrentTile())
                     if(tile.hasAPokemon()) {
-                        return j > 0?Direction.right: Direction.left;
+                        return tile;
                     }
             } catch (ArrayIndexOutOfBoundsException e){
-                e.printStackTrace();
             }
         }
         return null;
@@ -142,9 +139,9 @@ public class PokemonMob extends Pokemon {
 
     @Override
     public void updatePosition() {
-        if (this.equals(this.getCurrentTile())) {
+        if (this.equals(this.getCurrentTile()) && actionState == Action.MOVING) {
             solutionNodeList.remove(this.getCurrentTile());
-            return;
+            this.actionState = Action.IDLE;
         } else
             this.movementSpeedLogic(); //explanatory
     }

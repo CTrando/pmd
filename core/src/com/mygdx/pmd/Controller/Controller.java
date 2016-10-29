@@ -7,10 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Comparators.PokemonDistanceComparator;
-import com.mygdx.pmd.Enumerations.Key;
-import com.mygdx.pmd.Enumerations.PokemonName;
-import com.mygdx.pmd.Enumerations.Turn;
-import com.mygdx.pmd.Enumerations.State;
+import com.mygdx.pmd.Enumerations.*;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Interfaces.Updatable;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
@@ -114,8 +111,8 @@ public class Controller {
 
     public void updatePlayerOffset() {
         if (pokemonPlayer != null) {
-            playerXOffset = (pokemonPlayer.getX() - DungeonScreen.APP_WIDTH / 2);
-            playerYOffset = (pokemonPlayer.getY() - DungeonScreen.APP_HEIGHT / 2);
+            playerXOffset = (pokemonPlayer.x - DungeonScreen.APP_WIDTH / 2);
+            playerYOffset = (pokemonPlayer.y - DungeonScreen.APP_HEIGHT / 2);
         }
     }
 
@@ -157,53 +154,60 @@ public class Controller {
     }
 
     public void randomizePokemonLocation(Pokemon pokemon) {
-
         int rand = (int) (Math.random() * currentFloor.getRoomTileList().size());
 
         Tile random = currentFloor.getRoomTileList().get(rand);
 
         if (!(random instanceof StairTile) && random.getEntityList().size() == 0) {
+            pokemon.setNextTile(null);
+            //pokemon.turnState =Turn.COMPLETE);
             pokemon.setCurrentTile(random);
             random.addEntity(pokemon);
 
-            pokemon.setX(random.x);
-            pokemon.setY(random.y);
+            pokemon.x = random.x;
+            pokemon.y = random.y;
         }
         this.updatePlayerOffset();
         this.updateLoadedArea();
     }
 
     public void randomizeAllPokemonLocation() {
-        for (Pokemon pokemon : pokemonList)
+        for (Pokemon pokemon : pokemonList) {
             this.randomizePokemonLocation(pokemon);
+            pokemon.actionState = Action.IDLE;
+        }
     }
 
     public void update() {
-        this.tileBoard = currentFloor.getTileBoard();
-        this.updateKeys();
-        this.updatePlayerOffset();
-        Collections.sort(pokemonList, new PokemonDistanceComparator(this.getPokemonPlayer()));
+        try {
+            this.tileBoard = currentFloor.getTileBoard();
+            this.updateKeys();
+            this.updatePlayerOffset();
+            Collections.sort(pokemonList, new PokemonDistanceComparator(this.getPokemonPlayer()));
 
-        for (Pokemon pokemon : pokemonList) {
-            if (pokemonList.get(pokemonListCounter).getTurnState() == Turn.COMPLETE) {
-                if (pokemonList.get(pokemonListCounter) instanceof PokemonPlayer)
-                    this.updateLoadedArea();
-                pokemonListCounter++;
-                if (pokemonListCounter > pokemonList.size() - 1)
-                    pokemonListCounter = 0;
-                pokemonList.get(pokemonListCounter).setTurnState(Turn.WAITING);
-            }
-            pokemon.update();
-
-        }
-
-        for(int i = 0; i< projectiles.size; i++){
-            projectiles.get(i).update();
-            if(projectiles.get(i).hasHit) {
-                projectiles.removeIndex(i);
-                this.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
+            for (Pokemon pokemon : pokemonList) {
+                if (pokemonList.get(pokemonListCounter).turnState == Turn.COMPLETE) {
+                    if (pokemonList.get(pokemonListCounter) instanceof PokemonPlayer)
+                        this.updateLoadedArea();
+                    pokemonListCounter++;
+                    if (pokemonListCounter > pokemonList.size() - 1)
+                        pokemonListCounter = 0;
+                    pokemonList.get(pokemonListCounter).turnState = Turn.WAITING;
+                }
+                pokemon.update();
 
             }
+
+            for (int i = 0; i < projectiles.size; i++) {
+                projectiles.get(i).update();
+                if (projectiles.get(i).hasHit) {
+                    projectiles.removeIndex(i);
+                    this.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
+
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
