@@ -31,7 +31,7 @@ public class Button extends TextButton {
     {
         switch(this.classifier) {
             case PPHP:
-                this.setText("Current HP: " + controller.getPokemonPlayer().getHP() + "");
+                this.setText("Current hp: " + controller.getPokemonPlayer().getHp() + "");
                 break;
             case ANIMATION:
                 if(controller.getPokemonPlayer().currentAnimation != null)

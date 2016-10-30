@@ -21,7 +21,6 @@ import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.Screen.DungeonScreen;
 import com.mygdx.pmd.utils.Entity;
 import com.mygdx.pmd.utils.Projectile;
-import junit.framework.TestResult;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +28,7 @@ import java.util.Collections;
 
 public class Controller {
     public DungeonScreen controllerScreen;
+    public final boolean dungeonMode = true;
 
     ArrayList<Renderable> renderList;
     ArrayList<Room> roomList;
@@ -131,7 +131,7 @@ public class Controller {
         this.addEntity(pokemonPlayer);
         for (XmlReader.Element e : elementList) {
             PokemonName pokemonName = Enum.valueOf(PokemonName.class, e.get("name"));
-            PokemonMob pokemonMob = new PokemonMob(0, 0, this, true, pokemonName, State.friendly);
+            PokemonMob pokemonMob = new PokemonMob(0, 0, this, true, pokemonName, AgressionState.friendly);
             this.addEntity(pokemonMob);
         }
         this.randomizeAllPokemonLocation();
@@ -200,7 +200,7 @@ public class Controller {
 
             for (int i = 0; i < projectiles.size; i++) {
                 projectiles.get(i).update();
-                if (projectiles.get(i).hasHit) {
+                if (projectiles.get(i).hp <= 0) {
                     projectiles.removeIndex(i);
                     this.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
 
@@ -309,7 +309,7 @@ public class Controller {
                 updatePokemonList.add((Pokemon) entity);
         }
 
-        if (entity instanceof PokemonMob && ((PokemonMob) entity).state == State.aggressive) {
+        if (entity instanceof PokemonMob && ((PokemonMob) entity).agressionState == AgressionState.aggressive) {
             enemyList.add((Pokemon) entity);
         }
     }

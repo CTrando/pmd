@@ -8,54 +8,42 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.*;
-import com.mygdx.pmd.Interfaces.Renderable;
-import com.mygdx.pmd.Interfaces.Updatable;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.Screen.DungeonScreen;
 import com.mygdx.pmd.utils.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Pokemon extends Entity {
+    public Controller controller;
 
+    public Direction direction = Direction.down;
     public Tile facingTile;
     public Attack currentAttack;
 
     public HashMap<String, PAnimation> animationMap;
+    public PAnimation currentAnimation;
 
     private int startingRow;
     private int startingCol;
 
-    public Controller controller;
-    public Direction direction = Direction.down;
-
-    public PAnimation currentAnimation;
-
-    boolean movable;
-
-    private final boolean dungeonMode = true;
+    public boolean isMovable;
 
     public Tile[][] tileBoard;
 
     public Turn turnState = Turn.COMPLETE;
-
     public Action actionState = Action.IDLE;
-
-    private Sprite currentSprite;
+    public AgressionState agressionState;
 
     public String pokemonName;
 
-    public State state;
-
-    private int HP;
-
-    public Pokemon(Controller controller, int x, int y, boolean movable, PokemonName pokemonName) {
+    public Pokemon(Controller controller, int x, int y, boolean isMovable, PokemonName pokemonName) {
         this.controller = controller;
         this.x = x;
         this.y = y;
-        this.movable = movable;
+
+        this.isMovable = isMovable;
         this.pokemonName = pokemonName.toString();
 
         this.startingCol = this.x / 25;
@@ -63,14 +51,9 @@ public abstract class Pokemon extends Entity {
 
         this.currentSprite = DungeonScreen.sprites.get(pokemonName + "down1");
 
-        HP = 100;
-
-        if (dungeonMode) {
+        if (controller.dungeonMode) {
             tileBoard = controller.getCurrentFloor().getTileBoard();
-
-            currentTile = tileBoard[startingRow][startingCol];
-            currentTile.addEntity(this);
-
+            this.setCurrentTile(tileBoard[startingRow][startingCol]);
             nextTile = null;
         }
 
@@ -87,6 +70,7 @@ public abstract class Pokemon extends Entity {
         this.updateAttack();
     }
 
+    @Override
     public void updateAnimation() {
         switch(actionState) {
             case MOVING:
@@ -103,10 +87,6 @@ public abstract class Pokemon extends Entity {
                 animationMap.get(direction.toString()).clear();
         }
     }
-
-    public abstract void updateLogic();
-
-    public abstract void updatePosition();
 
     public void updateFacingTile() {
         try {
@@ -140,14 +120,6 @@ public abstract class Pokemon extends Entity {
             this.turnState =Turn.COMPLETE;
             this.currentAttack = null;
         }
-    }
-
-    @Override
-    public void render(SpriteBatch batch) {
-        if (currentSprite != null) {
-            batch.draw(currentSprite, x, y, currentSprite.getWidth(), currentSprite.getHeight());
-        }
-        //I've done the previous sprite thing here before and for whatever reason it didn't work out so don't try it
     }
 
     public void turnToTile(Tile tile) {
@@ -190,39 +162,6 @@ public abstract class Pokemon extends Entity {
             e.printStackTrace();
         }
     }
-
-    public Tile getCurrentTile() {
-        return currentTile;
-    }
-
-    public void setCurrentTile(Tile nextTile) {
-        if(nextTile == null) return;
-        if (this.currentTile != nextTile) {
-            this.currentTile.removeEntity(this);
-            nextTile.addEntity(this);
-            this.currentTile = nextTile;
-        }
-    }
-
-    public int getHP() {
-        return HP;
-    }
-
-    public void setHP(int HP) {
-        this.HP = HP;
-        if (this.HP <= 0) {
-            this.HP = 100;
-        }
-    }
-
-    public void takeDamage(int x) {
-        this.setHP(this.getHP() - x);
-    }
-
-    public void dealDamage(Pokemon pokemon) {
-        pokemon.takeDamage(1);
-    }
-
 
     public String toString() {
         return pokemonName;

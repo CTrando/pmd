@@ -1,12 +1,9 @@
 package com.mygdx.pmd.Model.Pokemon;
 
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.*;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.utils.Attack;
-import com.mygdx.pmd.utils.Projectile;
 
 import java.util.ArrayList;
 
@@ -24,9 +21,9 @@ public class PokemonMob extends Pokemon {
 
     public Tile playerTile;
 
-    public PokemonMob(int x, int y, Controller controller, boolean move, PokemonName pokemonName, State state) {
+    public PokemonMob(int x, int y, Controller controller, boolean move, PokemonName pokemonName, AgressionState agressionState) {
         super(controller, x, y, move, pokemonName);
-        super.state = state;
+        super.agressionState = agressionState;
 
         this.pokemonPlayer = controller.getPokemonPlayer();
         playerTile = pokemonPlayer.getCurrentTile();
