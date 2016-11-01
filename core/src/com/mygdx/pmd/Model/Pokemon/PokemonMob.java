@@ -1,8 +1,10 @@
 package com.mygdx.pmd.Model.Pokemon;
 
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.*;
 import com.mygdx.pmd.Model.TileType.Tile;
+import com.mygdx.pmd.utils.AI.ShortestPath;
 import com.mygdx.pmd.utils.Attack;
 
 import java.util.ArrayList;
@@ -10,25 +12,23 @@ import java.util.ArrayList;
 public class PokemonMob extends Pokemon {
     public PokemonPlayer pokemonPlayer;
 
-    ArrayList<Tile> openNodeList;
-    ArrayList<Tile> closedNodeList;
-
     private final int RANGE = 5;
 
-    private boolean hasReached = false;
+    ShortestPath shortestPath;
 
-    ArrayList<Tile> solutionNodeList;
+    Array<Tile> solutionNodeList;
 
     public Tile playerTile;
 
-    public PokemonMob(int x, int y, Controller controller, boolean move, PokemonName pokemonName, AgressionState agressionState) {
+    public PokemonMob(int x, int y, Controller controller, boolean move, PokemonName pokemonName, AggressionState agressionState) {
         super(controller, x, y, move, pokemonName);
-        super.agressionState = agressionState;
+        super.aggressionState = agressionState;
 
         this.pokemonPlayer = controller.getPokemonPlayer();
         playerTile = pokemonPlayer.getCurrentTile();
 
-        solutionNodeList = new ArrayList<Tile>();
+        solutionNodeList = new Array<Tile>();
+        shortestPath = new ShortestPath(this, tileBoard);
     }
 
     @Override
@@ -51,16 +51,18 @@ public class PokemonMob extends Pokemon {
     }
 
     public boolean pathFind() {
-        this.shortestPath();
+        solutionNodeList = shortestPath.findShortestPath(pokemonPlayer.currentTile);
+
         if (this.turnState == Turn.WAITING) {
-            if (solutionNodeList.size() > 0) {
-                this.setNextTile(solutionNodeList.get(0));
+            if (solutionNodeList.size > 0) {
+                this.setNextTile(solutionNodeList.first());
+                this.turnToTile(solutionNodeList.first());
                 if (this.isLegalToMoveTo(this.getNextTile())) {
                     this.actionState = Action.MOVING;
                     this.turnState =Turn.COMPLETE;
                     this.setCurrentTile(this.getNextTile());
                 } else {
-                    solutionNodeList = new ArrayList<Tile>();
+                    solutionNodeList = new Array<Tile>();
                     this.setNextTile(null);
                     return false;
                 }
@@ -81,18 +83,8 @@ public class PokemonMob extends Pokemon {
                 this.actionState = Action.ATTACKING;
                 this.turnState =Turn.PENDING;
             }else {
-                boolean canPathFind = this.pathFind();
-
-                if (!canPathFind) {
-                    this.turnToTile(this.playerTile);
-                    this.actionState = Action.ATTACKING;
-                    this.turnState =Turn.PENDING;
-                    currentAttack = new Attack(this, AttackType.DIRECT);
-                } else {
-                    this.turnToTile(solutionNodeList.get(0));
-                }
+                this.pathFind();
             }
-
         }
     }
 
@@ -136,104 +128,12 @@ public class PokemonMob extends Pokemon {
 
     @Override
     public void updatePosition() {
+        super.updatePosition();
+
         if (this.equals(this.getCurrentTile()) && actionState == Action.MOVING) {
-            solutionNodeList.remove(this.getCurrentTile());
-            this.actionState = Action.IDLE;
-        } else
-            this.movementSpeedLogic(); //explanatory
-    }
-
-
-    public void movementSpeedLogic() {
-        if (controller.isSPressed()) {
-            this.updateAnimation();
-            this.moveFast();
-        } else
-            this.moveSlow();
-    }
-
-    public void shortestPath() {
-        if (playerTile == null)
-            return;
-
-        if (playerTile != pokemonPlayer.getCurrentTile()) {
-            playerTile = pokemonPlayer.getCurrentTile();
-            this.createPathTo(playerTile);
+            solutionNodeList.removeValue(this.getCurrentTile(), true);
+            if(pokemonPlayer.actionState == Action.IDLE)
+                this.actionState = Action.IDLE;
         }
-    }
-
-    public ArrayList<Tile> createPathTo(Tile dest) {
-        hasReached = false;
-
-        Tile.resetTileArrayParents(tileBoard);
-
-        Tile destination = dest;
-        Tile currentTile = this.getCurrentTile();
-
-        openNodeList = new ArrayList<Tile>();
-        closedNodeList = new ArrayList<Tile>();
-        solutionNodeList = new ArrayList<Tile>();
-
-        openNodeList.add(currentTile);
-
-        while (!hasReached) {
-            Tile tile = openNodeList.get(0);
-            this.evaluateTile(tile, destination);
-        }
-
-        currentTile.setParent(null);
-        Tile backTrack = tileBoard[destination.row][destination.col];
-
-        while (backTrack.getParent() != null) {
-            backTrack = backTrack.getParent();
-            solutionNodeList.add(0, backTrack);
-        }
-        solutionNodeList.remove(this.getCurrentTile());
-        return solutionNodeList;
-    }
-
-    public void evaluateTile(Tile tile, Tile dest) {
-        if (tile == dest) {
-            openNodeList = new ArrayList<Tile>();
-            closedNodeList.add(tile);
-            hasReached = true;
-            return;
-        }
-
-        try {
-            if (tileBoard[tile.row + 1][tile.col].isWalkable() && !openNodeList.contains(tileBoard[tile.row + 1][tile.col])) {
-                tileBoard[tile.row + 1][tile.col].setParent(tile);
-                openNodeList.add(tileBoard[tile.row + 1][tile.col]);
-            }
-        } catch (ArrayIndexOutOfBoundsException s) {
-        }
-
-        try {
-            if (tileBoard[tile.row - 1][tile.col].isWalkable() && !openNodeList.contains(tileBoard[tile.row - 1][tile.col])) {
-                openNodeList.add(tileBoard[tile.row - 1][tile.col]);
-                tileBoard[tile.row - 1][tile.col].setParent(tile);
-            }
-        } catch (ArrayIndexOutOfBoundsException s) {
-        }
-
-        try {
-            if (tileBoard[tile.row][tile.col + 1].isWalkable() && !openNodeList.contains(tileBoard[tile.row][tile.col + 1])) {
-                openNodeList.add(tileBoard[tile.row][tile.col + 1]);
-                tileBoard[tile.row][tile.col + 1].setParent(tile);
-            }
-        } catch (ArrayIndexOutOfBoundsException s) {
-        }
-
-        try {
-            if (tileBoard[tile.row][tile.col - 1].isWalkable() && !openNodeList.contains(tileBoard[tile.row][tile.col - 1])) {
-                openNodeList.add(tileBoard[tile.row][tile.col - 1]);
-                tileBoard[tile.row][tile.col - 1].setParent(tile);
-            }
-        } catch (ArrayIndexOutOfBoundsException s) {
-        }
-
-        openNodeList.remove(tile);
-        if (!closedNodeList.contains(tile))
-            closedNodeList.add(tile);
     }
 }

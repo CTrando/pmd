@@ -131,7 +131,7 @@ public class Controller {
         this.addEntity(pokemonPlayer);
         for (XmlReader.Element e : elementList) {
             PokemonName pokemonName = Enum.valueOf(PokemonName.class, e.get("name"));
-            PokemonMob pokemonMob = new PokemonMob(0, 0, this, true, pokemonName, AgressionState.friendly);
+            PokemonMob pokemonMob = new PokemonMob(0, 0, this, true, pokemonName, AggressionState.friendly);
             this.addEntity(pokemonMob);
         }
         this.randomizeAllPokemonLocation();
@@ -309,7 +309,7 @@ public class Controller {
                 updatePokemonList.add((Pokemon) entity);
         }
 
-        if (entity instanceof PokemonMob && ((PokemonMob) entity).agressionState == AgressionState.aggressive) {
+        if (entity instanceof PokemonMob && ((PokemonMob) entity).aggressionState == AggressionState.aggressive) {
             enemyList.add((Pokemon) entity);
         }
     }

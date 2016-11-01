@@ -15,6 +15,9 @@ public abstract class Entity implements Renderable, Updatable{
     public int x;
     public int y;
 
+    public int row;
+    public int col;
+
     public int hp =100;
 
     public Tile nextTile;
@@ -81,7 +84,7 @@ public abstract class Entity implements Renderable, Updatable{
     }
 
     public void moveSlow() {
-        this.goToTile(nextTile, 1);
+        this.goToTile(currentTile, 1);
     }
 
     public void moveFast() {
@@ -108,6 +111,8 @@ public abstract class Entity implements Renderable, Updatable{
                 this.currentTile.removeEntity(this);
             nextTile.addEntity(this);
             this.currentTile = nextTile;
+            this.row = currentTile.row;
+            this.col = currentTile.col;
         }
     }
 

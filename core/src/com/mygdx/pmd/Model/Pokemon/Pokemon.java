@@ -3,7 +3,6 @@ package com.mygdx.pmd.Model.Pokemon;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Controller.Controller;
@@ -25,16 +24,13 @@ public abstract class Pokemon extends Entity {
     public HashMap<String, PAnimation> animationMap;
     public PAnimation currentAnimation;
 
-    private int startingRow;
-    private int startingCol;
-
     public boolean isMovable;
 
     public Tile[][] tileBoard;
 
     public Turn turnState = Turn.COMPLETE;
     public Action actionState = Action.IDLE;
-    public AgressionState agressionState;
+    public AggressionState aggressionState;
 
     public String pokemonName;
 
@@ -46,15 +42,11 @@ public abstract class Pokemon extends Entity {
         this.isMovable = isMovable;
         this.pokemonName = pokemonName.toString();
 
-        this.startingCol = this.x / 25;
-        this.startingRow = this.y / 25;
-
         this.currentSprite = DungeonScreen.sprites.get(pokemonName + "down1");
 
         if (controller.dungeonMode) {
             tileBoard = controller.getCurrentFloor().getTileBoard();
-            this.setCurrentTile(tileBoard[startingRow][startingCol]);
-            nextTile = null;
+            this.setCurrentTile(tileBoard[this.y/Tile.size][this.x/Tile.size]);
         }
 
         animationMap = new HashMap<String, PAnimation>();
@@ -88,6 +80,12 @@ public abstract class Pokemon extends Entity {
         }
     }
 
+    @Override
+    public void updatePosition(){
+        if (!this.equals(this.getCurrentTile()))
+            this.motionLogic(); //explanatory
+    }
+
     public void updateFacingTile() {
         try {
             switch (this.direction) {
@@ -110,7 +108,6 @@ public abstract class Pokemon extends Entity {
 
     public void updateAttack() {
         if (currentAttack == null) return;
-
         currentAttack.update();
         if(currentAttack.isFinished())
             this.actionState = Action.IDLE;
@@ -119,6 +116,15 @@ public abstract class Pokemon extends Entity {
             this.actionState = Action.IDLE;
             this.turnState =Turn.COMPLETE;
             this.currentAttack = null;
+        }
+    }
+
+    public void motionLogic() {
+        if (this.isWithinArea(controller.loadedArea)) {
+            if (controller.isSPressed()) {
+                this.moveFast();
+            } else
+                this.moveSlow();
         }
     }
 

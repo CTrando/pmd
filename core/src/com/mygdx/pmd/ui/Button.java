@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.MenuID;
+import com.mygdx.pmd.Model.Pokemon.Pokemon;
 
 /**
  * Created by Cameron on 9/11/2016.
@@ -39,7 +40,9 @@ public class Button extends TextButton {
                 else this.setText("Current Animation: " + "noanimation");
                 break;
             case ACTION:
-                this.setText("Turn: " + controller.getPokemonPlayer().turnState.toString());
+                    this.setText("Turn: " + controller.pokemonList.get(0).turnState.toString() + "\n"
+                    + "Turn: " + controller.pokemonList.get(1).turnState.toString() + "\n" +
+                            "Turn: " + controller.pokemonList.get(2).turnState.toString());
                 break;
             case STATE:
                 this.setText("State: " + controller.getPokemonPlayer().actionState.toString());
