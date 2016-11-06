@@ -6,6 +6,8 @@ import com.mygdx.pmd.Enumerations.*;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.utils.AI.ShortestPath;
 import com.mygdx.pmd.utils.Attack;
+import com.mygdx.pmd.utils.FastMotionBehavior;
+import com.mygdx.pmd.utils.SlowMotionBehavior;
 
 import java.util.ArrayList;
 
@@ -58,6 +60,11 @@ public class PokemonMob extends Pokemon {
                 this.setNextTile(solutionNodeList.first());
                 this.turnToTile(solutionNodeList.first());
                 if (this.isLegalToMoveTo(this.getNextTile())) {
+
+                    if(controller.isKeyPressed(Key.s))
+                        this.motionBehavior = new FastMotionBehavior(this);
+                    else
+                        this.motionBehavior = (new SlowMotionBehavior(this));
                     this.actionState = Action.MOVING;
                     this.turnState =Turn.COMPLETE;
                     this.setCurrentTile(this.getNextTile());

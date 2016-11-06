@@ -19,12 +19,14 @@ import com.mygdx.pmd.Model.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.Model.TileType.StairTile;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.Screen.DungeonScreen;
+import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.utils.Entity;
 import com.mygdx.pmd.utils.Projectile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Controller {
     public DungeonScreen controllerScreen;
@@ -40,8 +42,8 @@ public class Controller {
     public ArrayList<Tile> loadedArea;
     public ArrayList<Tile> renderableArea;
 
-    private int windowWidth;
-    private int windowLength;
+    public static final int windowWidth = 1000;
+    public static final int windowLength = 1000; //TODO the stutter might be because of having to reload everything on player movement
 
     public int playerXOffset;
     public int playerYOffset;
@@ -49,8 +51,8 @@ public class Controller {
     public int renderableRowOffset = 100;
     public int renderableColOffset = 100;
 
-    private int windowRows;
-    private int windowCols;
+    public static final int windowRows = windowLength / Constants.TILE_SIZE;
+    public static final int windowCols = windowWidth / Constants.TILE_SIZE;
 
     private PokemonPlayer pokemonPlayer;
 
@@ -59,20 +61,9 @@ public class Controller {
     private Tile[][] tileBoard;
     private FloorGenerator floorGenerator;
 
-
-    public boolean isUpPressed;
-    public boolean isDownPressed;
-    public boolean isRightPressed;
-    public boolean isLeftPressed;
-    public boolean isSPressed;
-    public boolean isSpacePressed;
-    public boolean isAPressed;
-    public boolean isBPressed;
-    public boolean isTPressed;
-
     public boolean keyFrozen = false;
 
-    Floor currentFloor;
+    public Floor currentFloor;
 
     ArrayList<Updatable> updateList = new ArrayList<Updatable>();
     ArrayList<Tile> roomTileList;
@@ -86,12 +77,6 @@ public class Controller {
         enemyList = new ArrayList<Pokemon>();
         updatePokemonList = new ArrayList<Pokemon>();
         projectiles = new Array<Projectile>();
-
-        this.windowLength = 2 * 500;
-        this.windowWidth = 2 * 500;
-
-        this.windowRows = windowLength / Tile.size;
-        this.windowCols = windowWidth / Tile.size;
 
         this.isShadowed = false;
 
@@ -153,35 +138,18 @@ public class Controller {
         return currentFloor;
     }
 
-    public void randomizePokemonLocation(Pokemon pokemon) {
-        int rand = (int) (Math.random() * currentFloor.getRoomTileList().size());
-
-        Tile random = currentFloor.getRoomTileList().get(rand);
-
-        if (!(random instanceof StairTile) && random.getEntityList().size() == 0) {
-            pokemon.setNextTile(null);
-            //pokemon.turnState =Turn.COMPLETE);
-            pokemon.setCurrentTile(random);
-            random.addEntity(pokemon);
-
-            pokemon.x = random.x;
-            pokemon.y = random.y;
+    public void randomizeAllPokemonLocation() {
+        for (Pokemon pokemon : pokemonList) {
+            pokemon.randomizeLocation();
+            pokemon.actionState = Action.IDLE;
         }
         this.updatePlayerOffset();
         this.updateLoadedArea();
     }
 
-    public void randomizeAllPokemonLocation() {
-        for (Pokemon pokemon : pokemonList) {
-            this.randomizePokemonLocation(pokemon);
-            pokemon.actionState = Action.IDLE;
-        }
-    }
-
     public void update() {
         try {
             this.tileBoard = currentFloor.getTileBoard();
-            this.updateKeys();
             this.updatePlayerOffset();
             Collections.sort(pokemonList, new PokemonDistanceComparator(this.getPokemonPlayer()));
 
@@ -206,82 +174,22 @@ public class Controller {
 
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void updateKeys() {
-        if (!keyFrozen) {
-            if (DungeonScreen.keys.get(Input.Keys.UP).get()) {
-                isUpPressed = true;
-            } else isUpPressed = false;
 
-            if (DungeonScreen.keys.get(Input.Keys.DOWN).get()) {
-                isDownPressed = true;
-            } else isDownPressed = false;
-
-            if (DungeonScreen.keys.get(Input.Keys.LEFT).get()) {
-                isLeftPressed = true;
-            } else isLeftPressed = false;
-
-            if (DungeonScreen.keys.get(Input.Keys.RIGHT).get()) {
-                isRightPressed = true;
-            } else isRightPressed = false;
-
-            if (DungeonScreen.keys.get(Input.Keys.S).get()) {
-                isSPressed = true;
-            } else isSPressed = false;
-
-            if (DungeonScreen.keys.get(Input.Keys.SPACE).get()) {
-                isSpacePressed = true;
-            } else isSpacePressed = false;
-
-            if (DungeonScreen.keys.get(Input.Keys.A).get()) {
-                isAPressed = true;
-            } else isAPressed = false;
-
-            if (DungeonScreen.keys.get(Input.Keys.B).get()) {
-                isBPressed = true;
-            } else isBPressed = false;
-
-            if(DungeonScreen.keys.get(Input.Keys.T).get()) {
-                isTPressed = true;
-            } else isTPressed = false;
-        }
-    }
-
-    public boolean isKeyPressed(Key key) {
+    public boolean isKeyPressed(Key key) { //TODO perhaps add a buffer system for more control later - amend definitely need a buffer system
         return DungeonScreen.keys.get(key.getValue()).get();
     }
 
     public boolean isKeyPressed() {
-        return isDownPressed || isLeftPressed || isRightPressed || isUpPressed || isAPressed;
-    }
-
-    public boolean isUpPressed() {
-        return isUpPressed;
-    }
-
-    public boolean isSPressed() {
-        return isSPressed;
-    }
-
-    public boolean isDownPressed() {
-        return isDownPressed;
-    }
-
-    public boolean isRightPressed() {
-        return isRightPressed;
-    }
-
-    public boolean isLeftPressed() {
-        return isLeftPressed;
-    }
-
-
-    public boolean isSpacePressed() {
-        return isSpacePressed;
+        for (AtomicBoolean b : DungeonScreen.keys.values()) {
+            if (b.get())
+                return true;
+        }
+        return false;
     }
 
     public void freezeKeys() {

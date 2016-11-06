@@ -2,6 +2,7 @@ package com.mygdx.pmd.Model.TileType;
 
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
 import com.mygdx.pmd.Screen.DungeonScreen;
 
@@ -10,20 +11,10 @@ import com.mygdx.pmd.Screen.DungeonScreen;
  */
 public class GenericTile extends Tile {
 
-    private Sprite sprite = DungeonScreen.sprites.get("generictilesprite");
-
-    private Tile[][] tileBoard;
-    private int windowRows;
-    private int windowCols;
-
     public GenericTile(Floor floor, int row, int col) {
-
         super(floor, row, col);
         this.setWalkable(false);
-        this.setSprite(sprite);
-
-        this.windowRows = this.getWindowRows();
-        this.windowCols = this.getWindowCols();
+        this.sprite = DungeonScreen.sprites.get("generictilesprite");
     }
 
     @Override
@@ -48,13 +39,13 @@ public class GenericTile extends Tile {
             }
         }
 
-        if (col + 1 < windowCols) {
+        if (col + 1 < Controller.windowCols) {
             if ((tileBoard[row][col + 1] instanceof RoomTile)) {
                 right = true;
             }
         }
 
-        if (row + 1 < windowRows) {
+        if (row + 1 < Controller.windowRows) {
             if ((tileBoard[row + 1][col] instanceof RoomTile)) {
                 down = true;
             }

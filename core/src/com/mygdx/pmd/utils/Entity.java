@@ -2,8 +2,11 @@ package com.mygdx.pmd.utils;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Interfaces.Updatable;
+import com.mygdx.pmd.Model.Pokemon.Pokemon;
+import com.mygdx.pmd.Model.TileType.StairTile;
 import com.mygdx.pmd.Model.TileType.Tile;
 
 import java.util.ArrayList;
@@ -24,6 +27,13 @@ public abstract class Entity implements Renderable, Updatable{
     public Tile currentTile;
 
     public Sprite currentSprite;
+    public MotionBehavior motionBehavior;
+
+    public Controller controller;
+
+    public Entity(Controller controller) {
+        this.controller = controller;
+    }
 
     @Override
     public void render(SpriteBatch batch) {
@@ -49,46 +59,6 @@ public abstract class Entity implements Renderable, Updatable{
     public void move(int dx, int dy) {
         x+=dx;
         y+=dy;
-    }
-
-    public void goToTile(Tile nextTile, int speed) {
-        if (nextTile == null)
-            return;
-
-        if (this.equals(nextTile)) {
-            return;
-        }
-
-        if (y > nextTile.y && x > nextTile.x) {
-            this.move(-speed, - speed);
-        } else if (y < nextTile.y && x > nextTile.x) {
-            this.move(-speed, speed);
-        } else if (y < nextTile.y && x < nextTile.x) {
-            this.move(speed, speed);
-        } else if (y > nextTile.y && x < nextTile.x) {
-            this.move(speed, -speed);
-        } else if (y > nextTile.y) {
-            this.move(0, -speed);
-        } else if (y < nextTile.y) {
-            this.move(0, speed);
-        } else if (x < nextTile.x) {
-            this.move(speed, 0);
-        } else if (x > nextTile.x) {
-            this.move(-speed, 0);
-        }
-    }
-
-    public void goToTileImmediately(Tile nextTile) {
-        this.x = nextTile.x;
-        this.y = nextTile.y;
-    }
-
-    public void moveSlow() {
-        this.goToTile(currentTile, 1);
-    }
-
-    public void moveFast() {
-        this.goToTileImmediately(currentTile);
     }
 
     public boolean isWithinArea(ArrayList<Tile> area) {
@@ -124,6 +94,20 @@ public abstract class Entity implements Renderable, Updatable{
         this.nextTile = tile;
     }
 
+    public void randomizeLocation() {
+        int rand = (int) (Math.random() * controller.currentFloor.getRoomTileList().size());
+
+        Tile random = controller.currentFloor.getRoomTileList().get(rand);
+
+        if (!(random instanceof StairTile) && random.getEntityList().size() == 0) {
+            this.setNextTile(null);
+            this.setCurrentTile(random);
+
+            this.x = random.x;
+            this.y = random.y;
+        }
+    }
+
     public int getHp() {
         return hp;
     }
@@ -152,10 +136,10 @@ public abstract class Entity implements Renderable, Updatable{
     }
 
     public boolean isAbove(Tile tile) {
-        return y > tile.getY();
+        return y > tile.y;
     }
 
     public boolean isBelow(Tile tile) {
-        return y < tile.getY();
+        return y < tile.y;
     }
 }

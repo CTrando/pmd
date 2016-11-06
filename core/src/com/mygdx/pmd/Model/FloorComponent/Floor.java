@@ -8,6 +8,7 @@ import com.mygdx.pmd.Interfaces.Updatable;
 import com.mygdx.pmd.Model.Generator.FloorGenerator;
 import com.mygdx.pmd.Model.Generator.PathGenerator;
 import com.mygdx.pmd.Model.Generator.RoomGenerator;
+import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.Model.TileType.GenericTile;
 import com.mygdx.pmd.Model.TileType.StairTile;
@@ -37,7 +38,7 @@ public class Floor implements Renderable, Updatable {
 
     FloorGenerator floorGenerator;
 
-    PokemonPlayer pokemonPlayer;
+    Pokemon pokemonPlayer;
 
     public Floor(Controller controller, int windowRows, int windowCols, FloorGenerator floorGenerator) {
         this.floorGenerator = floorGenerator;
@@ -101,7 +102,6 @@ public class Floor implements Renderable, Updatable {
     public void render(SpriteBatch batch) {
 
     }
-
 
     public void generateTileBoard() {
         for (int r = 0; r < tileBoard.length; r++) {

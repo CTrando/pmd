@@ -10,22 +10,11 @@ import com.mygdx.pmd.Screen.DungeonScreen;
  */
 public class PathTileHorizontal extends PathTile {
 
-    private Sprite sprite = DungeonScreen.sprites.get("hpathtilesprite");
-
-    private Tile[][] tileBoard;
-
-    private int row;
-    private int col;
-
     public PathTileHorizontal(Floor floor, int row, int col)
     {
         super(floor, row, col);
-        this.setSprite(sprite);
+        this.sprite = DungeonScreen.sprites.get("hpathtilesprite");
         this.tileBoard = floor.getTileBoard();
-
-        this.row = row;
-        this.col = col;
-
     }
 
     @Override
@@ -39,11 +28,6 @@ public class PathTileHorizontal extends PathTile {
             }
 
         }
-
- /*       int count = this.getNumRoomTilesAroundIgnoreSameRow(row, col);
-
-        if(count >=3)
-            return false;*/
 
         if(Tile.tileExists(tileBoard, row+1, col))
         {

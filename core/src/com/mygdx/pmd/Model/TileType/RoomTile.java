@@ -15,10 +15,6 @@ public class RoomTile extends Tile {
 
     private String classifier;
 
-    private Color color;
-
-    private Sprite sprite = DungeonScreen.sprites.get("roomtilesprite");
-
     private Tile[][] tileBoard;
 
     private int windowRows;
@@ -33,16 +29,11 @@ public class RoomTile extends Tile {
         super(floor, r,c);
 
         this.classifier = classifier;
-        this.setClassifier(classifier);
 
-        this.color = color;
-        this.setColor(color);
         this.setWalkable(true);
-        this.setSprite(sprite);
+        this.sprite = DungeonScreen.sprites.get("roomtilesprite");
 
         this.tileBoard = floor.getTileBoard();
-        this.windowRows = this.getWindowRows();
-        this.windowCols = this.getWindowCols();
 
         this.currentRoom = room;
     }

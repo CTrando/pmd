@@ -4,6 +4,7 @@ package com.mygdx.pmd.Model.FloorComponent;
 import com.mygdx.pmd.Model.TileType.DoorTile;
 import com.mygdx.pmd.Model.TileType.RoomTile;
 import com.mygdx.pmd.Model.TileType.Tile;
+import com.mygdx.pmd.utils.Constants;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -68,8 +69,8 @@ public class Room {
         roomConstraints = new ArrayList<Tile>();
         tileBoard = floor.getTileBoard();
 
-        windowLengthinTiles = floor.getWindowRows()/Tile.size;
-        windowWidthinTiles = floor.getWindowCols()/Tile.size;
+        windowLengthinTiles = floor.getWindowRows()/Constants.TILE_SIZE;
+        windowWidthinTiles = floor.getWindowCols()/ Constants.TILE_SIZE;
 
         startingRow = ((int)(windowLengthinTiles*Math.random()));
         startingCol = ((int)(windowWidthinTiles*Math.random()));

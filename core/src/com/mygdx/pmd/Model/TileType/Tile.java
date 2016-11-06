@@ -9,6 +9,7 @@ import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Screen.DungeonScreen;
+import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.utils.Entity;
 
 import java.awt.*;
@@ -21,57 +22,30 @@ public abstract class Tile implements Renderable {
     public int x;
     public int y;
 
-    private String classifier;
-
     public int row;
     public int col;
 
-    private int windowRows;
-    private int windowCols;
-
-    public static final int size = 25;
-
-    private Color color;
-
-    private Sprite sprite;
+    public Sprite sprite;
     private Sprite debug = DungeonScreen.sprites.get("debugtilesprite");;
 
     private boolean isWalkable;
 
-    private ArrayList<Renderable> renderList;
-
     private ArrayList<Entity> entityList;
 
-    private Tile[][] tileBoard;
-
+    public Tile[][] tileBoard;
     private Tile parent;
-
     private Pokemon currentPokemon;
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
 
     public Tile(Floor floor, int r, int c) {
         this.tileBoard = floor.getTileBoard();
-        this.parent = null;
 
-        this.x = c * Tile.size;
-
-        this.y = r * Tile.size;
+        this.x = c * Constants.TILE_SIZE;
+        this.y = r * Constants.TILE_SIZE;
 
         this.row = r;
         this.col = c;
 
-        this.windowRows = tileBoard.length;
-        this.windowCols = tileBoard[0].length;
-
-        classifier = "SMALL";
-
-        this.color = Color.white;
-        renderList = new ArrayList<Renderable>();
         entityList = new ArrayList<Entity>();
-
     }
 
     public void render(SpriteBatch batch)
@@ -94,10 +68,6 @@ public abstract class Tile implements Renderable {
     }
 
     public abstract boolean isLegal();
-
-    public Tile[][] getTileBoard() {
-        return tileBoard;
-    }
 
     public Tile calculateClosestNeighbor(ArrayList<Tile> tiles)
     {
@@ -133,12 +103,9 @@ public abstract class Tile implements Renderable {
         return retTile;
     }
 
-    public double calculateDistance(Tile t)
+    public double calculateDistance(Tile tile)
     {
-        int rowOffset = Math.abs(this.row - t.row);
-        int colOffset = Math.abs(this.col - t.col);
-
-        return Math.sqrt(Math.pow(rowOffset, 2) + Math.pow(colOffset,2));
+        return Tile.calculateDistance(this, tile);
     }
 
     public static boolean tileExists(Tile[][] tileBoard, int row, int col)
@@ -148,7 +115,7 @@ public abstract class Tile implements Renderable {
             return false;
         }
 
-        if(col>=tileBoard[0].length ||   col < 0)
+        if(col>=tileBoard[0].length || col < 0)
         {
             return false;
         }
@@ -204,7 +171,7 @@ public abstract class Tile implements Renderable {
         return returnTileList;
     }
 
-    public static Tile getNextTileOver(Tile[][] tileBoard, Tile t, Direction d)
+    public static Tile getNextTileInDirection(Tile[][] tileBoard, Tile t, Direction d)
     {
         int row = t.row;
         int col = t.col;
@@ -244,15 +211,6 @@ public abstract class Tile implements Renderable {
         else return false;
     }
 
-    public int getX() {
-        return this.col*Tile.size;
-    }
-
-    public int getY() {
-        return this.row*Tile.size;
-    }
-
-
     public int getRow() {
         return row;
     }
@@ -260,10 +218,6 @@ public abstract class Tile implements Renderable {
     public int getCol() {
         return col;
     }
-    public void setClassifier(String classifier) {
-        this.classifier = classifier;
-    }
-
 
     public boolean isWalkable() {
         return isWalkable;
@@ -271,22 +225,6 @@ public abstract class Tile implements Renderable {
 
     public void setWalkable(boolean walkable) {
         isWalkable = walkable;
-    }
-
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
-    }
-
-    public int getWindowCols() {
-        return windowCols;
-    }
-
-    public int getWindowRows() {
-        return windowRows;
     }
 
     public void setParent(Tile parent)
@@ -305,10 +243,6 @@ public abstract class Tile implements Renderable {
 
     public Pokemon getCurrentPokemon() {
         return currentPokemon;
-    }
-
-    public void setCurrentPokemon(Pokemon currentPokemon) {
-        this.currentPokemon = currentPokemon;
     }
 
     public void addEntity(Entity entity)
@@ -332,40 +266,31 @@ public abstract class Tile implements Renderable {
 
     public boolean isAbove(Tile other)
     {
-        if(other.row < this.row)
-            return true;
-        else return false;
+        return other.row < this.row;
     }
 
     public boolean isBelows(Tile other)
     {
-        if(other.row > this.row)
-            return true;
-        else return false;
+        return other.row > this.row;
     }
 
     public boolean isToLeft(Tile other)
     {
-        if(other.col > this.col)
-            return true;
-        else return false;
+        return other.col > this.col;
+    }
+
+    public boolean isToRight(Tile other){
+        return (other.col < this.col);
     }
 
     public static Tile getTileAt(int x, int y, Tile[][] tileBoard) {
         Tile retTile = null;
         try{
-            retTile = tileBoard[y/Tile.size][x/Tile.size];
+            retTile = tileBoard[y/Constants.TILE_SIZE][x/Constants.TILE_SIZE];
         } catch(ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
         }
         return retTile;
-    }
-
-    public boolean isToRight(Tile other)
-    {
-        if(other.col < this.col)
-            return true;
-        else return false;
     }
 
     public boolean equals(Tile o)

@@ -10,22 +10,13 @@ import com.mygdx.pmd.Screen.DungeonScreen;
  */
 public abstract class PathTile extends Tile {
 
-    private Sprite sprite = DungeonScreen.sprites.get("vpathtilesprite");
-    private Tile[][] tileBoard;
-
-    private int windowRows;
-    private int windowCols;
-
     public PathTile(Floor floor, int row, int col)
     {
         super(floor, row,col);
         this.setWalkable(true);
-        this.setSprite(sprite);
+        this.sprite = DungeonScreen.sprites.get("vpathtilesprite");
         super.row = row;
         super.col = col;
-        this.tileBoard = this.getTileBoard();
-        windowRows = this.getWindowRows();
-        windowCols = this.getWindowCols();
     }
 
     @Override
@@ -64,45 +55,4 @@ public abstract class PathTile extends Tile {
         }
         return count;
     }
-
-       /* int row = this.row;
-        int col = this.col;
-
-        int counter = 0;
-
-        if(tileExists(tileBoard, row-1, col-1))
-        {
-            if((tileBoard[row-1][col-1] instanceof RoomTile))
-            {
-                counter++;
-            }
-        }
-
-        if(tileExists(tileBoard, row-1, col+1))
-        {
-            if((tileBoard[row-1][col+1] instanceof RoomTile))
-            {
-                counter++;
-            }
-        }
-
-        if(tileExists(tileBoard, row+1, col+1))
-        {
-            if((tileBoard[row+1][col+1] instanceof RoomTile))
-            {
-                counter++;
-            }
-        }
-
-        if(tileExists(tileBoard, row+1, col-1))
-        {
-            if((tileBoard[row+1][col-1] instanceof RoomTile))
-            {
-                counter++;
-            }
-        }
-
-       return counter>0? false: true;*/
-
-
 }

@@ -11,18 +11,14 @@ import com.mygdx.pmd.Screen.DungeonScreen;
 public class StairTile extends Tile{
 
     Floor floor;
-    private Sprite sprite = DungeonScreen.sprites.get("stairtilesprite");
-
-
     public StairTile(Floor floor, int r, int c)
     {
         super(floor, r, c);
         this.floor = floor;
 
         this.setWalkable(true);
-        this.setSprite(sprite);
+        this.sprite = DungeonScreen.sprites.get("stairtilesprite");
     }
-
 
     @Override
     public boolean isLegal() {

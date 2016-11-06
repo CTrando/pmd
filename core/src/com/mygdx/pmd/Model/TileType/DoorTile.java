@@ -14,13 +14,10 @@ import java.awt.*;
 
 public class DoorTile extends RoomTile {
 
-    private Sprite sprite = DungeonScreen.sprites.get("doortilesprite");
-
     public DoorTile(Floor floor, int row, int col, Room room)
     {
         super(floor, row, col, "Door", Color.gray, room);
-        this.setColor(Color.gray);
-        this.setSprite(sprite);
+        this.sprite = DungeonScreen.sprites.get("doortilesprite");
     }
 
     public String getClassifier() {

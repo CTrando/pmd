@@ -22,6 +22,7 @@ public class Projectile extends Entity {
     public Direction direction;
 
     public Projectile(Tile targetTile, Pokemon parent) {
+        super(parent.controller);
         this.hp = 1;
         this.targetTile = targetTile;
         this.parent = parent;
@@ -35,6 +36,7 @@ public class Projectile extends Entity {
     }
 
     public Projectile(Direction direction, Pokemon parent) {
+        super(parent.controller);
         this.hp = 1;
         this.x = parent.getCurrentTile().x;
         this.y = parent.getCurrentTile().y;

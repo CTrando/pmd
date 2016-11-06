@@ -20,6 +20,7 @@ import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.PMD;
+import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.utils.Projectile;
 import com.mygdx.pmd.utils.Timer;
 import com.mygdx.pmd.ui.Button;
@@ -172,10 +173,10 @@ public class DungeonScreen implements InputProcessor, Screen {
         shapeRenderer.setColor(1,1,0,1);
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         for (Tile t : controller.renderableArea) {
-            if(controller.isTPressed) {
-                shapeRenderer.rect(t.x, t.y, Tile.size, Tile.size);
+          /*  if(controller.isTPressed) {
+                shapeRenderer.rect(t.x, t.y, Constants.TILE_SIZE, Constants.TILE_SIZE);
             }
-            t.render(batch);
+            t.render(batch);*/
         }
         shapeRenderer.end();
 

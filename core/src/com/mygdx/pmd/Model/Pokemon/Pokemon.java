@@ -35,6 +35,7 @@ public abstract class Pokemon extends Entity {
     public String pokemonName;
 
     public Pokemon(Controller controller, int x, int y, boolean isMovable, PokemonName pokemonName) {
+        super(controller);
         this.controller = controller;
         this.x = x;
         this.y = y;
@@ -46,7 +47,7 @@ public abstract class Pokemon extends Entity {
 
         if (controller.dungeonMode) {
             tileBoard = controller.getCurrentFloor().getTileBoard();
-            this.setCurrentTile(tileBoard[this.y/Tile.size][this.x/Tile.size]);
+            this.setCurrentTile(tileBoard[this.y/Constants.TILE_SIZE][this.x/Constants.TILE_SIZE]);
         }
 
         animationMap = new HashMap<String, PAnimation>();
@@ -83,7 +84,7 @@ public abstract class Pokemon extends Entity {
     @Override
     public void updatePosition(){
         if (!this.equals(this.getCurrentTile()))
-            this.motionLogic(); //explanatory
+            motionBehavior.move(); //explanatory
     }
 
     public void updateFacingTile() {
@@ -119,14 +120,14 @@ public abstract class Pokemon extends Entity {
         }
     }
 
-    public void motionLogic() {
+   /* public void motionLogic() {
         if (this.isWithinArea(controller.loadedArea)) {
-            if (controller.isSPressed()) {
+            if (controller.isKeyPressed(Key.s) && !controller.keyFrozen) {
                 this.moveFast();
             } else
                 this.moveSlow();
         }
-    }
+    }*/
 
     public void turnToTile(Tile tile) {
         if (tile.isAbove(currentTile))
@@ -167,6 +168,12 @@ public abstract class Pokemon extends Entity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void randomizeLocation() {
+        super.randomizeLocation();
+        currentTile.addEntity(this);
     }
 
     public String toString() {

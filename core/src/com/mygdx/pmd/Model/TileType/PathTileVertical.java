@@ -10,16 +10,9 @@ import com.mygdx.pmd.Screen.DungeonScreen;
  */
 public class PathTileVertical extends PathTile {
 
-    private Sprite sprite = DungeonScreen.sprites.get("vpathtilesprite");
-
-    private Tile[][] tileBoard;
-
-    private int row;
-    private int col;
-
     public PathTileVertical(Floor floor, int row, int col) {
         super(floor, row, col);
-        this.setSprite(sprite);
+        this.sprite = DungeonScreen.sprites.get("vpathtilesprite");
         this.tileBoard = floor.getTileBoard();
 
         this.row = row;
@@ -28,18 +21,13 @@ public class PathTileVertical extends PathTile {
 
     @Override
     public boolean isLegal() {
-        Tile currentTile = this;
         try {
             if ((tileBoard[row][col - 1] instanceof PathTileVertical)) {
                 return false;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
         }
-      /*  int count = this.getNumRoomTilesAroundIgnoreSameCol(row, col);
 
-        if (count >= 3)
-            return false;
-*/
         try {
             if ((tileBoard[row][col + 1] instanceof PathTileVertical)) {
                 return false;
