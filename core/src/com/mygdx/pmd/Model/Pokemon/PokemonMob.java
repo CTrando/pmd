@@ -14,16 +14,13 @@ import java.util.ArrayList;
 public class PokemonMob extends Pokemon {
     public Pokemon pokemonPlayer;
 
-    private final int RANGE = 5;
-
+    private final int RANGE = 2;
     ShortestPath shortestPath;
-
     Array<Tile> solutionNodeList;
-
     public Tile playerTile;
 
-    public PokemonMob(Controller controller, int x, int y) { //boolean move, PokemonName pokemonName, AggressionState agressionState) {
-        super(controller, x, y);
+    public PokemonMob(Controller controller, int x, int y, PokemonName pokemonName) {
+        super(controller, x, y, pokemonName);
 
         this.pokemonPlayer = controller.getPokemonPlayer();
         playerTile = pokemonPlayer.getCurrentTile();
@@ -54,7 +51,7 @@ public class PokemonMob extends Pokemon {
     public boolean pathFind() {
         solutionNodeList = shortestPath.findShortestPath(pokemonPlayer.currentTile);
 
-        if (this.turnState == Turn.WAITING) {
+        if (this.turnState == Turn.WAITING && this.equals(currentTile)) {
             if (solutionNodeList.size > 0) {
                 this.setNextTile(solutionNodeList.first());
                 this.turnToTile(solutionNodeList.first());
@@ -118,7 +115,6 @@ public class PokemonMob extends Pokemon {
             } catch (ArrayIndexOutOfBoundsException e){
             }
         }
-
         for(int j = -1*RANGE; j< RANGE; j++) {
             try {
                 Tile tile = tileBoard[getCurrentTile().row][getCurrentTile().col+j];
@@ -135,7 +131,6 @@ public class PokemonMob extends Pokemon {
     @Override
     public void updatePosition() {
         super.updatePosition();
-
         if (this.equals(this.getCurrentTile()) && actionState == Action.MOVING) {
             solutionNodeList.removeValue(this.getCurrentTile(), true);
             if(pokemonPlayer.actionState == Action.IDLE)

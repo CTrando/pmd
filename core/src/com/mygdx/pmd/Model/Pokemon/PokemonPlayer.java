@@ -1,14 +1,14 @@
 package com.mygdx.pmd.Model.Pokemon;
 
-import com.badlogic.gdx.Input;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.*;
 import com.mygdx.pmd.utils.FastMotionBehavior;
 import com.mygdx.pmd.utils.SlowMotionBehavior;
 
 public class PokemonPlayer extends Pokemon {
-    public PokemonPlayer(int x, int y, Controller controller, boolean move, PokemonName pokemonName) {
-        super(controller, x, y);
+
+    public PokemonPlayer(Controller controller, int x, int y, PokemonName pokemonName) {
+        super(controller, x, y, pokemonName);
         this.turnState = Turn.WAITING;
     }
 
@@ -90,12 +90,14 @@ public class PokemonPlayer extends Pokemon {
             controller.getCurrentFloor().getFloorGenerator().generateFloor();
             controller.getCurrentFloor().getFloorGenerator().controller.randomizeAllPokemonLocation();
         }
-        if (controller.isKeyPressed(Key.a) && this.turnState == Turn.WAITING) {
+        if (controller.isKeyPressed(Key.a)) {
             this.turnState = Turn.COMPLETE;
         }
-        if (controller.isKeyPressed(Key.a) && controller.isKeyPressed(Key.s)) {
+
+        if (controller.isKeyPressed(Key.a) && controller.isKeyPressed(Key.s) && this.turnState == Turn.WAITING) {
             this.turnState = Turn.COMPLETE;
         }
+
         if (controller.isKeyPressed(Key.b)) {
             controller.controllerScreen.switchMenus("defaultMenu");
         }

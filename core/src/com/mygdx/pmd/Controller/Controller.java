@@ -2,7 +2,6 @@ package com.mygdx.pmd.Controller;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
@@ -17,7 +16,6 @@ import com.mygdx.pmd.Model.Generator.FloorGenerator;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.Pokemon.PokemonMob;
 import com.mygdx.pmd.Model.Pokemon.PokemonPlayer;
-import com.mygdx.pmd.Model.TileType.StairTile;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.Screen.DungeonScreen;
 import com.mygdx.pmd.utils.Constants;
@@ -103,6 +101,7 @@ public class Controller {
     }
 
     public void loadPokemon() {
+        PokemonFactory pokemonFactory = new PokemonFactory(this);
         XmlReader xmlReader = new XmlReader();
         XmlReader.Element root = null;
         try {
@@ -113,12 +112,13 @@ public class Controller {
 
         Array<XmlReader.Element> elementList = root.getChildrenByName("Pokemon");
         XmlReader.Element player = root.getChildByName("PokemonPlayer");
-        PokemonPlayer pokemonPlayer = new PokemonPlayer(0, 0, this, true, Enum.valueOf(PokemonName.class, player.get("name")));
+        PokemonName playerName = Enum.valueOf(PokemonName.class, player.get("name"));
+        Pokemon pokemonPlayer = pokemonFactory.createPokemon(playerName, PokemonPlayer.class);
         this.addEntity(pokemonPlayer);
+
         for (XmlReader.Element e : elementList) {
             PokemonName pokemonName = Enum.valueOf(PokemonName.class, e.get("name"));
-            PokemonFactory pokemonFactory = new PokemonFactory(this);
-            Pokemon pokemon = pokemonFactory.createPokemon(pokemonName);
+            Pokemon pokemon = pokemonFactory.createPokemon(pokemonName, PokemonMob.class);
             this.addEntity(pokemon);
         }
         this.randomizeAllPokemonLocation();
@@ -156,16 +156,13 @@ public class Controller {
             Collections.sort(pokemonList, new PokemonDistanceComparator(this.getPokemonPlayer()));
 
             for (Pokemon pokemon : pokemonList) {
-                if (pokemonList.get(pokemonListCounter).turnState == Turn.COMPLETE) {
-                    if (pokemonList.get(pokemonListCounter) instanceof PokemonPlayer)
-                        this.updateLoadedArea();
-                    pokemonListCounter++;
-                    if (pokemonListCounter > pokemonList.size() - 1)
-                        pokemonListCounter = 0;
-                    pokemonList.get(pokemonListCounter).turnState = Turn.WAITING;
-                }
                 pokemon.update();
+            }
 
+            Pokemon pokemon = pokemonList.get(pokemonListCounter%pokemonList.size());
+            if(pokemon.turnState == Turn.COMPLETE){
+                pokemon = pokemonList.get((++pokemonListCounter)%pokemonList.size());
+                pokemon.turnState = Turn.WAITING;
             }
 
             for (int i = 0; i < projectiles.size; i++) {

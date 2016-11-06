@@ -9,7 +9,6 @@ import com.mygdx.pmd.utils.*;
 
 
 public abstract class Pokemon extends Entity {
-    public Controller controller;
 
     public Direction direction = Direction.down;
     public Tile facingTile;
@@ -17,25 +16,17 @@ public abstract class Pokemon extends Entity {
 
     public PAnimation currentAnimation;
 
-    public boolean isMovable;
-
     public Tile[][] tileBoard;
 
     public Turn turnState = Turn.COMPLETE;
     public Action actionState = Action.IDLE;
     public AggressionState aggressionState;
 
-    public String pokemonName;
+    public PokemonName pokemonName;
 
-    public Pokemon(Controller controller, int x, int y) {
-        super(controller);
-        this.controller = controller;
-        this.x = x;
-        this.y = y;
-
-        this.pokemonName = pokemonName.toString();
-
-        this.currentSprite = DungeonScreen.sprites.get(pokemonName + "down1");
+    protected Pokemon(Controller controller, int x, int y, PokemonName pokemonName) {
+        super(controller, x, y);
+        this.pokemonName = pokemonName;
 
         if (controller.dungeonMode) {
             tileBoard = controller.getCurrentFloor().getTileBoard();
@@ -133,9 +124,5 @@ public abstract class Pokemon extends Entity {
     public void randomizeLocation() {
         super.randomizeLocation();
         currentTile.addEntity(this);
-    }
-
-    public String toString() {
-        return pokemonName;
     }
 }

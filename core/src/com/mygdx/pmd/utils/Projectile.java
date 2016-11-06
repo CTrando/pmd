@@ -22,13 +22,10 @@ public class Projectile extends Entity {
     public Direction direction;
 
     public Projectile(Tile targetTile, Pokemon parent) {
-        super(parent.controller);
+        super(parent.controller, parent.facingTile.x, parent.facingTile.y);
         this.hp = 1;
         this.targetTile = targetTile;
         this.parent = parent;
-
-        this.x = parent.facingTile.x;
-        this.y = parent.facingTile.y;
 
         Array<Sprite> array = new Array<Sprite>();
         array.add(DungeonScreen.sprites.get("treekodownattack3"));
@@ -36,7 +33,7 @@ public class Projectile extends Entity {
     }
 
     public Projectile(Direction direction, Pokemon parent) {
-        super(parent.controller);
+        super(parent.controller, parent.currentTile.x, parent.currentTile.y);
         this.hp = 1;
         this.x = parent.getCurrentTile().x;
         this.y = parent.getCurrentTile().y;

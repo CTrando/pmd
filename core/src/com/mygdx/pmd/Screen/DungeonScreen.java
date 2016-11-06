@@ -69,6 +69,7 @@ public class DungeonScreen implements InputProcessor, Screen {
         this.loadManager();
         controller = new Controller(this);
         this.loadMenus();
+
         stage = new Stage();
         currentMenu = menuList.get("attackMenu");
         stage.addActor(currentMenu);

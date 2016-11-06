@@ -18,7 +18,6 @@ public class Attack {
 
     public Attack(Pokemon pokemon, AttackType type) {
         this.pokemon = pokemon;
-        this.name = pokemon.pokemonName;
         this.type = type;
 
         animation = pokemon.animationMap.get(pokemon.direction.toString() + "attack");

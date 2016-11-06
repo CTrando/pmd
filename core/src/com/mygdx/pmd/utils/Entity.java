@@ -39,8 +39,10 @@ public abstract class Entity implements Renderable, Updatable{
 
     public Controller controller;
 
-    public Entity(Controller controller) {
+    public Entity(Controller controller, int x, int y) {
         this.controller = controller;
+        this.x = x;
+        this.y = y;
         animationMap = new HashMap<String, PAnimation>();
     }
 
