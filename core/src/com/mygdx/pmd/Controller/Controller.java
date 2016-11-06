@@ -10,6 +10,7 @@ import com.mygdx.pmd.Comparators.PokemonDistanceComparator;
 import com.mygdx.pmd.Enumerations.*;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Interfaces.Updatable;
+import com.mygdx.pmd.Model.Factory.PokemonFactory;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
 import com.mygdx.pmd.Model.FloorComponent.Room;
 import com.mygdx.pmd.Model.Generator.FloorGenerator;
@@ -54,7 +55,7 @@ public class Controller {
     public static final int windowRows = windowLength / Constants.TILE_SIZE;
     public static final int windowCols = windowWidth / Constants.TILE_SIZE;
 
-    private PokemonPlayer pokemonPlayer;
+    private Pokemon pokemonPlayer;
 
     public boolean isShadowed;
 
@@ -116,13 +117,14 @@ public class Controller {
         this.addEntity(pokemonPlayer);
         for (XmlReader.Element e : elementList) {
             PokemonName pokemonName = Enum.valueOf(PokemonName.class, e.get("name"));
-            PokemonMob pokemonMob = new PokemonMob(0, 0, this, true, pokemonName, AggressionState.friendly);
-            this.addEntity(pokemonMob);
+            PokemonFactory pokemonFactory = new PokemonFactory(this);
+            Pokemon pokemon = pokemonFactory.createPokemon(pokemonName);
+            this.addEntity(pokemon);
         }
         this.randomizeAllPokemonLocation();
     }
 
-    public PokemonPlayer getPokemonPlayer() {
+    public Pokemon getPokemonPlayer() {
         return pokemonPlayer;
     }
 

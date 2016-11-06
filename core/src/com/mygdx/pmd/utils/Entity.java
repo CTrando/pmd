@@ -1,15 +1,22 @@
 package com.mygdx.pmd.utils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Controller.Controller;
+import com.mygdx.pmd.Enumerations.PokemonName;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Interfaces.Updatable;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.TileType.StairTile;
 import com.mygdx.pmd.Model.TileType.Tile;
+import com.mygdx.pmd.Screen.DungeonScreen;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Cameron on 10/18/2016.
@@ -27,12 +34,14 @@ public abstract class Entity implements Renderable, Updatable{
     public Tile currentTile;
 
     public Sprite currentSprite;
+    public HashMap<String, PAnimation> animationMap;
     public MotionBehavior motionBehavior;
 
     public Controller controller;
 
     public Entity(Controller controller) {
         this.controller = controller;
+        animationMap = new HashMap<String, PAnimation>();
     }
 
     @Override
@@ -116,6 +125,27 @@ public abstract class Entity implements Renderable, Updatable{
         this.hp = hp;
         if (this.hp <= 0) {
             this.hp = 0;
+        }
+    }
+
+    public void loadAnimations(PokemonName pokemonName) {
+        XmlReader xmlReader = new XmlReader();
+        try {
+            XmlReader.Element root = xmlReader.parse(Gdx.files.internal("utils/AnimationStorage.xml"));
+            for (XmlReader.Element element : root.getChildrenByName("Animation")) {
+                String name = element.get("name");
+                Array<Sprite> spriteArray = new Array<Sprite>();
+                for (XmlReader.Element child : element.getChildrenByName("sprite")) {
+                    Sprite sprite = DungeonScreen.sprites.get(pokemonName + child.get("name"));
+                    if (sprite != null)
+                        spriteArray.add(sprite);
+                }
+                Sprite finalSprite = DungeonScreen.sprites.get(pokemonName + element.getChildByName("finalsprite").get("name"));
+                PAnimation animation = new PAnimation(name, spriteArray, finalSprite, 30);
+                animationMap.put(name, animation);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

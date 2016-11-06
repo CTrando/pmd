@@ -8,7 +8,7 @@ import com.mygdx.pmd.utils.SlowMotionBehavior;
 
 public class PokemonPlayer extends Pokemon {
     public PokemonPlayer(int x, int y, Controller controller, boolean move, PokemonName pokemonName) {
-        super(controller, x, y, move, pokemonName);
+        super(controller, x, y);
         this.turnState = Turn.WAITING;
     }
 

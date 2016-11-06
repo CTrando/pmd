@@ -12,7 +12,7 @@ import com.mygdx.pmd.utils.SlowMotionBehavior;
 import java.util.ArrayList;
 
 public class PokemonMob extends Pokemon {
-    public PokemonPlayer pokemonPlayer;
+    public Pokemon pokemonPlayer;
 
     private final int RANGE = 5;
 
@@ -22,9 +22,8 @@ public class PokemonMob extends Pokemon {
 
     public Tile playerTile;
 
-    public PokemonMob(int x, int y, Controller controller, boolean move, PokemonName pokemonName, AggressionState agressionState) {
-        super(controller, x, y, move, pokemonName);
-        super.aggressionState = agressionState;
+    public PokemonMob(Controller controller, int x, int y) { //boolean move, PokemonName pokemonName, AggressionState agressionState) {
+        super(controller, x, y);
 
         this.pokemonPlayer = controller.getPokemonPlayer();
         playerTile = pokemonPlayer.getCurrentTile();
