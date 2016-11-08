@@ -71,7 +71,7 @@ public class DungeonScreen implements InputProcessor, Screen {
         this.loadMenus();
 
         stage = new Stage();
-        currentMenu = menuList.get("attackMenu");
+        currentMenu = menuList.get("defaultMenu");
         stage.addActor(currentMenu);
 
 
@@ -190,12 +190,12 @@ public class DungeonScreen implements InputProcessor, Screen {
 
         for (Renderable r : controller.getRenderList()) {
             if (r instanceof Pokemon) {
-                if (((Pokemon) r).isWithinArea(controller.renderableArea)) {
+                //if (((Pokemon) r).isWithinArea(controller.renderableArea)) {
                     /*Tile t = ((Pokemon) r).getFacingTile();
                     if(t != null)
                         t.renderDebug(batch);*/
                     r.render(batch);
-                }
+               // }
             } else
                 r.render(batch);
         }

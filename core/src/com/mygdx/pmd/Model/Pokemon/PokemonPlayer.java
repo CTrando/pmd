@@ -9,7 +9,7 @@ public class PokemonPlayer extends Pokemon {
 
     public PokemonPlayer(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y, pokemonName);
-        this.turnState = Turn.WAITING;
+        this.turnBehavior.setTurnState(Turn.WAITING);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class PokemonPlayer extends Pokemon {
 
             //TODO figure out a better way for logic with IDLE actionstates
             this.handleInput();
-            if (this.nextTile == null || this.turnState != Turn.WAITING)
+            if (this.nextTile == null || !this.turnBehavior.isTurnWaiting())
                 this.actionState = Action.IDLE;
             this.setNextTile(null);
         }
@@ -30,7 +30,7 @@ public class PokemonPlayer extends Pokemon {
 
     @Override
     public void updateLogic() {
-        if (this.turnState != Turn.COMPLETE)
+        if (!this.turnBehavior.isTurnComplete())
             this.handleInput();
 
         if (this.getNextTile() != null) {
@@ -42,7 +42,7 @@ public class PokemonPlayer extends Pokemon {
                     this.motionBehavior = (new SlowMotionBehavior(this));
 
                 controller.freezeKeys();
-                this.turnState = Turn.COMPLETE;
+                this.turnBehavior.setTurnState(Turn.COMPLETE);
                 this.setCurrentTile(this.getNextTile());
             } else {
                 return;
@@ -91,11 +91,11 @@ public class PokemonPlayer extends Pokemon {
             controller.getCurrentFloor().getFloorGenerator().controller.randomizeAllPokemonLocation();
         }
         if (controller.isKeyPressed(Key.a)) {
-            this.turnState = Turn.COMPLETE;
+            this.turnBehavior.setTurnState(Turn.COMPLETE);
         }
 
-        if (controller.isKeyPressed(Key.a) && controller.isKeyPressed(Key.s) && this.turnState == Turn.WAITING) {
-            this.turnState = Turn.COMPLETE;
+        if (controller.isKeyPressed(Key.a) && controller.isKeyPressed(Key.s) && this.turnBehavior.isTurnComplete()) {
+            this.turnBehavior.setTurnState(Turn.COMPLETE);
         }
 
         if (controller.isKeyPressed(Key.b)) {

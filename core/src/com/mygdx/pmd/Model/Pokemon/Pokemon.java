@@ -4,7 +4,6 @@ package com.mygdx.pmd.Model.Pokemon;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.*;
 import com.mygdx.pmd.Model.TileType.Tile;
-import com.mygdx.pmd.Screen.DungeonScreen;
 import com.mygdx.pmd.utils.*;
 
 
@@ -18,14 +17,15 @@ public abstract class Pokemon extends Entity {
 
     public Tile[][] tileBoard;
 
-    public Turn turnState = Turn.COMPLETE;
+    public TurnBehavior turnBehavior;
     public Action actionState = Action.IDLE;
-    public AggressionState aggressionState;
+    public Aggression aggression;
 
     public PokemonName pokemonName;
 
     protected Pokemon(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y);
+        turnBehavior = new TurnBehavior(this);
         this.pokemonName = pokemonName;
 
         if (controller.dungeonMode) {
@@ -95,7 +95,7 @@ public abstract class Pokemon extends Entity {
 
         if (currentAttack.isFinished() && controller.projectiles.size == 0) {
             this.actionState = Action.IDLE;
-            this.turnState =Turn.COMPLETE;
+            this.turnBehavior.setTurnState(Turn.COMPLETE);
             this.currentAttack = null;
         }
     }

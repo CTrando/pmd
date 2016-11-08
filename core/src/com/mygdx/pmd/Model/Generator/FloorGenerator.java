@@ -49,7 +49,11 @@ public class FloorGenerator {
         for(Pokemon pokemon: controller.pokemonList)
         {
             pokemon.setNextTile(null);
-           // pokemon.turnState =Turn.COMPLETE);
+            pokemon.turnBehavior.setTurnState(Turn.COMPLETE);
+        }
+
+        if(controller.getPokemonPlayer() != null){
+            controller.getPokemonPlayer().turnBehavior.setTurnState(Turn.WAITING);
         }
     }
 }

@@ -9,8 +9,6 @@ import com.mygdx.pmd.utils.Attack;
 import com.mygdx.pmd.utils.FastMotionBehavior;
 import com.mygdx.pmd.utils.SlowMotionBehavior;
 
-import java.util.ArrayList;
-
 public class PokemonMob extends Pokemon {
     public Pokemon pokemonPlayer;
 
@@ -22,6 +20,8 @@ public class PokemonMob extends Pokemon {
     public PokemonMob(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y, pokemonName);
 
+        this.aggression = Aggression.aggressive;
+
         this.pokemonPlayer = controller.getPokemonPlayer();
         playerTile = pokemonPlayer.getCurrentTile();
 
@@ -31,9 +31,9 @@ public class PokemonMob extends Pokemon {
 
     @Override
     public void updateAnimation() {
-        if (this.isWithinArea(controller.loadedArea)) {
+        //if (this.isWithinArea(controller.loadedArea)) {
             super.updateAnimation();
-        }
+      //  }
 
         if (this.getNextTile() == null)
             return;
@@ -51,7 +51,7 @@ public class PokemonMob extends Pokemon {
     public boolean pathFind() {
         solutionNodeList = shortestPath.findShortestPath(pokemonPlayer.currentTile);
 
-        if (this.turnState == Turn.WAITING && this.equals(currentTile)) {
+        if (this.turnBehavior.isTurnWaiting() && this.equals(currentTile)) {
             if (solutionNodeList.size > 0) {
                 this.setNextTile(solutionNodeList.first());
                 this.turnToTile(solutionNodeList.first());
@@ -61,8 +61,9 @@ public class PokemonMob extends Pokemon {
                         this.motionBehavior = new FastMotionBehavior(this);
                     else
                         this.motionBehavior = (new SlowMotionBehavior(this));
+
                     this.actionState = Action.MOVING;
-                    this.turnState =Turn.COMPLETE;
+                    this.turnBehavior.setTurnState(Turn.COMPLETE);
                     this.setCurrentTile(this.getNextTile());
                 } else {
                     solutionNodeList = new Array<Tile>();
@@ -77,14 +78,14 @@ public class PokemonMob extends Pokemon {
     }
 
     public void updateLogic() {
-        if (this.turnState == Turn.WAITING) {
-            if (this.canAttack() != null) {
+        if (this.turnBehavior.isTurnWaiting()) {
+            if (this.canAttack() != null && aggression == Aggression.aggressive) {
                 this.turnToTile(this.canAttack());
                 if(this.directAttack()) {}
                     else this.rangedAttack();
 
                 this.actionState = Action.ATTACKING;
-                this.turnState =Turn.PENDING;
+                this.turnBehavior.setTurnState(Turn.PENDING);
             }else {
                 this.pathFind();
             }
@@ -133,8 +134,12 @@ public class PokemonMob extends Pokemon {
         super.updatePosition();
         if (this.equals(this.getCurrentTile()) && actionState == Action.MOVING) {
             solutionNodeList.removeValue(this.getCurrentTile(), true);
-            if(pokemonPlayer.actionState == Action.IDLE)
+            if(pokemonPlayer.actionState == Action.IDLE && pokemonPlayer.turnBehavior.isTurnWaiting())
                 this.actionState = Action.IDLE;
         }
+    }
+
+    public void setAggression(Aggression agression){
+        this.aggression = agression;
     }
 }

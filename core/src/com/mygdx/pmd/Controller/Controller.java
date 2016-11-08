@@ -160,9 +160,9 @@ public class Controller {
             }
 
             Pokemon pokemon = pokemonList.get(pokemonListCounter%pokemonList.size());
-            if(pokemon.turnState == Turn.COMPLETE){
+            if(pokemon.turnBehavior.isTurnComplete()){
                 pokemon = pokemonList.get((++pokemonListCounter)%pokemonList.size());
-                pokemon.turnState = Turn.WAITING;
+                pokemon.turnBehavior.setTurnState(Turn.WAITING);
             }
 
             for (int i = 0; i < projectiles.size; i++) {
@@ -216,7 +216,7 @@ public class Controller {
                 updatePokemonList.add((Pokemon) entity);
         }
 
-        if (entity instanceof PokemonMob && ((PokemonMob) entity).aggressionState == AggressionState.aggressive) {
+        if (entity instanceof PokemonMob && ((PokemonMob) entity).aggression == Aggression.aggressive) {
             enemyList.add((Pokemon) entity);
         }
     }
