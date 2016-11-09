@@ -2,6 +2,7 @@ package com.mygdx.pmd.Model.Pokemon;
 
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.*;
+import com.mygdx.pmd.Model.Behavior.*;
 import com.mygdx.pmd.utils.FastMotionBehavior;
 import com.mygdx.pmd.utils.SlowMotionBehavior;
 
@@ -9,10 +10,16 @@ public class PokemonPlayer extends Pokemon {
 
     public PokemonPlayer(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y, pokemonName);
-        this.turnBehavior.setTurnState(Turn.WAITING);
+        this.turnState = Turn.WAITING;
+
+        behaviors = new Behavior[4];
+        behaviors[Behavior.INPUT_BEHAVIOR] = new InputBehavior(this);
+        behaviors[Behavior.LOGIC_BEHAVIOR] = new LogicBehavior(this);
+        behaviors[Behavior.MOVE_BEHAVIOR] = new PlayerMoveBehavior(this);
+        behaviors[Behavior.ANIMATION_BEHAVIOR] = new AnimationBehavior(this);
     }
 
-    @Override
+   /* @Override
     public void updatePosition() {
         super.updatePosition();
 
@@ -101,5 +108,5 @@ public class PokemonPlayer extends Pokemon {
         if (controller.isKeyPressed(Key.b)) {
             controller.controllerScreen.switchMenus("defaultMenu");
         }
-    }
+    }*/
 }

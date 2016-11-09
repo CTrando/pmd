@@ -9,6 +9,7 @@ import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.PokemonName;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Interfaces.Updatable;
+import com.mygdx.pmd.Model.Behavior.Behavior;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.TileType.StairTile;
 import com.mygdx.pmd.Model.TileType.Tile;
@@ -22,6 +23,8 @@ import java.util.HashMap;
  * Created by Cameron on 10/18/2016.
  */
 public abstract class Entity implements Renderable, Updatable{
+    public Behavior[] behaviors;
+
     public int x;
     public int y;
 
@@ -54,12 +57,6 @@ public abstract class Entity implements Renderable, Updatable{
         //I've done the previous sprite thing here before and for whatever reason it didn't work out so don't try it
     }
 
-    public abstract void updateAnimation();
-
-    public abstract void updateLogic();
-
-    public abstract void updatePosition();
-
     public abstract boolean isLegalToMoveTo(Tile tile);
 
     public boolean equals(Tile tile)
@@ -70,6 +67,46 @@ public abstract class Entity implements Renderable, Updatable{
     public void move(int dx, int dy) {
         x+=dx;
         y+=dy;
+    }
+
+    public void goToTile(Tile nextTile, int speed) {
+        if (nextTile == null)
+            return;
+
+        if (this.equals(nextTile)) {
+            return;
+        }
+
+        if (this.y > nextTile.y && this.x > nextTile.x) {
+            this.move(-speed, - speed);
+        } else if (this.y < nextTile.y && this.x > nextTile.x) {
+            this.move(-speed, speed);
+        } else if (this.y < nextTile.y && this.x < nextTile.x) {
+            this.move(speed, speed);
+        } else if (this.y > nextTile.y && this.x < nextTile.x) {
+            this.move(speed, -speed);
+        } else if (this.y > nextTile.y) {
+            this.move(0, -speed);
+        } else if (this.y < nextTile.y) {
+            this.move(0, speed);
+        } else if (this.x < nextTile.x) {
+            this.move(speed, 0);
+        } else if (this.x > nextTile.x) {
+            this.move(-speed, 0);
+        }
+    }
+
+    public void goToTileImmediately(Tile nextTile) {
+        this.x = nextTile.x;
+        this.y = nextTile.y;
+    }
+
+    public void moveSlow() {
+        this.goToTile(this.currentTile, 1);
+    }
+
+    public void moveFast() {
+        this.goToTileImmediately(this.currentTile);
     }
 
     public boolean isWithinArea(ArrayList<Tile> area) {

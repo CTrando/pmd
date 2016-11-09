@@ -57,7 +57,7 @@ public class Controller {
 
     public boolean isShadowed;
 
-    private Tile[][] tileBoard;
+    public Tile[][] tileBoard;
     private FloorGenerator floorGenerator;
 
     public boolean keyFrozen = false;
@@ -120,7 +120,7 @@ public class Controller {
             PokemonName pokemonName = Enum.valueOf(PokemonName.class, e.get("name"));
             Pokemon pokemon = pokemonFactory.createPokemon(pokemonName, PokemonMob.class);
             this.addEntity(pokemon);
-        }
+        } //TODO have thing here
         this.randomizeAllPokemonLocation();
     }
 
@@ -160,9 +160,9 @@ public class Controller {
             }
 
             Pokemon pokemon = pokemonList.get(pokemonListCounter%pokemonList.size());
-            if(pokemon.turnBehavior.isTurnComplete()){
+            if(pokemon.turnState == Turn.COMPLETE){
                 pokemon = pokemonList.get((++pokemonListCounter)%pokemonList.size());
-                pokemon.turnBehavior.setTurnState(Turn.WAITING);
+                pokemon.turnState = Turn.WAITING;
             }
 
             for (int i = 0; i < projectiles.size; i++) {

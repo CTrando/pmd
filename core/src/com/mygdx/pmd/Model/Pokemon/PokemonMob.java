@@ -3,6 +3,7 @@ package com.mygdx.pmd.Model.Pokemon;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.*;
+import com.mygdx.pmd.Model.Behavior.*;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.utils.AI.ShortestPath;
 import com.mygdx.pmd.utils.Attack;
@@ -22,14 +23,15 @@ public class PokemonMob extends Pokemon {
 
         this.aggression = Aggression.aggressive;
 
-        this.pokemonPlayer = controller.getPokemonPlayer();
-        playerTile = pokemonPlayer.getCurrentTile();
+        behaviors = new Behavior[4];
+        //behaviors[Behavior.INPUT_BEHAVIOR] = new InputBehavior(this);
+        behaviors[Behavior.LOGIC_BEHAVIOR] = new MobLogicBehavior(this);
+        behaviors[Behavior.MOVE_BEHAVIOR] = new MoveBehavior(this);
+        behaviors[Behavior.ANIMATION_BEHAVIOR] = new AnimationBehavior(this);
 
-        solutionNodeList = new Array<Tile>();
-        shortestPath = new ShortestPath(this, tileBoard);
     }
 
-    @Override
+   /* @Override
     public void updateAnimation() {
         //if (this.isWithinArea(controller.loadedArea)) {
             super.updateAnimation();
@@ -141,5 +143,5 @@ public class PokemonMob extends Pokemon {
 
     public void setAggression(Aggression agression){
         this.aggression = agression;
-    }
+    }*/
 }

@@ -167,7 +167,6 @@ public class DungeonScreen implements InputProcessor, Screen {
             b.update();
         }
 
-
         batch.begin();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);

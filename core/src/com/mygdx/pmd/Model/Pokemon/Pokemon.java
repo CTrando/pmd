@@ -3,6 +3,7 @@ package com.mygdx.pmd.Model.Pokemon;
 
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.*;
+import com.mygdx.pmd.Model.Behavior.Behavior;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.utils.*;
 
@@ -12,6 +13,8 @@ public abstract class Pokemon extends Entity {
     public Direction direction = Direction.down;
     public Tile facingTile;
     public Attack currentAttack;
+
+    public Turn turnState = Turn.COMPLETE;
 
     public PAnimation currentAnimation;
 
@@ -34,6 +37,29 @@ public abstract class Pokemon extends Entity {
         }
     }
 
+    @Override
+    public void update(){
+        for(int i = 0; i< behaviors.length; i++){
+            if(behaviors[i] != null)
+                behaviors[i].execute();
+        }
+    }
+
+    public void setBehavior(Behavior behavior, int index){
+        behaviors[index] = behavior;
+    }
+    
+    public void setDirectionBasedOnTile(Tile tile){
+        if (this.isToLeft(tile))
+            this.direction = Direction.right;
+        else if (this.isToRight(tile))
+            this.direction = Direction.left;
+        else if (this.isAbove(tile))
+            this.direction = Direction.down;
+        else if (this.isBelow(tile))
+            this.direction = Direction.up;
+    }
+/*
     @Override
     public void update() {
         this.updateAnimation();
@@ -98,7 +124,7 @@ public abstract class Pokemon extends Entity {
             this.turnBehavior.setTurnState(Turn.COMPLETE);
             this.currentAttack = null;
         }
-    }
+    }*/
 
     public void turnToTile(Tile tile) {
         if (tile.isAbove(currentTile))
@@ -113,6 +139,8 @@ public abstract class Pokemon extends Entity {
 
     @Override
     public boolean isLegalToMoveTo(Tile tile) {
+        if(tile == null) return false;
+
         if (tile.getCurrentPokemon() != null && tile.getCurrentPokemon() != this)
             return false;
         if (!tile.isWalkable())

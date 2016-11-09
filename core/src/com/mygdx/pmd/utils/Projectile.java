@@ -49,12 +49,12 @@ public class Projectile extends Entity {
     //TODO alter the projectile to make it have health, and alter the mutator methods for damage and health so that when it reaches 0 it removes itself from the updatelist
     @Override
     public void update() {
-        this.updateAnimation();
+      /*  this.updateAnimation();
         this.updateLogic();
-        this.updatePosition();
+        this.updatePosition();*/
     }
 
-    @Override
+   /* @Override
     public void updateAnimation() {
         currentSprite = projectileAnimation.getCurrentSprite();
     }
@@ -98,7 +98,7 @@ public class Projectile extends Entity {
                     break;
             }
         }
-    }
+    }*/
 
     @Override
     public boolean isLegalToMoveTo(Tile tile) {
