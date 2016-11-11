@@ -3,8 +3,6 @@ package com.mygdx.pmd.Model.Pokemon;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.*;
 import com.mygdx.pmd.Model.Behavior.*;
-import com.mygdx.pmd.utils.FastMotionBehavior;
-import com.mygdx.pmd.utils.SlowMotionBehavior;
 
 public class PokemonPlayer extends Pokemon {
 
@@ -12,10 +10,9 @@ public class PokemonPlayer extends Pokemon {
         super(controller, x, y, pokemonName);
         this.turnState = Turn.WAITING;
 
-        behaviors = new Behavior[4];
         behaviors[Behavior.INPUT_BEHAVIOR] = new InputBehavior(this);
         behaviors[Behavior.LOGIC_BEHAVIOR] = new LogicBehavior(this);
-        behaviors[Behavior.MOVE_BEHAVIOR] = new PlayerMoveBehavior(this);
+        behaviors[Behavior.MOVE_BEHAVIOR] = new MoveSlowBehavior(this);
         behaviors[Behavior.ANIMATION_BEHAVIOR] = new AnimationBehavior(this);
     }
 

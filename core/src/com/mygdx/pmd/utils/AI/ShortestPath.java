@@ -4,12 +4,10 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.utils.Entity;
 
-import java.util.ArrayList;
-
 /**
  * Created by Cameron on 10/30/2016.
  */
-public class ShortestPath {
+public class ShortestPath implements PathFind {
     public Entity parent;
     public Tile[][] tileBoard;
 
@@ -19,10 +17,14 @@ public class ShortestPath {
 
     Tile currentTile;
 
-
     public ShortestPath(Entity entity, Tile[][] tileBoard) {
         this.parent = entity;
         this.tileBoard = tileBoard;
+    }
+
+    @Override
+    public Array<Tile> pathFind(Tile tile) {
+        return this.findShortestPath(tile);
     }
 
     public Array<Tile> findShortestPath(Tile destination) {

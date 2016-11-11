@@ -4,6 +4,7 @@ package com.mygdx.pmd.Model.Pokemon;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.*;
 import com.mygdx.pmd.Model.Behavior.Behavior;
+import com.mygdx.pmd.Model.Behavior.NoBehavior;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.utils.*;
 
@@ -33,23 +34,26 @@ public abstract class Pokemon extends Entity {
 
         if (controller.dungeonMode) {
             tileBoard = controller.getCurrentFloor().getTileBoard();
-            this.setCurrentTile(tileBoard[this.y/Constants.TILE_SIZE][this.x/Constants.TILE_SIZE]);
+            this.setCurrentTile(tileBoard[this.y / Constants.TILE_SIZE][this.x / Constants.TILE_SIZE]);
+        }
+        behaviors = new Behavior[10];
+        for (int i = 0; i < behaviors.length; i++) {
+            behaviors[i] = new NoBehavior(this);
         }
     }
 
     @Override
-    public void update(){
-        for(int i = 0; i< behaviors.length; i++){
-            if(behaviors[i] != null)
-                behaviors[i].execute();
+    public void update() {
+        for (int i = 0; i < behaviors.length; i++) {
+            behaviors[i].execute();
         }
     }
 
-    public void setBehavior(Behavior behavior, int index){
+    public void setBehavior(Behavior behavior, int index) {
         behaviors[index] = behavior;
     }
-    
-    public void setDirectionBasedOnTile(Tile tile){
+
+    public void setDirectionBasedOnTile(Tile tile) {
         if (this.isToLeft(tile))
             this.direction = Direction.right;
         else if (this.isToRight(tile))
@@ -139,10 +143,10 @@ public abstract class Pokemon extends Entity {
 
     @Override
     public boolean isLegalToMoveTo(Tile tile) {
-        if(tile == null) return false;
+        if (tile == null) return false;
 
-        if (tile.getCurrentPokemon() != null && tile.getCurrentPokemon() != this)
-            return false;
+      /*  if (tile.getCurrentPokemon() != null && tile.getCurrentPokemon() != this)
+            return false;*/
         if (!tile.isWalkable())
             return false;
         return true;

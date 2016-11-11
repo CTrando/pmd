@@ -3,6 +3,7 @@ package com.mygdx.pmd.Model.TileType;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
+import com.mygdx.pmd.Model.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.Screen.DungeonScreen;
 
 /**
@@ -26,9 +27,10 @@ public class StairTile extends Tile{
     }
 
     @Override
-    public void playEvents()
-    {
-        floor.getFloorGenerator().generateFloor();
-        floor.getFloorGenerator().controller.randomizeAllPokemonLocation();
+    public void playEvents() {
+        if (getCurrentPokemon() instanceof PokemonPlayer) {
+            floor.getFloorGenerator().generateFloor();
+            floor.getFloorGenerator().controller.randomizeAllPokemonLocation();
+        }
     }
 }

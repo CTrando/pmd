@@ -4,6 +4,7 @@ import com.mygdx.pmd.Enumerations.Direction;
 import com.mygdx.pmd.Enumerations.Key;
 import com.mygdx.pmd.Enumerations.Turn;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
+import com.mygdx.pmd.Model.TileType.GenericTile;
 
 /**
  * Created by Cameron on 11/8/2016.
@@ -16,7 +17,7 @@ public class InputBehavior extends Behavior {
 
     @Override
     public void execute() {
-        if (pokemon.equals(pokemon.currentTile)) {
+        if (pokemon.equals(pokemon.currentTile) && pokemon.turnState == Turn.WAITING) {
             try {
                 if (controller.isKeyPressed(Key.down) && controller.isKeyPressed(Key.right)) {
                     pokemon.setNextTile(tileBoard[pokemon.currentTile.row - 1][pokemon.currentTile.col + 1]);
@@ -43,7 +44,12 @@ public class InputBehavior extends Behavior {
                     pokemon.setNextTile(tileBoard[pokemon.currentTile.row + 1][pokemon.currentTile.col]);
                     pokemon.direction = Direction.up;
                 }
+                else pokemon.setNextTile(null);
             } catch (ArrayIndexOutOfBoundsException e) {
+            }
+
+            if(!pokemon.isLegalToMoveTo(pokemon.nextTile)){
+                pokemon.nextTile = null;
             }
 
 

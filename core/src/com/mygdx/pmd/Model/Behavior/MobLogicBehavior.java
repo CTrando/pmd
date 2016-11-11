@@ -2,6 +2,7 @@ package com.mygdx.pmd.Model.Behavior;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.Enumerations.Action;
+import com.mygdx.pmd.Enumerations.Key;
 import com.mygdx.pmd.Enumerations.Turn;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.TileType.Tile;
@@ -25,27 +26,24 @@ public class MobLogicBehavior extends Behavior {
             pokemon.actionState = Action.IDLE;
 
         if (pokemon.turnState == Turn.WAITING && pokemon.equals(pokemon.currentTile)) {
-
-            solutionNodeList = shortestPath.findShortestPath(controller.getPokemonPlayer().currentTile);
+            solutionNodeList = shortestPath.pathFind(controller.getPokemonPlayer().currentTile);
             if (solutionNodeList.size <= 0){
                 pokemon.turnState = Turn.COMPLETE;
                 return;
             }
 
             pokemon.nextTile = solutionNodeList.first();
-
-            if (pokemon.isLegalToMoveTo(pokemon.nextTile)) {
-
-                pokemon.setCurrentTile(pokemon.nextTile);
-                pokemon.setDirectionBasedOnTile(pokemon.nextTile);
-                pokemon.nextTile = null;
-
-                pokemon.actionState = Action.MOVING;
-                pokemon.turnState = Turn.COMPLETE;
-            }
-            else pokemon.turnState = Turn.COMPLETE;
+            solutionNodeList.removeValue(pokemon.nextTile, true);
         }
+
+        if (pokemon.isLegalToMoveTo(pokemon.nextTile)) {
+            pokemon.setCurrentTile(pokemon.nextTile);
+            pokemon.setDirectionBasedOnTile(pokemon.nextTile);
+            pokemon.nextTile = null;
+
+            pokemon.actionState = Action.MOVING;
+            pokemon.turnState = Turn.COMPLETE;
+        }
+        else pokemon.turnState = Turn.COMPLETE;
     }
-
-
 }

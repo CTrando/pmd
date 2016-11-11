@@ -1,6 +1,7 @@
 package com.mygdx.pmd.Model.Behavior;
 
 import com.mygdx.pmd.Enumerations.Action;
+import com.mygdx.pmd.Enumerations.Key;
 import com.mygdx.pmd.Enumerations.Turn;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
 
@@ -15,11 +16,20 @@ public class LogicBehavior extends Behavior{
 
     @Override
     public void execute() {
-        if(pokemon.equals(pokemon.currentTile) && pokemon.nextTile == null)
+        if(pokemon.equals(pokemon.currentTile) && pokemon.nextTile == null) {
             pokemon.actionState = Action.IDLE;
+        }
 
         if(pokemon.equals(pokemon.currentTile) && pokemon.turnState == Turn.WAITING){
             if(pokemon.isLegalToMoveTo(pokemon.nextTile)){
+                if(pokemon.nextTile.hasAPokemon()) {
+                    pokemon.nextTile.getCurrentPokemon().nextTile = pokemon.currentTile;
+                }
+
+                if(controller.isKeyPressed(Key.s)){
+                    pokemon.setBehavior(new MoveFastBehavior(pokemon), 2);
+                } else pokemon.setBehavior(new MoveSlowBehavior(pokemon), 2);
+
                 pokemon.setCurrentTile(pokemon.nextTile);
                 pokemon.nextTile = null;
 

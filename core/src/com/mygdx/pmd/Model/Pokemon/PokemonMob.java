@@ -23,12 +23,21 @@ public class PokemonMob extends Pokemon {
 
         this.aggression = Aggression.aggressive;
 
-        behaviors = new Behavior[4];
-        //behaviors[Behavior.INPUT_BEHAVIOR] = new InputBehavior(this);
         behaviors[Behavior.LOGIC_BEHAVIOR] = new MobLogicBehavior(this);
-        behaviors[Behavior.MOVE_BEHAVIOR] = new MoveBehavior(this);
+        behaviors[Behavior.MOVE_BEHAVIOR] = new MoveSlowBehavior(this);
         behaviors[Behavior.ANIMATION_BEHAVIOR] = new AnimationBehavior(this);
 
+    }
+
+    @Override
+    public boolean isLegalToMoveTo(Tile tile){
+        if (tile == null) return false;
+
+        if (tile.getCurrentPokemon() != null)
+            return false;
+        if (!tile.isWalkable())
+            return false;
+        return true;
     }
 
    /* @Override

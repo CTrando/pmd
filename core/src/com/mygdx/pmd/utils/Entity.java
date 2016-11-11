@@ -10,6 +10,7 @@ import com.mygdx.pmd.Enumerations.PokemonName;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Interfaces.Updatable;
 import com.mygdx.pmd.Model.Behavior.Behavior;
+import com.mygdx.pmd.Model.Behavior.NoBehavior;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.TileType.StairTile;
 import com.mygdx.pmd.Model.TileType.Tile;

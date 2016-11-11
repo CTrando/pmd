@@ -260,7 +260,8 @@ public abstract class Tile implements Renderable {
         entityList.remove(entity);
         if(entity instanceof Pokemon)
         {
-            currentPokemon = null;
+            if((Pokemon)entity == currentPokemon)
+                currentPokemon = null;
         }
     }
 
