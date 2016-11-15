@@ -56,50 +56,17 @@ public abstract class Pokemon extends Entity {
     public void setDirectionBasedOnTile(Tile tile) {
         if (this.isToLeft(tile))
             this.direction = Direction.right;
-        else if (this.isToRight(tile))
+        if (this.isToRight(tile))
             this.direction = Direction.left;
-        else if (this.isAbove(tile))
+        if (this.isAbove(tile))
             this.direction = Direction.down;
-        else if (this.isBelow(tile))
+        if (this.isBelow(tile))
             this.direction = Direction.up;
     }
-/*
-    @Override
-    public void update() {
-        this.updateAnimation();
-        this.updateLogic();
-        this.updatePosition();
-        this.updateFacingTile();
-        this.updateAttack();
-    }
 
-    @Override
-    public void updateAnimation() {
-        switch(actionState) {
-            case MOVING:
-                currentAnimation = animationMap.get(direction.toString());
-                currentSprite = animationMap.get(direction.toString()).getCurrentSprite();
-                break;
-            case ATTACKING:
-                currentAnimation = animationMap.get(direction.toString() + "attack");
-                currentSprite = animationMap.get(direction.toString() + "attack").getCurrentSprite();
-                break;
-            case IDLE:
-                currentAnimation = animationMap.get("noanimation");
-                currentSprite = animationMap.get(direction.toString()).finalSprite;
-                animationMap.get(direction.toString()).clear();
-        }
-    }
-
-    @Override
-    public void updatePosition(){
-        if (!this.equals(this.getCurrentTile()))
-            motionBehavior.move(); //explanatory
-    }
-
-    public void updateFacingTile() {
+    public void setFacingTileBasedOnDirection(Direction direction) {
         try {
-            switch (this.direction) {
+            switch (direction) {
                 case up:
                     facingTile = tileBoard[currentTile.row + 1][currentTile.col];
                     break;
@@ -116,7 +83,7 @@ public abstract class Pokemon extends Entity {
         } catch (ArrayIndexOutOfBoundsException e) {
         }
     }
-
+    /*
     public void updateAttack() {
         if (currentAttack == null) return;
         currentAttack.update();
@@ -145,8 +112,10 @@ public abstract class Pokemon extends Entity {
     public boolean isLegalToMoveTo(Tile tile) {
         if (tile == null) return false;
 
-      /*  if (tile.getCurrentPokemon() != null && tile.getCurrentPokemon() != this)
-            return false;*/
+        if(tile.hasAPokemon())
+            if(tile.getCurrentPokemon().aggression == Aggression.aggressive)
+                return false;
+
         if (!tile.isWalkable())
             return false;
         return true;

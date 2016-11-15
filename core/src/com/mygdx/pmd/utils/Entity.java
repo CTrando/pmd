@@ -198,18 +198,18 @@ public abstract class Entity implements Renderable, Updatable{
     }
 
     public boolean isToRight(Tile tile) {
-        return x > tile.x;
+        return currentTile.x > tile.x;
     }
 
     public boolean isToLeft(Tile tile) {
-        return x < tile.x;
+        return currentTile.x < tile.x;
     }
 
     public boolean isAbove(Tile tile) {
-        return y > tile.y;
+        return currentTile.y > tile.y;
     }
 
     public boolean isBelow(Tile tile) {
-        return y < tile.y;
+        return currentTile.y < tile.y;
     }
 }

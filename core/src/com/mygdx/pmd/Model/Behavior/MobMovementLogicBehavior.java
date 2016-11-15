@@ -11,24 +11,28 @@ import com.mygdx.pmd.utils.AI.ShortestPath;
 /**
  * Created by Cameron on 11/8/2016.
  */
-public class MobLogicBehavior extends Behavior {
+public class MobMovementLogicBehavior extends Behavior {
     ShortestPath shortestPath;
     Array<Tile> solutionNodeList;
 
-    public MobLogicBehavior(Pokemon pokemon) {
+    public MobMovementLogicBehavior(Pokemon pokemon) {
         super(pokemon);
         shortestPath = new ShortestPath(pokemon, tileBoard);
     }
 
     @Override
     public void execute() {
-        if(pokemon.equals(pokemon.currentTile) && pokemon.turnState == Turn.COMPLETE)
+        if(pokemon.actionState != Action.IDLE && pokemon.actionState != Action.MOVING) return;
+
+
+        if(pokemon.equals(pokemon.currentTile)&& controller.getPokemonPlayer().turnState == Turn.WAITING)
             pokemon.actionState = Action.IDLE;
 
         if (pokemon.turnState == Turn.WAITING && pokemon.equals(pokemon.currentTile)) {
             solutionNodeList = shortestPath.pathFind(controller.getPokemonPlayer().currentTile);
             if (solutionNodeList.size <= 0){
                 pokemon.turnState = Turn.COMPLETE;
+                pokemon.actionState = Action.IDLE;
                 return;
             }
 
@@ -37,8 +41,9 @@ public class MobLogicBehavior extends Behavior {
         }
 
         if (pokemon.isLegalToMoveTo(pokemon.nextTile)) {
-            pokemon.setCurrentTile(pokemon.nextTile);
             pokemon.setDirectionBasedOnTile(pokemon.nextTile);
+
+            pokemon.setCurrentTile(pokemon.nextTile);
             pokemon.nextTile = null;
 
             pokemon.actionState = Action.MOVING;

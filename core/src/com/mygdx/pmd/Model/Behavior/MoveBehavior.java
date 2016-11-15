@@ -14,6 +14,7 @@ public class MoveBehavior extends Behavior {
 
     @Override
     public void execute(){
+        pokemon.setFacingTileBasedOnDirection(pokemon.direction);
         if(pokemon.actionState == Action.MOVING && pokemon.equals(pokemon.currentTile))
             pokemon.currentTile.playEvents();
     }

@@ -8,9 +8,9 @@ import com.mygdx.pmd.Model.Pokemon.Pokemon;
 /**
  * Created by Cameron on 11/8/2016.
  */
-public class LogicBehavior extends Behavior{
+public class PlayerMovementLogicBehavior extends Behavior{
 
-    public LogicBehavior(Pokemon pokemon){
+    public PlayerMovementLogicBehavior(Pokemon pokemon){
         super(pokemon);
     }
 
@@ -27,8 +27,8 @@ public class LogicBehavior extends Behavior{
                 }
 
                 if(controller.isKeyPressed(Key.s)){
-                    pokemon.setBehavior(new MoveFastBehavior(pokemon), 2);
-                } else pokemon.setBehavior(new MoveSlowBehavior(pokemon), 2);
+                    pokemon.setBehavior(new MoveFastBehavior(pokemon), Behavior.MOVE_BEHAVIOR);
+                } else pokemon.setBehavior(new MoveSlowBehavior(pokemon), Behavior.MOVE_BEHAVIOR);
 
                 pokemon.setCurrentTile(pokemon.nextTile);
                 pokemon.nextTile = null;
