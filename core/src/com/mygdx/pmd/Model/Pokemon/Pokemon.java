@@ -10,8 +10,6 @@ import com.mygdx.pmd.utils.*;
 
 
 public abstract class Pokemon extends Entity {
-
-    public Direction direction = Direction.down;
     public Tile facingTile;
     public Attack currentAttack;
 
@@ -27,18 +25,17 @@ public abstract class Pokemon extends Entity {
 
     public PokemonName pokemonName;
 
+    public Projectile projectile;
+
     protected Pokemon(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y);
+        direction = Direction.down;
         turnBehavior = new TurnBehavior(this);
         this.pokemonName = pokemonName;
 
         if (controller.dungeonMode) {
             tileBoard = controller.getCurrentFloor().getTileBoard();
             this.setCurrentTile(tileBoard[this.y / Constants.TILE_SIZE][this.x / Constants.TILE_SIZE]);
-        }
-        behaviors = new Behavior[10];
-        for (int i = 0; i < behaviors.length; i++) {
-            behaviors[i] = new NoBehavior(this);
         }
     }
 
@@ -53,16 +50,6 @@ public abstract class Pokemon extends Entity {
         behaviors[index] = behavior;
     }
 
-    public void setDirectionBasedOnTile(Tile tile) {
-        if (this.isToLeft(tile))
-            this.direction = Direction.right;
-        if (this.isToRight(tile))
-            this.direction = Direction.left;
-        if (this.isAbove(tile))
-            this.direction = Direction.down;
-        if (this.isBelow(tile))
-            this.direction = Direction.up;
-    }
 
     public void setFacingTileBasedOnDirection(Direction direction) {
         try {

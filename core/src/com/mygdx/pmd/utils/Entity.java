@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Controller.Controller;
+import com.mygdx.pmd.Enumerations.Direction;
 import com.mygdx.pmd.Enumerations.PokemonName;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Interfaces.Updatable;
@@ -41,6 +42,8 @@ public abstract class Entity implements Renderable, Updatable{
     public HashMap<String, PAnimation> animationMap;
     public MotionBehavior motionBehavior;
 
+    public Direction direction;
+
     public Controller controller;
 
     public Entity(Controller controller, int x, int y) {
@@ -48,6 +51,10 @@ public abstract class Entity implements Renderable, Updatable{
         this.x = x;
         this.y = y;
         animationMap = new HashMap<String, PAnimation>();
+        behaviors = new Behavior[10];
+        for (int i = 0; i < behaviors.length; i++) {
+            behaviors[i] = new NoBehavior(this);
+        }
     }
 
     @Override
@@ -181,7 +188,8 @@ public abstract class Entity implements Renderable, Updatable{
                         spriteArray.add(sprite);
                 }
                 Sprite finalSprite = DungeonScreen.sprites.get(pokemonName + element.getChildByName("finalsprite").get("name"));
-                PAnimation animation = new PAnimation(name, spriteArray, finalSprite, 30);
+                boolean isLooping = element.getChildByName("loopstatus").getBoolean("looping");
+                PAnimation animation = new PAnimation(name, spriteArray, finalSprite, 30, isLooping);
                 animationMap.put(name, animation);
             }
         } catch (IOException e) {
@@ -195,6 +203,21 @@ public abstract class Entity implements Renderable, Updatable{
 
     public void dealDamage(Entity entity, int damage) {
         entity.takeDamage(damage);
+    }
+
+    public void setFacingTileBasedOnDirection(Direction d){
+
+    }
+
+    public void setDirectionBasedOnTile(Tile tile) {
+        if (this.isToLeft(tile))
+            this.direction = Direction.right;
+        if (this.isToRight(tile))
+            this.direction = Direction.left;
+        if (this.isAbove(tile))
+            this.direction = Direction.down;
+        if (this.isBelow(tile))
+            this.direction = Direction.up;
     }
 
     public boolean isToRight(Tile tile) {

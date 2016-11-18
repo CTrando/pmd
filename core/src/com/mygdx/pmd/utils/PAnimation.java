@@ -18,11 +18,13 @@ public class PAnimation {
     public String classifier;
     public Sprite finalSprite;
     public Key key;
+    boolean isLooping;
 
-    public PAnimation(String classifier, Array<Sprite> animationSprites, Sprite finalSprite, int animationLength) {
+    public PAnimation(String classifier, Array<Sprite> animationSprites, Sprite finalSprite, int animationLength, boolean isLooping) {
         this.classifier = classifier;
         this.animationLength = animationLength;
         this.animationSprites = animationSprites;
+        this.isLooping = isLooping;
 
         if (animationSprites.size > 0) {
             this.eachFrameLength = animationLength / animationSprites.size;
@@ -32,6 +34,8 @@ public class PAnimation {
     }
 
     public void update() {
+        if(isFinished() && !isLooping) return;
+
         animationCounter++;
 
         if (animationCounter % eachFrameLength == 0) {

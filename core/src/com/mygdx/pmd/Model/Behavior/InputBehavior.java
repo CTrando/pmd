@@ -9,7 +9,7 @@ import com.mygdx.pmd.Model.TileType.GenericTile;
 /**
  * Created by Cameron on 11/8/2016.
  */
-public class InputBehavior extends Behavior {
+public class InputBehavior extends PokemonBehavior {
 
     public InputBehavior(Pokemon pokemon) {
         super(pokemon);

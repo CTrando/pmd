@@ -3,6 +3,7 @@ package com.mygdx.pmd.Model.Behavior;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.TileType.Tile;
+import com.mygdx.pmd.utils.Entity;
 
 /**
  * Created by Cameron on 11/8/2016.
@@ -16,12 +17,12 @@ public abstract class Behavior {
 
     Controller controller;
     Tile[][] tileBoard;
-    Pokemon pokemon;
+    Entity entity;
 
-    public Behavior(Pokemon pokemon){
-        this.controller = pokemon.controller;
+    public Behavior(Entity entity){
+        this.controller = entity.controller;
         this.tileBoard = controller.tileBoard;
-        this.pokemon = pokemon;
+        this.entity = entity;
     }
 
     public abstract void execute();

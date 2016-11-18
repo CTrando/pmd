@@ -12,8 +12,8 @@ public class MoveFastBehavior extends MoveBehavior {
 
     @Override
     public void execute(){
-        if(!this.equals(pokemon.currentTile)){
-            pokemon.moveFast();
+        if(!this.equals(entity.currentTile)){
+            entity.moveFast();
         }
         super.execute();
     }

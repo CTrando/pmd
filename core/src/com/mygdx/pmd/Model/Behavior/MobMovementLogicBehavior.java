@@ -11,7 +11,7 @@ import com.mygdx.pmd.utils.AI.ShortestPath;
 /**
  * Created by Cameron on 11/8/2016.
  */
-public class MobMovementLogicBehavior extends Behavior {
+public class MobMovementLogicBehavior extends PokemonBehavior {
     ShortestPath shortestPath;
     Array<Tile> solutionNodeList;
 
@@ -23,7 +23,6 @@ public class MobMovementLogicBehavior extends Behavior {
     @Override
     public void execute() {
         if(pokemon.actionState != Action.IDLE && pokemon.actionState != Action.MOVING) return;
-
 
         if(pokemon.equals(pokemon.currentTile)&& controller.getPokemonPlayer().turnState == Turn.WAITING)
             pokemon.actionState = Action.IDLE;

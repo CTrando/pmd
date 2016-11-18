@@ -8,7 +8,7 @@ import com.mygdx.pmd.Model.Pokemon.Pokemon;
 /**
  * Created by Cameron on 11/8/2016.
  */
-public class PlayerMovementLogicBehavior extends Behavior{
+public class PlayerMovementLogicBehavior extends PokemonBehavior{
 
     public PlayerMovementLogicBehavior(Pokemon pokemon){
         super(pokemon);
@@ -16,9 +16,7 @@ public class PlayerMovementLogicBehavior extends Behavior{
 
     @Override
     public void execute() {
-        if(pokemon.equals(pokemon.currentTile) && pokemon.nextTile == null) {
-            pokemon.actionState = Action.IDLE;
-        }
+        if(pokemon.actionState != Action.IDLE && pokemon.actionState != Action.MOVING) return;
 
         if(pokemon.equals(pokemon.currentTile) && pokemon.turnState == Turn.WAITING){
             if(pokemon.isLegalToMoveTo(pokemon.nextTile)){
@@ -36,6 +34,12 @@ public class PlayerMovementLogicBehavior extends Behavior{
                 pokemon.turnState = Turn.COMPLETE;
                 pokemon.actionState = Action.MOVING;
             }
+        }
+
+        if(pokemon.equals(pokemon.currentTile) && pokemon.nextTile == null) {
+            pokemon.actionState = Action.IDLE;
+            /*if(pokemon.actionState == Action.MOVING && pokemon.equals(pokemon.currentTile))
+                pokemon.currentTile.playEvents();*/
         }
     }
 

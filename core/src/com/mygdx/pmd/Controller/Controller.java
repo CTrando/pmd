@@ -159,22 +159,22 @@ public class Controller {
                 pokemon.update();
             }
 
-            Pokemon pokemon = pokemonList.get(pokemonListCounter%pokemonList.size());
-            if(pokemon.turnState == Turn.COMPLETE){
-                pokemon = pokemonList.get((++pokemonListCounter)%pokemonList.size());
+            Pokemon pokemon = pokemonList.get(pokemonListCounter % pokemonList.size());
+            if (pokemon.turnState == Turn.COMPLETE) {
+                pokemon = pokemonList.get((++pokemonListCounter) % pokemonList.size());
                 pokemon.turnState = Turn.WAITING;
-            }
-
-            for (int i = 0; i < projectiles.size; i++) {
-                projectiles.get(i).update();
-                if (projectiles.get(i).hp <= 0) {
-                    projectiles.removeIndex(i);
-                    this.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
-
-                }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        for (int i = 0; i < projectiles.size; i++) {
+            projectiles.get(i).update();
+            if (projectiles.get(i).destroy) {
+                projectiles.removeIndex(i);
+                this.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
+
+            }
         }
     }
 

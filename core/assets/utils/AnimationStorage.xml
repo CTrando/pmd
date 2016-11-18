@@ -4,12 +4,14 @@
         <sprite name="up2"/>
         <sprite name="up3"/>
         <finalsprite name = "defaultup"/>
+        <loopstatus looping = "true"/>
     </Animation>
     <Animation name = "down" key ="down">
         <sprite name ="down1"/>
         <sprite name ="down2"/>
         <sprite name ="down3"/>
         <finalsprite name = "defaultdown"/>
+        <loopstatus looping = "true"/>
 
     </Animation>
     <Animation name = "left" key ="left">
@@ -17,6 +19,8 @@
         <sprite name = "left2"/>
         <sprite name = "left3"/>
         <finalsprite name = "defaultleft"/>
+        <loopstatus looping = "true"/>
+
 
     </Animation>
     <Animation name = "right" key ="right">
@@ -24,6 +28,8 @@
         <sprite name = "right2"/>
         <sprite name = "right3"/>
         <finalsprite name = "defaultright"/>
+        <loopstatus looping = "true"/>
+
 
     </Animation>
     <Animation name = "upright" key ="up">
@@ -31,51 +37,69 @@
         <sprite name = "upright2"/>
         <sprite name = "upright3"/>
         <finalsprite name = "defaultright"/>
+        <loopstatus looping = "true"/>
+
     </Animation>
     <Animation name = "upleft" key ="up">
         <sprite name = "upleft1"/>
         <sprite name = "upleft2"/>
         <sprite name = "upleft3"/>
         <finalsprite name = "defaultright"/>
+        <loopstatus looping = "true"/>
+
     </Animation>
     <Animation name = "downleft" key ="up">
         <sprite name = "downleft1"/>
         <sprite name = "downleft2"/>
         <sprite name = "downleft3"/>
         <finalsprite name = "defaultright"/>
+        <loopstatus looping = "true"/>
+
     </Animation>
     <Animation name = "downright" key ="up">
         <sprite name = "downright1"/>
         <sprite name = "downright2"/>
         <sprite name = "downright3"/>
         <finalsprite name = "defaultright"/>
+        <loopstatus looping = "true"/>
+
     </Animation>
     <Animation name = "rightattack" key ="up">
         <sprite name = "rightattack1"/>
         <sprite name = "rightattack2"/>
         <sprite name = "rightattack3"/>
         <finalsprite name = "defaultright"/>
+        <loopstatus looping = "false"/>
+
     </Animation>
     <Animation name = "leftattack" key ="up">
         <sprite name = "leftattack1"/>
         <sprite name = "leftattack2"/>
         <sprite name = "leftattack3"/>
         <finalsprite name = "defaultleft"/>
+        <loopstatus looping = "false"/>
+
     </Animation>
     <Animation name = "downattack" key ="up">
         <sprite name = "downattack1"/>
         <sprite name = "downattack2"/>
         <sprite name = "downattack3"/>
         <finalsprite name = "defaultdown"/>
+        <loopstatus looping = "false"/>
+
     </Animation>
     <Animation name = "upattack" key ="up">
         <sprite name = "upattack1"/>
         <sprite name = "upattack2"/>
         <sprite name = "upattack3"/>
         <finalsprite name = "defaultup"/>
+        <loopstatus looping = "false"/>
+
     </Animation>
     <Animation name = "noanimation" key ="up">
         <finalsprite name =""/>
+        <loopstatus looping = "true"/>
+
     </Animation>
 
 </AnimationStorage>
