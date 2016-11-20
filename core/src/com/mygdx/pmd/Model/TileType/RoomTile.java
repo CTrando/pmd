@@ -1,50 +1,21 @@
 package com.mygdx.pmd.Model.TileType;
 
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
 import com.mygdx.pmd.Model.FloorComponent.Room;
 import com.mygdx.pmd.Screen.DungeonScreen;
-
-import java.awt.*;
 
 /**
  * Created by Cameron on 6/25/2016.
  */
 public class RoomTile extends Tile {
-
-    private String classifier;
-
-    private Tile[][] tileBoard;
-
-    private int windowRows;
-
-    private int windowCols;
-
-    private Room currentRoom;
-
-
-    public RoomTile(Floor floor, int r, int c, String classifier, Color color, Room room)
-    {
-        super(floor, r,c);
-
-        this.classifier = classifier;
-
-        this.setWalkable(true);
+    public Room currentRoom;
+    public RoomTile(int r, int c, Room room, Floor floor) {
+        super(r, c, floor, "ROOM");
+        this.isWalkable = true;
         this.sprite = DungeonScreen.sprites.get("roomtilesprite");
 
-        this.tileBoard = floor.getTileBoard();
-
         this.currentRoom = room;
-    }
-
-    public boolean belongsTo(Room other)
-    {
-        if(other.getRoomConstraints().contains(this))
-        {
-            return true;
-        }
-        else return false;
     }
 
     public boolean isLegal()
@@ -88,14 +59,5 @@ public class RoomTile extends Tile {
         if(counter == 4)
             return false;
         else return true;
-    }
-
-    public String getClassifier()
-    {
-        return classifier;
-    }
-
-    public Room getCurrentRoom() {
-        return currentRoom;
     }
 }

@@ -1,11 +1,8 @@
 package com.mygdx.pmd.utils;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.Enumerations.Direction;
-import com.mygdx.pmd.Enumerations.Turn;
 import com.mygdx.pmd.Model.Behavior.Behavior;
 import com.mygdx.pmd.Model.Behavior.MoveSlowBehavior;
 import com.mygdx.pmd.Model.Behavior.ProjectileCollisionLogicBehavior;
@@ -84,7 +81,7 @@ public class Projectile extends Entity {
         if (targetTile != null) {
             if (this.equals(this.targetTile) && projectileAnimation.isFinished()) {
                 this.takeDamage(1);
-                if (this.targetTile.hasAPokemon()) {
+                if (this.targetTile.hasEntity()) {
                     parent.dealDamage(targetTile.getCurrentPokemon(), 1);
                     parent.controller.controllerScreen.manager.get("sfx/wallhit.wav", Sound.class).play();
                 }
@@ -122,7 +119,7 @@ public class Projectile extends Entity {
 
     @Override
     public boolean isLegalToMoveTo(Tile tile) {
-        if(tile instanceof GenericTile || tile.hasAPokemon()) return false;
+        if(tile instanceof GenericTile || tile.hasEntity()) return false;
         return true;
     }
 }

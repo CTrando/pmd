@@ -30,7 +30,7 @@ public class MobAttackLogicBehavior extends PokemonBehavior {
             if (pokemon.turnState == Turn.WAITING) {
                 if (pokemon.facingTile == null) return;
 
-                if (pokemon.facingTile.hasAPokemon() && pokemon.facingTile != pokemon.currentTile) {
+                if (pokemon.facingTile.hasEntity() && pokemon.facingTile != pokemon.currentTile) {
                     pokemon.actionState = Action.ATTACKING;
                     pokemon.turnState = Turn.PENDING;
                     pokemon.projectile = new Projectile(pokemon.facingTile, pokemon);

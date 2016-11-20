@@ -58,7 +58,7 @@ public class RoomGenerator {
 
             if(!this.listOverlaps(room)) {
                 roomList.add(room);
-                doorList.add(room.getDoor());
+                doorList.add(room.door);
                 currentNumberOfRooms++;
             }
         }
@@ -90,12 +90,6 @@ public class RoomGenerator {
 
     public ArrayList<Room> getRoomList() {
         return roomList;
-    }
-
-    public void printArrayList() {
-        for (Room r : roomList) {
-            System.out.println("Columns:" + r.getStartingCol() + "," + r.getEndingCol() + "-" + "Rows:" + r.getStartingRow() + "," + r.getEndingRow());
-        }
     }
 
     public ArrayList<Tile> getRoomTileList() {

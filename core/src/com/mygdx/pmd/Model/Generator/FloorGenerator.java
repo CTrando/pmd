@@ -11,37 +11,20 @@ import com.mygdx.pmd.Model.TileType.Tile;
  * Created by Cameron on 7/6/2016.
  */
 public class FloorGenerator {
-    private Tile[][] tileBoard;
-    private RoomGenerator roomGenerator;
-    private PathGenerator pathGenerator;
     public Controller controller;
-
-    private int windowCols;
-    private int windowRows;
+    public Tile[][] tileBoard;
 
     Floor floor;
 
-
-    public FloorGenerator(int windowRows, int windowCols, int roomNum, Controller controller)
+    public FloorGenerator(Controller controller, int numRooms)
     {
-        floor = new Floor(controller, windowRows, windowCols, this);
+        floor = new Floor(controller, numRooms, this);
         this.controller = controller;
-        this.windowCols = windowCols;
-        this.windowRows = windowRows;
     }
 
     public Floor getFloor() {
         return floor;
     }
-
-    public RoomGenerator getRoomGenerator() {
-        return roomGenerator;
-    }
-
-    public PathGenerator getPathGenerator() {
-        return pathGenerator;
-    }
-
 
     public void generateFloor()
     {

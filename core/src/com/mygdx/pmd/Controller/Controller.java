@@ -79,7 +79,7 @@ public class Controller {
 
         this.isShadowed = false;
 
-        floorGenerator = new FloorGenerator(windowRows, windowCols, 10, this);
+        floorGenerator = new FloorGenerator(this, 15);
         floorGenerator.generateFloor();
         currentFloor = floorGenerator.getFloor();
 

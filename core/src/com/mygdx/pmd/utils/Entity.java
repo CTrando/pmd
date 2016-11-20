@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Controller.Controller;
+import com.mygdx.pmd.Enumerations.Aggression;
 import com.mygdx.pmd.Enumerations.Direction;
 import com.mygdx.pmd.Enumerations.PokemonName;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Interfaces.Updatable;
 import com.mygdx.pmd.Model.Behavior.Behavior;
 import com.mygdx.pmd.Model.Behavior.NoBehavior;
-import com.mygdx.pmd.Model.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.TileType.StairTile;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.Screen.DungeonScreen;
@@ -24,7 +24,7 @@ import java.util.HashMap;
 /**
  * Created by Cameron on 10/18/2016.
  */
-public abstract class Entity implements Renderable, Updatable{
+public abstract class Entity implements Renderable, Updatable {
     public Behavior[] behaviors;
 
     public int x;
@@ -33,7 +33,7 @@ public abstract class Entity implements Renderable, Updatable{
     public int row;
     public int col;
 
-    public int hp =100;
+    public int hp = 100;
 
     public Tile nextTile;
     public Tile currentTile;
@@ -43,6 +43,7 @@ public abstract class Entity implements Renderable, Updatable{
     public MotionBehavior motionBehavior;
 
     public Direction direction;
+    public Aggression aggression;
 
     public Controller controller;
 
@@ -67,14 +68,13 @@ public abstract class Entity implements Renderable, Updatable{
 
     public abstract boolean isLegalToMoveTo(Tile tile);
 
-    public boolean equals(Tile tile)
-    {
+    public boolean equals(Tile tile) {
         return (tile.x == x && tile.y == y);
     }
 
     public void move(int dx, int dy) {
-        x+=dx;
-        y+=dy;
+        x += dx;
+        y += dy;
     }
 
     public void goToTile(Tile nextTile, int speed) {
@@ -86,7 +86,7 @@ public abstract class Entity implements Renderable, Updatable{
         }
 
         if (this.y > nextTile.y && this.x > nextTile.x) {
-            this.move(-speed, - speed);
+            this.move(-speed, -speed);
         } else if (this.y < nextTile.y && this.x > nextTile.x) {
             this.move(-speed, speed);
         } else if (this.y < nextTile.y && this.x < nextTile.x) {
@@ -131,15 +131,16 @@ public abstract class Entity implements Renderable, Updatable{
     }
 
     public void setCurrentTile(Tile nextTile) {
-        if(nextTile == null) return;
-        if (this.currentTile != nextTile) {
-            if(currentTile != null)
-                this.currentTile.removeEntity(this);
-            nextTile.addEntity(this);
-            this.currentTile = nextTile;
-            this.row = currentTile.row;
-            this.col = currentTile.col;
-        }
+        if (nextTile == null) return;
+
+        if (currentTile != null)
+            this.currentTile.removeEntity(this);
+        this.currentTile = nextTile;
+        currentTile.addEntity(this);
+
+
+        this.row = currentTile.row;
+        this.col = currentTile.col;
     }
 
     public Tile getNextTile() {
@@ -152,7 +153,6 @@ public abstract class Entity implements Renderable, Updatable{
 
     public void randomizeLocation() {
         int rand = (int) (Math.random() * controller.currentFloor.getRoomTileList().size());
-
         Tile random = controller.currentFloor.getRoomTileList().get(rand);
 
         if (!(random instanceof StairTile) && random.getEntityList().size() == 0) {
@@ -205,7 +205,7 @@ public abstract class Entity implements Renderable, Updatable{
         entity.takeDamage(damage);
     }
 
-    public void setFacingTileBasedOnDirection(Direction d){
+    public void setFacingTileBasedOnDirection(Direction d) {
 
     }
 

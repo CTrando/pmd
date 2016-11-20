@@ -1,33 +1,33 @@
 package com.mygdx.pmd.Model.TileType;
 
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
 import com.mygdx.pmd.Model.FloorComponent.Room;
 import com.mygdx.pmd.Screen.DungeonScreen;
-
-import java.awt.*;
 
 /**
  * Created by Cameron on 6/27/2016.
  */
 
-public class DoorTile extends RoomTile {
+public class DoorTile extends Tile {
 
-    public DoorTile(Floor floor, int row, int col, Room room)
-    {
-        super(floor, row, col, "Door", Color.gray, room);
+    public Room room;
+
+    public DoorTile(int row, int col, Floor floor, Room room) {
+        super(row, col, floor, "DOOR");
+        this.room = room;
         this.sprite = DungeonScreen.sprites.get("doortilesprite");
-    }
 
-    public String getClassifier() {
-        return "Door";
     }
 
     @Override
-    public void playEvents()
-    {
+    public void playEvents() {
 
+    }
+
+    @Override
+    public boolean isLegal() {
+        return false;
     }
 
 }

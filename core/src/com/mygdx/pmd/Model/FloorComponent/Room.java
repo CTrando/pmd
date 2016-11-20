@@ -16,49 +16,36 @@ import java.util.Random;
 public class Room {
     private ArrayList<Tile> roomConstraints;
 
-    private int startingRow;   //height and width are expressed in tiles
-    private int startingCol;
+    public int startingRow;   //height and width are expressed in tiles
+    public int startingCol;
 
-    private int area;
+    public int endingRow;
+    public int endingCol;
 
-    private int endingRow;
-    private int endingCol;
-
+    public DoorTile door;
     private Floor floor;
+    public Tile[][] tileBoard;
 
     private int windowWidthinTiles;
     private int windowLengthinTiles;
-
-    private Color color;
-
-    private Tile[][] tileBoard;
 
     public static final int ROOM_SMALL = 20;
     public static final int ROOM_MEDIUM = 30;
     public static final int ROOM_LARGE = 40;
 
-    private DoorTile door;
-
     public Room(int startingRow, int startingCol, int endingRow, int endingCol, Floor floor) {
         this.floor = floor;
+        this.tileBoard = floor.getTileBoard();
         this.startingCol = startingCol;
         this.startingRow = startingRow;
-
-        windowLengthinTiles = floor.getWindowRows();
-        windowWidthinTiles = floor.getWindowCols();
 
         this.endingCol = endingCol;
         this.endingRow = endingRow;
 
+        windowLengthinTiles = floor.getWindowRows();
+        windowWidthinTiles = floor.getWindowCols();
+
         roomConstraints = new ArrayList<Tile>();
-
-        Random rand = new Random();
-        float red = rand.nextFloat();
-        float green = rand.nextFloat();
-        float blue = rand.nextFloat();
-
-        color = new Color(red,green,blue);
-        tileBoard = floor.getTileBoard();
 
         this.initializeRoomConstraints();
     }
@@ -69,25 +56,14 @@ public class Room {
         roomConstraints = new ArrayList<Tile>();
         tileBoard = floor.getTileBoard();
 
-        windowLengthinTiles = floor.getWindowRows()/Constants.TILE_SIZE;
-        windowWidthinTiles = floor.getWindowCols()/ Constants.TILE_SIZE;
+        windowLengthinTiles = floor.getWindowRows();
+        windowWidthinTiles = floor.getWindowCols();
 
         startingRow = ((int)(windowLengthinTiles*Math.random()));
         startingCol = ((int)(windowWidthinTiles*Math.random()));
 
         endingRow = ((int)((2*windowLengthinTiles +1)*Math.random())) - (windowLengthinTiles-15);
         endingCol = ((int)((2*windowWidthinTiles +1)*Math.random())) - (windowWidthinTiles-15);
-
-
-        Random rand = new Random();
-        float red = rand.nextFloat();
-        float green = rand.nextFloat();
-        float blue = rand.nextFloat();
-
-        color = new Color(red,green,blue);
-
-    /*    endingRow = startingRow+5;
-        endingCol = startingCol+5;*/
 
         this.checkRoomBounds();
         this.isRoomLegal();
@@ -103,14 +79,14 @@ public class Room {
         {
             for(int col = startingCol; col<endingCol; col++ )
             {
-                RoomTile r = new RoomTile(floor, row ,col , "Room Tile", color, this);
+                RoomTile r = new RoomTile(row ,col,this,floor);
                 roomConstraints.add(r);
             }
 
         }
 
         int rand = (int)((roomConstraints.size())* Math.random());
-        door = new DoorTile(floor, roomConstraints.get(rand).row, roomConstraints.get(rand).col, this);
+        door = new DoorTile(roomConstraints.get(rand).row, roomConstraints.get(rand).col, floor, this);
         roomConstraints.set(rand, door);
     }
 
@@ -214,41 +190,5 @@ public class Room {
         startingRow+=rand;
         startingCol+=rand;
         this.checkRoomBounds();
-    }
-
-    public int getStartingRow() {
-        return startingRow;
-    }
-
-    public void setStartingRow(int startingRow) {
-        this.startingRow = startingRow;
-    }
-
-    public int getStartingCol() {
-        return startingCol;
-    }
-
-    public void setStartingCol(int startingCol) {
-        this.startingCol = startingCol;
-    }
-
-    public int getEndingRow() {
-        return endingRow;
-    }
-
-    public void setEndingRow(int endingRow) {
-        this.endingRow = endingRow;
-    }
-
-    public int getEndingCol() {
-        return endingCol;
-    }
-
-    public void setEndingCol(int endingCol) {
-        this.endingCol = endingCol;
-    }
-
-    public DoorTile getDoor() {
-        return door;
     }
 }

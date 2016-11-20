@@ -1,7 +1,6 @@
 package com.mygdx.pmd.Model.TileType;
 
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
 import com.mygdx.pmd.Screen.DungeonScreen;
@@ -12,8 +11,8 @@ import com.mygdx.pmd.Screen.DungeonScreen;
 public class GenericTile extends Tile {
 
     public GenericTile(Floor floor, int row, int col) {
-        super(floor, row, col);
-        this.setWalkable(false);
+        super(row, col, floor, "GENERIO");
+        this.isWalkable = false;
         this.sprite = DungeonScreen.sprites.get("generictilesprite");
     }
 
@@ -51,15 +50,9 @@ public class GenericTile extends Tile {
             }
         }
 
-
         if (right && down && up && left) {
             return false;
         } else return true;
 
-    }
-
-
-    public String getClassifier() {
-        return "GenericTile";
     }
 }

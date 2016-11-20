@@ -16,16 +16,15 @@ import com.mygdx.pmd.Model.TileType.Tile;
 
 import java.util.ArrayList;
 
+import static com.mygdx.pmd.Controller.Controller.windowCols;
+import static com.mygdx.pmd.Controller.Controller.windowRows;
+
 /**
  * Created by Cameron on 7/27/2016.
  */
 public class Floor implements Renderable, Updatable {
-
     Controller controller;
-
     Tile[][] tileBoard;
-    int windowRows;
-    int windowCols;
 
     private RoomGenerator roomGenerator;
     private PathGenerator pathGenerator;
@@ -34,20 +33,19 @@ public class Floor implements Renderable, Updatable {
     private ArrayList<Tile> roomTileList;
     private ArrayList<Tile> doorList;
 
-    public final int NUMBER_OF_ROOMS = 15;
+    public final int NUMBER_OF_ROOMS;
 
     FloorGenerator floorGenerator;
 
     Pokemon pokemonPlayer;
 
-    public Floor(Controller controller, int windowRows, int windowCols, FloorGenerator floorGenerator) {
+    public Floor(Controller controller, int numRooms, FloorGenerator floorGenerator) {
         this.floorGenerator = floorGenerator;
+        this.controller = controller;
+        this.NUMBER_OF_ROOMS = numRooms;
 
         tileBoard = new Tile[windowRows][windowCols];
         this.generateTileBoard();
-        this.windowRows = windowRows;
-        this.windowCols = windowCols;
-        this.controller = controller;
         this.pokemonPlayer = controller.getPokemonPlayer();
 
         roomGenerator = new RoomGenerator(this);
@@ -96,11 +94,9 @@ public class Floor implements Renderable, Updatable {
     }
 
     public void update() {
-
     }
 
     public void render(SpriteBatch batch) {
-
     }
 
     public void generateTileBoard() {

@@ -13,8 +13,10 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
 
     @Override
     public void execute() {
-        if(projectile.currentTile.hasAPokemon()){
-            projectile.currentTile.getCurrentPokemon().takeDamage(1);
+        if(projectile.currentTile.hasEntity()){
+            for(Entity entity: projectile.currentTile.getEntityList()) {
+                entity.takeDamage(1);
+            }
             projectile.takeDamage(1);
             projectile.isAttackFinished = true;
         }

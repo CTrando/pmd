@@ -4,14 +4,12 @@ package com.mygdx.pmd.Model.Pokemon;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.*;
 import com.mygdx.pmd.Model.Behavior.Behavior;
-import com.mygdx.pmd.Model.Behavior.NoBehavior;
 import com.mygdx.pmd.Model.TileType.Tile;
 import com.mygdx.pmd.utils.*;
 
 
 public abstract class Pokemon extends Entity {
     public Tile facingTile;
-    public Attack currentAttack;
 
     public Turn turnState = Turn.COMPLETE;
 
@@ -21,7 +19,6 @@ public abstract class Pokemon extends Entity {
 
     public TurnBehavior turnBehavior;
     public Action actionState = Action.IDLE;
-    public Aggression aggression;
 
     public PokemonName pokemonName;
 
@@ -70,19 +67,6 @@ public abstract class Pokemon extends Entity {
         } catch (ArrayIndexOutOfBoundsException e) {
         }
     }
-    /*
-    public void updateAttack() {
-        if (currentAttack == null) return;
-        currentAttack.update();
-        if(currentAttack.isFinished())
-            this.actionState = Action.IDLE;
-
-        if (currentAttack.isFinished() && controller.projectiles.size == 0) {
-            this.actionState = Action.IDLE;
-            this.turnBehavior.setTurnState(Turn.COMPLETE);
-            this.currentAttack = null;
-        }
-    }*/
 
     public void turnToTile(Tile tile) {
         if (tile.isAbove(currentTile))
@@ -99,11 +83,14 @@ public abstract class Pokemon extends Entity {
     public boolean isLegalToMoveTo(Tile tile) {
         if (tile == null) return false;
 
-        if(tile.hasAPokemon())
-            if(tile.getCurrentPokemon().aggression == Aggression.aggressive)
-                return false;
+        if(tile.hasEntity()) {
+            for(Entity entity: tile.getEntityList()) {
+                if (entity.aggression == Aggression.aggressive)
+                    return false;
+            }
+        }
 
-        if (!tile.isWalkable())
+        if (!tile.isWalkable)
             return false;
         return true;
     }
@@ -111,6 +98,5 @@ public abstract class Pokemon extends Entity {
     @Override
     public void randomizeLocation() {
         super.randomizeLocation();
-        currentTile.addEntity(this);
     }
 }

@@ -1,7 +1,6 @@
 package com.mygdx.pmd.Model.TileType;
 
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
 import com.mygdx.pmd.Screen.DungeonScreen;
 
@@ -11,12 +10,8 @@ import com.mygdx.pmd.Screen.DungeonScreen;
 public class PathTileVertical extends PathTile {
 
     public PathTileVertical(Floor floor, int row, int col) {
-        super(floor, row, col);
+        super(row, col, floor, "PATHVERT");
         this.sprite = DungeonScreen.sprites.get("vpathtilesprite");
-        this.tileBoard = floor.getTileBoard();
-
-        this.row = row;
-        this.col = col;
     }
 
     @Override
@@ -35,6 +30,6 @@ public class PathTileVertical extends PathTile {
         } catch (ArrayIndexOutOfBoundsException e) {
         }
 
-        return true;
+        return super.isLegal();
     }
 }
