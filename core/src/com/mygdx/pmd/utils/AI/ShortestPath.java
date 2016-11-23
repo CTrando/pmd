@@ -1,8 +1,8 @@
 package com.mygdx.pmd.utils.AI;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.Model.TileType.Tile;
-import com.mygdx.pmd.utils.Entity;
+import com.mygdx.pmd.Model.Tile.Tile;
+import com.mygdx.pmd.Model.Entity.Entity;
 
 /**
  * Created by Cameron on 10/30/2016.

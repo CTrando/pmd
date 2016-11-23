@@ -2,10 +2,9 @@ package com.mygdx.pmd.Model.Generator;
 
 
 import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Enumerations.Turn;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
-import com.mygdx.pmd.Model.Pokemon.Pokemon;
-import com.mygdx.pmd.Model.TileType.Tile;
+import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
+import com.mygdx.pmd.Model.Tile.Tile;
 
 /**
  * Created by Cameron on 7/6/2016.
@@ -29,14 +28,8 @@ public class FloorGenerator {
     public void generateFloor()
     {
         floor.generateFloor();
-        for(Pokemon pokemon: controller.pokemonList)
-        {
+        for(Pokemon pokemon: controller.pokemonList) {
             pokemon.setNextTile(null);
-            pokemon.turnBehavior.setTurnState(Turn.COMPLETE);
-        }
-
-        if(controller.getPokemonPlayer() != null){
-            controller.getPokemonPlayer().turnBehavior.setTurnState(Turn.WAITING);
         }
     }
 }

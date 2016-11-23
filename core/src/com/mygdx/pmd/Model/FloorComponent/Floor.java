@@ -8,11 +8,10 @@ import com.mygdx.pmd.Interfaces.Updatable;
 import com.mygdx.pmd.Model.Generator.FloorGenerator;
 import com.mygdx.pmd.Model.Generator.PathGenerator;
 import com.mygdx.pmd.Model.Generator.RoomGenerator;
-import com.mygdx.pmd.Model.Pokemon.Pokemon;
-import com.mygdx.pmd.Model.Pokemon.PokemonPlayer;
-import com.mygdx.pmd.Model.TileType.GenericTile;
-import com.mygdx.pmd.Model.TileType.StairTile;
-import com.mygdx.pmd.Model.TileType.Tile;
+import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
+import com.mygdx.pmd.Model.Tile.GenericTile;
+import com.mygdx.pmd.Model.Tile.StairTile;
+import com.mygdx.pmd.Model.Tile.Tile;
 
 import java.util.ArrayList;
 

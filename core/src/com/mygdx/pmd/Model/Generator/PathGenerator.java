@@ -3,7 +3,7 @@ package com.mygdx.pmd.Model.Generator;
 
 import com.mygdx.pmd.Model.FloorComponent.Floor;
 import com.mygdx.pmd.Model.FloorComponent.Room;
-import com.mygdx.pmd.Model.TileType.*;
+import com.mygdx.pmd.Model.Tile.*;
 
 import java.util.ArrayList;
 

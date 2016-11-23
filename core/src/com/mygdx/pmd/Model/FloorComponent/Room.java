@@ -1,20 +1,17 @@
 package com.mygdx.pmd.Model.FloorComponent;
 
 
-import com.mygdx.pmd.Model.TileType.DoorTile;
-import com.mygdx.pmd.Model.TileType.RoomTile;
-import com.mygdx.pmd.Model.TileType.Tile;
-import com.mygdx.pmd.utils.Constants;
+import com.mygdx.pmd.Model.Tile.DoorTile;
+import com.mygdx.pmd.Model.Tile.RoomTile;
+import com.mygdx.pmd.Model.Tile.Tile;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Cameron on 6/17/2016.
  */
 public class Room {
-    private ArrayList<Tile> roomConstraints;
+    public ArrayList<Tile> roomConstraints;
 
     public int startingRow;   //height and width are expressed in tiles
     public int startingCol;
@@ -82,25 +79,17 @@ public class Room {
                 RoomTile r = new RoomTile(row ,col,this,floor);
                 roomConstraints.add(r);
             }
-
         }
-
         int rand = (int)((roomConstraints.size())* Math.random());
         door = new DoorTile(roomConstraints.get(rand).row, roomConstraints.get(rand).col, floor, this);
         roomConstraints.set(rand, door);
     }
 
-    public ArrayList<Tile> getRoomConstraints()
-    {
-        return roomConstraints;
-    }
-
-
     public boolean overlaps(Room other)
     {
         for(Tile o: this.roomConstraints)
         {
-            for(Tile z: other.getRoomConstraints())
+            for(Tile z: other.roomConstraints)
             {
                 if(o.col == z.col && o.row == z.row)
                 {

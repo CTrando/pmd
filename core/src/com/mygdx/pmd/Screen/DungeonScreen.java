@@ -17,11 +17,10 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.Key;
 import com.mygdx.pmd.Interfaces.Renderable;
-import com.mygdx.pmd.Model.Pokemon.Pokemon;
-import com.mygdx.pmd.Model.TileType.Tile;
+import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
+import com.mygdx.pmd.Model.Tile.Tile;
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.utils.Constants;
-import com.mygdx.pmd.utils.Projectile;
+import com.mygdx.pmd.Model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.utils.Timer;
 import com.mygdx.pmd.ui.Button;
 import com.mygdx.pmd.ui.Menu;
@@ -189,8 +188,8 @@ public class DungeonScreen implements InputProcessor, Screen {
 
         for (Renderable r : controller.getRenderList()) {
             if (r instanceof Pokemon) {
-                //if (((Pokemon) r).isWithinArea(controller.renderableArea)) {
-                    /*Tile t = ((Pokemon) r).getFacingTile();
+                //if (((Entity) r).isWithinArea(controller.renderableArea)) {
+                    /*Tile t = ((Entity) r).getFacingTile();
                     if(t != null)
                         t.renderDebug(batch);*/
                     r.render(batch);

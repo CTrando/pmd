@@ -3,8 +3,8 @@ package com.mygdx.pmd.Model.Generator;
 
 import com.mygdx.pmd.Model.FloorComponent.Floor;
 import com.mygdx.pmd.Model.FloorComponent.Room;
-import com.mygdx.pmd.Model.TileType.RoomTile;
-import com.mygdx.pmd.Model.TileType.Tile;
+import com.mygdx.pmd.Model.Tile.RoomTile;
+import com.mygdx.pmd.Model.Tile.Tile;
 
 import java.util.ArrayList;
 
@@ -67,8 +67,8 @@ public class RoomGenerator {
 
 
     public void placeRoomTiles() {
-        for (Room r : roomList) {
-            for (Tile rt : r.getRoomConstraints()) {
+        for (Room room : roomList) {
+            for (Tile rt : room.roomConstraints) {
                 tileBoard[rt.row][rt.col] = rt;
                 if(rt instanceof RoomTile)
                     roomTileList.add(rt);

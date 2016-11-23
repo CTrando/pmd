@@ -2,9 +2,9 @@ package com.mygdx.pmd.Model.Factory;
 
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.PokemonName;
-import com.mygdx.pmd.Model.Pokemon.Pokemon;
-import com.mygdx.pmd.Model.Pokemon.PokemonMob;
-import com.mygdx.pmd.Model.Pokemon.PokemonPlayer;
+import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
+import com.mygdx.pmd.Model.Entity.Pokemon.PokemonMob;
+import com.mygdx.pmd.Model.Entity.Pokemon.PokemonPlayer;
 
 /**
  * Created by Cameron on 11/6/2016.

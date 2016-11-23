@@ -1,6 +1,6 @@
 package com.mygdx.pmd.Comparators;
 
-import com.mygdx.pmd.Model.Pokemon.Pokemon;
+import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
 
 import java.util.Comparator;
 
