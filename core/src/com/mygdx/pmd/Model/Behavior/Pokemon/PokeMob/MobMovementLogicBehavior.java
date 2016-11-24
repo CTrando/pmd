@@ -3,6 +3,7 @@ package com.mygdx.pmd.Model.Behavior.Pokemon.PokeMob;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.Enumerations.Action;
 import com.mygdx.pmd.Enumerations.Turn;
+import com.mygdx.pmd.Exceptions.PathFindFailureException;
 import com.mygdx.pmd.Model.Behavior.Pokemon.PokemonBehavior;
 import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.Tile.Tile;
@@ -26,11 +27,17 @@ public class MobMovementLogicBehavior extends PokemonBehavior {
 
         if(pokemon.currentTile == null) System.out.println("NULL CURRENTTILE");
 
-        if(pokemon.equals(pokemon.currentTile)&& controller.getPokemonPlayer().turnState == Turn.WAITING)
+        if(pokemon.equals(pokemon.currentTile)&& controller.pokemonPlayer.turnState == Turn.WAITING)
             pokemon.actionState = Action.IDLE;
 
         if (pokemon.turnState == Turn.WAITING && pokemon.equals(pokemon.currentTile)) {
-            solutionNodeList = shortestPath.pathFind(controller.getPokemonPlayer().currentTile);
+            try {
+                solutionNodeList = shortestPath.pathFind(controller.pokemonPlayer.currentTile);
+            } catch (PathFindFailureException e){
+                e.printStackTrace();
+                System.out.println("Failed to pathfind");
+            }
+
             if (solutionNodeList.size <= 0){
                 pokemon.turnState = Turn.COMPLETE;
                 pokemon.actionState = Action.IDLE;

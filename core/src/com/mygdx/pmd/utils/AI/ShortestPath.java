@@ -1,8 +1,11 @@
 package com.mygdx.pmd.utils.AI;
 
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.pmd.Exceptions.PathFindFailureException;
 import com.mygdx.pmd.Model.Tile.Tile;
 import com.mygdx.pmd.Model.Entity.Entity;
+
+import java.nio.file.Path;
 
 /**
  * Created by Cameron on 10/30/2016.
@@ -23,31 +26,35 @@ public class ShortestPath implements PathFind {
     }
 
     @Override
-    public Array<Tile> pathFind(Tile tile) {
+    public Array<Tile> pathFind(Tile tile) throws PathFindFailureException{
         return this.findShortestPath(tile);
     }
 
-    public Array<Tile> findShortestPath(Tile destination) {
-        currentTile = null;
-        Tile.resetTileArrayParents(tileBoard);
+    public Array<Tile> findShortestPath(Tile destination) throws PathFindFailureException {
+        try {
+            currentTile = null;
+            Tile.resetTileArrayParents(tileBoard);
 
-        this.resetLists();
-        openNodeList.add(parent.currentTile);
+            this.resetLists();
+            openNodeList.add(parent.currentTile);
 
-        while (currentTile != destination) {
-            currentTile = openNodeList.get(0);
-            this.evaluateTile(currentTile, destination);
+            while (currentTile != destination) {
+                currentTile = openNodeList.get(0); //TODO Index out of bounds exception occuring here which means that parent.currentTile = null
+                this.evaluateTile(currentTile, destination);
+            }
+
+            parent.currentTile.setParent(null);
+            Tile backTrack = destination;
+
+            while (backTrack.getParent() != null) {
+                backTrack = backTrack.getParent();
+                solutionNodeList.insert(0, backTrack);
+            }
+            solutionNodeList.removeValue(parent.currentTile, false);
+            return solutionNodeList;
+        } catch(NullPointerException e){
+            throw new PathFindFailureException("Null somewhere in here");
         }
-
-        parent.currentTile.setParent(null);
-        Tile backTrack = destination;
-
-        while (backTrack.getParent() != null) {
-            backTrack = backTrack.getParent();
-            solutionNodeList.insert(0, backTrack);
-        }
-        solutionNodeList.removeValue(parent.currentTile, false);
-        return solutionNodeList;
     }
 
     public void resetLists() {

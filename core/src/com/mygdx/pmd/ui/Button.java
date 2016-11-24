@@ -31,26 +31,26 @@ public class Button extends TextButton {
     {
         switch(this.classifier) {
             case PPHP:
-                this.setText("Current hp: " + controller.getPokemonPlayer().getHp() + "");
+                this.setText("Current hp: " + controller.pokemonPlayer.getHp() + "");
                 break;
             case ANIMATION:
-                if(controller.getPokemonPlayer().currentAnimation != null)
-                    this.setText("Current Animation: " + controller.getPokemonPlayer().currentAnimation.toString());
+                if(controller.pokemonPlayer.currentAnimation != null)
+                    this.setText("Current Animation: " + controller.pokemonPlayer.currentAnimation.toString());
                 else this.setText("Current Animation: " + "noanimation");
                 break;
             case ACTION:
-                    this.setText("Turn: " + controller.pokemonList.get(0).turnState.toString() + " State: " + controller.pokemonList.get(0).actionState.toString()+ "\n"
-                    + "Turn: " + controller.pokemonList.get(1).turnState.toString() + " State: " + controller.pokemonList.get(1).actionState.toString()+ "\n" +
-                            "Turn: " + controller.pokemonList.get(2).turnState.toString() + " State: " + controller.pokemonList.get(2).actionState.toString()
+                    this.setText("Turn: " + controller.turnBasedEntities.get(0).turnState.toString() + " State: " + controller.turnBasedEntities.get(0).actionState.toString()+ "\n"
+                    + "Turn: " + controller.turnBasedEntities.get(1).turnState.toString() + " State: " + controller.turnBasedEntities.get(1).actionState.toString()+ "\n" +
+                            "Turn: " + controller.turnBasedEntities.get(2).turnState.toString() + " State: " + controller.turnBasedEntities.get(2).actionState.toString()
                     );
                 break;
             case STATE:
-                this.setText("State: " + controller.getPokemonPlayer().actionState.toString());
+                this.setText("State: " + controller.pokemonPlayer.actionState.toString());
                 break;
             case ATTACK:
                 break;
             case DIRECTION:
-                this.setText("Direction: " + controller.getPokemonPlayer().direction.toString());
+                this.setText("Direction: " + controller.pokemonPlayer.direction.toString());
                 break;
         }
     }
@@ -65,10 +65,9 @@ public class Button extends TextButton {
                     controller.controllerScreen.switchMenus(nextMenu);
 
                 if(classifier == MenuID.ATTACK){
-                    if(controller.getPokemonPlayer().currentAnimation.isFinished())
+                    if(controller.pokemonPlayer.currentAnimation.isFinished())
                         return;
                 }
-
             }
         });
     }

@@ -17,10 +17,12 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Enumerations.Key;
 import com.mygdx.pmd.Interfaces.Renderable;
+import com.mygdx.pmd.Model.Entity.Entity;
 import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.Tile.Tile;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.Model.Entity.Projectile.Projectile;
+import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.utils.Timer;
 import com.mygdx.pmd.ui.Button;
 import com.mygdx.pmd.ui.Menu;
@@ -35,15 +37,21 @@ public class DungeonScreen implements InputProcessor, Screen {
     SpriteBatch batch;
     ShapeRenderer shapeRenderer;
 
+    public Controller controller;
+    public Tile[][] tileBoard;
+
+    public static final int windowWidth = 1000;
+    public static final int windowLength = 1000; //TODO the stutter might be because of having to reload everything on player movement
+    public static final int windowRows = windowLength / Constants.TILE_SIZE;
+    public static final int windowCols = windowWidth / Constants.TILE_SIZE;
+
     public AssetManager manager;
     public static HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
     public Array<Button> updateButtonList;
 
-    private Music backgroundSound;
-
     InputMultiplexer inputMultiplexer;
 
-    Controller controller;
+
     OrthographicCamera camera;
 
     public static Menu currentMenu;
@@ -58,8 +66,6 @@ public class DungeonScreen implements InputProcessor, Screen {
     public static final int APP_WIDTH = 1080;//Gdx.graphics.getWidth();
     public static final int APP_HEIGHT = 720;//Gdx.graphics.getHeight();
 
-    public PAnimation animation;
-
     public DungeonScreen(final PMD game) {
         this.game = game;
         batch = game.batch;
@@ -67,6 +73,7 @@ public class DungeonScreen implements InputProcessor, Screen {
 
         this.loadManager();
         controller = new Controller(this);
+        tileBoard = controller.tileBoard;
         this.loadMenus();
 
         stage = new Stage();
@@ -168,39 +175,22 @@ public class DungeonScreen implements InputProcessor, Screen {
 
         batch.begin();
 
+        for (Renderable r : controller.renderList) {
+            r.render(batch);
+        }
+
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(1,1,0,1);
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-        for (Tile t : controller.renderableArea) {
-          /*  if(controller.isTPressed) {
-                shapeRenderer.rect(t.x, t.y, Constants.TILE_SIZE, Constants.TILE_SIZE);
+        if(controller.isKeyPressed(Key.t)) {
+            for (int i = 0; i < tileBoard.length; i++) {
+                for (int j = 0; j < tileBoard[0].length; j++) {
+                    Tile tile = tileBoard[i][j];
+                    shapeRenderer.rect(tile.x, tile.y, Constants.TILE_SIZE, Constants.TILE_SIZE);
+                }
             }
-            t.render(batch);*/
         }
         shapeRenderer.end();
-
-        if (isFullView) {
-            for (int i = 0; i < controller.getTileBoard().length; i++)
-                for (int j = 0; j < controller.getTileBoard()[0].length; j++)
-                    controller.getTileBoard()[i][j].render(batch);
-        }
-
-
-        for (Renderable r : controller.getRenderList()) {
-            if (r instanceof Pokemon) {
-                //if (((Entity) r).isWithinArea(controller.renderableArea)) {
-                    /*Tile t = ((Entity) r).getFacingTile();
-                    if(t != null)
-                        t.renderDebug(batch);*/
-                    r.render(batch);
-               // }
-            } else
-                r.render(batch);
-        }
-
-        for (Projectile p : controller.projectiles) {
-            p.render(batch);
-        }
 
    //    batch.draw(animation.getCurrentSprite(), 100, 100);
 
@@ -259,7 +249,7 @@ public class DungeonScreen implements InputProcessor, Screen {
     }
 
     public void updateCamera() {
-        camera.position.set(controller.getPokemonPlayer().x, controller.getPokemonPlayer().y, 0);
+        camera.position.set(controller.pokemonPlayer.x, controller.pokemonPlayer.y, 0);
         camera.update();
     }
 

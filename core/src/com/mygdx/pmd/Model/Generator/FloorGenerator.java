@@ -2,6 +2,7 @@ package com.mygdx.pmd.Model.Generator;
 
 
 import com.mygdx.pmd.Controller.Controller;
+import com.mygdx.pmd.Model.Entity.Entity;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
 import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.Model.Tile.Tile;
@@ -15,8 +16,7 @@ public class FloorGenerator {
 
     Floor floor;
 
-    public FloorGenerator(Controller controller, int numRooms)
-    {
+    public FloorGenerator(Controller controller, int numRooms) {
         floor = new Floor(controller, numRooms, this);
         this.controller = controller;
     }
@@ -25,11 +25,10 @@ public class FloorGenerator {
         return floor;
     }
 
-    public void generateFloor()
-    {
+    public void generateFloor() {
         floor.generateFloor();
-        for(Pokemon pokemon: controller.pokemonList) {
-            pokemon.setNextTile(null);
+        for(Entity entity: controller.turnBasedEntities) {
+            entity.setNextTile(null);
         }
     }
 }

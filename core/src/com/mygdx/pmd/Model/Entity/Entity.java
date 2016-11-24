@@ -6,9 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Enumerations.Aggression;
-import com.mygdx.pmd.Enumerations.Direction;
-import com.mygdx.pmd.Enumerations.PokemonName;
+import com.mygdx.pmd.Enumerations.*;
 import com.mygdx.pmd.Interfaces.Renderable;
 import com.mygdx.pmd.Interfaces.Updatable;
 import com.mygdx.pmd.Model.Behavior.BaseBehavior;
@@ -28,6 +26,10 @@ import java.util.HashMap;
 public abstract class Entity implements Renderable, Updatable {
     public BaseBehavior[] behaviors;
     public boolean isTurnBased;
+    public Turn turnState;
+    public Action actionState;
+
+    public boolean shouldBeDestroyed;
 
     public int x;
     public int y;
@@ -66,6 +68,17 @@ public abstract class Entity implements Renderable, Updatable {
     }
 
     @Override
+    public void update(){
+        for(int i = 0; i< behaviors.length; i++){
+            behaviors[i].execute();
+        }
+
+        if(this.shouldBeDestroyed){
+            controller.removeEntity(this);
+        }
+    }
+
+    @Override
     public void render(SpriteBatch batch) {
         if (currentSprite != null) {
             batch.draw(currentSprite, x, y, currentSprite.getWidth(), currentSprite.getHeight());
@@ -74,6 +87,9 @@ public abstract class Entity implements Renderable, Updatable {
     }
 
     public abstract boolean isLegalToMoveTo(Tile tile);
+    public void setBehavior(BaseBehavior behavior, int index) {
+        behaviors[index] = behavior;
+    }
 
     public boolean equals(Tile tile) {
         return (tile.x == x && tile.y == y);

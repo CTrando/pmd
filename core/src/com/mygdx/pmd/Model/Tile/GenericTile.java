@@ -5,6 +5,9 @@ import com.mygdx.pmd.Controller.Controller;
 import com.mygdx.pmd.Model.FloorComponent.Floor;
 import com.mygdx.pmd.Screen.DungeonScreen;
 
+import static com.mygdx.pmd.Screen.DungeonScreen.windowCols;
+import static com.mygdx.pmd.Screen.DungeonScreen.windowRows;
+
 /**
  * Created by Cameron on 7/3/2016.
  */
@@ -38,13 +41,13 @@ public class GenericTile extends Tile {
             }
         }
 
-        if (col + 1 < Controller.windowCols) {
+        if (col + 1 < windowCols) {
             if ((tileBoard[row][col + 1] instanceof RoomTile)) {
                 right = true;
             }
         }
 
-        if (row + 1 < Controller.windowRows) {
+        if (row + 1 < windowRows) {
             if ((tileBoard[row + 1][col] instanceof RoomTile)) {
                 down = true;
             }
@@ -53,6 +56,5 @@ public class GenericTile extends Tile {
         if (right && down && up && left) {
             return false;
         } else return true;
-
     }
 }

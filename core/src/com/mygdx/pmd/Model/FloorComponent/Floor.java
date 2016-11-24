@@ -15,8 +15,8 @@ import com.mygdx.pmd.Model.Tile.Tile;
 
 import java.util.ArrayList;
 
-import static com.mygdx.pmd.Controller.Controller.windowCols;
-import static com.mygdx.pmd.Controller.Controller.windowRows;
+import static com.mygdx.pmd.Screen.DungeonScreen.windowCols;
+import static com.mygdx.pmd.Screen.DungeonScreen.windowRows;
 
 /**
  * Created by Cameron on 7/27/2016.
@@ -45,7 +45,7 @@ public class Floor implements Renderable, Updatable {
 
         tileBoard = new Tile[windowRows][windowCols];
         this.generateTileBoard();
-        this.pokemonPlayer = controller.getPokemonPlayer();
+        this.pokemonPlayer = controller.pokemonPlayer;
 
         roomGenerator = new RoomGenerator(this);
         pathGenerator = new PathGenerator(this);
@@ -96,6 +96,9 @@ public class Floor implements Renderable, Updatable {
     }
 
     public void render(SpriteBatch batch) {
+        for (int i = 0; i < controller.tileBoard.length; i++)
+            for (int j = 0; j < controller.tileBoard[0].length; j++)
+                controller.tileBoard[i][j].render(batch);
     }
 
     public void generateTileBoard() {

@@ -1,5 +1,6 @@
 package com.mygdx.pmd.Comparators;
 
+import com.mygdx.pmd.Model.Entity.Entity;
 import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
 
 import java.util.Comparator;
@@ -7,22 +8,20 @@ import java.util.Comparator;
 /**
  * Created by Cameron on 9/7/2016.
  */
-public class PokemonDistanceComparator implements Comparator<Pokemon> {
+public class PokemonDistanceComparator implements Comparator<Entity> {
 
-    Pokemon mainPokemon;
+    Entity entity;
 
-    public PokemonDistanceComparator(Pokemon mainPokemon)
-    {
-        this.mainPokemon = mainPokemon;
+    public PokemonDistanceComparator(Entity entity) {
+        this.entity = entity;
     }
 
 
     @Override
-    public int compare(Pokemon o1, Pokemon o2) {
-
-        if(this.distanceFormula(mainPokemon.x, mainPokemon.y, o1.x, o1.y) < this.distanceFormula(mainPokemon.x, mainPokemon.y, o2.x, o2.y))
+    public int compare(Entity o1, Entity o2) {
+        if(this.distanceFormula(entity.x, entity.y, o1.x, o1.y) < this.distanceFormula(entity.x, entity.y, o2.x, o2.y))
             return -1;
-        else if(this.distanceFormula(mainPokemon.x, mainPokemon.y, o1.x, o1.y) > this.distanceFormula(mainPokemon.x, mainPokemon.y, o2.x, o2.y))
+        else if(this.distanceFormula(entity.x, entity.y, o1.x, o1.y) > this.distanceFormula(entity.x, entity.y, o2.x, o2.y))
             return 1;
         else return 0;
     }

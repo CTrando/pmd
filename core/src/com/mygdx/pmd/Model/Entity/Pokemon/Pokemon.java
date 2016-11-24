@@ -11,29 +11,20 @@ import com.mygdx.pmd.utils.*;
 
 
 public abstract class Pokemon extends Entity {
-    public Turn turnState = Turn.COMPLETE;
     public PAnimation currentAnimation;
     public Tile[][] tileBoard;
-    public Action actionState = Action.IDLE;
+
     public PokemonName pokemonName;
     public Projectile projectile;
 
     protected Pokemon(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y);
-        this.isTurnBased = true;
         this.direction = Direction.down;
         this.pokemonName = pokemonName;
-    }
+        this.actionState = Action.IDLE;
 
-    @Override
-    public void update() {
-        for (int i = 0; i < behaviors.length; i++) {
-            behaviors[i].execute();
-        }
-    }
-
-    public void setBehavior(BaseBehavior behavior, int index) {
-        behaviors[index] = behavior;
+        this.turnState = Turn.COMPLETE;
+        this.isTurnBased = true;
     }
 
     @Override

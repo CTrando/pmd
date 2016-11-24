@@ -15,12 +15,15 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
     public void execute() {
         if(projectile.currentTile == null) return;
 
-        if(projectile.currentTile.hasEntity() && !projectile.isAttackFinished){
-            for(Entity entity: projectile.currentTile.getEntityList()) {
-                entity.takeDamage(1);
+        if(projectile.currentTile.hasEntity()){
+            if(projectile.parent.currentAnimation.isFinished()) {
+                for (Entity entity : projectile.currentTile.getEntityList()) {
+                    entity.takeDamage(1);
+                }
+                projectile.takeDamage(1);
+                projectile.shouldBeDestroyed = true;
+                projectile.parent.projectile = null;
             }
-            projectile.takeDamage(1);
-            projectile.isAttackFinished = true;
         }
     }
 }

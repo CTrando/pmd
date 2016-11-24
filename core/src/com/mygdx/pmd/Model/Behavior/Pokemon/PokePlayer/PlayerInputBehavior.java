@@ -52,19 +52,14 @@ public class PlayerInputBehavior extends PokemonBehavior {
                 pokemon.nextTile = null;
             }
 
-
             if (controller.isKeyPressed(Key.space)) {
-                controller.getCurrentFloor().getFloorGenerator().generateFloor();
-                controller.getCurrentFloor().getFloorGenerator().controller.randomizeAllPokemonLocation();
+                controller.currentFloor.getFloorGenerator().generateFloor();
+                controller.currentFloor.getFloorGenerator().controller.randomizeAllPokemonLocation();
             }
             if (controller.isKeyPressed(Key.a)) {
                 pokemon.turnState = Turn.COMPLETE;
                 pokemon.nextTile = null;
             }
-
-           /* if (controller.isKeyPressed(Key.a) && controller.isKeyPressed(Key.s) && this.turnBehavior.isTurnComplete()) {
-                this.turnBehavior.setTurnState(Turn.COMPLETE);
-            }*/
 
             if (controller.isKeyPressed(Key.b)) {
                 controller.controllerScreen.switchMenus("defaultMenu");

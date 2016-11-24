@@ -33,6 +33,7 @@ public class MobAttackLogicBehavior extends PokemonBehavior {
                     pokemon.actionState = Action.ATTACKING;
                     pokemon.turnState = Turn.PENDING;
                     pokemon.projectile = new Projectile(pokemon.facingTile, pokemon);
+                    controller.addEntity(pokemon.projectile);
                 }
             }
         }

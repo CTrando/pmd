@@ -13,14 +13,12 @@ public class PokemonMob extends Pokemon {
 
     public PokemonMob(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y, pokemonName);
-
         this.aggression = Aggression.aggressive;
 
         behaviors[BaseBehavior.LOGIC_BEHAVIOR] = new MobMovementLogicBehavior(this);
         behaviors[BaseBehavior.ATTACK_BEHAVIOR] = new MobAttackLogicBehavior(this);
         behaviors[BaseBehavior.MOVE_BEHAVIOR] = new MoveSlowBehavior(this);
         behaviors[BaseBehavior.ANIMATION_BEHAVIOR] = new AnimationBehavior(this);
-
     }
 
     @Override
