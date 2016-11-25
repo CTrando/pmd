@@ -99,11 +99,10 @@ public class DungeonScreen implements InputProcessor, Screen {
 
         Gdx.input.setInputProcessor(inputMultiplexer);
 
-       //manager.get("sfx/background.ogg", Music.class).play();
+        //manager.get("sfx/background.ogg", Music.class).play();
     }
 
-    public void switchMenus(String menu)
-    {
+    public void switchMenus(String menu) {
         stage.clear();
         currentMenu = menuList.get(menu);
         stage.addActor(currentMenu);
@@ -167,22 +166,30 @@ public class DungeonScreen implements InputProcessor, Screen {
     public void render(float delta) {
         this.updateCamera();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         batch.setProjectionMatrix(camera.combined);
+        batch.begin();
 
         for (Button b : currentMenu.updateButtonList) {
             b.update();
         }
 
-        batch.begin();
-
-        for (Renderable r : controller.renderList) {
-            r.render(batch);
+        for (int i = 0; i< controller.renderList.size(); i++){
+            controller.renderList.get(i).render(batch);
         }
 
+        //    batch.draw(animation.getCurrentSprite(), 100, 100);
+
+        /* Not sure about this, might be good need to do more reserach
+        new SpriteDrawable(animation.getCurrentSprite()).draw(batch, 100,100,22,22);
+        */
+
+        batch.end();
+
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(1,1,0,1);
+        shapeRenderer.setColor(1, 1, 0, 1);
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-        if(controller.isKeyPressed(Key.t)) {
+        if (controller.isKeyPressed(Key.t)) {
             for (int i = 0; i < tileBoard.length; i++) {
                 for (int j = 0; j < tileBoard[0].length; j++) {
                     Tile tile = tileBoard[i][j];
@@ -191,14 +198,6 @@ public class DungeonScreen implements InputProcessor, Screen {
             }
         }
         shapeRenderer.end();
-
-   //    batch.draw(animation.getCurrentSprite(), 100, 100);
-
-        /* Not sure about this, might be good need to do more reserach
-        new SpriteDrawable(animation.getCurrentSprite()).draw(batch, 100,100,22,22);
-        */
-
-        batch.end();
         stage.draw();
     }
 
