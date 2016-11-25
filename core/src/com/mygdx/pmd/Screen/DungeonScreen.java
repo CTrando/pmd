@@ -172,11 +172,12 @@ public class DungeonScreen implements InputProcessor, Screen {
 
         for (Button b : currentMenu.updateButtonList) {
             b.update();
-        }
+        } //TODO Fix the buttons so that they can adapt to changes in the entity list
 
         for (int i = 0; i< controller.renderList.size(); i++){
             controller.renderList.get(i).render(batch);
         }
+
 
         //    batch.draw(animation.getCurrentSprite(), 100, 100);
 

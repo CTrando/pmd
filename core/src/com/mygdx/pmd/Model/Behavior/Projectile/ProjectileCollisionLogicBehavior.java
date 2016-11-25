@@ -18,7 +18,7 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
         if(projectile.currentTile.hasEntity()){
             if(projectile.parent.currentAnimation.isFinished()) {
                 for (Entity entity : projectile.currentTile.getEntityList()) {
-                    entity.takeDamage(1);
+                    entity.takeDamage(100);
                 }
                 projectile.takeDamage(1);
                 projectile.shouldBeDestroyed = true;

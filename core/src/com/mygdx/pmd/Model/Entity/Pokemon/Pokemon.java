@@ -42,4 +42,10 @@ public abstract class Pokemon extends Entity {
             return false;
         return true;
     }
+
+    @Override
+    public void update(){
+        super.update();
+        if(hp <= 0) shouldBeDestroyed = true;
+    }
 }
