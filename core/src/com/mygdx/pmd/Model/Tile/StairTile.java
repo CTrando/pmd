@@ -1,9 +1,9 @@
-package com.mygdx.pmd.Model.Tile;
+package com.mygdx.pmd.model.Tile;
 
 
-import com.mygdx.pmd.Model.FloorComponent.Floor;
-import com.mygdx.pmd.Model.Entity.Pokemon.PokemonPlayer;
-import com.mygdx.pmd.Screen.DungeonScreen;
+import com.mygdx.pmd.model.FloorComponent.Floor;
+import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
+import com.mygdx.pmd.screens.DungeonScreen;
 
 /**
  * Created by Cameron on 8/15/2016.

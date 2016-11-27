@@ -1,12 +1,12 @@
-package com.mygdx.pmd.Model.Behavior.Pokemon.PokeMob;
+package com.mygdx.pmd.model.Behavior.Pokemon.PokeMob;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.Enumerations.Action;
-import com.mygdx.pmd.Enumerations.Turn;
-import com.mygdx.pmd.Exceptions.PathFindFailureException;
-import com.mygdx.pmd.Model.Behavior.Pokemon.PokemonBehavior;
-import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
-import com.mygdx.pmd.Model.Tile.Tile;
+import com.mygdx.pmd.enumerations.Action;
+import com.mygdx.pmd.enumerations.Turn;
+import com.mygdx.pmd.exceptions.PathFindFailureException;
+import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
+import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
+import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.AI.ShortestPath;
 
 /**

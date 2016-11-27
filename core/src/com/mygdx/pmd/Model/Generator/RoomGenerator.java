@@ -1,10 +1,10 @@
-package com.mygdx.pmd.Model.Generator;
+package com.mygdx.pmd.model.Generator;
 
 
-import com.mygdx.pmd.Model.FloorComponent.Floor;
-import com.mygdx.pmd.Model.FloorComponent.Room;
-import com.mygdx.pmd.Model.Tile.RoomTile;
-import com.mygdx.pmd.Model.Tile.Tile;
+import com.mygdx.pmd.model.FloorComponent.Floor;
+import com.mygdx.pmd.model.FloorComponent.Room;
+import com.mygdx.pmd.model.Tile.RoomTile;
+import com.mygdx.pmd.model.Tile.Tile;
 
 import java.util.ArrayList;
 

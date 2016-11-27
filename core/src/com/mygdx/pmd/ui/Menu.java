@@ -1,9 +1,8 @@
 package com.mygdx.pmd.ui;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.Enumerations.MenuID;
+import com.mygdx.pmd.enumerations.MenuID;
 
 /**
  * Created by Cameron on 9/23/2016.

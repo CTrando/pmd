@@ -1,8 +1,8 @@
 package com.mygdx.pmd.utils.AI;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.Exceptions.PathFindFailureException;
-import com.mygdx.pmd.Model.Tile.Tile;
+import com.mygdx.pmd.exceptions.PathFindFailureException;
+import com.mygdx.pmd.model.Tile.Tile;
 
 /**
  * Created by Cameron on 11/11/2016.

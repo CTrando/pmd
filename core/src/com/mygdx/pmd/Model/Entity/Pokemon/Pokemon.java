@@ -1,18 +1,16 @@
-package com.mygdx.pmd.Model.Entity.Pokemon;
+package com.mygdx.pmd.model.Entity.Pokemon;
 
 
-import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Enumerations.*;
-import com.mygdx.pmd.Model.Behavior.BaseBehavior;
-import com.mygdx.pmd.Model.Entity.Entity;
-import com.mygdx.pmd.Model.Entity.Projectile.Projectile;
-import com.mygdx.pmd.Model.Tile.Tile;
+import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.model.Entity.Entity;
+import com.mygdx.pmd.model.Entity.Projectile.Projectile;
+import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.*;
 
 
 public abstract class Pokemon extends Entity {
     public PAnimation currentAnimation;
-    public Tile[][] tileBoard;
 
     public PokemonName pokemonName;
     public Projectile projectile;
@@ -47,5 +45,40 @@ public abstract class Pokemon extends Entity {
     public void update(){
         super.update();
         if(hp <= 0) shouldBeDestroyed = true;
+        if(shouldBeDestroyed) controller.removeEntity(this);
+    }
+
+    public void attack(Move move){
+        this.projectile = new Projectile(this, move);
+        controller.addEntity(this.projectile);
+    }
+
+    public boolean isVisible(){
+        int rOffset = 0;
+        int cOffset = 0;
+
+        switch(this.direction){
+            case down:
+                rOffset = -1;
+                break;
+            case up:
+                rOffset = 1;
+                break;
+            case right:
+                cOffset = 1;
+                break;
+            case left:
+                cOffset = -1;
+        }
+        for(int i = 1; i< 5; i++){
+            try {
+                Tile tile = tileBoard[currentTile.row + i * rOffset][currentTile.col + i * cOffset];
+
+                if (tile.hasEntity() && tile != currentTile) {
+                    return true;
+                }
+            } catch(ArrayIndexOutOfBoundsException e){}
+        }
+        return false;
     }
 }

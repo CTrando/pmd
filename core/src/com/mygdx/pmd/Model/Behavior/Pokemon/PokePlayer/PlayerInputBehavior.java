@@ -1,10 +1,10 @@
-package com.mygdx.pmd.Model.Behavior.Pokemon.PokePlayer;
+package com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer;
 
-import com.mygdx.pmd.Enumerations.Direction;
-import com.mygdx.pmd.Enumerations.Key;
-import com.mygdx.pmd.Enumerations.Turn;
-import com.mygdx.pmd.Model.Behavior.Pokemon.PokemonBehavior;
-import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
+import com.mygdx.pmd.enumerations.Direction;
+import com.mygdx.pmd.enumerations.Key;
+import com.mygdx.pmd.enumerations.Turn;
+import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
+import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 
 /**
  * Created by Cameron on 11/8/2016.

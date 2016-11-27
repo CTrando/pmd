@@ -8,11 +8,11 @@ import com.mygdx.pmd.PMD;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.foregroundFPS = 60;
-		config.width = 1080;
-		config.height = 720;
-
 		PMD game = new PMD();
+		config.foregroundFPS = 60;
+		config.width = game.WIDTH;
+		config.height = game.HEIGHT;
+		config.title = game.TITLE;
 
 		UISimpleTest test = new UISimpleTest();
 

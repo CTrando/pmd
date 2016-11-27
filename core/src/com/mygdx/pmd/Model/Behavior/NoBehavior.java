@@ -1,6 +1,6 @@
-package com.mygdx.pmd.Model.Behavior;
+package com.mygdx.pmd.model.Behavior;
 
-import com.mygdx.pmd.Model.Entity.Entity;
+import com.mygdx.pmd.model.Entity.Entity;
 
 /**
  * Created by Cameron on 11/10/2016.

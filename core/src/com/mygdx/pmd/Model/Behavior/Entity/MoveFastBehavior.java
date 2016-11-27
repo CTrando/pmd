@@ -1,6 +1,6 @@
-package com.mygdx.pmd.Model.Behavior.Entity;
+package com.mygdx.pmd.model.Behavior.Entity;
 
-import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
+import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 
 /**
  * Created by Cameron on 11/11/2016.

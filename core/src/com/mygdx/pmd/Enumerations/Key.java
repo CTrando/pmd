@@ -1,4 +1,4 @@
-package com.mygdx.pmd.Enumerations;
+package com.mygdx.pmd.enumerations;
 
 import com.badlogic.gdx.Input;
 

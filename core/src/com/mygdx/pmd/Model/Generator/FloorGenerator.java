@@ -1,11 +1,10 @@
-package com.mygdx.pmd.Model.Generator;
+package com.mygdx.pmd.model.Generator;
 
 
-import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Model.Entity.Entity;
-import com.mygdx.pmd.Model.FloorComponent.Floor;
-import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
-import com.mygdx.pmd.Model.Tile.Tile;
+import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.model.Entity.Entity;
+import com.mygdx.pmd.model.FloorComponent.Floor;
+import com.mygdx.pmd.model.Tile.Tile;
 
 /**
  * Created by Cameron on 7/6/2016.

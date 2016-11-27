@@ -1,8 +1,8 @@
-package com.mygdx.pmd.Model.Behavior;
+package com.mygdx.pmd.model.Behavior;
 
-import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Model.Tile.Tile;
-import com.mygdx.pmd.Model.Entity.Entity;
+import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.Entity.Entity;
 
 /**
  * Created by Cameron on 11/8/2016.

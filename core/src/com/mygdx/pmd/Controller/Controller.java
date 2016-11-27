@@ -1,26 +1,21 @@
-package com.mygdx.pmd.Controller;
+package com.mygdx.pmd.controller;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
-import com.mygdx.pmd.Comparators.PokemonDistanceComparator;
-import com.mygdx.pmd.Enumerations.*;
-import com.mygdx.pmd.Interfaces.Renderable;
-import com.mygdx.pmd.Interfaces.Updatable;
-import com.mygdx.pmd.Model.Factory.PokemonFactory;
-import com.mygdx.pmd.Model.FloorComponent.Floor;
-import com.mygdx.pmd.Model.FloorComponent.Room;
-import com.mygdx.pmd.Model.Generator.FloorGenerator;
-import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
-import com.mygdx.pmd.Model.Entity.Pokemon.PokemonMob;
-import com.mygdx.pmd.Model.Entity.Pokemon.PokemonPlayer;
-import com.mygdx.pmd.Model.Tile.Tile;
-import com.mygdx.pmd.Screen.DungeonScreen;
-import com.mygdx.pmd.utils.Constants;
-import com.mygdx.pmd.Model.Entity.Entity;
-import com.mygdx.pmd.Model.Entity.Projectile.Projectile;
+import com.mygdx.pmd.comparators.PokemonDistanceComparator;
+import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.interfaces.Renderable;
+import com.mygdx.pmd.model.Factory.PokemonFactory;
+import com.mygdx.pmd.model.FloorComponent.Floor;
+import com.mygdx.pmd.model.Generator.FloorGenerator;
+import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
+import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
+import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
+import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.screens.DungeonScreen;
+import com.mygdx.pmd.model.Entity.Entity;
 
 import java.io.IOException;
 import java.util.ArrayList;

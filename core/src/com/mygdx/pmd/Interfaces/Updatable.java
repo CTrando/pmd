@@ -1,4 +1,4 @@
-package com.mygdx.pmd.Interfaces;
+package com.mygdx.pmd.interfaces;
 
 /**
  * Created by Cameron on 7/27/2016.

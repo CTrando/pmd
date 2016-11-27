@@ -1,6 +1,4 @@
-package com.mygdx.pmd.Exceptions;
-
-import com.mygdx.pmd.utils.AI.PathFind;
+package com.mygdx.pmd.exceptions;
 
 /**
  * Created by Cameron on 11/23/2016.

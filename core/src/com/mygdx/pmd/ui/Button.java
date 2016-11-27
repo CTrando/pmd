@@ -5,8 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Enumerations.MenuID;
+import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.MenuID;
 
 /**
  * Created by Cameron on 9/11/2016.

@@ -1,7 +1,7 @@
 package com.mygdx.pmd.utils;
 
 
-import com.mygdx.pmd.Controller.Controller;
+import com.mygdx.pmd.controller.Controller;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

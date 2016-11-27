@@ -1,14 +1,14 @@
-package com.mygdx.pmd.Model.Tile;
+package com.mygdx.pmd.model.Tile;
 
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.Interfaces.Renderable;
-import com.mygdx.pmd.Model.FloorComponent.Floor;
-import com.mygdx.pmd.Screen.DungeonScreen;
+import com.mygdx.pmd.interfaces.Renderable;
+import com.mygdx.pmd.model.FloorComponent.Floor;
+import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.Constants;
-import com.mygdx.pmd.Model.Entity.Entity;
+import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.utils.MathLogic;
 
 import java.util.ArrayList;

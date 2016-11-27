@@ -1,22 +1,22 @@
-package com.mygdx.pmd.Model.FloorComponent;
+package com.mygdx.pmd.model.FloorComponent;
 
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Interfaces.Renderable;
-import com.mygdx.pmd.Interfaces.Updatable;
-import com.mygdx.pmd.Model.Generator.FloorGenerator;
-import com.mygdx.pmd.Model.Generator.PathGenerator;
-import com.mygdx.pmd.Model.Generator.RoomGenerator;
-import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
-import com.mygdx.pmd.Model.Tile.GenericTile;
-import com.mygdx.pmd.Model.Tile.StairTile;
-import com.mygdx.pmd.Model.Tile.Tile;
+import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.interfaces.Renderable;
+import com.mygdx.pmd.interfaces.Updatable;
+import com.mygdx.pmd.model.Generator.FloorGenerator;
+import com.mygdx.pmd.model.Generator.PathGenerator;
+import com.mygdx.pmd.model.Generator.RoomGenerator;
+import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
+import com.mygdx.pmd.model.Tile.GenericTile;
+import com.mygdx.pmd.model.Tile.StairTile;
+import com.mygdx.pmd.model.Tile.Tile;
 
 import java.util.ArrayList;
 
-import static com.mygdx.pmd.Screen.DungeonScreen.windowCols;
-import static com.mygdx.pmd.Screen.DungeonScreen.windowRows;
+import static com.mygdx.pmd.screens.DungeonScreen.windowCols;
+import static com.mygdx.pmd.screens.DungeonScreen.windowRows;
 
 /**
  * Created by Cameron on 7/27/2016.

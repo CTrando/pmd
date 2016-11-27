@@ -163,7 +163,7 @@ public class UISimpleTest extends Game {
             Array<XmlReader.Element> nodeList = root.getChildrenByName("Button");
             /*for(XmlReader.Element e: nodeList)
             {
-                table.add(new Button(e.get("text"), e.get("classifier"), skin, table, controller)).width(200);
+                table.add(new Button(e.get("text"), e.get("classifier"), skin, table, controller)).WIDTH(200);
                 table.row();
             }*/
             //have a HashMap of tables that I load on startup and can access

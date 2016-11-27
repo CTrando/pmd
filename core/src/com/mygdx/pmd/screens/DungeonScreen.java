@@ -1,4 +1,4 @@
-package com.mygdx.pmd.Screen;
+package com.mygdx.pmd.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
@@ -14,25 +14,21 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
-import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Enumerations.Key;
-import com.mygdx.pmd.Interfaces.Renderable;
-import com.mygdx.pmd.Model.Entity.Entity;
-import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
-import com.mygdx.pmd.Model.Tile.Tile;
+import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.Key;
+import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.Model.Entity.Projectile.Projectile;
+import com.mygdx.pmd.states.GameStateManager;
 import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.utils.Timer;
 import com.mygdx.pmd.ui.Button;
 import com.mygdx.pmd.ui.Menu;
-import com.mygdx.pmd.utils.PAnimation;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class DungeonScreen implements InputProcessor, Screen {
+public class DungeonScreen extends PScreen implements InputProcessor {
     final PMD game;
     SpriteBatch batch;
     ShapeRenderer shapeRenderer;
@@ -61,17 +57,16 @@ public class DungeonScreen implements InputProcessor, Screen {
     public static HashMap<Integer, AtomicBoolean> keys;
     public static HashMap<String, Menu> menuList;
 
-    public static final boolean isFullView = true;
-
-    public static final int APP_WIDTH = 1080;//Gdx.graphics.getWidth();
-    public static final int APP_HEIGHT = 720;//Gdx.graphics.getHeight();
+    /*public static final int APP_WIDTH = 1080;//Gdx.graphics.getWidth();
+    public static final int APP_HEIGHT = 720;//Gdx.graphics.getHeight();*/
 
     public DungeonScreen(final PMD game) {
         this.game = game;
         batch = game.batch;
-        shapeRenderer = new ShapeRenderer();
-
+        shapeRenderer = game.shapeRenderer;
         this.loadManager();
+        gameStateManager = new GameStateManager();
+
         controller = new Controller(this);
         tileBoard = controller.tileBoard;
         this.loadMenus();
@@ -80,17 +75,15 @@ public class DungeonScreen implements InputProcessor, Screen {
         currentMenu = menuList.get("defaultMenu");
         stage.addActor(currentMenu);
 
-
         keys = new HashMap<Integer, AtomicBoolean>();
-        updateButtonList = new Array<Button>();
-
         this.loadKeys();
+
+        updateButtonList = new Array<Button>();
 
         Timer timer = new Timer(controller);
         timer.ticking();
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
         camera.update();
 
         inputMultiplexer = new InputMultiplexer();
@@ -146,6 +139,7 @@ public class DungeonScreen implements InputProcessor, Screen {
         manager.load("pokemonassets/TREEKO_WALKSHEET.atlas", TextureAtlas.class);
         manager.load("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class);
         manager.load("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class);
+        manager.load("pokemonassets/PROJECTILE_TEXTURE.atlas", TextureAtlas.class);
         manager.load("sfx/background.ogg", Music.class);
         manager.load("sfx/wallhit.wav", Sound.class);
         manager.finishLoading();
@@ -153,7 +147,7 @@ public class DungeonScreen implements InputProcessor, Screen {
         this.loadImages(manager.get("pokemonassets/TREEKO_WALKSHEET.atlas", TextureAtlas.class));
         this.loadImages(manager.get("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class));
         this.loadImages(manager.get("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class));
-
+        this.loadImages(manager.get("pokemonassets/PROJECTILE_TEXTURE.atlas", TextureAtlas.class));
     }
 
     public void loadKeys() {

@@ -1,11 +1,9 @@
 package com.mygdx.pmd.utils.AI;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.Exceptions.PathFindFailureException;
-import com.mygdx.pmd.Model.Tile.Tile;
-import com.mygdx.pmd.Model.Entity.Entity;
-
-import java.nio.file.Path;
+import com.mygdx.pmd.exceptions.PathFindFailureException;
+import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.Entity.Entity;
 
 /**
  * Created by Cameron on 10/30/2016.

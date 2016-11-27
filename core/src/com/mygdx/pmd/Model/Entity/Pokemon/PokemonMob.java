@@ -1,13 +1,13 @@
-package com.mygdx.pmd.Model.Entity.Pokemon;
+package com.mygdx.pmd.model.Entity.Pokemon;
 
-import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Enumerations.*;
-import com.mygdx.pmd.Model.Behavior.*;
-import com.mygdx.pmd.Model.Behavior.Entity.AnimationBehavior;
-import com.mygdx.pmd.Model.Behavior.Entity.MoveSlowBehavior;
-import com.mygdx.pmd.Model.Behavior.Pokemon.PokeMob.MobAttackLogicBehavior;
-import com.mygdx.pmd.Model.Behavior.Pokemon.PokeMob.MobMovementLogicBehavior;
-import com.mygdx.pmd.Model.Tile.Tile;
+import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.model.Behavior.*;
+import com.mygdx.pmd.model.Behavior.Pokemon.PokemonAnimationBehavior;
+import com.mygdx.pmd.model.Behavior.Entity.MoveSlowBehavior;
+import com.mygdx.pmd.model.Behavior.Pokemon.PokeMob.MobAttackLogicBehavior;
+import com.mygdx.pmd.model.Behavior.Pokemon.PokeMob.MobMovementLogicBehavior;
+import com.mygdx.pmd.model.Tile.Tile;
 
 public class PokemonMob extends Pokemon {
 
@@ -18,7 +18,7 @@ public class PokemonMob extends Pokemon {
         behaviors[BaseBehavior.LOGIC_BEHAVIOR] = new MobMovementLogicBehavior(this);
         behaviors[BaseBehavior.ATTACK_BEHAVIOR] = new MobAttackLogicBehavior(this);
         behaviors[BaseBehavior.MOVE_BEHAVIOR] = new MoveSlowBehavior(this);
-        behaviors[BaseBehavior.ANIMATION_BEHAVIOR] = new AnimationBehavior(this);
+        behaviors[BaseBehavior.ANIMATION_BEHAVIOR] = new PokemonAnimationBehavior(this);
     }
 
     @Override

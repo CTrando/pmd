@@ -1,9 +1,9 @@
-package com.mygdx.pmd.Model.FloorComponent;
+package com.mygdx.pmd.model.FloorComponent;
 
 
-import com.mygdx.pmd.Model.Tile.DoorTile;
-import com.mygdx.pmd.Model.Tile.RoomTile;
-import com.mygdx.pmd.Model.Tile.Tile;
+import com.mygdx.pmd.model.Tile.DoorTile;
+import com.mygdx.pmd.model.Tile.RoomTile;
+import com.mygdx.pmd.model.Tile.Tile;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Room {
     public ArrayList<Tile> roomConstraints;
 
-    public int startingRow;   //height and width are expressed in tiles
+    public int startingRow;   //HEIGHT and width are expressed in tiles
     public int startingCol;
 
     public int endingRow;

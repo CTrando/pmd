@@ -1,19 +1,19 @@
-package com.mygdx.pmd.Model.Entity;
+package com.mygdx.pmd.model.Entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
-import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Enumerations.*;
-import com.mygdx.pmd.Interfaces.Renderable;
-import com.mygdx.pmd.Interfaces.Updatable;
-import com.mygdx.pmd.Model.Behavior.BaseBehavior;
-import com.mygdx.pmd.Model.Behavior.NoBehavior;
-import com.mygdx.pmd.Model.Tile.StairTile;
-import com.mygdx.pmd.Model.Tile.Tile;
-import com.mygdx.pmd.Screen.DungeonScreen;
+import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.interfaces.Renderable;
+import com.mygdx.pmd.interfaces.Updatable;
+import com.mygdx.pmd.model.Behavior.BaseBehavior;
+import com.mygdx.pmd.model.Behavior.NoBehavior;
+import com.mygdx.pmd.model.Tile.StairTile;
+import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.PAnimation;
 
 import java.io.IOException;
@@ -68,13 +68,9 @@ public abstract class Entity implements Renderable, Updatable {
     }
 
     @Override
-    public void update(){
-        for(int i = 0; i< behaviors.length; i++){
+    public void update() {
+        for (int i = 0; i < behaviors.length; i++) {
             behaviors[i].execute();
-        }
-
-        if(this.shouldBeDestroyed){
-            controller.removeEntity(this);
         }
     }
 
@@ -87,6 +83,7 @@ public abstract class Entity implements Renderable, Updatable {
     }
 
     public abstract boolean isLegalToMoveTo(Tile tile);
+
     public void setBehavior(BaseBehavior behavior, int index) {
         behaviors[index] = behavior;
     }

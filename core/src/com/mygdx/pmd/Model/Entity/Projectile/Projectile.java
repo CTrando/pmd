@@ -1,17 +1,18 @@
-package com.mygdx.pmd.Model.Entity.Projectile;
+package com.mygdx.pmd.model.Entity.Projectile;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.Enumerations.Direction;
-import com.mygdx.pmd.Model.Behavior.BaseBehavior;
-import com.mygdx.pmd.Model.Behavior.Entity.MoveSlowBehavior;
-import com.mygdx.pmd.Model.Behavior.Projectile.ProjectileCollisionLogicBehavior;
-import com.mygdx.pmd.Model.Behavior.Projectile.ProjectileMovementLogicBehavior;
-import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
-import com.mygdx.pmd.Model.Tile.GenericTile;
-import com.mygdx.pmd.Model.Tile.Tile;
-import com.mygdx.pmd.Screen.DungeonScreen;
-import com.mygdx.pmd.Model.Entity.Entity;
+import com.mygdx.pmd.enumerations.Action;
+import com.mygdx.pmd.enumerations.Move;
+import com.mygdx.pmd.model.Behavior.BaseBehavior;
+import com.mygdx.pmd.model.Behavior.Projectile.ProjectileAnimationBehavior;
+import com.mygdx.pmd.model.Behavior.Projectile.ProjectileCollisionLogicBehavior;
+import com.mygdx.pmd.model.Behavior.Projectile.ProjectileRangedMovementBehavior;
+import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
+import com.mygdx.pmd.model.Tile.GenericTile;
+import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.screens.DungeonScreen;
+import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.utils.PAnimation;
 
 /**
@@ -21,48 +22,64 @@ public class Projectile extends Entity {
 
     private PAnimation projectileAnimation;
     public Pokemon parent;
-    private Tile targetTile;
-    public boolean isAttackFinished;
-    public boolean destroy;
+    public Move move;
+    public boolean isRanged;
 
-    public Projectile(Tile targetTile, Pokemon parent) {
+    public Projectile(Pokemon parent, Move move) {
         super(parent.controller, parent.facingTile.x, parent.facingTile.y);
-
+        this.direction = parent.direction;
         this.isTurnBased = false;
-
-        behaviors[BaseBehavior.ATTACK_BEHAVIOR] = new ProjectileCollisionLogicBehavior(this);
-        behaviors[BaseBehavior.LOGIC_BEHAVIOR] = new ProjectileMovementLogicBehavior(this);
-        behaviors[BaseBehavior.MOVE_BEHAVIOR] = new MoveSlowBehavior(this);
-
         this.hp = 1;
-        this.targetTile = targetTile;
         this.currentTile = parent.facingTile;
         this.parent = parent;
+        this.move = move;
+        this.isRanged = move.isRanged();
+
+        behaviors[BaseBehavior.ATTACK_BEHAVIOR] = new ProjectileCollisionLogicBehavior(this);
+
+        if(move.isRanged()){
+            behaviors[BaseBehavior.LOGIC_BEHAVIOR] = new ProjectileRangedMovementBehavior(this);
+            behaviors[BaseBehavior.ANIMATION_BEHAVIOR] = new ProjectileAnimationBehavior(this);
+            this.actionState = Action.MOVING;
+        }
+
 
         Array<Sprite> array = new Array<Sprite>();
-        array.add(DungeonScreen.sprites.get("treekodownattack3"));
-        projectileAnimation = new PAnimation("attack", array, null, 10, false);
+        array.add(DungeonScreen.sprites.get("projectile1"));
+        array.add(DungeonScreen.sprites.get("projectile2"));
+        array.add(DungeonScreen.sprites.get("projectile3"));
+
+        projectileAnimation = new PAnimation("attack", array, null, 20, true);
+        animationMap.put("movement", projectileAnimation);
+
+        array = new Array<Sprite>();
+        array.add(DungeonScreen.sprites.get("projectiledeath1"));
+        array.add(DungeonScreen.sprites.get("projectiledeath2"));
+        array.add(DungeonScreen.sprites.get("projectiledeath3"));
+
+        projectileAnimation = new PAnimation("death", array, null, 20, false);
+        animationMap.put("death", projectileAnimation);
     }
 
-    public Projectile(Direction direction, Pokemon parent) {
-        super(parent.controller, parent.currentTile.x, parent.currentTile.y);
-        this.hp = 1;
-        this.isTurnBased = false;
+    @Override
+    public void update(){
+        if(parent.currentAnimation.isFinished()) {
+            super.update();
+        }
 
-        this.x = parent.getCurrentTile().x;
-        this.y = parent.getCurrentTile().y;
-
-        Array<Sprite> array = new Array<Sprite>();
-        array.add(DungeonScreen.sprites.get("treekodownattack3"));
-        projectileAnimation = new PAnimation("attack", array, null, 10, false);
-
-        this.direction = direction;
-        this.parent = parent;
+        if(projectileAnimation.isFinished() && this.shouldBeDestroyed){
+            controller.removeEntity(this);
+        }
     }
 
     @Override
     public boolean isLegalToMoveTo(Tile tile) {
         if(tile instanceof GenericTile || tile.hasEntity()) return false;
+        return true;
+    }
+
+    public boolean isLegal(){
+        if(currentTile instanceof GenericTile || currentTile == null) return false;
         return true;
     }
 }

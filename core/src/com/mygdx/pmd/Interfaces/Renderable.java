@@ -1,4 +1,4 @@
-package com.mygdx.pmd.Interfaces;
+package com.mygdx.pmd.interfaces;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

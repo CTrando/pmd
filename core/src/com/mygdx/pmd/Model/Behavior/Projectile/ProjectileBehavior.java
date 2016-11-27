@@ -1,7 +1,7 @@
-package com.mygdx.pmd.Model.Behavior.Projectile;
+package com.mygdx.pmd.model.Behavior.Projectile;
 
-import com.mygdx.pmd.Model.Behavior.BaseBehavior;
-import com.mygdx.pmd.Model.Entity.Projectile.Projectile;
+import com.mygdx.pmd.model.Behavior.BaseBehavior;
+import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 
 /**
  * Created by Cameron on 11/17/2016.

@@ -1,10 +1,10 @@
-package com.mygdx.pmd.Model.Factory;
+package com.mygdx.pmd.model.Factory;
 
-import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Enumerations.PokemonName;
-import com.mygdx.pmd.Model.Entity.Pokemon.Pokemon;
-import com.mygdx.pmd.Model.Entity.Pokemon.PokemonMob;
-import com.mygdx.pmd.Model.Entity.Pokemon.PokemonPlayer;
+import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.PokemonName;
+import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
+import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
+import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 
 /**
  * Created by Cameron on 11/6/2016.

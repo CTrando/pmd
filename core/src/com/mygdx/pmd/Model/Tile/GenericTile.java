@@ -1,12 +1,11 @@
-package com.mygdx.pmd.Model.Tile;
+package com.mygdx.pmd.model.Tile;
 
 
-import com.mygdx.pmd.Controller.Controller;
-import com.mygdx.pmd.Model.FloorComponent.Floor;
-import com.mygdx.pmd.Screen.DungeonScreen;
+import com.mygdx.pmd.model.FloorComponent.Floor;
+import com.mygdx.pmd.screens.DungeonScreen;
 
-import static com.mygdx.pmd.Screen.DungeonScreen.windowCols;
-import static com.mygdx.pmd.Screen.DungeonScreen.windowRows;
+import static com.mygdx.pmd.screens.DungeonScreen.windowCols;
+import static com.mygdx.pmd.screens.DungeonScreen.windowRows;
 
 /**
  * Created by Cameron on 7/3/2016.
