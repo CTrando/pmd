@@ -24,7 +24,6 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
                 }
                 projectile.takeDamage(1);
                 projectile.shouldBeDestroyed = true;
-                projectile.parent.projectile = null;
                 projectile.actionState = Action.DEATH;
             }
         }
@@ -32,7 +31,6 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
         if(!projectile.isLegal()){
             projectile.takeDamage(1);
             projectile.shouldBeDestroyed = true;
-            projectile.parent.projectile = null;
             projectile.actionState = Action.DEATH;
         }
     }

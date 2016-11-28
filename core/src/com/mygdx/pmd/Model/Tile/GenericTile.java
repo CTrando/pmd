@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Tile;
 
 
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.model.FloorComponent.Floor;
 import com.mygdx.pmd.screens.DungeonScreen;
 
@@ -15,7 +16,7 @@ public class GenericTile extends Tile {
     public GenericTile(Floor floor, int row, int col) {
         super(row, col, floor, "GENERIO");
         this.isWalkable = false;
-        this.sprite = DungeonScreen.sprites.get("generictilesprite");
+        this.sprite = PMD.sprites.get("generictilesprite");
     }
 
     @Override

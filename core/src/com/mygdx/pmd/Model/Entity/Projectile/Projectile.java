@@ -2,6 +2,7 @@ package com.mygdx.pmd.model.Entity.Projectile;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Move;
 import com.mygdx.pmd.model.Behavior.BaseBehavior;
@@ -45,17 +46,17 @@ public class Projectile extends Entity {
 
 
         Array<Sprite> array = new Array<Sprite>();
-        array.add(DungeonScreen.sprites.get("projectile1"));
-        array.add(DungeonScreen.sprites.get("projectile2"));
-        array.add(DungeonScreen.sprites.get("projectile3"));
+        array.add(PMD.sprites.get("projectile1"));
+        array.add(PMD.sprites.get("projectile2"));
+        array.add(PMD.sprites.get("projectile3"));
 
         projectileAnimation = new PAnimation("attack", array, null, 20, true);
         animationMap.put("movement", projectileAnimation);
 
         array = new Array<Sprite>();
-        array.add(DungeonScreen.sprites.get("projectiledeath1"));
-        array.add(DungeonScreen.sprites.get("projectiledeath2"));
-        array.add(DungeonScreen.sprites.get("projectiledeath3"));
+        array.add(PMD.sprites.get("projectiledeath1"));
+        array.add(PMD.sprites.get("projectiledeath2"));
+        array.add(PMD.sprites.get("projectiledeath3"));
 
         projectileAnimation = new PAnimation("death", array, null, 20, false);
         animationMap.put("death", projectileAnimation);
@@ -69,6 +70,7 @@ public class Projectile extends Entity {
 
         if(projectileAnimation.isFinished() && this.shouldBeDestroyed){
             controller.removeEntity(this);
+            this.parent.projectile = null;
         }
     }
 

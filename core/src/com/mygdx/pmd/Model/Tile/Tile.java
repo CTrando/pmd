@@ -4,9 +4,9 @@ package com.mygdx.pmd.model.Tile;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.model.FloorComponent.Floor;
-import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.utils.MathLogic;
@@ -25,8 +25,7 @@ public abstract class Tile implements Renderable {
     public Floor floor;
 
     public Sprite sprite;
-    private Sprite debug = DungeonScreen.sprites.get("debugtilesprite");
-    ;
+    private Sprite debug = PMD.sprites.get("debugtilesprite");
 
     public boolean isWalkable;
     public String classifier; //for toString purposes

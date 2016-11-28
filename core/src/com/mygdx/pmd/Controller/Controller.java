@@ -60,6 +60,7 @@ public class Controller {
             for (int i = 0; i< entityList.size(); i++) { //TODO there may be an error here later, fix when projectiles are implemented better
                 entityList.get(i).update();
             }
+
             Entity entity = turnBasedEntities.get(turnBasedEntityCount % turnBasedEntities.size());
             if (entity.turnState == Turn.COMPLETE) {
                 entity = turnBasedEntities.get((++turnBasedEntityCount) % turnBasedEntities.size());

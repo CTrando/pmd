@@ -2,6 +2,7 @@ package com.mygdx.pmd.model.Tile;
 
 
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.model.FloorComponent.Floor;
 import com.mygdx.pmd.screens.DungeonScreen;
 
@@ -13,7 +14,7 @@ public abstract class PathTile extends Tile {
     public PathTile(int row, int col, Floor floor, String classifier) {
         super(row, col, floor, classifier);
         this.isWalkable = true;
-        this.sprite = DungeonScreen.sprites.get("vpathtilesprite");
+        this.sprite = PMD.sprites.get("vpathtilesprite");
     }
 
     @Override

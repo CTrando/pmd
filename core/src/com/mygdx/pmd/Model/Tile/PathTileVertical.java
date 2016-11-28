@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Tile;
 
 
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.model.FloorComponent.Floor;
 import com.mygdx.pmd.screens.DungeonScreen;
 
@@ -11,7 +12,7 @@ public class PathTileVertical extends PathTile {
 
     public PathTileVertical(Floor floor, int row, int col) {
         super(row, col, floor, "PATHVERT");
-        this.sprite = DungeonScreen.sprites.get("vpathtilesprite");
+        this.sprite = PMD.sprites.get("vpathtilesprite");
     }
 
     @Override

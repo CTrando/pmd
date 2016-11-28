@@ -10,28 +10,35 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.Key;
 import com.mygdx.pmd.model.Tile.Tile;
-import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.states.GameStateManager;
+import com.mygdx.pmd.scenes.Hud;
 import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.utils.Timer;
 import com.mygdx.pmd.ui.Button;
 import com.mygdx.pmd.ui.Menu;
+
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DungeonScreen extends PScreen implements InputProcessor {
-    final PMD game;
+    final com.mygdx.pmd.PMD game;
     SpriteBatch batch;
     ShapeRenderer shapeRenderer;
+    Hud hud;
 
     public Controller controller;
     public Tile[][] tileBoard;
@@ -41,14 +48,16 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     public static final int windowRows = windowLength / Constants.TILE_SIZE;
     public static final int windowCols = windowWidth / Constants.TILE_SIZE;
 
+    public static final int V_WIDTH = 1080;
+    public static final int V_HEIGHT = 720;
+
     public AssetManager manager;
-    public static HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
     public Array<Button> updateButtonList;
 
     InputMultiplexer inputMultiplexer;
 
-
-    OrthographicCamera camera;
+    private OrthographicCamera gameCamera;
+    private Viewport gamePort;
 
     public static Menu currentMenu;
     Stage stage;
@@ -57,17 +66,17 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     public static HashMap<Integer, AtomicBoolean> keys;
     public static HashMap<String, Menu> menuList;
 
-    /*public static final int APP_WIDTH = 1080;//Gdx.graphics.getWidth();
-    public static final int APP_HEIGHT = 720;//Gdx.graphics.getHeight();*/
+    public DungeonScreen(final com.mygdx.pmd.PMD game) {
+        controller = new Controller(this);
 
-    public DungeonScreen(final PMD game) {
         this.game = game;
         batch = game.batch;
         shapeRenderer = game.shapeRenderer;
-        this.loadManager();
-        gameStateManager = new GameStateManager();
+        gameCamera = new OrthographicCamera(PMD.WIDTH, PMD.HEIGHT);
+        gamePort = new FitViewport(PMD.WIDTH, PMD.HEIGHT, gameCamera);
+        hud = new Hud(controller, this.batch);
 
-        controller = new Controller(this);
+
         tileBoard = controller.tileBoard;
         this.loadMenus();
 
@@ -83,13 +92,11 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         Timer timer = new Timer(controller);
         timer.ticking();
 
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.update();
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
         inputMultiplexer.addProcessor(stage);
-
+        inputMultiplexer.addProcessor(hud.stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
         //manager.get("sfx/background.ogg", Music.class).play();
@@ -132,24 +139,6 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         }
     }
 
-
-    public void loadManager() {
-        manager = game.manager;
-
-        manager.load("pokemonassets/TREEKO_WALKSHEET.atlas", TextureAtlas.class);
-        manager.load("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class);
-        manager.load("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class);
-        manager.load("pokemonassets/PROJECTILE_TEXTURE.atlas", TextureAtlas.class);
-        manager.load("sfx/background.ogg", Music.class);
-        manager.load("sfx/wallhit.wav", Sound.class);
-        manager.finishLoading();
-
-        this.loadImages(manager.get("pokemonassets/TREEKO_WALKSHEET.atlas", TextureAtlas.class));
-        this.loadImages(manager.get("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class));
-        this.loadImages(manager.get("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class));
-        this.loadImages(manager.get("pokemonassets/PROJECTILE_TEXTURE.atlas", TextureAtlas.class));
-    }
-
     public void loadKeys() {
         for (Key key : Key.values()) {
             keys.put(key.getValue(), new AtomicBoolean(false));
@@ -160,8 +149,9 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     public void render(float delta) {
         this.updateCamera();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        hud.invalidate();
+        batch.setProjectionMatrix(gameCamera.combined);
 
-        batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
         for (Button b : currentMenu.updateButtonList) {
@@ -171,13 +161,6 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         for (int i = 0; i< controller.renderList.size(); i++){
             controller.renderList.get(i).render(batch);
         }
-
-
-        //    batch.draw(animation.getCurrentSprite(), 100, 100);
-
-        /* Not sure about this, might be good need to do more reserach
-        new SpriteDrawable(animation.getCurrentSprite()).draw(batch, 100,100,22,22);
-        */
 
         batch.end();
 
@@ -194,6 +177,8 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         }
         shapeRenderer.end();
         stage.draw();
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
     }
 
     @Override
@@ -203,13 +188,6 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         stage.dispose();
     }
 
-    public void loadImages(TextureAtlas textureAtlas) {
-        for (TextureAtlas.AtlasRegion textureRegion : textureAtlas.getRegions()) {
-            Sprite sprite = textureAtlas.createSprite(textureRegion.name);
-            sprites.put(textureRegion.name, sprite);
-        }
-    }
-
     @Override
     public void show() {
 
@@ -217,14 +195,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-        camera.viewportWidth = width;
-        camera.viewportHeight = height;
-        camera.position.set(width / 2f, height / 2f, 0);
-        camera.update();
-
-        batch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
-        stage.getViewport().update(width, height);
-
+        gamePort.update(width, height, true);
     }
 
     @Override
@@ -243,8 +214,8 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     }
 
     public void updateCamera() {
-        camera.position.set(controller.pokemonPlayer.x, controller.pokemonPlayer.y, 0);
-        camera.update();
+        gameCamera.position.set(controller.pokemonPlayer.x, controller.pokemonPlayer.y, 0);
+        gameCamera.update();
     }
 
     @Override

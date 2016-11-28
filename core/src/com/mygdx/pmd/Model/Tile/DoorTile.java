@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Tile;
 
 
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.model.FloorComponent.Floor;
 import com.mygdx.pmd.model.FloorComponent.Room;
 import com.mygdx.pmd.screens.DungeonScreen;
@@ -16,7 +17,7 @@ public class DoorTile extends Tile {
     public DoorTile(int row, int col, Floor floor, Room room) {
         super(row, col, floor, "DOOR");
         this.room = room;
-        this.sprite = DungeonScreen.sprites.get("doortilesprite");
+        this.sprite = PMD.sprites.get("doortilesprite");
         this.isWalkable = true;
     }
 

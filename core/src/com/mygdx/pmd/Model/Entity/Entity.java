@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Renderable;
@@ -203,11 +204,11 @@ public abstract class Entity implements Renderable, Updatable {
                 String name = element.get("name");
                 Array<Sprite> spriteArray = new Array<Sprite>();
                 for (XmlReader.Element child : element.getChildrenByName("sprite")) {
-                    Sprite sprite = DungeonScreen.sprites.get(pokemonName + child.get("name"));
+                    Sprite sprite = PMD.sprites.get(pokemonName + child.get("name"));
                     if (sprite != null)
                         spriteArray.add(sprite);
                 }
-                Sprite finalSprite = DungeonScreen.sprites.get(pokemonName + element.getChildByName("finalsprite").get("name"));
+                Sprite finalSprite = PMD.sprites.get(pokemonName + element.getChildByName("finalsprite").get("name"));
                 boolean isLooping = element.getChildByName("loopstatus").getBoolean("looping");
                 PAnimation animation = new PAnimation(name, spriteArray, finalSprite, 30, isLooping);
                 animationMap.put(name, animation);
