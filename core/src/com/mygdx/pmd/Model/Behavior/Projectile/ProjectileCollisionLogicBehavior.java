@@ -24,14 +24,14 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
                 }
                 projectile.takeDamage(1);
                 projectile.shouldBeDestroyed = true;
-                projectile.actionState = Action.DEATH;
+                projectile.setActionState(Action.DEATH);
             }
         }
 
         if(!projectile.isLegal()){
             projectile.takeDamage(1);
             projectile.shouldBeDestroyed = true;
-            projectile.actionState = Action.DEATH;
+            projectile.setActionState(Action.DEATH);
         }
     }
 }

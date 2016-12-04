@@ -21,7 +21,7 @@ public class PlayerMovementLogicBehavior extends PokemonBehavior {
 
     @Override
     public void execute() {
-        if(pokemon.actionState != Action.IDLE && pokemon.actionState != Action.MOVING) return;
+        if(pokemon.getActionState() != Action.IDLE && pokemon.getActionState() != Action.MOVING) return;
 
         if(pokemon.equals(pokemon.currentTile) && pokemon.turnState == Turn.WAITING){
             if(pokemon.isLegalToMoveTo(pokemon.nextTile)){
@@ -39,14 +39,14 @@ public class PlayerMovementLogicBehavior extends PokemonBehavior {
                 pokemon.nextTile = null;
 
                 pokemon.turnState = Turn.COMPLETE;
-                pokemon.actionState = Action.MOVING;
+                pokemon.setActionState(Action.MOVING);
             }
         }
 
-        if(pokemon.equals(pokemon.currentTile) && pokemon.nextTile == null) {
-            if(pokemon.actionState == Action.MOVING)
-                pokemon.currentTile.playEvents();
-            pokemon.actionState = Action.IDLE;
+        if(pokemon.equals(pokemon.currentTile) && pokemon.nextTile == null && pokemon.getActionState() == Action.MOVING) {
+           /* if(pokemon.getActionState() == Action.MOVING)
+                pokemon.currentTile.playEvents();*/
+            pokemon.setActionState(Action.IDLE);
         }
     }
 

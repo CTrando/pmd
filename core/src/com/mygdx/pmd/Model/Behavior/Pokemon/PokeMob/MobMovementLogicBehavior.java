@@ -23,12 +23,12 @@ public class MobMovementLogicBehavior extends PokemonBehavior {
 
     @Override
     public void execute() {
-        if(pokemon.actionState != Action.IDLE && pokemon.actionState != Action.MOVING) return;
+        if(pokemon.getActionState() != Action.IDLE && pokemon.getActionState() != Action.MOVING) return;
 
         if(pokemon.currentTile == null) System.out.println("NULL CURRENTTILE");
 
         if(pokemon.equals(pokemon.currentTile)&& controller.pokemonPlayer.turnState == Turn.WAITING)
-            pokemon.actionState = Action.IDLE;
+            pokemon.setActionState(Action.IDLE);
 
         if (pokemon.turnState == Turn.WAITING && pokemon.equals(pokemon.currentTile)) {
             try {
@@ -40,7 +40,7 @@ public class MobMovementLogicBehavior extends PokemonBehavior {
 
             if (solutionNodeList.size <= 0){
                 pokemon.turnState = Turn.COMPLETE;
-                pokemon.actionState = Action.IDLE;
+                pokemon.setActionState(Action.IDLE);
                 return;
             }
 
@@ -54,7 +54,7 @@ public class MobMovementLogicBehavior extends PokemonBehavior {
             pokemon.setCurrentTile(pokemon.nextTile);
             pokemon.nextTile = null;
 
-            pokemon.actionState = Action.MOVING;
+            pokemon.setActionState(Action.MOVING);
             pokemon.turnState = Turn.COMPLETE;
         }
         else pokemon.turnState = Turn.COMPLETE;

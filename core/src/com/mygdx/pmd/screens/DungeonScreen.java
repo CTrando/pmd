@@ -34,6 +34,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static com.mygdx.pmd.PMD.keys;
+
 public class DungeonScreen extends PScreen implements InputProcessor {
     final com.mygdx.pmd.PMD game;
     SpriteBatch batch;
@@ -63,7 +65,6 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     Stage stage;
     XmlReader xmlReader;
 
-    public static HashMap<Integer, AtomicBoolean> keys;
     public static HashMap<String, Menu> menuList;
 
     public DungeonScreen(final com.mygdx.pmd.PMD game) {
@@ -83,9 +84,6 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         stage = new Stage();
         currentMenu = menuList.get("defaultMenu");
         stage.addActor(currentMenu);
-
-        keys = new HashMap<Integer, AtomicBoolean>();
-        this.loadKeys();
 
         updateButtonList = new Array<Button>();
 
@@ -139,19 +137,12 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         }
     }
 
-    public void loadKeys() {
-        for (Key key : Key.values()) {
-            keys.put(key.getValue(), new AtomicBoolean(false));
-        }
-    }
-
     @Override
     public void render(float delta) {
         this.updateCamera();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        hud.invalidate();
-        batch.setProjectionMatrix(gameCamera.combined);
 
+        batch.setProjectionMatrix(gameCamera.combined);
         batch.begin();
 
         for (Button b : currentMenu.updateButtonList) {
@@ -161,7 +152,6 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         for (int i = 0; i< controller.renderList.size(); i++){
             controller.renderList.get(i).render(batch);
         }
-
         batch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -177,6 +167,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         }
         shapeRenderer.end();
         stage.draw();
+
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
     }

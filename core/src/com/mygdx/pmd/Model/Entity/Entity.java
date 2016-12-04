@@ -16,6 +16,9 @@ import com.mygdx.pmd.model.Tile.StairTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.PAnimation;
+import com.mygdx.pmd.utils.observers.NoObserver;
+import com.mygdx.pmd.utils.observers.Observable;
+import com.mygdx.pmd.utils.observers.Observer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,11 +27,12 @@ import java.util.HashMap;
 /**
  * Created by Cameron on 10/18/2016.
  */
-public abstract class Entity implements Renderable, Updatable {
+public abstract class Entity implements Renderable, Updatable, Observable {
     public BaseBehavior[] behaviors;
     public boolean isTurnBased;
     public Turn turnState;
-    public Action actionState;
+    private Action actionState;
+    public Action previousState;
 
     public boolean shouldBeDestroyed;
 
@@ -48,6 +52,7 @@ public abstract class Entity implements Renderable, Updatable {
 
     public Sprite currentSprite;
     public HashMap<String, PAnimation> animationMap;
+    public Observer[] observers;
 
     public Direction direction;
     public Aggression aggression;
@@ -62,9 +67,14 @@ public abstract class Entity implements Renderable, Updatable {
         this.direction = Direction.down;
 
         animationMap = new HashMap<String, PAnimation>();
+
         behaviors = new BaseBehavior[10];
         for (int i = 0; i < behaviors.length; i++) {
             behaviors[i] = new NoBehavior(this);
+        }
+        observers = new Observer[10];
+        for(int i = 0; i< observers.length; i++){
+            observers[i] = new NoObserver(this);
         }
     }
 
@@ -81,6 +91,12 @@ public abstract class Entity implements Renderable, Updatable {
             batch.draw(currentSprite, x, y, currentSprite.getWidth(), currentSprite.getHeight());
         }
         //I've done the previous sprite thing here before and for whatever reason it didn't work out so don't try it
+    }
+
+    public void notifyObservers(){
+        for(int i = 0; i< observers.length; i++){
+            observers[i].update();
+        }
     }
 
     public abstract boolean isLegalToMoveTo(Tile tile);
@@ -271,5 +287,15 @@ public abstract class Entity implements Renderable, Updatable {
 
     public boolean isBelow(Tile tile) {
         return currentTile.y < tile.y;
+    }
+
+    public void setActionState(Action actionState){
+        this.previousState = this.actionState;
+        this.actionState = actionState;
+        this.notifyObservers();
+    }
+
+    public Action getActionState(){
+        return actionState;
     }
 }

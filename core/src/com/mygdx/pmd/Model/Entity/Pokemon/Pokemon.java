@@ -1,12 +1,14 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
 
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.*;
+import com.mygdx.pmd.utils.observers.Observer;
 
 
 public abstract class Pokemon extends Entity {
@@ -19,7 +21,7 @@ public abstract class Pokemon extends Entity {
         super(controller, x, y);
         this.direction = Direction.down;
         this.pokemonName = pokemonName;
-        this.actionState = Action.IDLE;
+        this.setActionState(Action.IDLE);
 
         this.turnState = Turn.COMPLETE;
         this.isTurnBased = true;

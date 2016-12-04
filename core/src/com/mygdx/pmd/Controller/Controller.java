@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static com.mygdx.pmd.PMD.keys;
+
 public class Controller {
     public DungeonScreen controllerScreen;
     public Tile[][] tileBoard;
@@ -73,7 +75,7 @@ public class Controller {
     }
 
     public boolean isKeyPressed(Key key) { //TODO perhaps add a buffer system for more control later - amend definitely need a buffer system
-        return DungeonScreen.keys.get(key.getValue()).get();
+        return keys.get(key.getValue()).get();
     }
 
     public void loadPokemon() {
@@ -102,7 +104,7 @@ public class Controller {
     public void randomizeAllPokemonLocation() {
         for (Entity entity : entityList) {
             entity.randomizeLocation();
-            entity.actionState = Action.IDLE;
+            entity.setActionState(Action.IDLE);
         }
     }
 

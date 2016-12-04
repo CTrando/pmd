@@ -12,7 +12,7 @@ public class ProjectileAnimationBehavior extends ProjectileBehavior {
 
     @Override
     public void execute() {
-        switch(projectile.actionState){
+        switch(projectile.getActionState()){
             case MOVING:
                 projectile.currentSprite = projectile.animationMap.get("movement").getCurrentSprite();
                 break;

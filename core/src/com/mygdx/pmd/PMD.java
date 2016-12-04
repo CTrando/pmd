@@ -9,10 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.Key;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.screens.PScreen;
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 /**
@@ -24,6 +26,8 @@ public class PMD extends Game {
 
     public static final String TITLE = "Pokemon Mystery Dungeon";
     public static HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
+    public static HashMap<Integer, AtomicBoolean> keys;
+
 
     public SpriteBatch batch;
     public ShapeRenderer shapeRenderer;
@@ -36,7 +40,10 @@ public class PMD extends Game {
     @Override
     public void create() {
         sprites = new HashMap<String, Sprite>();
+        keys = new HashMap<Integer, AtomicBoolean>();
         manager = new AssetManager();
+
+        this.loadKeys();
         this.loadManager();
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -74,5 +81,12 @@ public class PMD extends Game {
         this.loadImages(manager.get("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class));
         this.loadImages(manager.get("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class));
         this.loadImages(manager.get("pokemonassets/PROJECTILE_TEXTURE.atlas", TextureAtlas.class));
+    }
+
+
+    public void loadKeys() {
+        for (Key key : Key.values()) {
+            keys.put(key.getValue(), new AtomicBoolean(false));
+        }
     }
 }

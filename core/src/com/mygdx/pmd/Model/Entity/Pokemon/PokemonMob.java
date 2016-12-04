@@ -31,4 +31,9 @@ public class PokemonMob extends Pokemon {
             return false;
         return true;
     }
+
+    @Override
+    public void registerObservers() {
+
+    }
 }

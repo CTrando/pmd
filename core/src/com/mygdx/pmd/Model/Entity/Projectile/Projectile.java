@@ -41,7 +41,7 @@ public class Projectile extends Entity {
         if(move.isRanged()){
             behaviors[BaseBehavior.LOGIC_BEHAVIOR] = new ProjectileRangedMovementBehavior(this);
             behaviors[BaseBehavior.ANIMATION_BEHAVIOR] = new ProjectileAnimationBehavior(this);
-            this.actionState = Action.MOVING;
+            this.setActionState(Action.MOVING);
         }
 
 
@@ -83,6 +83,11 @@ public class Projectile extends Entity {
     public boolean isLegal(){
         if(currentTile instanceof GenericTile || currentTile == null) return false;
         return true;
+    }
+
+    @Override
+    public void registerObservers() {
+
     }
 }
 

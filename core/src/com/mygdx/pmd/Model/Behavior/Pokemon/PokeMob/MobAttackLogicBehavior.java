@@ -18,19 +18,19 @@ public class MobAttackLogicBehavior extends PokemonBehavior {
 
     @Override
     public void execute() {
-        if (pokemon.actionState != Action.IDLE && pokemon.actionState != Action.ATTACKING) return;
+        if (pokemon.getActionState() != Action.IDLE && pokemon.getActionState() != Action.ATTACKING) return;
 
-        if (pokemon.actionState == Action.ATTACKING) {
+        if (pokemon.getActionState() == Action.ATTACKING) {
             if (pokemon.projectile == null && pokemon.currentAnimation.isFinished()) {
                 pokemon.turnState = Turn.COMPLETE;
-                pokemon.actionState = Action.IDLE;
+                pokemon.setActionState(Action.IDLE);
             }
-        } else if (pokemon.actionState == Action.IDLE) {
+        } else if (pokemon.getActionState() == Action.IDLE) {
             if (pokemon.turnState == Turn.WAITING) {
                 if (pokemon.facingTile == null) return;
 
                 if ((pokemon.isVisible() || pokemon.facingTile.hasEntity()) && pokemon.facingTile != pokemon.currentTile) {
-                    pokemon.actionState = Action.ATTACKING;
+                    pokemon.setActionState(Action.ATTACKING);
                     pokemon.turnState = Turn.PENDING;
 
                     pokemon.attack(Move.SCRATCH);

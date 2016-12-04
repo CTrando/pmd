@@ -13,7 +13,7 @@ public class PokemonAnimationBehavior extends PokemonBehavior {
 
     @Override
     public void execute() {
-        switch(pokemon.actionState) {
+        switch(pokemon.getActionState()) {
             case MOVING:
                 pokemon.currentAnimation = pokemon.animationMap.get(pokemon.direction.toString());
                 pokemon.currentSprite = pokemon.animationMap.get(pokemon.direction.toString()).getCurrentSprite();

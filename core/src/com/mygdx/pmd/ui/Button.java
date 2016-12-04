@@ -39,13 +39,13 @@ public class Button extends TextButton {
                 else this.setText("Current Animation: " + "noanimation");
                 break;
             case ACTION:
-                    this.setText("Turn: " + controller.turnBasedEntities.get(0).turnState.toString() + " State: " + controller.turnBasedEntities.get(0).actionState.toString()+ "\n"
-                    + "Turn: " + controller.turnBasedEntities.get(1).turnState.toString() + " State: " + controller.turnBasedEntities.get(1).actionState.toString()+ "\n" +
-                            "Turn: " + controller.turnBasedEntities.get(2).turnState.toString() + " State: " + controller.turnBasedEntities.get(2).actionState.toString()
+                    this.setText("Turn: " + controller.turnBasedEntities.get(0).turnState.toString() + " State: " + controller.turnBasedEntities.get(0).getActionState().toString() +"\n " + controller.turnBasedEntities.get(0).previousState.toString() + "\n"
+                    + "Turn: " + controller.turnBasedEntities.get(1).turnState.toString() + " State: " + controller.turnBasedEntities.get(1).getActionState().toString()+ "\n" +
+                            "Turn: " + controller.turnBasedEntities.get(2).turnState.toString() + " State: " + controller.turnBasedEntities.get(2).getActionState().toString()
                     );
                 break;
             case STATE:
-                this.setText("State: " + controller.pokemonPlayer.actionState.toString());
+                this.setText("State: " + controller.pokemonPlayer.getActionState().toString());
                 break;
             case ATTACK:
                 break;
