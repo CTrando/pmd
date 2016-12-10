@@ -10,9 +10,10 @@ import com.mygdx.pmd.model.Entity.Entity;
 public abstract class BaseBehavior {
     public static final int INPUT_BEHAVIOR = 0;
     public static final int ATTACK_BEHAVIOR = 1;
-    public static final int LOGIC_BEHAVIOR = 2;
-    public static final int MOVE_BEHAVIOR = 3;
-    public static final int ANIMATION_BEHAVIOR = 4;
+    public static final int PATHFIND_BEHAVIOR = 2;
+    public static final int LOGIC_BEHAVIOR = 3;
+    public static final int MOVE_BEHAVIOR = 4;
+    public static final int ANIMATION_BEHAVIOR = 5;
 
     public Controller controller;
     public Tile[][] tileBoard;

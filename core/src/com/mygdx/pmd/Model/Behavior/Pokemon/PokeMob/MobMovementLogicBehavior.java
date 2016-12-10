@@ -25,38 +25,19 @@ public class MobMovementLogicBehavior extends PokemonBehavior {
     public void execute() {
         if(pokemon.getActionState() != Action.IDLE && pokemon.getActionState() != Action.MOVING) return;
 
-        if(pokemon.currentTile == null) System.out.println("NULL CURRENTTILE");
-
-        if(pokemon.equals(pokemon.currentTile)&& controller.pokemonPlayer.turnState == Turn.WAITING)
+        if(pokemon.equals(pokemon.currentTile) && (pokemon.turnState == Turn.COMPLETE || controller.pokemonPlayer.turnState == Turn.WAITING))
             pokemon.setActionState(Action.IDLE);
 
-        if (pokemon.turnState == Turn.WAITING && pokemon.equals(pokemon.currentTile)) {
-            try {
-                solutionNodeList = shortestPath.pathFind(controller.pokemonPlayer.currentTile);
-            } catch (PathFindFailureException e){
-                e.printStackTrace();
-                System.out.println("Failed to pathfind");
-            }
+        if(pokemon.turnState == Turn.WAITING) {
+            if (pokemon.isLegalToMoveTo(pokemon.nextTile)) {
+                pokemon.setDirectionBasedOnTile(pokemon.nextTile);
 
-            if (solutionNodeList.size <= 0){
+                pokemon.setCurrentTile(pokemon.nextTile);
+                pokemon.nextTile = null;
+
+                pokemon.setActionState(Action.MOVING);
                 pokemon.turnState = Turn.COMPLETE;
-                pokemon.setActionState(Action.IDLE);
-                return;
-            }
-
-            pokemon.nextTile = solutionNodeList.first();
-            solutionNodeList.removeValue(pokemon.nextTile, true);
+            } else pokemon.turnState = Turn.COMPLETE;
         }
-
-        if (pokemon.isLegalToMoveTo(pokemon.nextTile)) {
-            pokemon.setDirectionBasedOnTile(pokemon.nextTile);
-
-            pokemon.setCurrentTile(pokemon.nextTile);
-            pokemon.nextTile = null;
-
-            pokemon.setActionState(Action.MOVING);
-            pokemon.turnState = Turn.COMPLETE;
-        }
-        else pokemon.turnState = Turn.COMPLETE;
     }
 }

@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.Entity.Pokemon;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Behavior.*;
+import com.mygdx.pmd.model.Behavior.Pokemon.PokeMob.MobPathFindingBehavior;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonAnimationBehavior;
 import com.mygdx.pmd.model.Behavior.Entity.MoveSlowBehavior;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokeMob.MobAttackLogicBehavior;
@@ -15,6 +16,7 @@ public class PokemonMob extends Pokemon {
         super(controller, x, y, pokemonName);
         this.aggression = Aggression.aggressive;
 
+        behaviors[BaseBehavior.PATHFIND_BEHAVIOR] = new MobPathFindingBehavior(this);
         behaviors[BaseBehavior.LOGIC_BEHAVIOR] = new MobMovementLogicBehavior(this);
         behaviors[BaseBehavior.ATTACK_BEHAVIOR] = new MobAttackLogicBehavior(this);
         behaviors[BaseBehavior.MOVE_BEHAVIOR] = new MoveSlowBehavior(this);

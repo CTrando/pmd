@@ -44,8 +44,6 @@ public class PlayerMovementLogicBehavior extends PokemonBehavior {
         }
 
         if(pokemon.equals(pokemon.currentTile) && pokemon.nextTile == null && pokemon.getActionState() == Action.MOVING) {
-           /* if(pokemon.getActionState() == Action.MOVING)
-                pokemon.currentTile.playEvents();*/
             pokemon.setActionState(Action.IDLE);
         }
     }
