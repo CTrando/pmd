@@ -26,4 +26,5 @@ public abstract class BaseBehavior {
     }
 
     public abstract void execute();
+    public abstract boolean canExecute();
 }

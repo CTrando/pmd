@@ -8,19 +8,10 @@ import com.mygdx.pmd.model.Entity.Entity;
 /**
  * Created by Cameron on 10/30/2016.
  */
-public class ShortestPath implements PathFind {
-    public Entity parent;
-    public Tile[][] tileBoard;
+public class ShortestPath extends PathFind {
 
-    Array<Tile> openNodeList;
-    Array<Tile> closedNodeList;
-    Array<Tile> solutionNodeList;
-
-    Tile currentTile;
-
-    public ShortestPath(Entity entity, Tile[][] tileBoard) {
-        this.parent = entity;
-        this.tileBoard = tileBoard;
+    public ShortestPath(Entity entity) {
+        super(entity);
     }
 
     @Override
@@ -34,21 +25,21 @@ public class ShortestPath implements PathFind {
             Tile.resetTileArrayParents(tileBoard);
 
             this.resetLists();
-            openNodeList.add(parent.currentTile);
+            openNodeList.add(entity.currentTile);
 
             while (currentTile != destination) {
-                currentTile = openNodeList.get(0); //TODO Index out of bounds exception occuring here which means that parent.currentTile = null
+                currentTile = openNodeList.get(0); //TODO Index out of bounds exception occuring here which means that entity.currentTile = null
                 this.evaluateTile(currentTile, destination);
             }
 
-            parent.currentTile.setParent(null);
+            entity.currentTile.setParent(null);
             Tile backTrack = destination;
 
             while (backTrack.getParent() != null) {
                 backTrack = backTrack.getParent();
                 solutionNodeList.insert(0, backTrack);
             }
-            solutionNodeList.removeValue(parent.currentTile, false);
+            solutionNodeList.removeValue(entity.currentTile, false);
             return solutionNodeList;
         } catch(NullPointerException e){
             throw new PathFindFailureException("Null somewhere in here");

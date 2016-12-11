@@ -105,6 +105,8 @@ public class Controller {
         for (Entity entity : entityList) {
             entity.randomizeLocation();
             entity.setActionState(Action.IDLE);
+            entity.turnState = Turn.COMPLETE;
+            if(entity instanceof PokemonPlayer) entity.turnState = Turn.WAITING;
         }
     }
 

@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static com.mygdx.pmd.PMD.keys;
 
 public class DungeonScreen extends PScreen implements InputProcessor {
-    final com.mygdx.pmd.PMD game;
+    public final com.mygdx.pmd.PMD game;
     SpriteBatch batch;
     ShapeRenderer shapeRenderer;
     Hud hud;

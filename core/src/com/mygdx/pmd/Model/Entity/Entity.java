@@ -14,7 +14,6 @@ import com.mygdx.pmd.model.Behavior.BaseBehavior;
 import com.mygdx.pmd.model.Behavior.NoBehavior;
 import com.mygdx.pmd.model.Tile.StairTile;
 import com.mygdx.pmd.model.Tile.Tile;
-import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.PAnimation;
 import com.mygdx.pmd.utils.observers.NoObserver;
 import com.mygdx.pmd.utils.observers.Observable;
@@ -49,6 +48,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     public Tile nextTile;
     public Tile currentTile;
     public Tile facingTile;
+    public Tile possibleNextTile;
 
     public Sprite currentSprite;
     public HashMap<String, PAnimation> animationMap;
@@ -106,6 +106,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     }
 
     public boolean equals(Tile tile) {
+        if(tile == null) return false;
         return (tile.x == x && tile.y == y);
     }
 
@@ -114,7 +115,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         y += dy;
     }
 
-    public void goToTile(Tile nextTile, int speed) {
+    public void moveToTile(Tile nextTile, int speed) {
         if (nextTile == null)
             return;
 
@@ -147,7 +148,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     }
 
     public void moveSlow() {
-        this.goToTile(this.currentTile, 1);
+        this.moveToTile(this.nextTile, 1);
     }
 
     public void moveFast() {
@@ -168,16 +169,10 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     }
 
     public void setCurrentTile(Tile nextTile) {
-        if (nextTile == null) return;
-
-        if (currentTile != null)
-            this.currentTile.removeEntity(this);
         this.currentTile = nextTile;
-        currentTile.addEntity(this);
-
-
-        this.row = currentTile.row;
-        this.col = currentTile.col;
+        this.x = currentTile.x;
+        this.y = currentTile.y;
+        this.notifyObservers();
     }
 
     public Tile getNextTile() {
@@ -185,7 +180,19 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     }
 
     public void setNextTile(Tile tile) {
+        if (tile == null) return;
+
+        if (this.currentTile != null)
+            this.currentTile.removeEntity(this);
+        tile.addEntity(this);
+
         this.nextTile = tile;
+    }
+
+    public void updateCurrentTile(){
+        Tile tile = Tile.getTileAt(x, y, tileBoard);
+        if(this.equals(tile))
+            this.setCurrentTile(tile);
     }
 
     public void randomizeLocation() {
@@ -193,11 +200,8 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         Tile random = controller.currentFloor.getRoomTileList().get(rand);
 
         if (!(random instanceof StairTile) && random.getEntityList().size() == 0) {
-            this.setNextTile(null);
+            this.setNextTile(random);
             this.setCurrentTile(random);
-
-            this.x = random.x;
-            this.y = random.y;
         }
     }
 

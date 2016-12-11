@@ -12,8 +12,10 @@ public class MoveSlowBehavior extends MoveBehavior {
 
     @Override
     public void execute(){
-        if(!this.equals(entity.currentTile)){
-            entity.moveSlow();
+        if(entity.nextTile == null) return;
+
+        if(!entity.equals(entity.nextTile)){
+            entity.moveToTile(entity.nextTile, 1);
         }
         super.execute();
     }

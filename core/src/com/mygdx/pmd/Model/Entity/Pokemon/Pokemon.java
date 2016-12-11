@@ -2,13 +2,16 @@ package com.mygdx.pmd.model.Entity.Pokemon;
 
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.*;
 import com.mygdx.pmd.utils.observers.Observer;
+import com.sun.org.apache.xml.internal.security.encryption.AgreementMethod;
 
 
 public abstract class Pokemon extends Entity {
@@ -47,7 +50,11 @@ public abstract class Pokemon extends Entity {
     public void update(){
         super.update();
         if(hp <= 0) shouldBeDestroyed = true;
-        if(shouldBeDestroyed) controller.removeEntity(this);
+        if(shouldBeDestroyed) {
+            controller.removeEntity(this);
+            if (this instanceof PokemonPlayer) controller.controllerScreen.game.dispose();
+            this.dispose();
+        }
     }
 
     public void attack(Move move){
@@ -56,6 +63,7 @@ public abstract class Pokemon extends Entity {
     }
 
     public boolean isVisible(){
+        if(this.aggression != Aggression.aggressive) return false;
         int rOffset = 0;
         int cOffset = 0;
 
@@ -82,5 +90,9 @@ public abstract class Pokemon extends Entity {
             } catch(ArrayIndexOutOfBoundsException e){}
         }
         return false;
+    }
+
+    public void dispose(){
+        this.currentTile.removeEntity(this);
     }
 }

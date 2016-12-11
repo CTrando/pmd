@@ -12,8 +12,8 @@ public class MoveFastBehavior extends MoveBehavior {
 
     @Override
     public void execute(){
-        if(!this.equals(entity.currentTile)){
-            entity.moveFast();
+        if(!this.equals(entity.nextTile)){
+            entity.moveToTile(entity.nextTile, 5);
         }
         super.execute();
     }

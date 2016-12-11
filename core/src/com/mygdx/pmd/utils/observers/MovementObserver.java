@@ -13,9 +13,7 @@ public class MovementObserver extends Observer {
 
     @Override
     public void update() {
-        if(entity.previousState == Action.MOVING && entity.getActionState() == Action.IDLE){
-            entity.currentTile.playEvents();
-        }
+        entity.currentTile.playEvents();
     }
 
 

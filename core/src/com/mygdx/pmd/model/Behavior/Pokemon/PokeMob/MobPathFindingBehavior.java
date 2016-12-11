@@ -7,27 +7,31 @@ import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.AI.ShortestPath;
+import com.mygdx.pmd.utils.AI.Wander;
 
 /**
  * Created by Cameron on 12/9/2016.
  */
 public class MobPathFindingBehavior extends PokemonBehavior {
     ShortestPath shortestPath;
+    Wander wander;
     Array<Tile> solutionNodeList;
 
     public MobPathFindingBehavior(Pokemon pokemon) {
         super(pokemon);
-        shortestPath = new ShortestPath(pokemon, tileBoard);
+        shortestPath = new ShortestPath(pokemon);
+        wander = new Wander(pokemon);
         solutionNodeList = new Array<Tile>();
     }
 
     @Override
     public void execute() {
-        if(pokemon.isVisible()) return;
+        if(!this.canExecute()) return;
 
         if(pokemon.turnState == Turn.WAITING && pokemon.equals(pokemon.currentTile)) {
             try {
-                solutionNodeList = shortestPath.pathFind(controller.pokemonPlayer.currentTile);
+                solutionNodeList = wander.pathFind(controller.pokemonPlayer.nextTile);
+                //solutionNodeList = shortestPath.pathFind(controller.pokemonPlayer.nextTile);
             } catch (PathFindFailureException e) {
                 System.out.println("Failed to pathfind");
             }
@@ -37,8 +41,14 @@ public class MobPathFindingBehavior extends PokemonBehavior {
                 return;
             }
 
-            pokemon.nextTile = solutionNodeList.first();
-            solutionNodeList.removeValue(pokemon.nextTile, true);
+            pokemon.possibleNextTile = solutionNodeList.first();
+            solutionNodeList.removeValue(pokemon.possibleNextTile, true);
         }
+    }
+
+    @Override
+    public boolean canExecute() {
+        if(pokemon.isVisible()) return false;
+        return true;
     }
 }

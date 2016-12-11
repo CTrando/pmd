@@ -15,8 +15,9 @@ public class ProjectileRangedMovementBehavior extends ProjectileBehavior{
 
     @Override
     public void execute(){
-        if(projectile.shouldBeDestroyed) return;
-            switch (projectile.direction) {
+        if(!canExecute()) return;
+
+        switch (projectile.direction) {
                 case up:
                     projectile.y += 1;
                     break;
@@ -31,6 +32,12 @@ public class ProjectileRangedMovementBehavior extends ProjectileBehavior{
                     break;
             }
             projectile.currentTile = Tile.getTileAt(projectile.x, projectile.y, projectile.tileBoard);
+    }
+
+    @Override
+    public boolean canExecute() {
+        if(projectile.shouldBeDestroyed) return false;
+        return true;
     }
 
 }
