@@ -20,7 +20,7 @@ public class Wander extends PathFind {
     public Array<Tile> pathFind(Tile tile) throws PathFindFailureException {
         Tile currentTile = entity.currentTile;
         Tile nextTile = this.chooseRandomTile(currentTile);
-        if (nextTile != null) {
+        if (nextTile != null && entity.isLegalToMoveTo(nextTile)) {
             solutionNodeList.add(nextTile);
         }
         return solutionNodeList;

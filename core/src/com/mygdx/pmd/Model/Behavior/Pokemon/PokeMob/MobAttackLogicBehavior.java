@@ -12,7 +12,6 @@ import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
  */
 public class MobAttackLogicBehavior extends PokemonBehavior {
 
-
     public MobAttackLogicBehavior(Pokemon pokemon) {
         super(pokemon);
     }

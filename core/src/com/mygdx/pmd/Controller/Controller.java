@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.mygdx.pmd.comparators.PokemonDistanceComparator;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Renderable;
+import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.model.Factory.PokemonFactory;
 import com.mygdx.pmd.model.FloorComponent.Floor;
 import com.mygdx.pmd.model.Generator.FloorGenerator;
@@ -49,7 +50,10 @@ public class Controller {
         currentFloor = floorGenerator.getFloor();
         renderList.add(currentFloor);
 
+        FloorFactory floorFactory = new FloorFactory(this);
+
         tileBoard = currentFloor.getTileBoard();
+        //tileBoard = floorFactory.createFloor();
 
         this.loadPokemon();
         this.randomizeAllPokemonLocation();

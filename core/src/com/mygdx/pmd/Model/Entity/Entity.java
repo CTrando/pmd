@@ -196,13 +196,15 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     }
 
     public void randomizeLocation() {
-        int rand = (int) (Math.random() * controller.currentFloor.getRoomTileList().size());
-        Tile random = controller.currentFloor.getRoomTileList().get(rand);
+        int randRow = (int)(Math.random()* controller.tileBoard[0].length);
+        int randCol = (int)(Math.random()* controller.tileBoard.length);
 
-        if (!(random instanceof StairTile) && random.getEntityList().size() == 0) {
+        Tile random = tileBoard[randRow][randCol];
+
+        if (random.isWalkable && !(random instanceof StairTile) && random.getEntityList().size() == 0) {
             this.setNextTile(random);
             this.setCurrentTile(random);
-        }
+        } else randomizeLocation();
     }
 
     public int getHp() {
@@ -296,7 +298,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     public void setActionState(Action actionState){
         this.previousState = this.actionState;
         this.actionState = actionState;
-        this.notifyObservers();
+        //this.notifyObservers();
     }
 
     public Action getActionState(){
