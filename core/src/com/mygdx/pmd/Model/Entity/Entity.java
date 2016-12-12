@@ -12,7 +12,6 @@ import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.interfaces.Updatable;
 import com.mygdx.pmd.model.Behavior.BaseBehavior;
 import com.mygdx.pmd.model.Behavior.NoBehavior;
-import com.mygdx.pmd.model.Tile.StairTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.PAnimation;
 import com.mygdx.pmd.utils.observers.NoObserver;
@@ -201,7 +200,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
 
         Tile random = tileBoard[randRow][randCol];
 
-        if (random.isWalkable && !(random instanceof StairTile) && random.getEntityList().size() == 0) {
+        if (random.isWalkable && /*!(random instanceof StairTile) &&*/ random.getEntityList().size() == 0) {
             this.setNextTile(random);
             this.setCurrentTile(random);
         } else randomizeLocation();

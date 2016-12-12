@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.interfaces.Renderable;
-import com.mygdx.pmd.model.FloorComponent.Floor;
 import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.utils.MathLogic;
@@ -23,7 +22,6 @@ public abstract class Tile implements Renderable {
 
     public int row;
     public int col;
-    public Floor floor;
 
     public Sprite sprite;
     private Sprite debug = PMD.sprites.get("debugtilesprite");
@@ -36,20 +34,6 @@ public abstract class Tile implements Renderable {
     public Tile[][] tileBoard;
     public Tile parent;
 
-    public Tile(int r, int c, Floor floor, String classifier) {
-        this.tileBoard = floor.getTileBoard();
-
-        this.x = c * Constants.TILE_SIZE;
-        this.y = r * Constants.TILE_SIZE;
-
-        this.row = r;
-        this.col = c;
-        this.floor = floor;
-        this.classifier = classifier;
-
-        entityList = new ArrayList<Entity>();
-    }
-
     public Tile(int r, int c, Controller controller, String classifier) {
         this.tileBoard = controller.tileBoard;
 
@@ -58,7 +42,6 @@ public abstract class Tile implements Renderable {
 
         this.row = r;
         this.col = c;
-        this.floor = floor;
         this.classifier = classifier;
 
         entityList = new ArrayList<Entity>();

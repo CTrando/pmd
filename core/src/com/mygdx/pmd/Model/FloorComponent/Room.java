@@ -1,9 +1,10 @@
 package com.mygdx.pmd.model.FloorComponent;
 
 
-import com.mygdx.pmd.model.Tile.DoorTile;
+import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.model.Tile.RoomTile;
 import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.utils.PRandomInt;
 
 import java.util.ArrayList;
 
@@ -16,168 +17,31 @@ public class Room {
     public int startingRow;   //HEIGHT and width are expressed in tiles
     public int startingCol;
 
-    public int endingRow;
-    public int endingCol;
+    public int width;
+    public int height;
 
-    public DoorTile door;
-    private Floor floor;
+    public Controller controller;
     public Tile[][] tileBoard;
 
-    private int windowWidthinTiles;
-    private int windowLengthinTiles;
+    public Room(Controller controller, Tile[][] tileBoard){
+        this.controller = controller;
+        this.tileBoard = tileBoard;
 
-    public static final int ROOM_SMALL = 20;
-    public static final int ROOM_MEDIUM = 30;
-    public static final int ROOM_LARGE = 40;
+        startingRow = PRandomInt.random(0, tileBoard.length);
+        startingCol = PRandomInt.random(0, tileBoard[0].length);
 
-    public Room(int startingRow, int startingCol, int endingRow, int endingCol, Floor floor) {
-        this.floor = floor;
-        this.tileBoard = floor.getTileBoard();
-        this.startingCol = startingCol;
-        this.startingRow = startingRow;
+        height = PRandomInt.random(0,10);
+        width = PRandomInt.random(0, 10);
 
-        this.endingCol = endingCol;
-        this.endingRow = endingRow;
-
-        windowLengthinTiles = floor.getWindowRows();
-        windowWidthinTiles = floor.getWindowCols();
-
-        roomConstraints = new ArrayList<Tile>();
-
-        this.initializeRoomConstraints();
+        startingRow = (startingRow+height)%tileBoard.length;
+        startingCol = (startingCol+width)%tileBoard[0].length;
     }
 
-    public Room(Floor floor) {
-        this.floor = floor;
-
-        roomConstraints = new ArrayList<Tile>();
-        tileBoard = floor.getTileBoard();
-
-        windowLengthinTiles = floor.getWindowRows();
-        windowWidthinTiles = floor.getWindowCols();
-
-        startingRow = ((int)(windowLengthinTiles*Math.random()));
-        startingCol = ((int)(windowWidthinTiles*Math.random()));
-
-        endingRow = ((int)((2*windowLengthinTiles +1)*Math.random())) - (windowLengthinTiles-15);
-        endingCol = ((int)((2*windowWidthinTiles +1)*Math.random())) - (windowWidthinTiles-15);
-
-        this.checkRoomBounds();
-        this.isRoomLegal();
-
-        this.initializeRoomConstraints();
-    }
-
-    public void initializeRoomConstraints()
-    {
-        this.isRoomLegal();
-        roomConstraints = new ArrayList<Tile>();
-        for(int row = startingRow; row< endingRow; row++)
-        {
-            for(int col = startingCol; col<endingCol; col++ )
-            {
-                RoomTile r = new RoomTile(row ,col,this,floor);
-                roomConstraints.add(r);
+    public void createRoom(){
+        for(int i = startingRow; i< startingRow+height; i++){
+            for(int j = startingCol; j< startingCol + width; j++){
+                tileBoard[i][j] = new RoomTile(i,j, controller, this);
             }
         }
-        int rand = (int)((roomConstraints.size())* Math.random());
-        door = new DoorTile(roomConstraints.get(rand).row, roomConstraints.get(rand).col, floor, this);
-        roomConstraints.set(rand, door);
-    }
-
-    public boolean overlaps(Room other)
-    {
-        for(Tile o: this.roomConstraints)
-        {
-            for(Tile z: other.roomConstraints)
-            {
-                if(o.col == z.col && o.row == z.row)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public void checkRoomBounds() {
-
-        if(startingCol < 0)
-        {
-            startingCol = 0;
-        }
-
-        if(startingRow < 0)
-        {
-            startingCol = 0;
-        }
-
-        if(startingCol > windowWidthinTiles)
-        {
-            startingRow = windowWidthinTiles;
-        }
-
-        if(startingRow > windowLengthinTiles)
-        {
-            startingRow = windowLengthinTiles;
-        }
-
-        if (endingRow < 0) {
-            endingRow = 0;
-        }
-
-        if (endingCol < 0) {
-            endingCol = 0;
-        }
-
-        if (endingRow > windowLengthinTiles) {
-            endingRow = windowLengthinTiles;
-
-        }
-
-        if (endingCol > windowWidthinTiles) {
-            endingCol = windowWidthinTiles;
-        }
-    }
-
-    public void isRoomLegal() {
-
-        if(endingRow == startingRow+1)
-        {
-            endingRow +=2;
-            endingCol +=2;
-        }
-
-        if(endingCol == startingCol+1)
-        {
-            endingCol +=2;
-            endingRow +=2;
-        }
-
-        if (endingRow < startingRow) {
-            int x = startingRow;
-            startingRow = endingRow;
-            endingRow = x;
-        }
-
-        if (endingCol < startingCol) {
-            int x = startingCol;
-            startingCol = endingCol;
-            endingCol = x;
-        }
-
-
-        this.checkRoomBounds();
-    }
-
-    public void moveRoom()
-    {
-        int rand = (int)(5*Math.random());
-
-        startingCol+=rand;
-        endingCol+=rand;
-        startingRow+=rand;
-        startingCol+=rand;
-        this.checkRoomBounds();
     }
 }

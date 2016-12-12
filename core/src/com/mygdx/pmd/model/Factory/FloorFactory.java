@@ -2,6 +2,7 @@ package com.mygdx.pmd.model.Factory;
 
 
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.model.FloorComponent.Room;
 import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.screens.DungeonScreen;
@@ -24,7 +25,18 @@ public class FloorFactory {
                 tileBoard[i][j] = new GenericTile(i, j, controller);
             }
         }
+        Room room = new Room(controller, tileBoard);
+        room.createRoom();
         return tileBoard;
+    }
+
+    public void createRooms(int NUM_ROOMS){
+
+
+    }
+
+    public void createPaths(){
+
     }
 
 }

@@ -9,8 +9,6 @@ import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.model.Factory.PokemonFactory;
-import com.mygdx.pmd.model.FloorComponent.Floor;
-import com.mygdx.pmd.model.Generator.FloorGenerator;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
@@ -32,9 +30,9 @@ public class Controller {
     public ArrayList<Entity> entityList;
     public ArrayList<Entity> turnBasedEntities;
     public Pokemon pokemonPlayer;
-
+/*
     private FloorGenerator floorGenerator;
-    public Floor currentFloor;
+    public Floor currentFloor;*/
 
     private int turnBasedEntityCount;
 
@@ -45,15 +43,15 @@ public class Controller {
         renderList = new ArrayList<Renderable>();
         entityList = new ArrayList<Entity>();
 
-        floorGenerator = new FloorGenerator(this, 15);
+       /* floorGenerator = new FloorGenerator(this, 15);
         floorGenerator.generateFloor();
         currentFloor = floorGenerator.getFloor();
-        renderList.add(currentFloor);
+        renderList.add(currentFloor);*/
 
         FloorFactory floorFactory = new FloorFactory(this);
 
-        tileBoard = currentFloor.getTileBoard();
-        //tileBoard = floorFactory.createFloor();
+        //tileBoard = currentFloor.getTileBoard();
+        tileBoard = floorFactory.createFloor();
 
         this.loadPokemon();
         this.randomizeAllPokemonLocation();

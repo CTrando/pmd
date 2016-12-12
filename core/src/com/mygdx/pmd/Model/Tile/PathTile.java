@@ -1,14 +1,15 @@
+/*
 package com.mygdx.pmd.model.Tile;
 
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.model.FloorComponent.Floor;
-import com.mygdx.pmd.screens.DungeonScreen;
 
+*/
 /**
  * Created by Cameron on 7/4/2016.
- */
+ *//*
+
 public abstract class PathTile extends Tile {
 
     public PathTile(int row, int col, Floor floor, String classifier) {
@@ -34,3 +35,4 @@ public abstract class PathTile extends Tile {
         return true;
     }
 }
+*/

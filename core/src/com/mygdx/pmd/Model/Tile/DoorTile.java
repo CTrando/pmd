@@ -1,14 +1,15 @@
+/*
 package com.mygdx.pmd.model.Tile;
 
 
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.model.FloorComponent.Floor;
 import com.mygdx.pmd.model.FloorComponent.Room;
-import com.mygdx.pmd.screens.DungeonScreen;
 
+*/
 /**
  * Created by Cameron on 6/27/2016.
- */
+ *//*
+
 
 public class DoorTile extends Tile {
 
@@ -32,3 +33,4 @@ public class DoorTile extends Tile {
     }
 
 }
+*/

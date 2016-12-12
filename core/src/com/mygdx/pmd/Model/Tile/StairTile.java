@@ -1,14 +1,15 @@
+/*
 package com.mygdx.pmd.model.Tile;
 
 
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.model.FloorComponent.Floor;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
-import com.mygdx.pmd.screens.DungeonScreen;
 
+*/
 /**
  * Created by Cameron on 8/15/2016.
- */
+ *//*
+
 public class StairTile extends Tile{
     public StairTile(Floor floor, int r, int c) {
         super(r, c, floor, "STAIR");
@@ -29,3 +30,4 @@ public class StairTile extends Tile{
         }
     }
 }
+*/
