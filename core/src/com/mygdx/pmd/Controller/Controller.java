@@ -30,9 +30,8 @@ public class Controller {
     public ArrayList<Entity> entityList;
     public ArrayList<Entity> turnBasedEntities;
     public Pokemon pokemonPlayer;
-/*
-    private FloorGenerator floorGenerator;
-    public Floor currentFloor;*/
+
+    FloorFactory floorFactory;
 
     private int turnBasedEntityCount;
 
@@ -43,17 +42,16 @@ public class Controller {
         renderList = new ArrayList<Renderable>();
         entityList = new ArrayList<Entity>();
 
-       /* floorGenerator = new FloorGenerator(this, 15);
-        floorGenerator.generateFloor();
-        currentFloor = floorGenerator.getFloor();
-        renderList.add(currentFloor);*/
+        floorFactory = new FloorFactory(this);
 
-        FloorFactory floorFactory = new FloorFactory(this);
-
-        //tileBoard = currentFloor.getTileBoard();
         tileBoard = floorFactory.createFloor();
 
         this.loadPokemon();
+        this.randomizeAllPokemonLocation();
+    }
+
+    public void nextFloor(){
+        tileBoard = floorFactory.createFloor();
         this.randomizeAllPokemonLocation();
     }
 

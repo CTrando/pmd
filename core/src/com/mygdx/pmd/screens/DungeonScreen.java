@@ -149,9 +149,9 @@ public class DungeonScreen extends PScreen implements InputProcessor {
             b.update();
         } //TODO Fix the buttons so that they can adapt to changes in the entity list
 
-        for (int i = 0; i < tileBoard.length; i++) {
-            for (int j = 0; j < tileBoard[0].length; j++) {
-                Tile tile = tileBoard[i][j];
+        for (int i = 0; i < controller.tileBoard.length; i++) {
+            for (int j = 0; j < controller.tileBoard[0].length; j++) {
+                Tile tile = controller.tileBoard[i][j];
                 tile.render(batch);
             }
         }

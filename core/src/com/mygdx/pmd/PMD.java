@@ -28,7 +28,6 @@ public class PMD extends Game {
     public static HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
     public static HashMap<Integer, AtomicBoolean> keys;
 
-
     public SpriteBatch batch;
     public ShapeRenderer shapeRenderer;
 

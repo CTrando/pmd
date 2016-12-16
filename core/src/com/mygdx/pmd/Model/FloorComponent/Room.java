@@ -1,7 +1,11 @@
 package com.mygdx.pmd.model.FloorComponent;
 
 
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.Direction;
+import com.mygdx.pmd.model.Factory.FloorFactory;
+import com.mygdx.pmd.model.Tile.DoorTile;
 import com.mygdx.pmd.model.Tile.RoomTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.PRandomInt;
@@ -20,28 +24,61 @@ public class Room {
     public int width;
     public int height;
 
-    public Controller controller;
-    public Tile[][] tileBoard;
+    public FloorFactory floorFactory;
+    public Tile[][] placeHolder;
+    public Array<Tile> borderTiles;
 
-    public Room(Controller controller, Tile[][] tileBoard){
-        this.controller = controller;
-        this.tileBoard = tileBoard;
+    public Room(FloorFactory floorFactory){
+        this.floorFactory = floorFactory;
+        this.placeHolder = floorFactory.getPlaceHolder();
 
-        startingRow = PRandomInt.random(0, tileBoard.length);
-        startingCol = PRandomInt.random(0, tileBoard[0].length);
+        startingRow = PRandomInt.random(0, placeHolder.length);
+        startingCol = PRandomInt.random(0, placeHolder[0].length);
 
-        height = PRandomInt.random(0,10);
-        width = PRandomInt.random(0, 10);
+        height = PRandomInt.random(3,10);
+        width = PRandomInt.random(3, 10);
 
-        startingRow = (startingRow+height)%tileBoard.length;
-        startingCol = (startingCol+width)%tileBoard[0].length;
+        if(startingRow + height > placeHolder.length) startingRow = 0;
+        if(startingCol + width > placeHolder[0].length) startingCol = 0;
+
+        //set up border tiles - perimeter of rectangle
+        this.borderTiles = new Array<Tile>();
     }
 
     public void createRoom(){
         for(int i = startingRow; i< startingRow+height; i++){
             for(int j = startingCol; j< startingCol + width; j++){
-                tileBoard[i][j] = new RoomTile(i,j, controller, this);
+                placeHolder[i][j] = new RoomTile(i,j,floorFactory);
+
+                if( i == startingRow ||
+                    i == startingRow+height-1 ||
+                    j == startingCol ||
+                    j == startingCol+width-1 )
+                    borderTiles.add(placeHolder[i][j]);
             }
         }
+
+        this.setConnectors();
+    }
+
+    public void setConnectors(){
+        if(borderTiles.size <= 0) return;
+        int numConnectors = PRandomInt.random(1,3);
+
+        for(int i = 0; i< numConnectors; i++){
+            int randIndex = PRandomInt.random(0,borderTiles.size);
+            Tile randTile =borderTiles.get(randIndex);
+            placeHolder[randTile.row][randTile.col] = new DoorTile(randTile.row, randTile.col, floorFactory);
+            Connector connector = new Connector(randTile, getDirection(randTile));
+            floorFactory.addConnector(connector);
+        }
+    }
+
+    public Direction getDirection(Tile borderTile){
+        if(borderTile.row == startingRow) return Direction.down;
+        if(borderTile.row == startingRow+height-1) return Direction.up;
+        if(borderTile.col == startingCol) return Direction.left;
+        if(borderTile.col == startingCol+width-1) return Direction.right;
+        return null;
     }
 }
