@@ -6,6 +6,6 @@ package com.mygdx.pmd.utils;
 public class PRandomInt {
 
     public static int random(int floor, int ceiling){
-        return (int)(Math.random()*ceiling) + floor;
+        return (int)(Math.random()*(ceiling+1)) + floor;
     }
 }

@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.FloorComponent;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.ConnectFrom;
 import com.mygdx.pmd.enumerations.Direction;
 import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.model.Tile.DoorTile;
@@ -45,6 +46,23 @@ public class Room {
         this.borderTiles = new Array<Tile>();
     }
 
+    public Room(FloorFactory floorFactory, Connector connector){
+        this.floorFactory = floorFactory;
+        this.placeHolder = floorFactory.getPlaceHolder();
+
+        startingRow = connector.tile.row;
+        startingCol= connector.tile.col;
+
+        height = PRandomInt.random(2,3);
+        width = PRandomInt.random(2, 3);
+
+        if(startingRow + height > placeHolder.length) height = placeHolder.length - startingRow -1;
+        if(startingCol + width > placeHolder[0].length) width = placeHolder[0].length - startingCol -1;
+
+        //set up border tiles - perimeter of rectangle
+        this.borderTiles = new Array<Tile>();
+    }
+
     public void createRoom(){
         for(int i = startingRow; i< startingRow+height; i++){
             for(int j = startingCol; j< startingCol + width; j++){
@@ -57,7 +75,6 @@ public class Room {
                     borderTiles.add(placeHolder[i][j]);
             }
         }
-
         this.setConnectors();
     }
 
@@ -66,10 +83,13 @@ public class Room {
         int numConnectors = PRandomInt.random(1,3);
 
         for(int i = 0; i< numConnectors; i++){
-            int randIndex = PRandomInt.random(0,borderTiles.size);
-            Tile randTile =borderTiles.get(randIndex);
+            int randIndex = PRandomInt.random(0,borderTiles.size-1);
+            Tile randTile = borderTiles.get(randIndex);
             placeHolder[randTile.row][randTile.col] = new DoorTile(randTile.row, randTile.col, floorFactory);
-            Connector connector = new Connector(randTile, getDirection(randTile));
+            if(randTile == null) System.out.println("ROOM TILE TERRIBLE");
+
+
+            Connector connector = new Connector(randTile, getDirection(randTile), ConnectFrom.ROOM);
             floorFactory.addConnector(connector);
         }
     }

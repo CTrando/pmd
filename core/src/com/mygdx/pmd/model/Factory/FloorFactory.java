@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.Factory;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.ConnectFrom;
 import com.mygdx.pmd.model.FloorComponent.Connector;
 import com.mygdx.pmd.model.FloorComponent.Path;
 import com.mygdx.pmd.model.FloorComponent.Room;
@@ -10,7 +11,9 @@ import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.RoomTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.screens.DungeonScreen;
+import com.mygdx.pmd.utils.PRandomInt;
 
+import java.lang.ref.PhantomReference;
 
 
 /**
@@ -23,7 +26,9 @@ public class FloorFactory {
     Array<Room> rooms;
     private Array<Connector> connectors;
 
-    public int NUM_ROOMS = 1;
+    public boolean stopGenerating = false;
+
+    public int NUM_ROOMS = 10;
 
     public FloorFactory(Controller controller){
         this.controller = controller;
@@ -34,9 +39,21 @@ public class FloorFactory {
     }
 
     public Tile[][] createFloor(){
+        connectors = new Array<Connector>();
+        rooms = new Array<Room>();
+        stopGenerating = false;
+
         this.createBlankFloor();
-        this.createRooms(NUM_ROOMS);
-        this.createPaths();
+        //create the first room
+        Room room = new Room(this);
+        room.createRoom();
+
+        //create the first path
+        Path path = new Path(this,connectors.pop());
+        path.createPath();
+
+        //start updating the connectors
+        this.createConnections();
 
         this.finalizeFloor();
         return tileBoard;
@@ -58,8 +75,34 @@ public class FloorFactory {
         }
     }
 
+    public void createConnections(){
+        while(connectors.size > 0 && !stopGenerating){
+            Connector connector = connectors.pop();
+
+            if (connector.connectFrom == ConnectFrom.PATH){
+                int rand = PRandomInt.random(0,1);
+                if(rand == 0){
+                    Path path = new Path(this, connector);
+                    path.createPath();
+                } else {
+                    Room room = new Room(this, connector);
+                    room.createRoom();
+                    rooms.add(room);
+                }
+            } else {
+                Path path = new Path(this, connector);
+                path.createPath();
+            }
+
+            if(rooms.size > NUM_ROOMS) {
+                stopGenerating = true;
+            }
+
+        }
+    }
+
     public void createPaths(){
-        while(connectors.size > 0){
+        for(int i = 0; i< 15; i++){
             Path path = new Path(this,connectors.pop());
             path.createPath();
         }
@@ -75,6 +118,12 @@ public class FloorFactory {
 
     public void addConnector(Connector connector){
         connectors.add(connector);
+    }
+
+    public boolean isWithinBounds(int row, int col){
+        if(row >= tileBoard.length || row < 0) return false;
+        if(col >= tileBoard[0].length || col < 0) return false;
+        return true;
     }
 
     public Tile[][] getPlaceHolder() {

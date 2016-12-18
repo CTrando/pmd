@@ -1,5 +1,6 @@
 package com.mygdx.pmd.model.FloorComponent;
 
+import com.mygdx.pmd.enumerations.ConnectFrom;
 import com.mygdx.pmd.enumerations.Direction;
 import com.mygdx.pmd.model.Tile.Tile;
 
@@ -9,9 +10,11 @@ import com.mygdx.pmd.model.Tile.Tile;
 public class Connector {
     public Direction direction;
     public Tile tile;
+    public ConnectFrom connectFrom;
 
-    public Connector(Tile tile, Direction direction){
+    public Connector(Tile tile, Direction direction, ConnectFrom connectFrom){
         this.direction = direction;
         this.tile = tile;
+        this.connectFrom = connectFrom;
     }
 }
