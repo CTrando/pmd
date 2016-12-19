@@ -29,6 +29,8 @@ public class Room {
     public Tile[][] placeHolder;
     public Array<Tile> borderTiles;
 
+    private Direction orientation;
+
     public Room(FloorFactory floorFactory){
         this.floorFactory = floorFactory;
         this.placeHolder = floorFactory.getPlaceHolder();
@@ -36,8 +38,8 @@ public class Room {
         startingRow = PRandomInt.random(0, placeHolder.length);
         startingCol = PRandomInt.random(0, placeHolder[0].length);
 
-        height = PRandomInt.random(3,10);
-        width = PRandomInt.random(3, 10);
+        height = PRandomInt.random(2,3);
+        width = PRandomInt.random(2, 3);
 
         if(startingRow + height > placeHolder.length) startingRow = 0;
         if(startingCol + width > placeHolder[0].length) startingCol = 0;
@@ -49,6 +51,7 @@ public class Room {
     public Room(FloorFactory floorFactory, Connector connector){
         this.floorFactory = floorFactory;
         this.placeHolder = floorFactory.getPlaceHolder();
+        this.orientation = connector.direction;
 
         startingRow = connector.tile.row;
         startingCol= connector.tile.col;
@@ -56,8 +59,15 @@ public class Room {
         height = PRandomInt.random(2,3);
         width = PRandomInt.random(2, 3);
 
-        if(startingRow + height > placeHolder.length) height = placeHolder.length - startingRow -1;
-        if(startingCol + width > placeHolder[0].length) width = placeHolder[0].length - startingCol -1;
+        switch(orientation){
+            case down: startingRow -= height; break;
+            case left: startingCol -= width; break;
+        }
+
+        if(startingRow <=0) startingRow = 0;
+        if(startingCol <= 0) startingCol = 0;
+        if(startingRow + height >= placeHolder.length) startingRow = placeHolder.length-height;
+        if(startingCol + width >= placeHolder[0].length) startingCol = placeHolder[0].length-width;
 
         //set up border tiles - perimeter of rectangle
         this.borderTiles = new Array<Tile>();
@@ -83,16 +93,21 @@ public class Room {
         int numConnectors = PRandomInt.random(1,3);
 
         for(int i = 0; i< numConnectors; i++){
+            if(borderTiles.size == 0) break;
             int randIndex = PRandomInt.random(0,borderTiles.size-1);
             Tile randTile = borderTiles.get(randIndex);
             placeHolder[randTile.row][randTile.col] = new DoorTile(randTile.row, randTile.col, floorFactory);
+            borderTiles.removeValue(randTile,false);
             if(randTile == null) System.out.println("ROOM TILE TERRIBLE");
 
+            Array<Tile> neighbors = Tile.getTilesAroundTile(placeHolder,randTile);
+            borderTiles.removeAll(neighbors,false);
 
             Connector connector = new Connector(randTile, getDirection(randTile), ConnectFrom.ROOM);
             floorFactory.addConnector(connector);
         }
     }
+
 
     public Direction getDirection(Tile borderTile){
         if(borderTile.row == startingRow) return Direction.down;
@@ -100,5 +115,7 @@ public class Room {
         if(borderTile.col == startingCol) return Direction.left;
         if(borderTile.col == startingCol+width-1) return Direction.right;
         return null;
+
+        //fix this method if you want to fix the one room thing with one border tile against the tileBoard edge
     }
 }

@@ -19,6 +19,10 @@ import java.lang.ref.PhantomReference;
 /**
  * Created by Cameron on 12/11/2016.
  */
+
+/**
+ * TODO Potential problem with placing rooms right next to each other
+ */
 public class FloorFactory {
     Controller controller;
     public Tile[][] tileBoard;
@@ -28,7 +32,7 @@ public class FloorFactory {
 
     public boolean stopGenerating = false;
 
-    public int NUM_ROOMS = 10;
+    public int NUM_ROOMS = 2;
 
     public FloorFactory(Controller controller){
         this.controller = controller;
@@ -76,7 +80,7 @@ public class FloorFactory {
     }
 
     public void createConnections(){
-        while(connectors.size > 0 && !stopGenerating){
+        while(connectors.size > 0 && connectors.size < 20){
             Connector connector = connectors.pop();
 
             if (connector.connectFrom == ConnectFrom.PATH){
@@ -89,16 +93,14 @@ public class FloorFactory {
                     room.createRoom();
                     rooms.add(room);
                 }
-            } else {
+            } else if (connector.connectFrom == ConnectFrom.ROOM){
                 Path path = new Path(this, connector);
                 path.createPath();
             }
 
-            if(rooms.size > NUM_ROOMS) {
-                stopGenerating = true;
-            }
-
+            System.out.println(connectors.size);
         }
+        System.out.println("Done");
     }
 
     public void createPaths(){

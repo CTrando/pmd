@@ -12,4 +12,17 @@ public enum Direction {
     upright,
     downleft,
     downright;
+
+    private Direction opposite;
+
+    static{
+        up.opposite = down;
+        down.opposite = up;
+        left.opposite = right;
+        right.opposite = left;
+    }
+
+    public Direction getOppositeDirection(){
+        return opposite;
+    }
 }
