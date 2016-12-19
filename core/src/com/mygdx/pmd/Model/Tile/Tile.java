@@ -21,6 +21,8 @@ public abstract class Tile implements Renderable {
     public int x;
     public int y;
 
+    public byte spriteValue = 0;
+
     public int row;
     public int col;
 

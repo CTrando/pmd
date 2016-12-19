@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -52,6 +53,8 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     public static final int V_WIDTH = 1080;
     public static final int V_HEIGHT = 720;
+
+    public BitmapFont bfont = new BitmapFont();
 
     public AssetManager manager;
     public Array<Button> updateButtonList;
@@ -153,6 +156,8 @@ public class DungeonScreen extends PScreen implements InputProcessor {
             for (int j = 0; j < controller.tileBoard[0].length; j++) {
                 Tile tile = controller.tileBoard[i][j];
                 tile.render(batch);
+                //drawing strings like this is very costly performance wise and causes stuttering
+                bfont.draw(batch, tile.spriteValue+"", tile.x + 7, tile.y+ 17);
             }
         }
 

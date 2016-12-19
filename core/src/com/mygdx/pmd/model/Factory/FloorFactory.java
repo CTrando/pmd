@@ -2,18 +2,13 @@ package com.mygdx.pmd.model.Factory;
 
 
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.ConnectFrom;
-import com.mygdx.pmd.model.FloorComponent.Connector;
-import com.mygdx.pmd.model.FloorComponent.Path;
-import com.mygdx.pmd.model.FloorComponent.Room;
-import com.mygdx.pmd.model.Tile.GenericTile;
-import com.mygdx.pmd.model.Tile.RoomTile;
-import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.FloorComponent.*;
+import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.PRandomInt;
-
-import java.lang.ref.PhantomReference;
 
 
 /**
@@ -32,8 +27,6 @@ public class FloorFactory {
 
     public boolean stopGenerating = false;
 
-    public int NUM_ROOMS = 2;
-
     public FloorFactory(Controller controller){
         this.controller = controller;
         tileBoard = new Tile[DungeonScreen.windowRows][DungeonScreen.windowCols];
@@ -43,6 +36,7 @@ public class FloorFactory {
     }
 
     public Tile[][] createFloor(){
+        //reset variables - should probably change this
         connectors = new Array<Connector>();
         rooms = new Array<Room>();
         stopGenerating = false;
@@ -59,6 +53,7 @@ public class FloorFactory {
         //start updating the connectors
         this.createConnections();
 
+        // do sprite settings and placeholder --> tileBoard
         this.finalizeFloor();
         return tileBoard;
     }
@@ -68,14 +63,6 @@ public class FloorFactory {
             for(int j = 0; j< placeHolder[0].length; j++){
                 placeHolder[i][j] = new GenericTile(i,j,this);
             }
-        }
-    }
-
-    public void createRooms(int NUM_ROOMS){
-        for(int i = 0; i< NUM_ROOMS; i++){
-            Room room = new Room(this);
-            room.createRoom();
-            rooms.add(room);
         }
     }
 
@@ -103,19 +90,31 @@ public class FloorFactory {
         System.out.println("Done");
     }
 
-    public void createPaths(){
-        for(int i = 0; i< 15; i++){
-            Path path = new Path(this,connectors.pop());
-            path.createPath();
-        }
-    }
-
     public void finalizeFloor(){
+        //check neighbors and set spriteValue
+        for(int i = 0; i< placeHolder.length; i++){
+            for(int j = 0; j< placeHolder[0].length; j++){
+                if(this.isWithinBounds(i+1,j) && placeHolder[i+1][j] instanceof RoomTile) placeHolder[i][j].spriteValue+=1;
+                if(this.isWithinBounds(i+1, j+1) && placeHolder[i+1][j+1] instanceof RoomTile) placeHolder[i][j].spriteValue+=2;
+                if(this.isWithinBounds(i,j+1) && placeHolder[i][j+1] instanceof RoomTile) placeHolder[i][j].spriteValue+=3;
+                if(this.isWithinBounds(i-1, j+1) && placeHolder[i-1][j+1] instanceof RoomTile) placeHolder[i][j].spriteValue+=4;
+                if(this.isWithinBounds(i-1,j) && placeHolder[i-1][j] instanceof RoomTile) placeHolder[i][j].spriteValue+=5;
+                if(this.isWithinBounds(i-1, j-1) && placeHolder[i-1][j-1] instanceof RoomTile) placeHolder[i][j].spriteValue+=6;
+                if(this.isWithinBounds(i,j-1) && placeHolder[i][j-1] instanceof RoomTile) placeHolder[i][j].spriteValue+=7;
+                if(this.isWithinBounds(i+1, j-1) && placeHolder[i+1][j-1] instanceof RoomTile) placeHolder[i][j].spriteValue+=8;
+            }
+        }
+
+        // set sprite based on spriteValue and move placeHolder to tileBoard
         for(int i = 0; i< placeHolder.length; i++){
             for(int j = 0; j< tileBoard[0].length; j++){
+                Tile tile = placeHolder[i][j];
+                if(tile.spriteValue == 0)
+                    tile.sprite = PMD.sprites.get("treekoup1");
                 tileBoard[i][j] = placeHolder[i][j];
             }
         }
+
     }
 
     public void addConnector(Connector connector){

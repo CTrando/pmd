@@ -14,7 +14,7 @@ import static com.mygdx.pmd.screens.DungeonScreen.windowRows;
 public class GenericTile extends Tile {
 
     public GenericTile(int row, int col, FloorFactory floorFactory) {
-        super(row, col, floorFactory, "GENERIO");
+        super(row, col, floorFactory, "GENERIC");
         this.isWalkable = true;
         this.sprite = PMD.sprites.get("generictilesprite");
     }

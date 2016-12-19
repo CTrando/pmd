@@ -96,7 +96,7 @@ public class Room {
             if(borderTiles.size == 0) break;
             int randIndex = PRandomInt.random(0,borderTiles.size-1);
             Tile randTile = borderTiles.get(randIndex);
-            placeHolder[randTile.row][randTile.col] = new DoorTile(randTile.row, randTile.col, floorFactory);
+            placeHolder[randTile.row][randTile.col] = new RoomTile(randTile.row, randTile.col, floorFactory);
             borderTiles.removeValue(randTile,false);
             if(randTile == null) System.out.println("ROOM TILE TERRIBLE");
 
