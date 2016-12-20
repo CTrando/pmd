@@ -1,2 +1,4 @@
 include ':desktop'
 include ':core'
+//include ':ios-moe'
+include ':android'

@@ -11,7 +11,6 @@ import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.*;
 import com.mygdx.pmd.utils.observers.Observer;
-import com.sun.org.apache.xml.internal.security.encryption.AgreementMethod;
 
 
 public abstract class Pokemon extends Entity {

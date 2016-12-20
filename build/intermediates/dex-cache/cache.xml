@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Cameron\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx\1.9.4\4b4b7962d1bc75af0438f5c81ec1010557bc9ee5\gdx-1.9.4.jar"
+        jumboMode="false"
+        revision="24.0.2"
+        sha1="4b4b7962d1bc75af0438f5c81ec1010557bc9ee5">
+        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\pre-dexed\debug\gdx-1.9.4_fe2d15396392d40148219135b7bea219fbd4085d.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cameron\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-backend-android\1.9.4\194b33382d6d58fad031521ba3331d926c476c9b\gdx-backend-android-1.9.4.jar"
+        jumboMode="false"
+        revision="24.0.2"
+        sha1="194b33382d6d58fad031521ba3331d926c476c9b">
+        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\pre-dexed\debug\gdx-backend-android-1.9.4_2335d03bbfa67b84331ef68a893969d423d4a8c3.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cameron\.gradle\caches\modules-2\files-2.1\com.badlogicgames.box2dlights\box2dlights\1.4\3d77ad5b4164fb32fc67e2446e35911bb0aaf0bd\box2dlights-1.4.jar"
+        jumboMode="false"
+        revision="24.0.2"
+        sha1="3d77ad5b4164fb32fc67e2446e35911bb0aaf0bd">
+        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\pre-dexed\debug\box2dlights-1.4_68337206285626242474800935d92f8445fff103.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cameron\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-box2d\1.9.4\98a0d25c9f0637fecac6e4aacf7287aa635964f5\gdx-box2d-1.9.4.jar"
+        jumboMode="false"
+        revision="24.0.2"
+        sha1="98a0d25c9f0637fecac6e4aacf7287aa635964f5">
+        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\pre-dexed\debug\gdx-box2d-1.9.4_49e9bd26ccb7372a3e5d387ff393d51524fd92e7.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cameron\Desktop\LibGDXGames\pmd\core\build\libs\core-1.0.jar"
+        jumboMode="false"
+        revision="24.0.2"
+        sha1="3d5164fe9d693abb26a503ad53dbf9b5d5822d78">
+        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\pre-dexed\debug\core-1.0_621f25cd348c95fbc4934869b05f3cf5b798bedc.jar" />
+    </item>
+
+</items>

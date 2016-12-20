@@ -110,7 +110,16 @@ public class FloorFactory {
             for(int j = 0; j< tileBoard[0].length; j++){
                 Tile tile = placeHolder[i][j];
                 if(tile.spriteValue == 0)
-                    tile.sprite = PMD.sprites.get("treekoup1");
+                    tile.sprite = PMD.sprites.get("blacktilesprite");
+                else if (tile.spriteValue == 18)
+                    tile.sprite = PMD.sprites.get("toprighttilesprite");
+                else if (tile.spriteValue == 16)
+                    tile.sprite = PMD.sprites.get("bottomrightcornertilesprite");
+                else if (tile.spriteValue == 12)
+                    tile.sprite = PMD.sprites.get("toplefttilesprite");
+                else if (tile.spriteValue == 6)
+                    tile.sprite = PMD.sprites.get("bottomlefttilesprite");
+
                 tileBoard[i][j] = placeHolder[i][j];
             }
         }
