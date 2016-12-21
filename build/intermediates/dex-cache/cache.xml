@@ -2,6 +2,20 @@
 <items version="2" >
 
     <item
+        jar="C:\Users\Cameron\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx\1.9.4\4b4b7962d1bc75af0438f5c81ec1010557bc9ee5\gdx-1.9.4.jar"
+        jumboMode="false"
+        revision="24.0.2"
+        sha1="4b4b7962d1bc75af0438f5c81ec1010557bc9ee5">
+        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\pre-dexed\release\gdx-1.9.4_fe2d15396392d40148219135b7bea219fbd4085d.jar" />
+    </item>
+    <item
+        jar="C:\Users\Cameron\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-backend-android\1.9.4\194b33382d6d58fad031521ba3331d926c476c9b\gdx-backend-android-1.9.4.jar"
+        jumboMode="false"
+        revision="24.0.2"
+        sha1="194b33382d6d58fad031521ba3331d926c476c9b">
+        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\pre-dexed\release\gdx-backend-android-1.9.4_2335d03bbfa67b84331ef68a893969d423d4a8c3.jar" />
+    </item>
+    <item
         jar="C:\Users\Cameron\.gradle\caches\modules-2\files-2.1\com.badlogicgames.box2dlights\box2dlights\1.4\3d77ad5b4164fb32fc67e2446e35911bb0aaf0bd\box2dlights-1.4.jar"
         jumboMode="false"
         revision="24.0.2"
@@ -19,22 +33,8 @@
         jar="C:\Users\Cameron\Desktop\LibGDXGames\pmd\core\build\libs\core-1.0.jar"
         jumboMode="false"
         revision="24.0.2"
-        sha1="ad912df972966971a490c54b19ce425f795bc482">
+        sha1="73957e4ad9e4b6918c792bf90a9b457ab4e91628">
         <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\pre-dexed\debug\core-1.0_621f25cd348c95fbc4934869b05f3cf5b798bedc.jar" />
-    </item>
-    <item
-        jar="C:\Users\Cameron\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx\1.9.4\4b4b7962d1bc75af0438f5c81ec1010557bc9ee5\gdx-1.9.4.jar"
-        jumboMode="false"
-        revision="24.0.2"
-        sha1="4b4b7962d1bc75af0438f5c81ec1010557bc9ee5">
-        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\pre-dexed\release\gdx-1.9.4_fe2d15396392d40148219135b7bea219fbd4085d.jar" />
-    </item>
-    <item
-        jar="C:\Users\Cameron\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-backend-android\1.9.4\194b33382d6d58fad031521ba3331d926c476c9b\gdx-backend-android-1.9.4.jar"
-        jumboMode="false"
-        revision="24.0.2"
-        sha1="194b33382d6d58fad031521ba3331d926c476c9b">
-        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\pre-dexed\release\gdx-backend-android-1.9.4_2335d03bbfa67b84331ef68a893969d423d4a8c3.jar" />
     </item>
 
 </items>

@@ -8,6 +8,11 @@
 .idea/workspace.xml
 .idea/tasks.xml
 
+# Folders
+android 
+build 
+classes
+
 # Sensitive or high-churn files:
 .idea/dataSources.ids
 .idea/dataSources.xml
