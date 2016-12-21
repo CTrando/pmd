@@ -28,11 +28,11 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" exported="" />
-    <orderEntry type="library" exported="" name="gdx-backend-lwjgl-1.9.4" level="project" />
-    <orderEntry type="library" exported="" name="gdx-platform-1.9.4-natives-desktop" level="project" />
-    <orderEntry type="library" exported="" name="gdx-box2d-platform-1.9.4-natives-desktop" level="project" />
-    <orderEntry type="library" exported="" name="gdx-1.9.4" level="project" />
-    <orderEntry type="library" exported="" name="gdx-box2d-1.9.4" level="project" />
+    <orderEntry type="library" exported="" name="gdx-backend-lwjgl-1.9.5" level="project" />
+    <orderEntry type="library" exported="" name="gdx-platform-1.9.5-natives-desktop" level="project" />
+    <orderEntry type="library" exported="" name="gdx-box2d-platform-1.9.5-natives-desktop" level="project" />
+    <orderEntry type="library" exported="" name="gdx-1.9.5" level="project" />
+    <orderEntry type="library" exported="" name="gdx-box2d-1.9.5" level="project" />
     <orderEntry type="library" exported="" name="box2dlights-1.4" level="project" />
     <orderEntry type="library" exported="" name="lwjgl-2.9.2" level="project" />
     <orderEntry type="library" exported="" name="lwjgl_util-2.9.2" level="project" />

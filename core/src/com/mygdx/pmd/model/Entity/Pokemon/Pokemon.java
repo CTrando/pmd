@@ -48,6 +48,7 @@ public abstract class Pokemon extends Entity {
         if(shouldBeDestroyed) {
             controller.removeEntity(this);
             if (this instanceof PokemonPlayer) controller.controllerScreen.game.dispose();
+            System.out.println("WOE IS ME I AM DEAD");
             this.dispose();
         }
     }

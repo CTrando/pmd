@@ -56,7 +56,8 @@ public class PMD extends Game {
     }
 
     public void dispose() {
-        batch.dispose();
+        //TODO fix this
+      //  batch.dispose();
     }
 
     public void loadImages(TextureAtlas textureAtlas) {

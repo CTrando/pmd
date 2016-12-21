@@ -12,9 +12,12 @@ import com.mygdx.pmd.model.Factory.PokemonFactory;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
+import com.mygdx.pmd.model.Spawner.MobSpawner;
+import com.mygdx.pmd.model.Tile.RoomTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.model.Entity.Entity;
+import com.mygdx.pmd.utils.PRandomInt;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +33,8 @@ public class Controller {
     public ArrayList<Entity> entityList;
     public ArrayList<Entity> turnBasedEntities;
     public Pokemon pokemonPlayer;
+
+    public MobSpawner mobSpawner;
 
     FloorFactory floorFactory;
 
@@ -48,6 +53,8 @@ public class Controller {
 
         this.loadPokemon();
         this.randomizeAllPokemonLocation();
+        mobSpawner = new MobSpawner(this);
+        this.addEntity(mobSpawner);
     }
 
     public void nextFloor(){
@@ -130,5 +137,14 @@ public class Controller {
         if(entity.isTurnBased){
             turnBasedEntities.remove(entity);
         }
+    }
+
+    public static Tile chooseUnoccupiedTile(Tile[][] tileBoard){
+        int randRow = PRandomInt.random(0, tileBoard.length-1);
+        int randCol = PRandomInt.random(0, tileBoard[0].length-1);
+
+        if(tileBoard[randRow][randCol] instanceof RoomTile){
+            return tileBoard[randRow][randCol];
+        } else return chooseUnoccupiedTile(tileBoard);
     }
 }

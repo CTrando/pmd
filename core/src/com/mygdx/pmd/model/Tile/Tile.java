@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
+import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.utils.Constants;
@@ -20,7 +21,9 @@ public abstract class Tile implements Renderable {
     public int x;
     public int y;
 
-    public byte spriteValue = 0;
+    public Controller controller;
+
+    public int spriteValue = 0;
 
     public int row;
     public int col;
@@ -36,8 +39,12 @@ public abstract class Tile implements Renderable {
     public Tile[][] tileBoard;
     public Tile parent;
 
+    public FloorFactory floorFactory;
+
     public Tile(int r, int c, FloorFactory floorFactory, String classifier) {
+        this.controller = floorFactory.controller;
         this.tileBoard = floorFactory.tileBoard;
+        this.floorFactory = floorFactory;
 
         this.x = c * Constants.TILE_SIZE;
         this.y = r * Constants.TILE_SIZE;

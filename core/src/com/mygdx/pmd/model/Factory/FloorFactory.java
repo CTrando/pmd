@@ -19,7 +19,7 @@ import com.mygdx.pmd.utils.PRandomInt;
  * TODO Potential problem with placing rooms right next to each other
  */
 public class FloorFactory {
-    Controller controller;
+    public Controller controller;
     public Tile[][] tileBoard;
     Tile[][] placeHolder;
     Array<Room> rooms;
@@ -53,8 +53,15 @@ public class FloorFactory {
         //start updating the connectors
         this.createConnections();
 
-        // do sprite settings and placeholder --> tileBoard
-        this.finalizeFloor();
+        //check neighbors and skin tiles
+        this.skinTiles();
+
+        //place event tiles
+        this.placeEventTiles();
+
+        //place tiles
+        this.placeTiles();
+
         return tileBoard;
     }
 
@@ -90,40 +97,51 @@ public class FloorFactory {
         System.out.println("Done");
     }
 
-    public void finalizeFloor(){
+    public void skinTiles(){
         //check neighbors and set spriteValue
         for(int i = 0; i< placeHolder.length; i++){
             for(int j = 0; j< placeHolder[0].length; j++){
+                Tile tile = placeHolder[i][j];
+
                 if(this.isWithinBounds(i+1,j) && placeHolder[i+1][j] instanceof RoomTile) placeHolder[i][j].spriteValue+=1;
                 if(this.isWithinBounds(i+1, j+1) && placeHolder[i+1][j+1] instanceof RoomTile) placeHolder[i][j].spriteValue+=2;
-                if(this.isWithinBounds(i,j+1) && placeHolder[i][j+1] instanceof RoomTile) placeHolder[i][j].spriteValue+=3;
-                if(this.isWithinBounds(i-1, j+1) && placeHolder[i-1][j+1] instanceof RoomTile) placeHolder[i][j].spriteValue+=4;
-                if(this.isWithinBounds(i-1,j) && placeHolder[i-1][j] instanceof RoomTile) placeHolder[i][j].spriteValue+=5;
-                if(this.isWithinBounds(i-1, j-1) && placeHolder[i-1][j-1] instanceof RoomTile) placeHolder[i][j].spriteValue+=6;
-                if(this.isWithinBounds(i,j-1) && placeHolder[i][j-1] instanceof RoomTile) placeHolder[i][j].spriteValue+=7;
-                if(this.isWithinBounds(i+1, j-1) && placeHolder[i+1][j-1] instanceof RoomTile) placeHolder[i][j].spriteValue+=8;
+                if(this.isWithinBounds(i,j+1) && placeHolder[i][j+1] instanceof RoomTile) placeHolder[i][j].spriteValue+=4;
+                if(this.isWithinBounds(i-1, j+1) && placeHolder[i-1][j+1] instanceof RoomTile) placeHolder[i][j].spriteValue+=8;
+                if(this.isWithinBounds(i-1,j) && placeHolder[i-1][j] instanceof RoomTile) placeHolder[i][j].spriteValue+=16;
+                if(this.isWithinBounds(i-1, j-1) && placeHolder[i-1][j-1] instanceof RoomTile) placeHolder[i][j].spriteValue+=32;
+                if(this.isWithinBounds(i,j-1) && placeHolder[i][j-1] instanceof RoomTile) placeHolder[i][j].spriteValue+=64;
+                if(this.isWithinBounds(i+1, j-1) && placeHolder[i+1][j-1] instanceof RoomTile) placeHolder[i][j].spriteValue+=128;
+
+                if (tile.spriteValue == 0)
+                    tile.sprite = PMD.sprites.get("blacktilesprite");
+                else if (tile.spriteValue == 112)
+                    tile.sprite = PMD.sprites.get("toprighttilesprite");
+                else if (tile.spriteValue == 193)
+                    tile.sprite = PMD.sprites.get("bottomrightcornertilesprite");
+                else if (tile.spriteValue == 28)
+                    tile.sprite = PMD.sprites.get("toplefttilesprite");
+                else if (tile.spriteValue == 7)
+                    tile.sprite = PMD.sprites.get("bottomlefttilesprite");
             }
         }
+    }
 
+    public void placeTiles(){
         // set sprite based on spriteValue and move placeHolder to tileBoard
-        for(int i = 0; i< placeHolder.length; i++){
-            for(int j = 0; j< tileBoard[0].length; j++){
+        for(int i = 0; i< placeHolder.length; i++) {
+            for (int j = 0; j < tileBoard[0].length; j++) {
                 Tile tile = placeHolder[i][j];
-                if(tile.spriteValue == 0)
-                    tile.sprite = PMD.sprites.get("blacktilesprite");
-                else if (tile.spriteValue == 18)
-                    tile.sprite = PMD.sprites.get("toprighttilesprite");
-                else if (tile.spriteValue == 16)
-                    tile.sprite = PMD.sprites.get("bottomrightcornertilesprite");
-                else if (tile.spriteValue == 12)
-                    tile.sprite = PMD.sprites.get("toplefttilesprite");
-                else if (tile.spriteValue == 6)
-                    tile.sprite = PMD.sprites.get("bottomlefttilesprite");
-
                 tileBoard[i][j] = placeHolder[i][j];
             }
         }
+    }
 
+    public void placeEventTiles(){
+        Tile tile = Controller.chooseUnoccupiedTile(placeHolder);
+        while(tile.spriteValue < 200 && tile.hasEntity()) {
+            tile = Controller.chooseUnoccupiedTile(placeHolder);
+        }
+        placeHolder[tile.row][tile.col] = new StairTile(tile.row, tile.col, this);
     }
 
     public void addConnector(Connector connector){
