@@ -1,6 +1,5 @@
 package com.mygdx.pmd.utils.observers;
 
-import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.model.Entity.Entity;
 
 /**

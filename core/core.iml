@@ -39,5 +39,6 @@
     <orderEntry type="library" exported="" scope="TEST" name="byte-buddy-1.4.33" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="byte-buddy-agent-1.4.33" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="objenesis-2.4" level="project" />
+    <orderEntry type="library" exported="" name="core.core-1.0" level="project" />
   </component>
 </module>
