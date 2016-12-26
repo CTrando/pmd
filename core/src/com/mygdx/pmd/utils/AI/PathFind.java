@@ -2,6 +2,7 @@ package com.mygdx.pmd.utils.AI;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
+import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.model.Tile.Tile;
 
@@ -9,7 +10,7 @@ import com.mygdx.pmd.model.Tile.Tile;
  * Created by Cameron on 11/11/2016.
  */
 public abstract class PathFind {
-    public Entity entity;
+    public DynamicEntity dEntity;
     public Tile[][] tileBoard;
 
     Array<Tile> openNodeList;
@@ -18,10 +19,10 @@ public abstract class PathFind {
 
     Tile currentTile;
 
-    public PathFind(Entity entity){
-        this.entity = entity;
-        this.tileBoard = this.entity.tileBoard;
-        this.currentTile = entity.currentTile;
+    public PathFind(DynamicEntity dEntity){
+        this.dEntity = dEntity;
+        this.tileBoard = this.dEntity.tileBoard;
+        this.currentTile = dEntity.currentTile;
         this.solutionNodeList = new Array<Tile>();
     }
 

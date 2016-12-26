@@ -27,10 +27,6 @@ import java.util.HashMap;
  */
 public abstract class Entity implements Renderable, Updatable, Observable {
     public BaseBehavior[] behaviors;
-    public boolean isTurnBased;
-    public Turn turnState;
-    private Action actionState;
-    public Action previousState;
 
     public boolean shouldBeDestroyed;
 
@@ -40,21 +36,13 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     public int row;
     public int col;
 
-    public int hp = 100;
-
     public Tile[][] tileBoard;
 
-    public Tile nextTile;
     public Tile currentTile;
-    public Tile facingTile;
-    public Tile possibleNextTile;
 
     public Sprite currentSprite;
     public HashMap<String, PAnimation> animationMap;
     public Observer[] observers;
-
-    public Direction direction;
-    public Aggression aggression;
 
     public Controller controller;
 
@@ -63,10 +51,10 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         this.tileBoard = controller.tileBoard;
         this.x = x;
         this.y = y;
-        this.direction = Direction.down;
 
         animationMap = new HashMap<String, PAnimation>();
 
+        //initialize behaviors array
         behaviors = new BaseBehavior[10];
         for (int i = 0; i < behaviors.length; i++) {
             behaviors[i] = new NoBehavior(this);
@@ -98,8 +86,6 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         }
     }
 
-    public abstract boolean isLegalToMoveTo(Tile tile);
-
     public void setBehavior(BaseBehavior behavior, int index) {
         behaviors[index] = behavior;
     }
@@ -107,114 +93,6 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     public boolean equals(Tile tile) {
         if(tile == null) return false;
         return (tile.x == x && tile.y == y);
-    }
-
-    public void move(int dx, int dy) {
-        x += dx;
-        y += dy;
-    }
-
-    public void moveToTile(Tile nextTile, int speed) {
-        if (nextTile == null)
-            return;
-
-        if (this.equals(nextTile)) {
-            return;
-        }
-
-        if (this.y > nextTile.y && this.x > nextTile.x) {
-            this.move(-speed, -speed);
-        } else if (this.y < nextTile.y && this.x > nextTile.x) {
-            this.move(-speed, speed);
-        } else if (this.y < nextTile.y && this.x < nextTile.x) {
-            this.move(speed, speed);
-        } else if (this.y > nextTile.y && this.x < nextTile.x) {
-            this.move(speed, -speed);
-        } else if (this.y > nextTile.y) {
-            this.move(0, -speed);
-        } else if (this.y < nextTile.y) {
-            this.move(0, speed);
-        } else if (this.x < nextTile.x) {
-            this.move(speed, 0);
-        } else if (this.x > nextTile.x) {
-            this.move(-speed, 0);
-        }
-    }
-
-    public void goToTileImmediately(Tile nextTile) {
-        this.x = nextTile.x;
-        this.y = nextTile.y;
-    }
-
-    public void moveSlow() {
-        this.moveToTile(this.nextTile, 1);
-    }
-
-    public void moveFast() {
-        this.goToTileImmediately(this.currentTile);
-    }
-
-    public boolean isWithinArea(ArrayList<Tile> area) {
-        for (Tile t : area) {
-            if (t == this.currentTile) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Tile getCurrentTile() {
-        return currentTile;
-    }
-
-    public void setCurrentTile(Tile nextTile) {
-        this.currentTile = nextTile;
-        this.x = currentTile.x;
-        this.y = currentTile.y;
-        this.notifyObservers();
-    }
-
-    public Tile getNextTile() {
-        return nextTile;
-    }
-
-    public void setNextTile(Tile tile) {
-        if (tile == null) return;
-
-        if (this.currentTile != null)
-            this.currentTile.removeEntity(this);
-        tile.addEntity(this);
-
-        this.nextTile = tile;
-    }
-
-    public void updateCurrentTile(){
-        Tile tile = Tile.getTileAt(x, y, tileBoard);
-        if(this.equals(tile))
-            this.setCurrentTile(tile);
-    }
-
-    public void randomizeLocation() {
-        int randRow = (int)(Math.random()* controller.tileBoard[0].length);
-        int randCol = (int)(Math.random()* controller.tileBoard.length);
-
-        Tile random = tileBoard[randRow][randCol];
-
-        if (random.isWalkable && /*!(random instanceof StairTile) &&*/ random.getEntityList().size() == 0) {
-            this.setNextTile(random);
-            this.setCurrentTile(random);
-        } else randomizeLocation();
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-        if (this.hp <= 0) {
-            this.hp = 0;
-        }
     }
 
     public void loadAnimations(PokemonName pokemonName) {
@@ -239,68 +117,4 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         }
     }
 
-    public void takeDamage(int x) {
-        this.setHp(this.getHp() - x);
-    }
-
-    public void dealDamage(Entity entity, int damage) {
-        entity.takeDamage(damage);
-    }
-
-    public void setFacingTileBasedOnDirection(Direction d) {
-        try {
-            switch (direction) {
-                case up:
-                    facingTile = tileBoard[currentTile.row + 1][currentTile.col];
-                    break;
-                case down:
-                    facingTile = tileBoard[currentTile.row - 1][currentTile.col];
-                    break;
-                case right:
-                    facingTile = tileBoard[currentTile.row][currentTile.col + 1];
-                    break;
-                case left:
-                    facingTile = tileBoard[currentTile.row][currentTile.col - 1];
-                    break;
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-        }
-    }
-
-    public void setDirectionBasedOnTile(Tile tile) {
-        if (this.isToLeft(tile))
-            this.direction = Direction.right;
-        if (this.isToRight(tile))
-            this.direction = Direction.left;
-        if (this.isAbove(tile))
-            this.direction = Direction.down;
-        if (this.isBelow(tile))
-            this.direction = Direction.up;
-    }
-
-    public boolean isToRight(Tile tile) {
-        return currentTile.x > tile.x;
-    }
-
-    public boolean isToLeft(Tile tile) {
-        return currentTile.x < tile.x;
-    }
-
-    public boolean isAbove(Tile tile) {
-        return currentTile.y > tile.y;
-    }
-
-    public boolean isBelow(Tile tile) {
-        return currentTile.y < tile.y;
-    }
-
-    public void setActionState(Action actionState){
-        this.previousState = this.actionState;
-        this.actionState = actionState;
-        //this.notifyObservers();
-    }
-
-    public Action getActionState(){
-        return actionState;
-    }
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.interfaces.Renderable;
+import com.mygdx.pmd.model.Entity.StaticEntity;
 import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.model.Entity.Entity;
@@ -35,6 +36,7 @@ public abstract class Tile implements Renderable {
     public String classifier; //for toString purposes
 
     private ArrayList<Entity> entityList;
+    private Array<StaticEntity> staticEntities;
 
     public Tile[][] tileBoard;
     public Tile parent;
@@ -54,10 +56,14 @@ public abstract class Tile implements Renderable {
         this.classifier = classifier;
 
         entityList = new ArrayList<Entity>();
+        staticEntities = new Array<StaticEntity>();
     }
 
     public void render(SpriteBatch batch) {
         batch.draw(sprite, x, y);
+        for(StaticEntity sEntity: staticEntities){
+            sEntity.render(batch);
+        }
     }
 
     public void renderDebug(SpriteBatch batch) {
@@ -69,6 +75,9 @@ public abstract class Tile implements Renderable {
     }
 
     public void playEvents() {
+        if(staticEntities.size > 0){
+            staticEntities.clear();
+        }
     }
 
     public abstract boolean isLegal();
@@ -174,6 +183,10 @@ public abstract class Tile implements Renderable {
     public void addEntity(Entity entity) {
         if (!entityList.contains(entity))
             entityList.add(entity);
+
+        if(entity instanceof StaticEntity){
+            staticEntities.add((StaticEntity)entity);
+        }
     }
 
     public void removeEntity(Entity entity) {

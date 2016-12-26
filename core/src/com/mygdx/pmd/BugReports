@@ -1,3 +1,14 @@
-Bug Report
+Bug Reports
 8/29/16
 When a pokemon is blocking the way of an enemy to the player, and it is blocking the only path to the player, the dijkstra's algorithm fails.
+
+12/22/16
+Have to simplify entity more so that it can be applied to items.
+Inheritance tree like
+
+
+Entity
+
+DynamicEntity Static Entity
+Pokemon         Items
+PMob PPlayer    Berry

@@ -9,6 +9,7 @@ import com.mygdx.pmd.model.Behavior.BaseBehavior;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileAnimationBehavior;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileCollisionLogicBehavior;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileRangedMovementBehavior;
+import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.Tile;
@@ -18,7 +19,7 @@ import com.mygdx.pmd.utils.PAnimation;
 /**
  * Created by Cameron on 10/18/2016.
  */
-public class Projectile extends Entity {
+public class Projectile extends DynamicEntity {
 
     private PAnimation projectileAnimation;
     public Pokemon parent;

@@ -2,6 +2,7 @@ package com.mygdx.pmd.utils.AI;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
+import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.model.Entity.Entity;
 
@@ -10,8 +11,8 @@ import com.mygdx.pmd.model.Entity.Entity;
  */
 public class ShortestPath extends PathFind {
 
-    public ShortestPath(Entity entity) {
-        super(entity);
+    public ShortestPath(DynamicEntity dEntity) {
+        super(dEntity);
     }
 
     @Override
@@ -25,21 +26,21 @@ public class ShortestPath extends PathFind {
             Tile.resetTileArrayParents(tileBoard);
 
             this.resetLists();
-            openNodeList.add(entity.currentTile);
+            openNodeList.add(dEntity.currentTile);
 
             while (currentTile != destination) {
                 currentTile = openNodeList.get(0); //TODO Index out of bounds exception occuring here which means that entity.currentTile = null
                 this.evaluateTile(currentTile, destination);
             }
 
-            entity.currentTile.setParent(null);
+            dEntity.currentTile.setParent(null);
             Tile backTrack = destination;
 
             while (backTrack.getParent() != null) {
                 backTrack = backTrack.getParent();
                 solutionNodeList.insert(0, backTrack);
             }
-            solutionNodeList.removeValue(entity.currentTile, false);
+            solutionNodeList.removeValue(dEntity.currentTile, false);
             return solutionNodeList;
         } catch(NullPointerException e){
             throw new PathFindFailureException("Null somewhere in here");

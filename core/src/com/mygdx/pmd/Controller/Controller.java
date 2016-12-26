@@ -4,9 +4,12 @@ package com.mygdx.pmd.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
+import com.mygdx.pmd.Interfaces.Turnbaseable;
 import com.mygdx.pmd.comparators.PokemonDistanceComparator;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Renderable;
+import com.mygdx.pmd.model.Decorators.FloorDecorator;
+import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.model.Factory.PokemonFactory;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
@@ -31,7 +34,8 @@ public class Controller {
 
     public ArrayList<Renderable> renderList;
     public ArrayList<Entity> entityList;
-    public ArrayList<Entity> turnBasedEntities;
+    public Array<DynamicEntity> dEntities;
+    public ArrayList<DynamicEntity> turnBasedEntities;
     public Pokemon pokemonPlayer;
 
     public MobSpawner mobSpawner;
@@ -43,13 +47,16 @@ public class Controller {
     public Controller(DungeonScreen controllerScreen) {
         this.controllerScreen = controllerScreen;
 
-        turnBasedEntities = new ArrayList<Entity>();
+        turnBasedEntities = new ArrayList<DynamicEntity>();
         renderList = new ArrayList<Renderable>();
         entityList = new ArrayList<Entity>();
+        dEntities = new Array<DynamicEntity>();
 
         floorFactory = new FloorFactory(this);
-
         tileBoard = floorFactory.createFloor();
+        tileBoard = FloorDecorator.placeItems(tileBoard);
+        tileBoard = FloorDecorator.skinTiles(tileBoard);
+
 
         this.loadPokemon();
         this.randomizeAllPokemonLocation();
@@ -57,28 +64,27 @@ public class Controller {
         this.addEntity(mobSpawner);
     }
 
-    public void nextFloor(){
+    public void nextFloor() {
         tileBoard = floorFactory.createFloor();
+        tileBoard = FloorDecorator.placeItems(tileBoard);
+        tileBoard = FloorDecorator.skinTiles(tileBoard);
         this.randomizeAllPokemonLocation();
     }
 
     public void update() {
-        try {
-            Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
 
-            for (int i = 0; i< entityList.size(); i++) { //TODO there may be an error here later, fix when projectiles are implemented better
-                entityList.get(i).update();
-            }
+        Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
 
-            Entity entity = turnBasedEntities.get(turnBasedEntityCount % turnBasedEntities.size());
-            if (entity.turnState == Turn.COMPLETE) {
-                entity = turnBasedEntities.get((++turnBasedEntityCount) % turnBasedEntities.size());
-                entity.turnState = Turn.WAITING;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (int i = 0; i < entityList.size(); i++) { //TODO there may be an error here later, fix when projectiles are implemented better
+            entityList.get(i).update();
         }
+
+        DynamicEntity dentity = turnBasedEntities.get(turnBasedEntityCount % turnBasedEntities.size());
+        if (dentity.turnState == Turn.COMPLETE) {
+            dentity = turnBasedEntities.get((++turnBasedEntityCount) % turnBasedEntities.size());
+            dentity.turnState = Turn.WAITING;
+        }
+
     }
 
     public boolean isKeyPressed(Key key) { //TODO perhaps add a buffer system for more control later - amend definitely need a buffer system
@@ -109,11 +115,12 @@ public class Controller {
     }
 
     public void randomizeAllPokemonLocation() {
-        for (Entity entity : entityList) {
-            entity.randomizeLocation();
-            entity.setActionState(Action.IDLE);
-            entity.turnState = Turn.COMPLETE;
-            if(entity instanceof PokemonPlayer) entity.turnState = Turn.WAITING;
+        for (DynamicEntity dEntity : dEntities) {
+            dEntity.randomizeLocation();
+            dEntity.setActionState(Action.IDLE);
+            dEntity.turnState = Turn.COMPLETE;
+
+            if (dEntity instanceof PokemonPlayer) dEntity.turnState = Turn.WAITING;
         }
     }
 
@@ -121,8 +128,12 @@ public class Controller {
         renderList.add(entity);
         entityList.add(entity);
 
-        if(entity.isTurnBased){
-            turnBasedEntities.add(entity);
+        if (entity instanceof DynamicEntity) {
+            dEntities.add((DynamicEntity) entity);
+        }
+
+        if (entity instanceof Turnbaseable) {
+            turnBasedEntities.add((DynamicEntity) entity);
         }
 
         if (entity instanceof PokemonPlayer) {
@@ -134,16 +145,16 @@ public class Controller {
         renderList.remove(entity);
         entityList.remove(entity);
 
-        if(entity.isTurnBased){
+        if (entity instanceof Turnbaseable) {
             turnBasedEntities.remove(entity);
         }
     }
 
-    public static Tile chooseUnoccupiedTile(Tile[][] tileBoard){
-        int randRow = PRandomInt.random(0, tileBoard.length-1);
-        int randCol = PRandomInt.random(0, tileBoard[0].length-1);
+    public static Tile chooseUnoccupiedTile(Tile[][] tileBoard) {
+        int randRow = PRandomInt.random(0, tileBoard.length - 1);
+        int randCol = PRandomInt.random(0, tileBoard[0].length - 1);
 
-        if(tileBoard[randRow][randCol] instanceof RoomTile){
+        if (tileBoard[randRow][randCol] instanceof RoomTile) {
             return tileBoard[randRow][randCol];
         } else return chooseUnoccupiedTile(tileBoard);
     }

@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Behavior.Projectile;
 
 import com.mygdx.pmd.enumerations.Action;
+import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 
@@ -19,7 +20,10 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
         if (projectile.currentTile.hasEntity() && projectile.equals(projectile.currentTile)) {
             if (projectile.parent.currentAnimation.isFinished()) {
                 for (Entity entity : projectile.currentTile.getEntityList()) {
-                    entity.takeDamage(20);
+                    if(entity instanceof DynamicEntity) {
+                        DynamicEntity dEntity = (DynamicEntity)entity;
+                        dEntity.takeDamage(20);
+                    }
                 }
                 projectile.takeDamage(1);
                 projectile.shouldBeDestroyed = true;

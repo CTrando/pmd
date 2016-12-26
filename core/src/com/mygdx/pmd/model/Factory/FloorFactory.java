@@ -17,11 +17,13 @@ import com.mygdx.pmd.utils.PRandomInt;
 
 /**
  * TODO Potential problem with placing rooms right next to each other
+ * TODO Fix item not being cleared
  */
 public class FloorFactory {
     public Controller controller;
     public Tile[][] tileBoard;
     Tile[][] placeHolder;
+
     Array<Room> rooms;
     private Array<Connector> connectors;
 
@@ -31,6 +33,7 @@ public class FloorFactory {
         this.controller = controller;
         tileBoard = new Tile[DungeonScreen.windowRows][DungeonScreen.windowCols];
         placeHolder = new Tile[tileBoard.length][tileBoard[0].length];
+
         rooms = new Array<Room>();
         connectors = new Array<Connector>();
     }
@@ -52,9 +55,6 @@ public class FloorFactory {
 
         //start updating the connectors
         this.createConnections();
-
-        //check neighbors and skin tiles
-        this.skinTiles();
 
         //place event tiles
         this.placeEventTiles();
@@ -95,35 +95,6 @@ public class FloorFactory {
             System.out.println(connectors.size);
         }
         System.out.println("Done");
-    }
-
-    public void skinTiles(){
-        //check neighbors and set spriteValue
-        for(int i = 0; i< placeHolder.length; i++){
-            for(int j = 0; j< placeHolder[0].length; j++){
-                Tile tile = placeHolder[i][j];
-
-                if(this.isWithinBounds(i+1,j) && placeHolder[i+1][j] instanceof RoomTile) placeHolder[i][j].spriteValue+=1;
-                if(this.isWithinBounds(i+1, j+1) && placeHolder[i+1][j+1] instanceof RoomTile) placeHolder[i][j].spriteValue+=2;
-                if(this.isWithinBounds(i,j+1) && placeHolder[i][j+1] instanceof RoomTile) placeHolder[i][j].spriteValue+=4;
-                if(this.isWithinBounds(i-1, j+1) && placeHolder[i-1][j+1] instanceof RoomTile) placeHolder[i][j].spriteValue+=8;
-                if(this.isWithinBounds(i-1,j) && placeHolder[i-1][j] instanceof RoomTile) placeHolder[i][j].spriteValue+=16;
-                if(this.isWithinBounds(i-1, j-1) && placeHolder[i-1][j-1] instanceof RoomTile) placeHolder[i][j].spriteValue+=32;
-                if(this.isWithinBounds(i,j-1) && placeHolder[i][j-1] instanceof RoomTile) placeHolder[i][j].spriteValue+=64;
-                if(this.isWithinBounds(i+1, j-1) && placeHolder[i+1][j-1] instanceof RoomTile) placeHolder[i][j].spriteValue+=128;
-
-                if (tile.spriteValue == 0)
-                    tile.sprite = PMD.sprites.get("blacktilesprite");
-                else if (tile.spriteValue == 112)
-                    tile.sprite = PMD.sprites.get("toprighttilesprite");
-                else if (tile.spriteValue == 193)
-                    tile.sprite = PMD.sprites.get("bottomrightcornertilesprite");
-                else if (tile.spriteValue == 28)
-                    tile.sprite = PMD.sprites.get("toplefttilesprite");
-                else if (tile.spriteValue == 7)
-                    tile.sprite = PMD.sprites.get("bottomlefttilesprite");
-            }
-        }
     }
 
     public void placeTiles(){
