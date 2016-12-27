@@ -1,27 +1,11 @@
 package com.mygdx.pmd.model.Entity;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.XmlReader;
-import com.mygdx.pmd.Interfaces.Damageable;
-import com.mygdx.pmd.PMD;
+import com.mygdx.pmd.interfaces.Damageable;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.Renderable;
-import com.mygdx.pmd.interfaces.Updatable;
-import com.mygdx.pmd.model.Behavior.BaseBehavior;
-import com.mygdx.pmd.model.Behavior.NoBehavior;
 import com.mygdx.pmd.model.Tile.Tile;
-import com.mygdx.pmd.utils.PAnimation;
-import com.mygdx.pmd.utils.observers.NoObserver;
-import com.mygdx.pmd.utils.observers.Observable;
-import com.mygdx.pmd.utils.observers.Observer;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Cameron on 10/18/2016.

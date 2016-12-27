@@ -1,7 +1,7 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
 
-import com.mygdx.pmd.Interfaces.Turnbaseable;
+import com.mygdx.pmd.interfaces.Turnbaseable;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.DynamicEntity;

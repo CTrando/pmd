@@ -14,7 +14,7 @@ public class PokemonMob extends Pokemon {
 
     public PokemonMob(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y, pokemonName);
-        this.aggression = Aggression.passive;
+        this.aggression = Aggression.aggressive;
 
         behaviors[BaseBehavior.PATHFIND_BEHAVIOR] = new MobPathFindingBehavior(this);
         behaviors[BaseBehavior.LOGIC_BEHAVIOR] = new MobMovementLogicBehavior(this);

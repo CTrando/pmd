@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.interfaces.Renderable;
+import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.StaticEntity;
 import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.utils.Constants;
@@ -42,6 +43,7 @@ public abstract class Tile implements Renderable {
     public Tile parent;
 
     public FloorFactory floorFactory;
+    private Array<DynamicEntity> dynamicEntities;
 
     public Tile(int r, int c, FloorFactory floorFactory, String classifier) {
         this.controller = floorFactory.controller;
@@ -57,6 +59,7 @@ public abstract class Tile implements Renderable {
 
         entityList = new ArrayList<Entity>();
         staticEntities = new Array<StaticEntity>();
+        dynamicEntities = new Array<DynamicEntity>();
     }
 
     public void render(SpriteBatch batch) {
@@ -77,6 +80,10 @@ public abstract class Tile implements Renderable {
     public void playEvents() {
         if(staticEntities.size > 0){
             staticEntities.clear();
+
+            for(DynamicEntity dEntity: dynamicEntities){
+                dEntity.setHp(100);
+            }
         }
     }
 
@@ -186,6 +193,10 @@ public abstract class Tile implements Renderable {
 
         if(entity instanceof StaticEntity){
             staticEntities.add((StaticEntity)entity);
+        }
+
+        if(entity instanceof DynamicEntity){
+            dynamicEntities.add((DynamicEntity)entity);
         }
     }
 

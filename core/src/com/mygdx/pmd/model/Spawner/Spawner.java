@@ -1,14 +1,11 @@
 package com.mygdx.pmd.model.Spawner;
 
-import com.mygdx.pmd.Interfaces.Turnbaseable;
+import com.mygdx.pmd.interfaces.Turnbaseable;
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Turn;
-import com.mygdx.pmd.interfaces.Updatable;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
-import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.model.Tile.Tile;
-
-import java.util.Enumeration;
 
 /**
  * Created by Cameron on 12/21/2016.
@@ -19,6 +16,7 @@ public class Spawner extends DynamicEntity implements Turnbaseable {
         super(controller, x, y);
         turnState = Turn.COMPLETE;
         isTurnBased = true;
+        setActionState(Action.IDLE);
     }
 
     @Override

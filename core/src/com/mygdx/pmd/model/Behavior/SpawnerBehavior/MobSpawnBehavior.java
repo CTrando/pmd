@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Behavior.SpawnerBehavior;
 
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.PokemonName;
 import com.mygdx.pmd.enumerations.Turn;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
@@ -24,6 +25,7 @@ public class MobSpawnBehavior extends SpawnBehavior {
     @Override
     public void execute() {
         if(canExecute()){
+            dEntity.setActionState(Action.SPAWNING);
             Tile tile = Controller.chooseUnoccupiedTile(tileBoard);
             int rand = PRandomInt.random(0, 10);
             switch (rand) {
@@ -33,7 +35,7 @@ public class MobSpawnBehavior extends SpawnBehavior {
                     controller.addEntity(pokemon);
             }
             dEntity.turnState = Turn.COMPLETE;
-        }
+        } else dEntity.setActionState(Action.IDLE);
     }
 
     @Override
