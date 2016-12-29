@@ -42,29 +42,40 @@ public class Controller {
 
     FloorFactory floorFactory;
 
+    public int floorCount;
+
     private int turnBasedEntityCount;
 
     public Controller(DungeonScreen controllerScreen) {
         this.controllerScreen = controllerScreen;
 
+        //list of entities
         turnBasedEntities = new ArrayList<DynamicEntity>();
-        renderList = new ArrayList<Renderable>();
-        entityList = new ArrayList<Entity>();
         dEntities = new Array<DynamicEntity>();
+        entityList = new ArrayList<Entity>();
 
+        //list of renderables
+        renderList = new ArrayList<Renderable>();
+
+        //init tileboard
         floorFactory = new FloorFactory(this);
         tileBoard = floorFactory.createFloor();
+
+        //decorate tileboard
         tileBoard = FloorDecorator.placeItems(tileBoard);
         tileBoard = FloorDecorator.skinTiles(tileBoard);
 
-
+        //load pokemon from xml
         this.loadPokemon();
         this.randomizeAllPokemonLocation();
+
+        //add in a mob spawner
         mobSpawner = new MobSpawner(this);
-        this.addEntity(mobSpawner);
+        //this.addEntity(mobSpawner);
     }
 
     public void nextFloor() {
+        floorCount++;
         tileBoard = floorFactory.createFloor();
         tileBoard = FloorDecorator.placeItems(tileBoard);
         tileBoard = FloorDecorator.skinTiles(tileBoard);
@@ -72,29 +83,27 @@ public class Controller {
     }
 
     public void update() {
-
         Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
-
-        for (int i = 0; i < entityList.size(); i++) { //TODO there may be an error here later, fix when projectiles are implemented better
+        for (int i = 0; i < entityList.size(); i++) {
             entityList.get(i).update();
         }
 
-        DynamicEntity dentity = turnBasedEntities.get(turnBasedEntityCount % turnBasedEntities.size());
-        if (dentity.turnState == Turn.COMPLETE) {
-            dentity = turnBasedEntities.get((++turnBasedEntityCount) % turnBasedEntities.size());
-            dentity.turnState = Turn.WAITING;
+        //need to fix this to decouple turn based entities from dynamic entities
+        DynamicEntity dEntity = turnBasedEntities.get(turnBasedEntityCount % turnBasedEntities.size());
+        if (dEntity.turnState == Turn.COMPLETE) {
+            dEntity = turnBasedEntities.get((++turnBasedEntityCount) % turnBasedEntities.size());
+            dEntity.turnState = Turn.WAITING;
         }
-
     }
 
-    public boolean isKeyPressed(Key key) { //TODO perhaps add a buffer system for more control later - amend definitely need a buffer system
+    public boolean isKeyPressed(Key key) { //TODO perhaps add a buffer system for more control later
         return keys.get(key.getValue()).get();
     }
 
     public void loadPokemon() {
-        PokemonFactory pokemonFactory = new PokemonFactory(this);
         XmlReader xmlReader = new XmlReader();
         XmlReader.Element root = null;
+
         try {
             root = xmlReader.parse(Gdx.files.internal("utils/PokemonStorage.xml"));
         } catch (IOException e) {
@@ -104,12 +113,15 @@ public class Controller {
         Array<XmlReader.Element> elementList = root.getChildrenByName("Pokemon");
         XmlReader.Element player = root.getChildByName("PokemonPlayer");
         PokemonName playerName = Enum.valueOf(PokemonName.class, player.get("name"));
-        Pokemon pokemonPlayer = pokemonFactory.createPokemon(playerName, PokemonPlayer.class);
+
+        //init player
+        Pokemon pokemonPlayer = PokemonFactory.createPokemon(this, playerName, PokemonPlayer.class);
         this.addEntity(pokemonPlayer);
 
+        //init mobs
         for (XmlReader.Element e : elementList) {
             PokemonName pokemonName = Enum.valueOf(PokemonName.class, e.get("name"));
-            Pokemon pokemon = pokemonFactory.createPokemon(pokemonName, PokemonMob.class);
+            Pokemon pokemon = PokemonFactory.createPokemon(this, pokemonName, PokemonMob.class);
             this.addEntity(pokemon);
         }
     }
@@ -117,10 +129,6 @@ public class Controller {
     public void randomizeAllPokemonLocation() {
         for (DynamicEntity dEntity : dEntities) {
             dEntity.randomizeLocation();
-            dEntity.setActionState(Action.IDLE);
-            dEntity.turnState = Turn.COMPLETE;
-
-            if (dEntity instanceof PokemonPlayer) dEntity.turnState = Turn.WAITING;
         }
     }
 
@@ -132,6 +140,7 @@ public class Controller {
             dEntities.add((DynamicEntity) entity);
         }
 
+        //TODO decouple turn based entities from dynamic entities
         if (entity instanceof Turnbaseable) {
             turnBasedEntities.add((DynamicEntity) entity);
         }
@@ -148,13 +157,19 @@ public class Controller {
         if (entity instanceof Turnbaseable) {
             turnBasedEntities.remove(entity);
         }
+
+        if (entity instanceof DynamicEntity){
+            dEntities.removeValue((DynamicEntity)entity, true);
+        }
     }
 
     public static Tile chooseUnoccupiedTile(Tile[][] tileBoard) {
         int randRow = PRandomInt.random(0, tileBoard.length - 1);
         int randCol = PRandomInt.random(0, tileBoard[0].length - 1);
 
-        if (tileBoard[randRow][randCol] instanceof RoomTile) {
+        Tile chosenTile = tileBoard[randRow][randCol];
+
+        if (chosenTile instanceof RoomTile && chosenTile.isDynamicEntityEmpty()) {
             return tileBoard[randRow][randCol];
         } else return chooseUnoccupiedTile(tileBoard);
     }

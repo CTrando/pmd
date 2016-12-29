@@ -30,7 +30,7 @@ public class MobSpawnBehavior extends SpawnBehavior {
             int rand = PRandomInt.random(0, 10);
             switch (rand) {
                 case 0:
-                    Pokemon pokemon = pokemonFactory.createPokemon(PokemonName.treeko, PokemonMob.class);
+                    Pokemon pokemon = pokemonFactory.createPokemon(controller, PokemonName.treeko, PokemonMob.class);
                     pokemon.setCurrentTile(tile);
                     controller.addEntity(pokemon);
             }

@@ -2,7 +2,6 @@ package com.mygdx.pmd.model.Factory;
 
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.ConnectFrom;
 import com.mygdx.pmd.model.FloorComponent.*;
@@ -109,7 +108,7 @@ public class FloorFactory {
 
     public void placeEventTiles(){
         Tile tile = Controller.chooseUnoccupiedTile(placeHolder);
-        while(tile.spriteValue < 200 && tile.hasEntity()) {
+        while(tile.spriteValue < 200 && tile.hasDynamicEntity()) {
             tile = Controller.chooseUnoccupiedTile(placeHolder);
         }
         placeHolder[tile.row][tile.col] = new StairTile(tile.row, tile.col, this);

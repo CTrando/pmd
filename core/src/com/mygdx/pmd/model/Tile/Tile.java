@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.Aggression;
 import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.StaticEntity;
@@ -43,7 +44,7 @@ public abstract class Tile implements Renderable {
     public Tile parent;
 
     public FloorFactory floorFactory;
-    private Array<DynamicEntity> dynamicEntities;
+    public Array<DynamicEntity> dynamicEntities;
 
     public Tile(int r, int c, FloorFactory floorFactory, String classifier) {
         this.controller = floorFactory.controller;
@@ -171,8 +172,8 @@ public abstract class Tile implements Renderable {
         return returnTileList;
     }
 
-    public boolean hasEntity() {
-        return (entityList.size() > 0);
+    public boolean hasDynamicEntity() {
+        return (dynamicEntities.size > 0);
     }
 
     public void setParent(Tile parent) {
@@ -202,6 +203,14 @@ public abstract class Tile implements Renderable {
 
     public void removeEntity(Entity entity) {
         entityList.remove(entity);
+
+        if(entity instanceof DynamicEntity){
+            dynamicEntities.removeValue((DynamicEntity) entity, true);
+        }
+
+        if(entity instanceof StaticEntity){
+            staticEntities.removeValue((StaticEntity) entity, true);
+        }
     }
 
     public boolean isAbove(Tile other) {
@@ -236,6 +245,20 @@ public abstract class Tile implements Renderable {
                 return true;
         }
         return false;
+    }
+
+    public boolean containsAggressionType(Aggression type){
+        //TODO seeing me in the place of the other so still attacking, need to change it so that if it sees obstacle don't attack
+        for(DynamicEntity dEntity: dynamicEntities){
+            if(dEntity.aggression == type){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isDynamicEntityEmpty(){
+        return dynamicEntities.size == 0;
     }
 
     public boolean equals(Tile o) {

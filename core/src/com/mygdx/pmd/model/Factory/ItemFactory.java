@@ -11,7 +11,7 @@ import com.mygdx.pmd.model.Tile.Tile;
 public class ItemFactory {
 
     public static void placeItems(Tile[][] tileBoard){
-        for(int i = 0; i< 10; i++) {
+        for(int i = 0; i< 5; i++) {
             Tile rand = Controller.chooseUnoccupiedTile(tileBoard);
             Item item = new Berry(rand);
             rand.addEntity(item);

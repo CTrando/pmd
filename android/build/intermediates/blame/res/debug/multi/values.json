@@ -7,8 +7,8 @@
                     "startLine": 2,
                     "startColumn": 4,
                     "startOffset": 55,
-                    "endColumn": 48,
-                    "endOffset": 99
+                    "endColumn": 60,
+                    "endOffset": 111
                 },
                 "from": {
                     "file": "C:\\Users\\Cameron\\Desktop\\LibGDXGames\\pmd\\android\\res\\values\\strings.xml",
@@ -16,8 +16,8 @@
                         "startLine": 3,
                         "startColumn": 4,
                         "startOffset": 59,
-                        "endColumn": 48,
-                        "endOffset": 103
+                        "endColumn": 60,
+                        "endOffset": 115
                     }
                 }
             },
@@ -25,21 +25,13 @@
                 "to": {
                     "startLine": 3,
                     "startColumn": 4,
-                    "startOffset": 104,
+                    "startOffset": 116,
                     "endLine": 10,
                     "endColumn": 12,
-                    "endOffset": 562
+                    "endOffset": 574
                 },
                 "from": {
-                    "file": "C:\\Users\\Cameron\\Desktop\\LibGDXGames\\pmd\\android\\res\\values\\styles.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 19,
-                        "endLine": 9,
-                        "endColumn": 12,
-                        "endOffset": 484
-                    }
+                    "file": "C:\\Users\\Cameron\\Desktop\\LibGDXGames\\pmd\\android\\res\\values\\styles.xml"
                 }
             }
         ]

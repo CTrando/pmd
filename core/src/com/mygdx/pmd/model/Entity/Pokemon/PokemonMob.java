@@ -27,7 +27,7 @@ public class PokemonMob extends Pokemon {
     public boolean isLegalToMoveTo(Tile tile){
         if (tile == null) return false;
 
-        if (tile.hasEntity())
+        if (tile.hasDynamicEntity())
             return false;
         if (!tile.isWalkable)
             return false;

@@ -15,23 +15,21 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
 
     @Override
     public void execute() {
-        if(!canExecute()) return;
+        if (!canExecute()) return;
 
-        if (projectile.currentTile.hasEntity() && projectile.equals(projectile.currentTile)) {
+        if (!projectile.currentTile.isDynamicEntityEmpty() && projectile.equals(projectile.currentTile)) {
             if (projectile.parent.currentAnimation.isFinished()) {
-                for (Entity entity : projectile.currentTile.getEntityList()) {
-                    if(entity instanceof DynamicEntity) {
-                        DynamicEntity dEntity = (DynamicEntity)entity;
-                        dEntity.takeDamage(20);
-                    }
+                for (DynamicEntity dEntity : projectile.currentTile.dynamicEntities) {
+                    dEntity.takeDamage(20);
                 }
+
                 projectile.takeDamage(1);
                 projectile.shouldBeDestroyed = true;
                 projectile.setActionState(Action.DEATH);
             }
         }
 
-        if (!projectile.isLegal()) {
+        if (!projectile.isLegalToMoveTo(projectile.currentTile)) {
             projectile.takeDamage(1);
             projectile.shouldBeDestroyed = true;
             projectile.setActionState(Action.DEATH);
@@ -43,7 +41,10 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
         if (projectile.shouldBeDestroyed) {
             return false;
         }
-        if (projectile.currentTile == null) return false;
+        if (projectile.currentTile == null) {
+            projectile.shouldBeDestroyed = true;
+            return false;
+        }
         return true;
     }
 }

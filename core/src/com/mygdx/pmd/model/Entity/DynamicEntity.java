@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.Entity;
 import com.mygdx.pmd.interfaces.Damageable;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.Tile.Tile;
 
 import java.util.ArrayList;
@@ -120,15 +121,16 @@ public abstract class DynamicEntity extends Entity{
     }
 
     public void randomizeLocation() {
-        int randRow = (int)(Math.random()* controller.tileBoard.length);
-        int randCol = (int)(Math.random()* controller.tileBoard[0].length);
+        Tile random = Controller.chooseUnoccupiedTile(tileBoard);
 
-        Tile random = controller.tileBoard[randRow][randCol];
-
-        if (random.isWalkable && /*!(random instanceof StairTile) &&*/ random.getEntityList().size() == 0) {
+        if (random.isWalkable) {
             this.setNextTile(random);
             this.setCurrentTile(random);
+            this.possibleNextTile = null;
         } else randomizeLocation();
+
+        this.setActionState(Action.IDLE);
+        this.turnState = Turn.COMPLETE;
     }
 
     public int getHp() {
@@ -142,8 +144,8 @@ public abstract class DynamicEntity extends Entity{
         }
     }
 
-    public void takeDamage(int x) {
-        this.setHp(this.getHp() - x);
+    public void takeDamage(int damage) {
+        this.setHp(this.getHp() - damage);
     }
 
     public void dealDamage(Damageable damageable, int damage) {

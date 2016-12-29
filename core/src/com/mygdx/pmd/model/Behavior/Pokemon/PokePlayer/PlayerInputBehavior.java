@@ -1,11 +1,13 @@
 package com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer;
 
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Direction;
 import com.mygdx.pmd.enumerations.Key;
 import com.mygdx.pmd.enumerations.Turn;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
+import com.mygdx.pmd.screens.EndScreen;
 
 /**
  * Created by Cameron on 11/8/2016.
@@ -75,6 +77,11 @@ public class PlayerInputBehavior extends PokemonBehavior {
 
         if (controller.isKeyPressed(Key.b)) {
             controller.controllerScreen.switchMenus("defaultMenu");
+        }
+
+        if (controller.isKeyPressed(Key.r)){
+            controller.controllerScreen.game.setScreen(PMD.endScreen);
+            //controller.controllerScreen.reset();
         }
     }
 

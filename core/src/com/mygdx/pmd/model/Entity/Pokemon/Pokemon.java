@@ -31,7 +31,7 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
     public boolean isLegalToMoveTo(Tile tile) {
         if (tile == null) return false;
 
-        if(tile.hasEntity()) {
+        if(tile.hasDynamicEntity()) {
             for(Entity entity: tile.getEntityList()) {
                 if(entity instanceof DynamicEntity) {
                     DynamicEntity dEntity = (DynamicEntity) entity;
@@ -63,7 +63,7 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
         controller.addEntity(this.projectile);
     }
 
-    public boolean isVisible(){
+    public boolean isEnemyInSight(){
         if(this.aggression != Aggression.aggressive) return false;
         int rOffset = 0;
         int cOffset = 0;
@@ -84,9 +84,10 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
         for(int i = 1; i< 5; i++){
             try {
                 Tile tile = tileBoard[currentTile.row + i * rOffset][currentTile.col + i * cOffset];
-
-                if (tile.hasEntity() && tile != currentTile) {
-                    return true;
+                if (tile.dynamicEntities.size > 0){
+                    if(tile != currentTile && tile.containsAggressionType(Aggression.passive)) {
+                        return true;
+                    } else return false;
                 }
             } catch(ArrayIndexOutOfBoundsException e){}
         }

@@ -23,7 +23,8 @@ public class MobAttackLogicBehavior extends PokemonBehavior {
         if (pokemon.getActionState() == Action.IDLE) {
             if (pokemon.turnState == Turn.WAITING) {
                 if (pokemon.facingTile == null) return;
-                if ((pokemon.isVisible() || pokemon.facingTile.hasEntity()) && pokemon.facingTile != pokemon.currentTile) {
+                //this is temporary
+                if ((pokemon.isEnemyInSight()) && pokemon.facingTile != pokemon.currentTile) {
                     pokemon.setActionState(Action.ATTACKING);
                     pokemon.turnState = Turn.PENDING;
 

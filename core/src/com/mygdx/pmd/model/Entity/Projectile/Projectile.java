@@ -13,7 +13,6 @@ import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.Tile;
-import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.utils.PAnimation;
 
 /**
@@ -75,14 +74,8 @@ public class Projectile extends DynamicEntity {
     }
 
     @Override
-    public boolean isLegalToMoveTo(Tile tile) {
-        if(tile instanceof GenericTile || tile.hasEntity()) return false;
-        return true;
-    }
-
-    public boolean isLegal(){
-        if(currentTile instanceof GenericTile || currentTile == null) return false;
-        return true;
+    public boolean isLegalToMoveTo(Tile tile){
+        return tile.isWalkable;
     }
 
     @Override

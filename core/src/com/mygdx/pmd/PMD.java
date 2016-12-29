@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.Key;
 import com.mygdx.pmd.screens.DungeonScreen;
+import com.mygdx.pmd.screens.EndScreen;
 import com.mygdx.pmd.screens.PScreen;
 
 import java.util.HashMap;
@@ -28,27 +29,31 @@ public class PMD extends Game {
     public static HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
     public static HashMap<Integer, AtomicBoolean> keys;
 
+    public static PScreen dungeonScreen;
+    public static PScreen endScreen;
+
     public SpriteBatch batch;
     public ShapeRenderer shapeRenderer;
 
     public AssetManager manager;
     public Controller controller;
 
-    public PScreen currentScreen;
-
     @Override
     public void create() {
-        sprites = new HashMap<String, Sprite>();
+        batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
         keys = new HashMap<Integer, AtomicBoolean>();
         manager = new AssetManager();
+        sprites = new HashMap<String, Sprite>();
+
 
         this.loadKeys();
         this.loadManager();
-        batch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
 
-        currentScreen = new DungeonScreen(this);
-        this.setScreen(currentScreen);
+        dungeonScreen = new DungeonScreen(this);
+        endScreen = new EndScreen(this);
+
+        this.setScreen(dungeonScreen);
     }
 
     public void render() {
@@ -88,5 +93,10 @@ public class PMD extends Game {
         for (Key key : Key.values()) {
             keys.put(key.getValue(), new AtomicBoolean(false));
         }
+    }
+
+    //TODO add buffer screen system
+    public void switchScreen(PScreen screen){
+        this.setScreen(screen);
     }
 }

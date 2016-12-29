@@ -17,7 +17,7 @@ public class PokemonFactory {
         this.controller = controller;
     }
 
-    public Pokemon createPokemon(PokemonName name, Class ident){
+    public static Pokemon createPokemon(Controller controller, PokemonName name, Class ident){
         Pokemon pokemon = null;
         if(ident == PokemonMob.class) {
             pokemon = new PokemonMob(controller, 0, 0, name);

@@ -6,7 +6,7 @@ import com.badlogic.gdx.Input;
  * Created by Cameron on 8/29/2016.
  */
 public enum Key {
-    up(Input.Keys.UP), down(Input.Keys.DOWN), left(Input.Keys.LEFT), right(Input.Keys.RIGHT), space(Input.Keys.SPACE), s(Input.Keys.S), a(Input.Keys.A), b(Input.Keys.B), t(Input.Keys.T);
+    up(Input.Keys.UP), down(Input.Keys.DOWN), left(Input.Keys.LEFT), right(Input.Keys.RIGHT), space(Input.Keys.SPACE), s(Input.Keys.S), a(Input.Keys.A), b(Input.Keys.B), t(Input.Keys.T), r(Input.Keys.R);
 
     private final int value;
 

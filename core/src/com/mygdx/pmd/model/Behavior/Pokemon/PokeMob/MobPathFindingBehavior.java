@@ -48,7 +48,7 @@ public class MobPathFindingBehavior extends PokemonBehavior {
 
     @Override
     public boolean canExecute() {
-        if(pokemon.isVisible()) return false;
+        if(pokemon.isEnemyInSight()) return false;
         return true;
     }
 }

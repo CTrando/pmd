@@ -10,6 +10,6 @@ import com.mygdx.pmd.model.Tile.Tile;
 public class Berry extends Item {
     public Berry(Tile tile) {
         super(tile);
-        this.currentSprite = PMD.sprites.get("doortilesprite");
+        this.currentSprite = PMD.sprites.get("berrysprite");
     }
 }

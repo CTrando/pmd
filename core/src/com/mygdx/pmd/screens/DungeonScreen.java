@@ -12,8 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.Key;
@@ -49,6 +48,8 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     public BitmapFont bfont = new BitmapFont();
 
+    public int time =300;
+
     public AssetManager manager;
     public Array<Button> updateButtonList;
 
@@ -63,15 +64,20 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     public static HashMap<String, Menu> menuList;
 
-    public DungeonScreen(final com.mygdx.pmd.PMD game) {
+    public DungeonScreen(final PMD game) {
         controller = new Controller(this);
 
         this.game = game;
         batch = game.batch;
         shapeRenderer = game.shapeRenderer;
         gameCamera = new OrthographicCamera(PMD.WIDTH, PMD.HEIGHT);
-        gamePort = new FitViewport(PMD.WIDTH, PMD.HEIGHT, gameCamera);
-        hud = new Hud(controller, this.batch);
+
+        if(Gdx.app.getType() == Application.ApplicationType.Android) {
+            gameCamera.zoom -= .5;
+        }
+        //gamePort = new FitViewport(PMD.WIDTH, PMD.HEIGHT, gameCamera);\
+        gamePort = new ScreenViewport(gameCamera);
+        hud = new Hud(this, this.batch);
 
 
         tileBoard = controller.tileBoard;
@@ -83,8 +89,8 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
         updateButtonList = new Array<Button>();
 
-        Timer timer = new Timer(controller);
-        timer.ticking();
+       /* Timer timer = new Timer(controller);
+        timer.ticking();*/
 
 
         inputMultiplexer = new InputMultiplexer();
@@ -134,23 +140,24 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float dt) {
+        controller.update();
         this.updateCamera();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(gameCamera.combined);
         batch.begin();
 
-        for (Button b : currentMenu.updateButtonList) {
+       /* for (Button b : currentMenu.updateButtonList) {
             b.update();
-        } //TODO Fix the buttons so that they can adapt to changes in the entity list
+        } //TODO Fix the buttons so that they can adapt to changes in the entity list*/
 
         for (int i = 0; i < controller.tileBoard.length; i++) {
             for (int j = 0; j < controller.tileBoard[0].length; j++) {
                 Tile tile = controller.tileBoard[i][j];
                 tile.render(batch);
                 //drawing strings like this is very costly performance wise and causes stuttering
-                bfont.draw(batch, tile.spriteValue+"", tile.x + 7, tile.y+ 17);
+                //bfont.draw(batch, tile.spriteValue+"", tile.x + 7, tile.y+ 17);
             }
         }
 
@@ -159,24 +166,30 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         }
 
         batch.end();
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(1, 1, 0, 1);
-        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         if (controller.isKeyPressed(Key.t)) {
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.setColor(1, 1, 0, 1);
+            shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
             for (int i = 0; i < tileBoard.length; i++) {
                 for (int j = 0; j < tileBoard[0].length; j++) {
                     Tile tile = tileBoard[i][j];
                     shapeRenderer.rect(tile.x, tile.y, Constants.TILE_SIZE, Constants.TILE_SIZE);
                 }
             }
+
+            shapeRenderer.end();
         }
-        shapeRenderer.end();
         stage.draw();
 
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.update(dt);
         hud.stage.draw();
     }
+
+    public void reset(){
+        controller = new Controller(this);
+    }
+
 
     @Override
     public void dispose() {
@@ -192,6 +205,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     @Override
     public void resize(int width, int height) {
+        hud.viewport.update(width, height, true);
         gamePort.update(width, height, true);
     }
 

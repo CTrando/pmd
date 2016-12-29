@@ -1,63 +1,156 @@
 package com.mygdx.pmd.scenes;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.screens.DungeonScreen;
+import com.mygdx.pmd.screens.PScreen;
 
 /**
  * Created by Cameron on 11/26/2016.
  */
 public class Hud {
     public Stage stage;
-    private Viewport viewport;
+    public Viewport viewport;
 
-    private Integer worldTimer;
-    private float timeCount;
-
-    Label countDownLabel;
     Label timeLabel;
+    Label floorLabel;
     Label testLabel;
 
     BitmapFont customFont;
+    DungeonScreen screen;
 
-    Controller controller;
-
-    public Hud(Controller controller, SpriteBatch batch){
-        this.controller = controller;
-        worldTimer = 0;
-        timeCount = 0;
+    public Hud(DungeonScreen screen, SpriteBatch batch){
+        this.screen = screen;
         customFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
 
-        viewport = new FitViewport(DungeonScreen.V_WIDTH, DungeonScreen.V_HEIGHT, new OrthographicCamera());
+        OrthographicCamera hudCam = new OrthographicCamera();
+
+        //viewport = new FitViewport(DungeonScreen.V_WIDTH, DungeonScreen.V_HEIGHT, hudCam);
+        viewport = new ScreenViewport(hudCam);
         stage = new Stage(viewport, batch);
 
-        Table table = new Table();
-        table.top();
-        table.setFillParent(true);
+        Table onScreenController = new Table();
+        onScreenController.center();
+        onScreenController.top();
+        onScreenController.setFillParent(true);
         Skin skin = new Skin(Gdx.files.internal("ui/test.json"));
 
-        countDownLabel = new Label(controller.pokemonPlayer.hp + "", skin);
 
-        timeLabel = new Label("TIME", skin);
+        testLabel = new Label("HP: " + screen.controller.pokemonPlayer.hp, skin);
+        floorLabel = new Label("Floor: " + screen.controller.floorCount, skin);
+        timeLabel = new Label("Time left:" + screen.time, skin);
 
-        testLabel = new Label("Hope it works", skin);
+        Image upImg = new Image(PMD.sprites.get("treekoup1"));
+        upImg.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                PMD.keys.get(Input.Keys.UP).set(true);
+                return true;
+            }
 
-        table.add(countDownLabel).expandX().padTop(10);
-        table.add(timeLabel).expandX().padTop(10);
-        table.add(testLabel).expandX().padTop(10);
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                PMD.keys.get(Input.Keys.UP).set(false);
+            }
+        });
 
-        stage.addActor(table);
+        Image downImg = new Image(PMD.sprites.get("treekodown1"));
+        downImg.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                PMD.keys.get(Input.Keys.DOWN).set(true);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                PMD.keys.get(Input.Keys.DOWN).set(false);
+            }
+        });
+
+        Image leftImg = new Image(PMD.sprites.get("treekoleft1"));
+        leftImg.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                PMD.keys.get(Input.Keys.LEFT).set(true);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                PMD.keys.get(Input.Keys.LEFT).set(false);
+            }
+        });
+
+        Image rightImg = new Image(PMD.sprites.get("treekoright1"));
+        rightImg.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
+                PMD.keys.get(Input.Keys.RIGHT).set(true);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                PMD.keys.get(Input.Keys.RIGHT).set(false);
+            }
+        });
+
+        onScreenController.debug();
+        onScreenController.add();
+        onScreenController.add(upImg).pad(5,5,5,5);
+
+        onScreenController.row();
+        onScreenController.add(leftImg).pad(5,5,5,5);
+        onScreenController.add();
+        onScreenController.add();
+        onScreenController.add(rightImg).pad(5,5,5,5);
+        onScreenController.row();
+        onScreenController.add();
+        onScreenController.add(downImg).pad(5,5,5,5);
+
+        Table temp = new Table();
+        temp.setFillParent(true);
+        temp.left().bottom();
+        temp.debug();
+        temp.add(testLabel);
+        temp.row();
+        temp.add(floorLabel);
+        temp.row();
+        temp.add(timeLabel);
+
+        stage.addActor(onScreenController);
+        stage.addActor(temp);
     }
+
+    float accumTime = 0;
+
+    public void update(float dt){
+        if(accumTime > .5f) {
+            screen.time--;
+            accumTime = 0;
+        } else accumTime += dt;
+
+        testLabel.setText("HP: " + screen.controller.pokemonPlayer.hp);
+        floorLabel.setText("Floor: " + screen.controller.floorCount);
+        timeLabel.setText("Time: "+screen.time);
+    }
+
 }
