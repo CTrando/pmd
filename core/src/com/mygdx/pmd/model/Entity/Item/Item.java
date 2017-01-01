@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Entity.Item;
 
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.model.Entity.StaticEntity;
 import com.mygdx.pmd.model.Factory.FloorFactory;
@@ -18,6 +19,9 @@ public abstract class Item extends StaticEntity{
     @Override
     public void registerObservers() {
 
+    }
+
+    public void playEvents(DynamicEntity receiver){
     }
 
 }

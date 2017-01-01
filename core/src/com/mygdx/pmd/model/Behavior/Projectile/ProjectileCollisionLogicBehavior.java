@@ -1,5 +1,7 @@
 package com.mygdx.pmd.model.Behavior.Projectile;
 
+import com.badlogic.gdx.audio.Sound;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Entity;
@@ -26,6 +28,7 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
                 projectile.takeDamage(1);
                 projectile.shouldBeDestroyed = true;
                 projectile.setActionState(Action.DEATH);
+                PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
             }
         }
 
@@ -33,6 +36,7 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
             projectile.takeDamage(1);
             projectile.shouldBeDestroyed = true;
             projectile.setActionState(Action.DEATH);
+            PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
         }
     }
 
@@ -41,7 +45,8 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
         if (projectile.shouldBeDestroyed) {
             return false;
         }
-        if (projectile.currentTile == null) {
+        if (projectile.currentTile == null) { //meed to incorporate into isLeagltomoveto
+            PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
             projectile.shouldBeDestroyed = true;
             return false;
         }

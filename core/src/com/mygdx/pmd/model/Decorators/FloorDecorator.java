@@ -1,9 +1,11 @@
 package com.mygdx.pmd.model.Decorators;
 
 import com.mygdx.pmd.PMD;
+import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.model.Factory.ItemFactory;
 import com.mygdx.pmd.model.Tile.RoomTile;
+import com.mygdx.pmd.model.Tile.StairTile;
 import com.mygdx.pmd.model.Tile.Tile;
 
 /**
@@ -51,6 +53,15 @@ public class FloorDecorator {
         if(row >= tileBoard.length || row < 0) return false;
         if(col >= tileBoard[0].length || col < 0) return false;
         return true;
+    }
+
+    public static Tile[][] placeEventTiles(Tile[][] tileBoard, FloorFactory floorFactory){
+        Tile tile = Controller.chooseUnoccupiedTile(tileBoard);
+        while(tile.spriteValue <= 250 || tile.hasDynamicEntity()) {
+            tile = Controller.chooseUnoccupiedTile(tileBoard);
+        }
+        tileBoard[tile.row][tile.col] = new StairTile(tile.row, tile.col, floorFactory);
+        return tileBoard;
     }
 
 }

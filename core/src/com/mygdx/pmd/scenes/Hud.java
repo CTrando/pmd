@@ -28,6 +28,7 @@ import com.mygdx.pmd.screens.PScreen;
 public class Hud {
     public Stage stage;
     public Viewport viewport;
+    private float accumTime = 0;
 
     Label timeLabel;
     Label floorLabel;
@@ -140,14 +141,13 @@ public class Hud {
         stage.addActor(temp);
     }
 
-    float accumTime = 0;
-
     public void update(float dt){
-        if(accumTime > .5f) {
+        if(accumTime > 1f) {
             screen.time--;
             accumTime = 0;
         } else accumTime += dt;
 
+        //reason why not appearing is because did not include : in bit map font
         testLabel.setText("HP: " + screen.controller.pokemonPlayer.hp);
         floorLabel.setText("Floor: " + screen.controller.floorCount);
         timeLabel.setText("Time: "+screen.time);

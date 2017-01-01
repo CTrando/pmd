@@ -28,8 +28,11 @@ public class EndScreen extends PScreen {
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if(Gdx.input.justTouched()){
+            game.setScreen(PMD.dungeonScreen);
+        }
         batch.begin();
-        bfont.draw(batch, "HEllo testing", Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth() / 2);
+        bfont.draw(batch, "Click to play again", Gdx.graphics.getHeight() / 2, Gdx.graphics.getWidth() / 2);
         batch.end();
     }
 

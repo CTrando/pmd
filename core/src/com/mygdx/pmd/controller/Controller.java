@@ -31,6 +31,7 @@ import static com.mygdx.pmd.PMD.keys;
 public class Controller {
     public DungeonScreen controllerScreen;
     public Tile[][] tileBoard;
+    public static final int NUM_MAX_ENTITY = 10;
 
     public ArrayList<Renderable> renderList;
     public ArrayList<Entity> entityList;
@@ -64,6 +65,7 @@ public class Controller {
         //decorate tileboard
         tileBoard = FloorDecorator.placeItems(tileBoard);
         tileBoard = FloorDecorator.skinTiles(tileBoard);
+        tileBoard = FloorDecorator.placeEventTiles(tileBoard, floorFactory);
 
         //load pokemon from xml
         this.loadPokemon();
@@ -76,9 +78,12 @@ public class Controller {
 
     public void nextFloor() {
         floorCount++;
+
         tileBoard = floorFactory.createFloor();
         tileBoard = FloorDecorator.placeItems(tileBoard);
         tileBoard = FloorDecorator.skinTiles(tileBoard);
+        tileBoard = FloorDecorator.placeEventTiles(tileBoard, floorFactory);
+
         this.randomizeAllPokemonLocation();
     }
 

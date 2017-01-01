@@ -48,7 +48,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     public BitmapFont bfont = new BitmapFont();
 
-    public int time =300;
+    public int time =200;
 
     public AssetManager manager;
     public Array<Button> updateButtonList;
@@ -72,9 +72,6 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         shapeRenderer = game.shapeRenderer;
         gameCamera = new OrthographicCamera(PMD.WIDTH, PMD.HEIGHT);
 
-        if(Gdx.app.getType() == Application.ApplicationType.Android) {
-            gameCamera.zoom -= .5;
-        }
         //gamePort = new FitViewport(PMD.WIDTH, PMD.HEIGHT, gameCamera);\
         gamePort = new ScreenViewport(gameCamera);
         hud = new Hud(this, this.batch);
@@ -184,6 +181,10 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.update(dt);
         hud.stage.draw();
+
+        if(time == 0){
+            game.setScreen(PMD.endScreen);
+        }
     }
 
     public void reset(){
@@ -200,7 +201,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     @Override
     public void show() {
-
+        controller = new Controller(this);
     }
 
     @Override

@@ -55,9 +55,6 @@ public class FloorFactory {
         //start updating the connectors
         this.createConnections();
 
-        //place event tiles
-        this.placeEventTiles();
-
         //place tiles
         this.placeTiles();
 
@@ -104,14 +101,6 @@ public class FloorFactory {
                 tileBoard[i][j] = placeHolder[i][j];
             }
         }
-    }
-
-    public void placeEventTiles(){
-        Tile tile = Controller.chooseUnoccupiedTile(placeHolder);
-        while(tile.spriteValue < 200 && tile.hasDynamicEntity()) {
-            tile = Controller.chooseUnoccupiedTile(placeHolder);
-        }
-        placeHolder[tile.row][tile.col] = new StairTile(tile.row, tile.col, this);
     }
 
     public void addConnector(Connector connector){

@@ -17,6 +17,7 @@ import com.mygdx.pmd.utils.PRandomInt;
  */
 public class MobSpawnBehavior extends SpawnBehavior {
     PokemonFactory pokemonFactory;
+
     public MobSpawnBehavior(DynamicEntity dEntity) {
         super(dEntity);
         pokemonFactory = new PokemonFactory(controller);
@@ -24,7 +25,9 @@ public class MobSpawnBehavior extends SpawnBehavior {
 
     @Override
     public void execute() {
-        if(canExecute()){
+        if (!canExecute()) return;
+
+        if(controller.dEntities.size < Controller.NUM_MAX_ENTITY) {
             dEntity.setActionState(Action.SPAWNING);
             Tile tile = Controller.chooseUnoccupiedTile(tileBoard);
             int rand = PRandomInt.random(0, 10);
@@ -34,13 +37,13 @@ public class MobSpawnBehavior extends SpawnBehavior {
                     pokemon.setCurrentTile(tile);
                     controller.addEntity(pokemon);
             }
-            dEntity.turnState = Turn.COMPLETE;
-        } else dEntity.setActionState(Action.IDLE);
+        }
+        dEntity.turnState = Turn.COMPLETE;
     }
 
     @Override
-    public boolean canExecute(){
-        if(dEntity.turnState == Turn.WAITING) {
+    public boolean canExecute() {
+        if (dEntity.turnState == Turn.WAITING) {
             return true;
         }
         return false;

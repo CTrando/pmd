@@ -9,6 +9,7 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.Aggression;
 import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
+import com.mygdx.pmd.model.Entity.Item.Item;
 import com.mygdx.pmd.model.Entity.StaticEntity;
 import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.utils.Constants;
@@ -78,14 +79,13 @@ public abstract class Tile implements Renderable {
 
     }
 
-    public void playEvents() {
-        if(staticEntities.size > 0){
-            staticEntities.clear();
-
-            for(DynamicEntity dEntity: dynamicEntities){
-                dEntity.setHp(100);
+    public void playEvents(DynamicEntity receiver) {
+        for(StaticEntity sEntity: staticEntities){
+            if(sEntity instanceof Item){
+                ((Item) sEntity).playEvents(receiver);
             }
         }
+        staticEntities.clear();
     }
 
     public abstract boolean isLegal();

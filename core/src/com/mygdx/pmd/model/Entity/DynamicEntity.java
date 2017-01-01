@@ -142,6 +142,10 @@ public abstract class DynamicEntity extends Entity{
         if (this.hp <= 0) {
             this.hp = 0;
         }
+
+        if(this.hp > 100){
+            this.hp = 100;
+        }
     }
 
     public void takeDamage(int damage) {

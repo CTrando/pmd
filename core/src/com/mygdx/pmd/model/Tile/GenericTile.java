@@ -14,7 +14,7 @@ public class GenericTile extends Tile {
 
     public GenericTile(int row, int col, FloorFactory floorFactory) {
         super(row, col, floorFactory, "GENERIC");
-        this.isWalkable = true;
+        this.isWalkable = false;
         this.sprite = PMD.sprites.get("generictilesprite");
     }
 

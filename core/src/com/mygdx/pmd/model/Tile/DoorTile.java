@@ -2,6 +2,7 @@ package com.mygdx.pmd.model.Tile;
 
 
 import com.mygdx.pmd.PMD;
+import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Factory.FloorFactory;
 
 /**
@@ -17,7 +18,7 @@ public class DoorTile extends Tile {
     }
 
     @Override
-    public void playEvents() {
+    public void playEvents(DynamicEntity dEntity) {
 
     }
 

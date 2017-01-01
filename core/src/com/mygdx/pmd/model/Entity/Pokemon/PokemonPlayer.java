@@ -1,5 +1,7 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
+import com.badlogic.gdx.audio.Music;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Behavior.*;
@@ -38,6 +40,8 @@ public class PokemonPlayer extends Pokemon {
     @Override
     public void dispose(){
         super.dispose();
-        controller.controllerScreen.reset();
+        //controller.controllerScreen.reset();
+        controller.controllerScreen.game.setScreen(PMD.endScreen);
+        PMD.manager.get("sfx/background.ogg", Music.class).play();
     }
 }

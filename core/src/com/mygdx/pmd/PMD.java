@@ -35,7 +35,7 @@ public class PMD extends Game {
     public SpriteBatch batch;
     public ShapeRenderer shapeRenderer;
 
-    public AssetManager manager;
+    public static AssetManager manager;
     public Controller controller;
 
     @Override
