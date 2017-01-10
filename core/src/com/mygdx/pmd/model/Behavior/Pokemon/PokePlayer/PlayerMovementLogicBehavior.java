@@ -24,7 +24,6 @@ public class PlayerMovementLogicBehavior extends PokemonBehavior {
 
         if(pokemon.equals(pokemon.currentTile) && pokemon.turnState == Turn.WAITING){
             if(pokemon.isLegalToMoveTo(pokemon.possibleNextTile)){
-
                 if(controller.isKeyPressed(Key.s)){
                     pokemon.setBehavior(new MoveFastBehavior(pokemon), BaseBehavior.MOVE_BEHAVIOR);
                 } else pokemon.setBehavior(new MoveSlowBehavior(pokemon), BaseBehavior.MOVE_BEHAVIOR);
@@ -34,7 +33,7 @@ public class PlayerMovementLogicBehavior extends PokemonBehavior {
 
                 pokemon.turnState = Turn.COMPLETE;
                 pokemon.setActionState(Action.MOVING);
-            }
+            } else pokemon.possibleNextTile = null;
         }
 
         pokemon.updateCurrentTile();

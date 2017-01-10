@@ -4,6 +4,7 @@ package com.mygdx.pmd.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.interfaces.Turnbaseable;
 import com.mygdx.pmd.comparators.PokemonDistanceComparator;
 import com.mygdx.pmd.enumerations.*;
@@ -36,7 +37,7 @@ public class Controller {
     public ArrayList<Renderable> renderList;
     public ArrayList<Entity> entityList;
     public Array<DynamicEntity> dEntities;
-    public ArrayList<DynamicEntity> turnBasedEntities;
+    public ArrayList<Entity> turnBasedEntities;
     public Pokemon pokemonPlayer;
 
     public MobSpawner mobSpawner;
@@ -44,6 +45,7 @@ public class Controller {
     FloorFactory floorFactory;
 
     public int floorCount;
+    public int turns = 20;
 
     private int turnBasedEntityCount;
 
@@ -51,7 +53,7 @@ public class Controller {
         this.controllerScreen = controllerScreen;
 
         //list of entities
-        turnBasedEntities = new ArrayList<DynamicEntity>();
+        turnBasedEntities = new ArrayList<Entity>();
         dEntities = new Array<DynamicEntity>();
         entityList = new ArrayList<Entity>();
 
@@ -73,7 +75,7 @@ public class Controller {
 
         //add in a mob spawner
         mobSpawner = new MobSpawner(this);
-        //this.addEntity(mobSpawner);
+        this.addEntity(mobSpawner);
     }
 
     public void nextFloor() {
@@ -94,10 +96,14 @@ public class Controller {
         }
 
         //need to fix this to decouple turn based entities from dynamic entities
-        DynamicEntity dEntity = turnBasedEntities.get(turnBasedEntityCount % turnBasedEntities.size());
-        if (dEntity.turnState == Turn.COMPLETE) {
-            dEntity = turnBasedEntities.get((++turnBasedEntityCount) % turnBasedEntities.size());
-            dEntity.turnState = Turn.WAITING;
+        Entity entity = turnBasedEntities.get(turnBasedEntityCount % turnBasedEntities.size());
+        if (entity.turnState == Turn.COMPLETE) {
+            if(entity instanceof PokemonPlayer){
+                turns--;
+            }
+
+            entity = turnBasedEntities.get((++turnBasedEntityCount) % turnBasedEntities.size());
+            entity.turnState = Turn.WAITING;
         }
     }
 
@@ -146,8 +152,8 @@ public class Controller {
         }
 
         //TODO decouple turn based entities from dynamic entities
-        if (entity instanceof Turnbaseable) {
-            turnBasedEntities.add((DynamicEntity) entity);
+        if (entity.isTurnBaseable()) {
+            turnBasedEntities.add(entity);
         }
 
         if (entity instanceof PokemonPlayer) {
@@ -159,7 +165,7 @@ public class Controller {
         renderList.remove(entity);
         entityList.remove(entity);
 
-        if (entity instanceof Turnbaseable) {
+        if (entity.isTurnBaseable()) {
             turnBasedEntities.remove(entity);
         }
 

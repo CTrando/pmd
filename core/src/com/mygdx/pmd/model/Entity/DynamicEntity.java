@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 public abstract class DynamicEntity extends Entity{
     public boolean isTurnBased;
-    public Turn turnState;
     private Action actionState;
     public Action previousState;
 

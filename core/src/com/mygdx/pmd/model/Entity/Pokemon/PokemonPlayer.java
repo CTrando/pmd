@@ -40,8 +40,7 @@ public class PokemonPlayer extends Pokemon {
     @Override
     public void dispose(){
         super.dispose();
-        //controller.controllerScreen.reset();
         controller.controllerScreen.game.setScreen(PMD.endScreen);
-        PMD.manager.get("sfx/background.ogg", Music.class).play();
+        //PMD.manager.get("sfx/background.ogg", Music.class).play();
     }
 }

@@ -45,6 +45,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     public Observer[] observers;
 
     public Controller controller;
+    public Turn turnState;
 
     public Entity(Controller controller, int x, int y) {
         this.controller = controller;
@@ -90,6 +91,10 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         behaviors[index] = behavior;
     }
 
+    public boolean isTurnBaseable(){
+        return turnState != null;
+    }
+
     public boolean equals(Tile tile) {
         if(tile == null) return false;
         return (tile.x == x && tile.y == y);
@@ -116,5 +121,4 @@ public abstract class Entity implements Renderable, Updatable, Observable {
             e.printStackTrace();
         }
     }
-
 }

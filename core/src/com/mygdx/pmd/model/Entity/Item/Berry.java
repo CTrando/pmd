@@ -19,6 +19,6 @@ public class Berry extends Item {
     public void playEvents(DynamicEntity receiver){
         receiver.setHp(receiver.getHp()+20);
         //breaks code complete's demeters principle
-        receiver.controller.controllerScreen.time+=100;
+        receiver.controller.turns+=10;
     }
 }

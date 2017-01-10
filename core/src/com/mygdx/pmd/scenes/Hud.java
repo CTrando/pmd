@@ -33,6 +33,7 @@ public class Hud {
     Label timeLabel;
     Label floorLabel;
     Label testLabel;
+    Label turnLabel;
 
     BitmapFont customFont;
     DungeonScreen screen;
@@ -57,6 +58,7 @@ public class Hud {
         testLabel = new Label("HP: " + screen.controller.pokemonPlayer.hp, skin);
         floorLabel = new Label("Floor: " + screen.controller.floorCount, skin);
         timeLabel = new Label("Time left:" + screen.time, skin);
+        turnLabel = new Label("Turns left: " + screen.controller.turns, skin);
 
         Image upImg = new Image(PMD.sprites.get("treekoup1"));
         upImg.addListener(new InputListener(){
@@ -136,13 +138,15 @@ public class Hud {
         temp.add(floorLabel);
         temp.row();
         temp.add(timeLabel);
+        temp.row();
+        temp.add(turnLabel);
 
         stage.addActor(onScreenController);
         stage.addActor(temp);
     }
 
     public void update(float dt){
-        if(accumTime > 1f) {
+        if(accumTime > 1f && !screen.paused) {
             screen.time--;
             accumTime = 0;
         } else accumTime += dt;
@@ -151,6 +155,7 @@ public class Hud {
         testLabel.setText("HP: " + screen.controller.pokemonPlayer.hp);
         floorLabel.setText("Floor: " + screen.controller.floorCount);
         timeLabel.setText("Time: "+screen.time);
+        turnLabel.setText("Turns left: " + screen.controller.turns);
     }
 
 }

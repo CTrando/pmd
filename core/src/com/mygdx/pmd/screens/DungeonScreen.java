@@ -19,9 +19,6 @@ import com.mygdx.pmd.enumerations.Key;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.scenes.Hud;
 import com.mygdx.pmd.utils.Constants;
-import com.mygdx.pmd.utils.Timer;
-import com.mygdx.pmd.ui.Button;
-import com.mygdx.pmd.ui.Menu;
 
 
 import java.io.IOException;
@@ -48,21 +45,18 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     public BitmapFont bfont = new BitmapFont();
 
-    public int time =200;
+    public int time =20;
 
     public AssetManager manager;
-    public Array<Button> updateButtonList;
 
     InputMultiplexer inputMultiplexer;
 
     private OrthographicCamera gameCamera;
     private Viewport gamePort;
 
-    public static Menu currentMenu;
     Stage stage;
     XmlReader xmlReader;
-
-    public static HashMap<String, Menu> menuList;
+    public boolean paused;
 
     public DungeonScreen(final PMD game) {
         controller = new Controller(this);
@@ -78,17 +72,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
 
         tileBoard = controller.tileBoard;
-        this.loadMenus();
-
         stage = new Stage();
-        currentMenu = menuList.get("defaultMenu");
-        stage.addActor(currentMenu);
-
-        updateButtonList = new Array<Button>();
-
-       /* Timer timer = new Timer(controller);
-        timer.ticking();*/
-
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
@@ -99,55 +83,18 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         //manager.get("sfx/background.ogg", Music.class).play();
     }
 
-    public void switchMenus(String menu) {
-        stage.clear();
-        currentMenu = menuList.get(menu);
-        stage.addActor(currentMenu);
-    }
-
-    public void loadMenus() {
-        xmlReader = new XmlReader();
-        menuList = new HashMap<String, Menu>();
-
-        XmlReader.Element root = null;
-
-        try {
-            root = xmlReader.parse(Gdx.files.internal("ui/MenuStorage.xml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Array<XmlReader.Element> MenuList = root.getChildrenByName("Menu");
-
-        for (XmlReader.Element e : MenuList) {
-            Menu menu = new Menu();
-            menu.setFillParent(true);
-            menu.top().right();
-
-            TextureAtlas textureAtlas = new TextureAtlas(e.get("textureatlas"));
-            Skin skin = new Skin(Gdx.files.internal(e.get("json")), textureAtlas);
-
-            for (XmlReader.Element child : e.getChildrenByName("Button")) {
-                Button button = new Button(child.get("text"), child.get("classifier"), skin, menu, child.get("nextMenu"), controller);
-                menu.addButton(button);
-                menu.row().width(200);
-            }
-            menuList.put(e.get("MenuName"), menu);
-        }
-    }
-
     @Override
     public void render(float dt) {
+        if(controller.turns < 0){
+            game.setScreen(PMD.endScreen);
+        }
+
         controller.update();
         this.updateCamera();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(gameCamera.combined);
         batch.begin();
-
-       /* for (Button b : currentMenu.updateButtonList) {
-            b.update();
-        } //TODO Fix the buttons so that they can adapt to changes in the entity list*/
 
         for (int i = 0; i < controller.tileBoard.length; i++) {
             for (int j = 0; j < controller.tileBoard[0].length; j++) {
@@ -181,16 +128,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.update(dt);
         hud.stage.draw();
-
-        if(time == 0){
-            game.setScreen(PMD.endScreen);
-        }
     }
-
-    public void reset(){
-        controller = new Controller(this);
-    }
-
 
     @Override
     public void dispose() {
@@ -201,6 +139,8 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     @Override
     public void show() {
+        //set the global amount of time
+        time = 10;
         controller = new Controller(this);
     }
 
