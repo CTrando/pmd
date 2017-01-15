@@ -6,6 +6,7 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Behavior.*;
 import com.mygdx.pmd.model.Behavior.Entity.MoveSlowBehavior;
+import com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer.PlayerAttackLogicBehavior;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonAnimationBehavior;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer.PlayerInputBehavior;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer.PlayerMovementLogicBehavior;
@@ -21,6 +22,7 @@ public class PokemonPlayer extends Pokemon {
         this.registerObservers();
 
         behaviors[BaseBehavior.INPUT_BEHAVIOR] = new PlayerInputBehavior(this);
+        behaviors[BaseBehavior.ATTACK_BEHAVIOR] = new PlayerAttackLogicBehavior(this);
         behaviors[BaseBehavior.LOGIC_BEHAVIOR] = new PlayerMovementLogicBehavior(this);
         behaviors[BaseBehavior.MOVE_BEHAVIOR] = new MoveSlowBehavior(this);
         behaviors[BaseBehavior.ANIMATION_BEHAVIOR] = new PokemonAnimationBehavior(this);

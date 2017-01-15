@@ -6,7 +6,7 @@ import com.mygdx.pmd.model.Tile.Tile;
 /**
  * Created by Cameron on 11/17/2016.
  */
-public class ProjectileRangedMovementBehavior extends ProjectileBehavior{
+public class ProjectileRangedMovementBehavior extends ProjectileBehavior {
 
 
     public ProjectileRangedMovementBehavior(Projectile projectile) {
@@ -14,29 +14,29 @@ public class ProjectileRangedMovementBehavior extends ProjectileBehavior{
     }
 
     @Override
-    public void execute(){
-        if(!canExecute()) return;
+    public void execute() {
+        if (!canExecute()) return;
 
         switch (projectile.direction) {
-                case up:
-                    projectile.y += 1;
-                    break;
-                case down:
-                    projectile.y -= 1;
-                    break;
-                case right:
-                    projectile.x += 1;
-                    break;
-                case left:
-                    projectile.x -= 1;
-                    break;
-            }
-            projectile.currentTile = Tile.getTileAt(projectile.x, projectile.y, projectile.tileBoard);
+            case up:
+                projectile.y += projectile.speed;
+                break;
+            case down:
+                projectile.y -= projectile.speed;
+                break;
+            case right:
+                projectile.x += projectile.speed;
+                break;
+            case left:
+                projectile.x -= projectile.speed;
+                break;
+        }
+        projectile.currentTile = Tile.getTileAt(projectile.x, projectile.y, projectile.tileBoard);
     }
 
     @Override
     public boolean canExecute() {
-        if(projectile.shouldBeDestroyed) return false;
+        if (projectile.shouldBeDestroyed) return false;
         return true;
     }
 

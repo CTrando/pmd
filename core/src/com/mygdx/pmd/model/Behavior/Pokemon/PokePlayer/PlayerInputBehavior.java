@@ -1,10 +1,7 @@
 package com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer;
 
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.enumerations.Action;
-import com.mygdx.pmd.enumerations.Direction;
-import com.mygdx.pmd.enumerations.Key;
-import com.mygdx.pmd.enumerations.Turn;
+import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 
@@ -63,20 +60,31 @@ public class PlayerInputBehavior extends PokemonBehavior {
             }
         }
 
-        if (controller.isKeyPressed(Key.space) && pokemon.getActionState() == Action.IDLE) {
-            controller.nextFloor();
-        }
-        if (controller.isKeyPressed(Key.a)) {
-            pokemon.turnState = Turn.COMPLETE;
-            pokemon.possibleNextTile = null;
-        }
+        //only allows actions to occur if the player is standing still
+        if(pokemon.getActionState() == Action.IDLE) {
 
-        if (controller.isKeyPressed(Key.p)) {
-            controller.controllerScreen.paused = !controller.controllerScreen.paused;
-        }
+            if (controller.isKeyPressed(Key.space)) {
+                controller.nextFloor();
+            }
+            if (controller.isKeyPressed(Key.b) && controller.isKeyPressed(Key.t)) {
+                pokemon.attack(Move.INSTANT_KILLER);
+                pokemon.setActionState(Action.ATTACKING);
+                pokemon.turnState = Turn.PENDING;
+            }
 
-        if (controller.isKeyPressed(Key.r)){
-            controller.controllerScreen.game.setScreen(PMD.endScreen);
+            if (controller.isKeyPressed(Key.a)) {
+                pokemon.turnState = Turn.COMPLETE;
+                pokemon.possibleNextTile = null;
+            }
+
+            if (controller.isKeyPressed(Key.p)) {
+                controller.paused = !controller.paused;
+            }
+
+            if (controller.isKeyPressed(Key.r)) {
+                controller.controllerScreen.game.setScreen(PMD.endScreen);
+            }
+
         }
     }
 

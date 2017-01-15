@@ -34,6 +34,7 @@ public class Controller {
     public Tile[][] tileBoard;
     public static final int NUM_MAX_ENTITY = 10;
 
+    public boolean paused;
     public ArrayList<Renderable> renderList;
     public ArrayList<Entity> entityList;
     public Array<DynamicEntity> dEntities;
@@ -44,7 +45,7 @@ public class Controller {
 
     FloorFactory floorFactory;
 
-    public int floorCount;
+    public int floorCount = 1;
     public int turns = 20;
 
     private int turnBasedEntityCount;
@@ -95,13 +96,11 @@ public class Controller {
             entityList.get(i).update();
         }
 
-        //need to fix this to decouple turn based entities from dynamic entities
         Entity entity = turnBasedEntities.get(turnBasedEntityCount % turnBasedEntities.size());
         if (entity.turnState == Turn.COMPLETE) {
-            if(entity instanceof PokemonPlayer){
+            if(entity instanceof PokemonPlayer && !this.paused){
                 turns--;
             }
-
             entity = turnBasedEntities.get((++turnBasedEntityCount) % turnBasedEntities.size());
             entity.turnState = Turn.WAITING;
         }
@@ -161,6 +160,7 @@ public class Controller {
         }
     }
 
+    //TODO fix this method so it only removes after the end of an interation
     public void removeEntity(Entity entity) {
         renderList.remove(entity);
         entityList.remove(entity);

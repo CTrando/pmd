@@ -61,6 +61,7 @@ public class Hud {
         turnLabel = new Label("Turns left: " + screen.controller.turns, skin);
 
         Image upImg = new Image(PMD.sprites.get("treekoup1"));
+        upImg.setScale(2f);
         upImg.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
@@ -75,6 +76,7 @@ public class Hud {
         });
 
         Image downImg = new Image(PMD.sprites.get("treekodown1"));
+        downImg.setScale(2f);
         downImg.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
@@ -89,6 +91,7 @@ public class Hud {
         });
 
         Image leftImg = new Image(PMD.sprites.get("treekoleft1"));
+        leftImg.setScale(2f);
         leftImg.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
@@ -103,6 +106,7 @@ public class Hud {
         });
 
         Image rightImg = new Image(PMD.sprites.get("treekoright1"));
+        rightImg.setScale(2f);
         rightImg.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
@@ -118,16 +122,16 @@ public class Hud {
 
         onScreenController.debug();
         onScreenController.add();
-        onScreenController.add(upImg).pad(5,5,5,5);
+        onScreenController.add(upImg).pad(15,15,15,15);
 
         onScreenController.row();
-        onScreenController.add(leftImg).pad(5,5,5,5);
+        onScreenController.add(leftImg).pad(15,15,15,15);
         onScreenController.add();
         onScreenController.add();
-        onScreenController.add(rightImg).pad(5,5,5,5);
+        onScreenController.add(rightImg).pad(15,15,15,15);
         onScreenController.row();
         onScreenController.add();
-        onScreenController.add(downImg).pad(5,5,5,5);
+        onScreenController.add(downImg).pad(15,15,15,15);
 
         Table temp = new Table();
         temp.setFillParent(true);
@@ -137,24 +141,19 @@ public class Hud {
         temp.row();
         temp.add(floorLabel);
         temp.row();
-        temp.add(timeLabel);
-        temp.row();
         temp.add(turnLabel);
 
-        stage.addActor(onScreenController);
+        onScreenController.right().padRight(10).bottom();
+
+        if(Gdx.app.getType() == Application.ApplicationType.Android)
+            stage.addActor(onScreenController);
         stage.addActor(temp);
     }
 
     public void update(float dt){
-        if(accumTime > 1f && !screen.paused) {
-            screen.time--;
-            accumTime = 0;
-        } else accumTime += dt;
-
         //reason why not appearing is because did not include : in bit map font
         testLabel.setText("HP: " + screen.controller.pokemonPlayer.hp);
         floorLabel.setText("Floor: " + screen.controller.floorCount);
-        timeLabel.setText("Time: "+screen.time);
         turnLabel.setText("Turns left: " + screen.controller.turns);
     }
 

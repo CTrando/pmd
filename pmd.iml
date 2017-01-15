@@ -15,6 +15,5 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="library" name="src" level="project" />
   </component>
 </module>

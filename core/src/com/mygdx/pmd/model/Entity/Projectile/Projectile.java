@@ -24,6 +24,8 @@ public class Projectile extends DynamicEntity {
     public Pokemon parent;
     public Move move;
     public boolean isRanged;
+    public int damage;
+    public int speed;
 
     public Projectile(Pokemon parent, Move move) {
         super(parent.controller, parent.facingTile.x, parent.facingTile.y);
@@ -33,6 +35,8 @@ public class Projectile extends DynamicEntity {
         this.currentTile = parent.facingTile;
         this.parent = parent;
         this.move = move;
+        this.damage = move.damage;
+        this.speed = move.speed;
         this.isRanged = move.isRanged();
 
         behaviors[BaseBehavior.ATTACK_BEHAVIOR] = new ProjectileCollisionLogicBehavior(this);

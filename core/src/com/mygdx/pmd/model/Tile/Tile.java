@@ -16,6 +16,7 @@ import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.utils.MathLogic;
 
+
 import java.util.ArrayList;
 
 /**
@@ -235,6 +236,7 @@ public abstract class Tile implements Renderable {
             retTile = tileBoard[y / Constants.TILE_SIZE][x / Constants.TILE_SIZE];
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
+            return null;
         }
         return retTile;
     }

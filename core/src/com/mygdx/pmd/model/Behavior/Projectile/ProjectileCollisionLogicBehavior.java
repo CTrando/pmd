@@ -22,7 +22,7 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
         if (!projectile.currentTile.isDynamicEntityEmpty() && projectile.equals(projectile.currentTile)) {
             if (projectile.parent.currentAnimation.isFinished()) {
                 for (DynamicEntity dEntity : projectile.currentTile.dynamicEntities) {
-                    dEntity.takeDamage(20);
+                    dEntity.takeDamage(projectile.damage);
                 }
 
                 projectile.takeDamage(1);
@@ -48,6 +48,8 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
         if (projectile.currentTile == null) { //meed to incorporate into isLeagltomoveto
             PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
             projectile.shouldBeDestroyed = true;
+            projectile.setActionState(Action.DEATH);
+
             return false;
         }
         return true;
