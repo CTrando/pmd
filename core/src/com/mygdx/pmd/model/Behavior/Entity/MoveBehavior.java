@@ -16,8 +16,6 @@ public class MoveBehavior extends BaseBehavior {
 
     @Override
     public void execute(){
-        if(!this.canExecute()) return;
-
         dEntity.setFacingTileBasedOnDirection(dEntity.direction);
     }
 

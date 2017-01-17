@@ -9,6 +9,7 @@ import com.mygdx.pmd.model.Behavior.Entity.MoveSlowBehavior;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokeMob.MobAttackLogicBehavior;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokeMob.MobMovementLogicBehavior;
 import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.utils.observers.MovementObserver;
 
 public class PokemonMob extends Pokemon {
 
@@ -36,6 +37,6 @@ public class PokemonMob extends Pokemon {
 
     @Override
     public void registerObservers() {
-
+        observers[0] = new MovementObserver(this);
     }
 }

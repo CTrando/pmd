@@ -21,6 +21,10 @@
 
 -verbose
 
+-keepattributes EnclosingMethod
+-keepattributes InnerClasses
+
+
 -dontwarn android.support.**
 -dontwarn android.support.v4.**
 -dontwarn com.badlogic.gdx.backends.android.AndroidFragmentApplication
@@ -28,10 +32,8 @@
 -dontwarn com.badlogic.gdx.physics.box2d.utils.Box2DBuild
 -dontwarn com.badlogic.gdx.jnigen.BuildTarget*
 -dontwarn com.badlogic.gdx.graphics.g2d.freetype.FreetypeBuild
--dontwarn **CompatHoneycomb
 
 -keep public class * extends android.support.v4.app.Fragment
-
 -keep class com.badlogic.gdx.controllers.android.AndroidControllers
 
 -keepclassmembers class com.badlogic.gdx.backends.android.AndroidInput* {

@@ -11,7 +11,6 @@ import com.mygdx.pmd.model.Behavior.Projectile.ProjectileCollisionLogicBehavior;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileRangedMovementBehavior;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
-import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.PAnimation;
 
@@ -72,7 +71,7 @@ public class Projectile extends DynamicEntity {
         }
 
         if(projectileAnimation.isFinished() && this.shouldBeDestroyed){
-            controller.removeEntity(this);
+            controller.addToRemoveList(this);
             this.parent.projectile = null;
         }
     }

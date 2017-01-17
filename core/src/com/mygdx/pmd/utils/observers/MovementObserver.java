@@ -17,6 +17,4 @@ public class MovementObserver extends Observer {
     public void update() {
         entity.currentTile.playEvents(dEntity);
     }
-
-
 }

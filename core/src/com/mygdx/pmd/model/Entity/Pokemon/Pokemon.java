@@ -25,6 +25,7 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
 
         this.turnState = Turn.COMPLETE;
         this.isTurnBased = true;
+        this.registerObservers();
     }
 
     @Override
@@ -51,7 +52,7 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
         super.update();
         if(hp <= 0) shouldBeDestroyed = true;
         if(shouldBeDestroyed) {
-            controller.removeEntity(this);
+            controller.addToRemoveList(this);
             if (this instanceof PokemonPlayer) controller.controllerScreen.game.dispose();
             System.out.println("WOE IS ME I AM DEAD");
             this.dispose();
@@ -60,7 +61,7 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
 
     public void attack(Move move){
         this.projectile = new Projectile(this, move);
-        controller.addEntity(this.projectile);
+        controller.directlyAddEntity(this.projectile);
     }
 
     public boolean isEnemyInSight(){

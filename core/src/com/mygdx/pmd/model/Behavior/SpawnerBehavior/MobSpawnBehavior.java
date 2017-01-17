@@ -5,7 +5,6 @@ import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.PokemonName;
 import com.mygdx.pmd.enumerations.Turn;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
-import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 import com.mygdx.pmd.model.Factory.PokemonFactory;
@@ -35,7 +34,7 @@ public class MobSpawnBehavior extends SpawnBehavior {
                 case 0:
                     Pokemon pokemon = pokemonFactory.createPokemon(controller, PokemonName.treeko, PokemonMob.class);
                     pokemon.setCurrentTile(tile);
-                    controller.addEntity(pokemon);
+                    controller.directlyAddEntity(pokemon);
             }
         }
         dEntity.turnState = Turn.COMPLETE;

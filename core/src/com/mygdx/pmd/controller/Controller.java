@@ -4,8 +4,6 @@ package com.mygdx.pmd.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
-import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.interfaces.Turnbaseable;
 import com.mygdx.pmd.comparators.PokemonDistanceComparator;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Renderable;
@@ -41,6 +39,9 @@ public class Controller {
     public ArrayList<Entity> turnBasedEntities;
     public Pokemon pokemonPlayer;
 
+    private Array<Entity> toBeRemoved;
+    private Array<Entity> toBeAdded;
+
     public MobSpawner mobSpawner;
 
     FloorFactory floorFactory;
@@ -57,6 +58,8 @@ public class Controller {
         turnBasedEntities = new ArrayList<Entity>();
         dEntities = new Array<DynamicEntity>();
         entityList = new ArrayList<Entity>();
+        toBeRemoved = new Array<Entity>();
+        toBeAdded = new Array<Entity>();
 
         //list of renderables
         renderList = new ArrayList<Renderable>();
@@ -76,7 +79,7 @@ public class Controller {
 
         //add in a mob spawner
         mobSpawner = new MobSpawner(this);
-        this.addEntity(mobSpawner);
+        this.directlyAddEntity(mobSpawner);
     }
 
     public void nextFloor() {
@@ -91,17 +94,23 @@ public class Controller {
     }
 
     public void update() {
+        addEntities();
+        removeEntities();
         Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
         for (int i = 0; i < entityList.size(); i++) {
             entityList.get(i).update();
         }
 
-        Entity entity = turnBasedEntities.get(turnBasedEntityCount % turnBasedEntities.size());
+        Entity entity = turnBasedEntities.get(turnBasedEntityCount);
         if (entity.turnState == Turn.COMPLETE) {
-            if(entity instanceof PokemonPlayer && !this.paused){
+            if (entity instanceof PokemonPlayer && !this.paused) {
                 turns--;
             }
-            entity = turnBasedEntities.get((++turnBasedEntityCount) % turnBasedEntities.size());
+            if (++turnBasedEntityCount >= turnBasedEntities.size()) {
+                turnBasedEntityCount = 0;
+            }
+
+            entity = turnBasedEntities.get(turnBasedEntityCount);
             entity.turnState = Turn.WAITING;
         }
     }
@@ -126,13 +135,13 @@ public class Controller {
 
         //init player
         Pokemon pokemonPlayer = PokemonFactory.createPokemon(this, playerName, PokemonPlayer.class);
-        this.addEntity(pokemonPlayer);
+        this.directlyAddEntity(pokemonPlayer);
 
         //init mobs
         for (XmlReader.Element e : elementList) {
             PokemonName pokemonName = Enum.valueOf(PokemonName.class, e.get("name"));
             Pokemon pokemon = PokemonFactory.createPokemon(this, pokemonName, PokemonMob.class);
-            this.addEntity(pokemon);
+            this.directlyAddEntity(pokemon);
         }
     }
 
@@ -142,7 +151,17 @@ public class Controller {
         }
     }
 
-    public void addEntity(Entity entity) {
+    public void toBeAdded(Entity entity){
+        toBeAdded.add(entity);
+    }
+
+    public void addEntities() {
+        for (Entity entity : toBeAdded) {
+            directlyAddEntity(entity);
+        }
+    }
+
+    public void directlyAddEntity(Entity entity) {
         renderList.add(entity);
         entityList.add(entity);
 
@@ -160,18 +179,27 @@ public class Controller {
         }
     }
 
+    private void removeEntities() {
+        if (toBeRemoved.size == 0) return;
+
+        for (Entity entity : toBeRemoved) {
+            renderList.remove(entity);
+            entityList.remove(entity);
+
+            if (entity.isTurnBaseable()) {
+                turnBasedEntities.remove(entity);
+            }
+
+            if (entity instanceof DynamicEntity) {
+                dEntities.removeValue((DynamicEntity) entity, true);
+            }
+        }
+        toBeRemoved = new Array<Entity>();
+    }
+
     //TODO fix this method so it only removes after the end of an interation
-    public void removeEntity(Entity entity) {
-        renderList.remove(entity);
-        entityList.remove(entity);
-
-        if (entity.isTurnBaseable()) {
-            turnBasedEntities.remove(entity);
-        }
-
-        if (entity instanceof DynamicEntity){
-            dEntities.removeValue((DynamicEntity)entity, true);
-        }
+    public void addToRemoveList(Entity entity) {
+        toBeRemoved.add(entity);
     }
 
     public static Tile chooseUnoccupiedTile(Tile[][] tileBoard) {

@@ -19,7 +19,6 @@ public class PokemonPlayer extends Pokemon {
         super(controller, x, y, pokemonName);
         this.turnState = Turn.WAITING;
         this.aggression = Aggression.passive;
-        this.registerObservers();
 
         behaviors[BaseBehavior.INPUT_BEHAVIOR] = new PlayerInputBehavior(this);
         behaviors[BaseBehavior.ATTACK_BEHAVIOR] = new PlayerAttackLogicBehavior(this);

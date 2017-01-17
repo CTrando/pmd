@@ -1,5 +1,6 @@
 package com.mygdx.pmd.model.Behavior.Entity;
 
+import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Entity;
 
@@ -13,11 +14,13 @@ public class MoveSlowBehavior extends MoveBehavior {
 
     @Override
     public void execute(){
+        super.execute();
+        if(dEntity.getActionState() != Action.MOVING) return;
+
         if(dEntity.nextTile == null) return;
 
         if(!dEntity.equals(dEntity.nextTile)){
             dEntity.moveToTile(dEntity.nextTile, 1);
         }
-        super.execute();
     }
 }
