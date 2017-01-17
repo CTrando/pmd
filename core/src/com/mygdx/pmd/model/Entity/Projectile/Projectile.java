@@ -1,5 +1,6 @@
 package com.mygdx.pmd.model.Entity.Projectile;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
@@ -40,50 +41,46 @@ public class Projectile extends DynamicEntity {
 
         behaviors[BaseBehavior.ATTACK_BEHAVIOR] = new ProjectileCollisionLogicBehavior(this);
 
-        if(move.isRanged()){
+        if (move.isRanged()) {
             behaviors[BaseBehavior.LOGIC_BEHAVIOR] = new ProjectileRangedMovementBehavior(this);
             behaviors[BaseBehavior.ANIMATION_BEHAVIOR] = new ProjectileAnimationBehavior(this);
             this.setActionState(Action.MOVING);
         }
 
-
-        Array<Sprite> array = new Array<Sprite>();
-        array.add(PMD.sprites.get("projectile1"));
-        array.add(PMD.sprites.get("projectile2"));
-        array.add(PMD.sprites.get("projectile3"));
-
-        projectileAnimation = new PAnimation("attack", array, null, 20, true);
+        projectileAnimation = new PAnimation("attack", move.projectileMovementAnimation, null, 20, true);
         animationMap.put("movement", projectileAnimation);
 
-        array = new Array<Sprite>();
-        array.add(PMD.sprites.get("projectiledeath1"));
-        array.add(PMD.sprites.get("projectiledeath2"));
-        array.add(PMD.sprites.get("projectiledeath3"));
-
-        projectileAnimation = new PAnimation("death", array, null, 20, false);
+        projectileAnimation = new PAnimation("death", move.projectileDeathAnimation, null, 20, false);
         animationMap.put("death", projectileAnimation);
     }
 
     @Override
-    public void update(){
-        if(parent.currentAnimation.isFinished()) {
+    public void update() {
+        if (parent.currentAnimation.isFinished()) {
             super.update();
         }
 
-        if(projectileAnimation.isFinished() && this.shouldBeDestroyed){
+        if (projectileAnimation.isFinished() && this.shouldBeDestroyed) {
             controller.addToRemoveList(this);
             this.parent.projectile = null;
         }
     }
 
     @Override
-    public boolean isLegalToMoveTo(Tile tile){
+    public boolean isLegalToMoveTo(Tile tile) {
         return tile.isWalkable;
     }
 
     @Override
     public void registerObservers() {
 
+    }
+
+    public void dispose() {
+        this.takeDamage(1);
+        this.shouldBeDestroyed = true;
+        this.setActionState(Action.DEATH);
+        PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
     }
 }
 

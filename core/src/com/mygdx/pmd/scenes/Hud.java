@@ -44,7 +44,6 @@ public class Hud {
 
         OrthographicCamera hudCam = new OrthographicCamera();
 
-        //viewport = new FitViewport(DungeonScreen.V_WIDTH, DungeonScreen.V_HEIGHT, hudCam);
         viewport = new ScreenViewport(hudCam);
         stage = new Stage(viewport, batch);
 
@@ -53,7 +52,7 @@ public class Hud {
         onScreenController.top();
         onScreenController.setFillParent(true);
         Skin skin = new Skin(Gdx.files.internal("ui/test.json"));
-        
+
         testLabel = new Label("HP: " + screen.controller.pokemonPlayer.hp, skin);
         floorLabel = new Label("Floor: " + screen.controller.floorCount, skin);
         timeLabel = new Label("Time left:" + screen.time, skin);

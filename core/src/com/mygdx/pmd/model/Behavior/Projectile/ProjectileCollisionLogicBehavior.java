@@ -33,10 +33,7 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
         }
 
         if (!projectile.isLegalToMoveTo(projectile.currentTile)) {
-            projectile.takeDamage(1);
-            projectile.shouldBeDestroyed = true;
-            projectile.setActionState(Action.DEATH);
-            PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
+            projectile.dispose();
         }
     }
 
@@ -46,9 +43,7 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
             return false;
         }
         if (projectile.currentTile == null) { //meed to incorporate into isLeagltomoveto
-            PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
-            projectile.shouldBeDestroyed = true;
-            projectile.setActionState(Action.DEATH);
+            projectile.dispose();
 
             return false;
         }

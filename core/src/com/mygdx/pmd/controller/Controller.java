@@ -94,8 +94,7 @@ public class Controller {
     }
 
     public void update() {
-        addEntities();
-        removeEntities();
+        //watch for modulus errors so don't use it
         Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
         for (int i = 0; i < entityList.size(); i++) {
             entityList.get(i).update();
@@ -113,6 +112,8 @@ public class Controller {
             entity = turnBasedEntities.get(turnBasedEntityCount);
             entity.turnState = Turn.WAITING;
         }
+        addEntities();
+        removeEntities();
     }
 
     public boolean isKeyPressed(Key key) { //TODO perhaps add a buffer system for more control later

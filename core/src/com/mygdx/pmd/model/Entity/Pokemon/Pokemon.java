@@ -7,6 +7,7 @@ import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
+import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.*;
 
@@ -83,8 +84,11 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
                 cOffset = -1;
         }
         for(int i = 1; i< 5; i++){
+            //these are the rules for viewing things
             try {
                 Tile tile = tileBoard[currentTile.row + i * rOffset][currentTile.col + i * cOffset];
+                if(tile instanceof GenericTile) return false;
+
                 if (tile.dynamicEntities.size > 0){
                     if(tile != currentTile && tile.containsAggressionType(Aggression.passive)) {
                         return true;
