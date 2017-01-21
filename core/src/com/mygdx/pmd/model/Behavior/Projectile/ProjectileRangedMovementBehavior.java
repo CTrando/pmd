@@ -33,7 +33,7 @@ public class ProjectileRangedMovementBehavior extends ProjectileBehavior {
         }
         projectile.currentTile = Tile.getTileAt(projectile.x, projectile.y, projectile.tileBoard);
 
-        //this code is a range limit on how far away the projectile can go 
+        //this code is a range limit on how far away the projectile can go
         if(projectile.parent.currentTile.calculateDistance(projectile.currentTile) > 5*25){
             projectile.dispose();
         }
