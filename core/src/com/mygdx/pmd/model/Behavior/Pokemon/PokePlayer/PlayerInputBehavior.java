@@ -20,45 +20,45 @@ public class PlayerInputBehavior extends PokemonBehavior {
         //set the possible next tile based on key hit
         try {
             if (controller.isKeyPressed(Key.down)) {
-                pokemon.possibleNextTile = (tileBoard[pokemon.currentTile.row - 1][pokemon.currentTile.col]);
+                pMob.possibleNextTile = (tileBoard[pMob.currentTile.row - 1][pMob.currentTile.col]);
             } else if (controller.isKeyPressed(Key.left)) {
-                pokemon.possibleNextTile = (tileBoard[pokemon.currentTile.row][pokemon.currentTile.col - 1]);
+                pMob.possibleNextTile = (tileBoard[pMob.currentTile.row][pMob.currentTile.col - 1]);
             } else if (controller.isKeyPressed(Key.right)) {
-                pokemon.possibleNextTile = (tileBoard[pokemon.currentTile.row][pokemon.currentTile.col + 1]);
+                pMob.possibleNextTile = (tileBoard[pMob.currentTile.row][pMob.currentTile.col + 1]);
             } else if (controller.isKeyPressed(Key.up)) {
-                pokemon.possibleNextTile = (tileBoard[pokemon.currentTile.row + 1][pokemon.currentTile.col]);
-            } else pokemon.possibleNextTile = (null);
+                pMob.possibleNextTile = (tileBoard[pMob.currentTile.row + 1][pMob.currentTile.col]);
+            } else pMob.possibleNextTile = (null);
         } catch (ArrayIndexOutOfBoundsException e) {
         }
 
         // set the direction based on key hit - note that one can only change directions and not move when he is not moving
-        if (pokemon.equals(pokemon.currentTile)) {
+        if (pMob.equals(pMob.currentTile)) {
             if (controller.isKeyPressed(Key.down)) {
-                pokemon.direction = Direction.down;
+                pMob.direction = Direction.down;
             } else if (controller.isKeyPressed(Key.left)) {
-                pokemon.direction = Direction.left;
+                pMob.direction = Direction.left;
             } else if (controller.isKeyPressed(Key.right)) {
-                pokemon.direction = Direction.right;
+                pMob.direction = Direction.right;
             } else if (controller.isKeyPressed(Key.up)) {
-                pokemon.direction = Direction.up;
+                pMob.direction = Direction.up;
             }
         }
 
         //only allows actions to occur if the player is standing still
-        if(pokemon.getActionState() == Action.IDLE) {
+        if(pMob.getActionState() == Action.IDLE) {
 
             if (controller.isKeyPressed(Key.space)) {
                 controller.nextFloor();
             }
             if (controller.isKeyPressed(Key.b) && controller.isKeyPressed(Key.t)) {
-                pokemon.attack(Move.INSTANT_KILLER);
-                pokemon.setActionState(Action.ATTACKING);
-                pokemon.turnState = Turn.PENDING;
+                pMob.attack(Move.INSTANT_KILLER);
+                pMob.setActionState(Action.ATTACKING);
+                pMob.turnState = Turn.PENDING;
             }
             else
             if (controller.isKeyPressed(Key.a)) {
-                pokemon.turnState = Turn.COMPLETE;
-                pokemon.possibleNextTile = null;
+                pMob.turnState = Turn.COMPLETE;
+                pMob.possibleNextTile = null;
             }
             else
             if (controller.isKeyPressed(Key.p)) {
@@ -74,7 +74,7 @@ public class PlayerInputBehavior extends PokemonBehavior {
 
     @Override
     public boolean canExecute() {
-        if (pokemon.turnState == Turn.WAITING) return true;
+        if (pMob.turnState == Turn.WAITING) return true;
         return false;
     }
 }

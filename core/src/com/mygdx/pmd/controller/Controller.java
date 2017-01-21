@@ -73,7 +73,7 @@ public class Controller {
         tileBoard = FloorDecorator.skinTiles(tileBoard);
         tileBoard = FloorDecorator.placeEventTiles(tileBoard, floorFactory);
 
-        //load pokemon from xml
+        //load pMob from xml
         this.loadPokemon();
         this.randomizeAllPokemonLocation();
 

@@ -15,21 +15,21 @@ public class PokemonAnimationBehavior extends PokemonBehavior {
     public void execute() {
         if(!this.canExecute()) return;
 
-        switch(pokemon.getActionState()) {
+        switch(pMob.getActionState()) {
             case MOVING:
-                pokemon.currentAnimation = pokemon.animationMap.get(pokemon.direction.toString());
-                pokemon.currentSprite = pokemon.animationMap.get(pokemon.direction.toString()).getCurrentSprite();
+                pMob.currentAnimation = pMob.animationMap.get(pMob.direction.toString());
+                pMob.currentSprite = pMob.animationMap.get(pMob.direction.toString()).getCurrentSprite();
                 break;
             case ATTACKING:
-                pokemon.currentAnimation = pokemon.animationMap.get(pokemon.direction.toString() + "attack");
-                pokemon.currentSprite = pokemon.animationMap.get(pokemon.direction.toString() + "attack").getCurrentSprite();
+                pMob.currentAnimation = pMob.animationMap.get(pMob.direction.toString() + "attack");
+                pMob.currentSprite = pMob.animationMap.get(pMob.direction.toString() + "attack").getCurrentSprite();
                 break;
             case IDLE:
-                if(pokemon.currentAnimation != null)
-                    pokemon.currentAnimation.clear();
-                pokemon.currentAnimation = pokemon.animationMap.get("noanimation");
-                pokemon.currentSprite = pokemon.animationMap.get(pokemon.direction.toString()).finalSprite;
-                pokemon.animationMap.get(pokemon.direction.toString()).clear();
+                if(pMob.currentAnimation != null)
+                    pMob.currentAnimation.clear();
+                pMob.currentAnimation = pMob.animationMap.get("noanimation");
+                pMob.currentSprite = pMob.animationMap.get(pMob.direction.toString()).finalSprite;
+                pMob.animationMap.get(pMob.direction.toString()).clear();
         }
     }
 

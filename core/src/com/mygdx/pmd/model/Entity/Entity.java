@@ -29,6 +29,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     public BaseBehavior[] behaviors;
 
     public boolean shouldBeDestroyed;
+    public BaseBehavior noBehavior;
 
     public int x;
     public int y;
@@ -54,11 +55,12 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         this.y = y;
 
         animationMap = new HashMap<String, PAnimation>();
+        noBehavior = new NoBehavior(this);
 
         //initialize behaviors array
         behaviors = new BaseBehavior[10];
         for (int i = 0; i < behaviors.length; i++) {
-            behaviors[i] = new NoBehavior(this);
+            behaviors[i] = this.noBehavior;
         }
         observers = new Observer[10];
         for(int i = 0; i< observers.length; i++){

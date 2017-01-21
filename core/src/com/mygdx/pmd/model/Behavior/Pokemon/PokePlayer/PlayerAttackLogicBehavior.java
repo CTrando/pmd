@@ -1,8 +1,6 @@
 package com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer;
 
 import com.mygdx.pmd.enumerations.Action;
-import com.mygdx.pmd.enumerations.Aggression;
-import com.mygdx.pmd.enumerations.Move;
 import com.mygdx.pmd.enumerations.Turn;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
@@ -19,17 +17,17 @@ public class PlayerAttackLogicBehavior extends PokemonBehavior{
     public void execute() {
         if(!this.canExecute()) return;
 
-        if (pokemon.getActionState() == Action.ATTACKING) {
-            if (pokemon.projectile == null && pokemon.currentAnimation.isFinished()) {
-                pokemon.turnState = Turn.COMPLETE;
-                pokemon.setActionState(Action.IDLE);
+        if (pMob.getActionState() == Action.ATTACKING) {
+            if (pMob.projectile == null && pMob.currentAnimation.isFinished()) {
+                pMob.turnState = Turn.COMPLETE;
+                pMob.setActionState(Action.IDLE);
             }
         }
     }
 
     @Override
     public boolean canExecute(){
-        if (pokemon.getActionState() != Action.ATTACKING) return false;
+        if (pMob.getActionState() != Action.ATTACKING) return false;
         return true;
     }
 

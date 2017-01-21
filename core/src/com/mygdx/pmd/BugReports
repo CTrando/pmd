@@ -12,3 +12,6 @@ Entity
 DynamicEntity Static Entity
 Pokemon         Items
 PMob PPlayer    Berry
+
+Each entity has two objects to be updated - one that corresponds to its current action state and updates animations and the other updates based on its action state
+Must be a master controller that each object reinstantiates - checks for input

@@ -18,6 +18,11 @@ public class Wander extends PathFind {
     public Array<Tile> pathFind(Tile tile) throws PathFindFailureException {
         Tile currentTile = dEntity.currentTile;
         Tile nextTile = this.chooseRandomTile(currentTile);
+
+        while(!nextTile.isWalkable){
+            nextTile = chooseRandomTile(currentTile);
+        }
+
         if (nextTile != null && dEntity.isLegalToMoveTo(nextTile)) {
             solutionNodeList.add(nextTile);
         }
@@ -42,7 +47,7 @@ public class Wander extends PathFind {
                     return tileBoard[r - 1][c];
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
+            return chooseRandomTile(curTile);
         }
         return null;
     }

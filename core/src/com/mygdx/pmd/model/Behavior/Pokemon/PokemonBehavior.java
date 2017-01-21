@@ -7,9 +7,9 @@ import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
  * Created by Cameron on 11/17/2016.
  */
 public abstract class PokemonBehavior extends BaseBehavior {
-    public Pokemon pokemon;
+    public Pokemon pMob;
     public PokemonBehavior(Pokemon pokemon) {
         super(pokemon);
-        this.pokemon = pokemon;
+        this.pMob = pokemon;
     }
 }

@@ -4,6 +4,7 @@ package com.mygdx.pmd.model.Entity.Pokemon;
 import com.mygdx.pmd.interfaces.Turnbaseable;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
@@ -17,6 +18,8 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
 
     public PokemonName pokemonName;
     public Projectile projectile;
+
+    public PokemonBehavior logic;
 
     protected Pokemon(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y);
@@ -51,6 +54,8 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
     @Override
     public void update(){
         super.update();
+        updateCurrentTile();
+
         if(hp <= 0) shouldBeDestroyed = true;
         if(shouldBeDestroyed) {
             controller.addToRemoveList(this);

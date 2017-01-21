@@ -11,6 +11,7 @@ import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
  * Created by Cameron on 11/14/2016.
  */
 public class MobAttackLogicBehavior extends PokemonBehavior {
+    public boolean hasNotAttacked = true;
 
     public MobAttackLogicBehavior(Pokemon pokemon) {
         super(pokemon);
@@ -18,33 +19,32 @@ public class MobAttackLogicBehavior extends PokemonBehavior {
 
     @Override
     public void execute() {
-        if(!this.canExecute()) return;
+        if (!this.canExecute()) return;
 
-        if (pokemon.getActionState() == Action.IDLE) {
-            if (pokemon.turnState == Turn.WAITING) {
-                if (pokemon.facingTile == null) return;
-                //this is temporary
+        if (pMob.facingTile == null) return;
+        //this is temporary
 
-                if ((pokemon.isEnemyInSight()) && pokemon.facingTile != pokemon.currentTile) {
-                    pokemon.setActionState(Action.ATTACKING);
-                    pokemon.turnState = Turn.PENDING;
-
-                    pokemon.attack(Move.SCRATCH);
-                }
-            }
+        if (pMob.projectile == null && hasNotAttacked) {
+            pMob.attack(Move.SCRATCH);
+            hasNotAttacked = false;
         }
-        else if (pokemon.getActionState() == Action.ATTACKING) {
-            if (pokemon.projectile == null && pokemon.currentAnimation.isFinished()) {
-                pokemon.turnState = Turn.COMPLETE;
-                pokemon.setActionState(Action.IDLE);
+        else {
+            if (pMob.projectile == null && pMob.currentAnimation.isFinished()) {
+                pMob.turnState = Turn.COMPLETE;
+                pMob.setActionState(Action.IDLE);
             }
         }
     }
 
+    //call this first
+    public void resetAttack(){
+        hasNotAttacked = true;
+    }
+
     @Override
-    public boolean canExecute(){
-        if (pokemon.getActionState() != Action.IDLE && pokemon.getActionState() != Action.ATTACKING) return false;
-        if(pokemon.aggression != Aggression.aggressive) return false;
+    public boolean canExecute() {
+        if (pMob.getActionState() != Action.IDLE && pMob.getActionState() != Action.ATTACKING) return false;
+        if (pMob.aggression != Aggression.aggressive) return false;
         return true;
     }
 }
