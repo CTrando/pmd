@@ -21,6 +21,7 @@ import com.mygdx.pmd.scenes.Hud;
 import com.mygdx.pmd.utils.Constants;
 
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -56,7 +57,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     Stage stage;
     XmlReader xmlReader;
-    public boolean paused;
+    public boolean timePaused;
 
     public DungeonScreen(final PMD game) {
         controller = new Controller(this);

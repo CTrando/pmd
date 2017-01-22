@@ -1,26 +1,19 @@
 package com.mygdx.pmd.scenes;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.screens.DungeonScreen;
-import com.mygdx.pmd.screens.PScreen;
 
 /**
  * Created by Cameron on 11/26/2016.
@@ -59,8 +52,8 @@ public class Hud {
         turnLabel = new Label("Turns left: " + screen.controller.turns, skin);
 
 
-        Image upImg = new Image(PMD.sprites.get("treekoup1"));
-        upImg.setScale(2f);
+        Image upImg = new Image(PMD.sprites.get("uparrow"));
+        upImg.setScale(.5f);
         upImg.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -74,8 +67,8 @@ public class Hud {
             }
         });
 
-        Image downImg = new Image(PMD.sprites.get("treekodown1"));
-        downImg.setScale(2f);
+        Image downImg = new Image(PMD.sprites.get("downarrow"));
+        downImg.setScale(.5f);
         downImg.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -89,8 +82,8 @@ public class Hud {
             }
         });
 
-        Image leftImg = new Image(PMD.sprites.get("treekoleft1"));
-        leftImg.setScale(2f);
+        Image leftImg = new Image(PMD.sprites.get("leftarrow"));
+        leftImg.setScale(.5f);
         leftImg.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -104,8 +97,9 @@ public class Hud {
             }
         });
 
-        Image rightImg = new Image(PMD.sprites.get("treekoright1"));
-        rightImg.setScale(2f);
+        Image rightImg = new Image(PMD.sprites.get("rightarrow"));
+        rightImg.setScale(.5f);
+        rightImg.setWidth(rightImg.getWidth()/2);
         rightImg.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -144,7 +138,7 @@ public class Hud {
 
         onScreenController.right().padRight(10).bottom();
 
-        if (Gdx.app.getType() == Application.ApplicationType.Android)
+        //if (Gdx.app.getType() == Application.ApplicationType.Android)
             stage.addActor(onScreenController);
         stage.addActor(temp);
     }
@@ -153,6 +147,10 @@ public class Hud {
         //reason why not appearing is because did not include : in bit map font
         testLabel.setText("HP: " + screen.controller.pokemonPlayer.hp);
         floorLabel.setText("Floor: " + screen.controller.floorCount);
+        if(screen.controller.turnsPaused){
+            customFont.setColor(Color.BLUE);
+        }
+
         turnLabel.setText("Turns left: " + screen.controller.turns);
     }
 

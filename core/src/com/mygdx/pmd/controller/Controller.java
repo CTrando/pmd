@@ -32,7 +32,7 @@ public class Controller {
     public Tile[][] tileBoard;
     public static final int NUM_MAX_ENTITY = 10;
 
-    public boolean paused;
+    public boolean turnsPaused;
     public ArrayList<Renderable> renderList;
     public ArrayList<Entity> entityList;
     public Array<DynamicEntity> dEntities;
@@ -102,7 +102,7 @@ public class Controller {
 
         Entity entity = turnBasedEntities.get(turnBasedEntityCount);
         if (entity.turnState == Turn.COMPLETE) {
-            if (entity instanceof PokemonPlayer && !this.paused) {
+            if (entity instanceof PokemonPlayer && !this.turnsPaused) {
                 turns--;
             }
             if (++turnBasedEntityCount >= turnBasedEntities.size()) {

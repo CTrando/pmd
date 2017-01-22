@@ -7,16 +7,11 @@ import com.mygdx.pmd.model.Entity.Entity;
 /**
  * Created by Cameron on 11/8/2016.
  */
-public class MoveBehavior extends BaseBehavior {
+public abstract class MoveBehavior extends BaseBehavior {
     public DynamicEntity dEntity;
     public MoveBehavior(DynamicEntity dEntity) {
         super(dEntity);
         this.dEntity = dEntity;
-    }
-
-    @Override
-    public void execute(){
-        dEntity.setFacingTileBasedOnDirection(dEntity.direction);
     }
 
     @Override

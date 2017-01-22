@@ -1,16 +1,18 @@
-package com.mygdx.pmd.model.Behavior.Pokemon;
+package com.mygdx.pmd.model.Behavior.Pokemon.PokeMob;
 
 import com.mygdx.pmd.enumerations.Action;
+import com.mygdx.pmd.enumerations.Move;
 import com.mygdx.pmd.enumerations.Turn;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
-import com.mygdx.pmd.model.Behavior.Pokemon.PokeMob.MobAttackLogicBehavior;
+import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 
 /**
  * Created by Cameron on 1/20/2017.
  */
 public class MobLogic extends PokemonBehavior {
-    PokemonMob pMob;
+    private PokemonMob pMob;
+
     public MobLogic(PokemonMob pMob) {
         super(pMob);
         this.pMob = pMob;
@@ -18,35 +20,44 @@ public class MobLogic extends PokemonBehavior {
 
     @Override
     public void execute() {
-        if(this.pMob.turnState != Turn.WAITING || !pMob.equals(pMob.currentTile)) {
+        //ensure that when this runs the pokemon's turn is always waiting
+        if(pMob.turnState != Turn.WAITING) return;
+
+        //make sure that if the pokemon is moving, it's turn will be set to complete and the algorithm will no longer run
+        if (!pMob.equals(pMob.currentTile)) {
             pMob.turnState = Turn.COMPLETE;
             return;
         }
 
-        if(pMob.canAttack()){
+        if (pMob.canAttack()) {
+            pMob.attack(Move.SCRATCH);
             pMob.turnState = Turn.PENDING;
             pMob.setActionState(Action.ATTACKING);
 
             pMob.behaviors[2] = pMob.attackBehavior;
-            pMob.attackBehavior.resetAttack();
             return;
         }
 
-        if(pMob.canMove()) { //TODO can fix stuttering here by changing when the action state is set
+        if (pMob.canMove()) {
             pMob.turnState = Turn.COMPLETE;
-            pMob.setActionState(Action.MOVING);
-            pMob.behaviors[2] = pMob.moveBehavior;
 
-            pathFind();
-            fillerNameHere();
+            if(pMob.isForcedMove){
+                pMob.setActionState(Action.MOVING);
+                pMob.behaviors[2] = pMob.moveBehavior;
+                pMob.isForcedMove = false;
+            }
+            else
+            //check to see if it can pathfind
+            if (pathFind()) {
+                pMob.setActionState(Action.MOVING);
+                pMob.behaviors[2] = pMob.moveBehavior;
+                //TODO replace filler name
+            }
         }
-/*
-        this.pMob.behaviors[0] = this.pMob.noBehavior;
-*/
     }
 
 
-    public boolean pathFind(){
+    private boolean pathFind() {
         try {
             pMob.path = pMob.pathFind.pathFind(controller.pokemonPlayer.nextTile);
             //solutionNodeList = shortestPath.pathFind(controller.pokemonPlayer.nextTile);
@@ -57,12 +68,6 @@ public class MobLogic extends PokemonBehavior {
         if (pMob.path.size <= 0) {
             return false;
         }
-        return true;
-    }
-
-    public boolean fillerNameHere() {
-        //TODO Rename this filler name
-        if(pMob.path.size == 0) return false;
 
         this.pMob.possibleNextTile = pMob.path.first();
         pMob.path.removeValue(this.pMob.possibleNextTile, true);

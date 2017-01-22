@@ -78,6 +78,7 @@ public class PMD extends Game {
         manager.load("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class);
         manager.load("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class);
         manager.load("pokemonassets/PROJECTILE_TEXTURE.atlas", TextureAtlas.class);
+        manager.load("pokemonassets/ARROW_SPRITES.atlas", TextureAtlas.class);
         manager.load("sfx/background.ogg", Music.class);
         manager.load("sfx/wallhit.wav", Sound.class);
         manager.finishLoading();
@@ -86,6 +87,7 @@ public class PMD extends Game {
         this.loadImages(manager.get("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class));
         this.loadImages(manager.get("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class));
         this.loadImages(manager.get("pokemonassets/PROJECTILE_TEXTURE.atlas", TextureAtlas.class));
+        this.loadImages(manager.get("pokemonassets/ARROW_SPRITES.atlas", TextureAtlas.class));
     }
 
 
@@ -95,7 +97,7 @@ public class PMD extends Game {
         }
     }
 
-    //TODO add buffer screen system
+    //TODO add buffer screen system using stacks
     public void switchScreen(PScreen screen){
         this.setScreen(screen);
     }

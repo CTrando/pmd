@@ -1,5 +1,6 @@
 package com.mygdx.pmd.model.Behavior.Entity;
 
+import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 
 /**
@@ -12,9 +13,10 @@ public class MoveFastBehavior extends MoveBehavior {
 
     @Override
     public void execute(){
-        if(!this.equals(dEntity.nextTile)){
+        if(!dEntity.equals(dEntity.nextTile)){
             dEntity.moveToTile(dEntity.nextTile, 5);
+        } else {
+            dEntity.setActionState(Action.IDLE);
         }
-        super.execute();
     }
 }

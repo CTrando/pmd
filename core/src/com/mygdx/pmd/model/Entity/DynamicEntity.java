@@ -16,6 +16,8 @@ public abstract class DynamicEntity extends Entity{
     private Action actionState;
     public Action previousState;
 
+    public boolean isForcedMove;
+
     public boolean shouldBeDestroyed;
 
     public int hp = 100;
@@ -37,6 +39,11 @@ public abstract class DynamicEntity extends Entity{
     public void move(int dx, int dy) {
         x += dx;
         y += dy;
+    }
+
+    public void forceMoveToTile(Tile nextTile){
+        isForcedMove = true;
+        this.setNextTile(nextTile);
     }
 
     public void moveToTile(Tile nextTile, int speed) {

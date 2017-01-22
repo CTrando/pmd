@@ -4,6 +4,9 @@ package com.mygdx.pmd.model.Entity.Pokemon;
 import com.mygdx.pmd.interfaces.Turnbaseable;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.model.Behavior.BaseBehavior;
+import com.mygdx.pmd.model.Behavior.Entity.MoveSlowBehavior;
+import com.mygdx.pmd.model.Behavior.Pokemon.AttackBehavior;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Entity;
@@ -15,6 +18,8 @@ import com.mygdx.pmd.utils.*;
 
 public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
     public PAnimation currentAnimation;
+    public BaseBehavior attackBehavior;
+    public BaseBehavior moveBehavior;
 
     public PokemonName pokemonName;
     public Projectile projectile;
@@ -26,6 +31,9 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
         this.direction = Direction.down;
         this.pokemonName = pokemonName;
         this.setActionState(Action.IDLE);
+
+        this.attackBehavior = new AttackBehavior(this);
+        this.moveBehavior = new MoveSlowBehavior(this);
 
         this.turnState = Turn.COMPLETE;
         this.isTurnBased = true;
@@ -55,6 +63,11 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
     public void update(){
         super.update();
         updateCurrentTile();
+        setFacingTileBasedOnDirection(direction);
+
+        if (getActionState() == Action.IDLE) {
+            behaviors[2] = this.noBehavior;
+        }
 
         if(hp <= 0) shouldBeDestroyed = true;
         if(shouldBeDestroyed) {
