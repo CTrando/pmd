@@ -3,12 +3,10 @@ package com.mygdx.pmd.model.Entity;
 import com.mygdx.pmd.interfaces.Damageable;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.Tile.Tile;
 
 import java.util.ArrayList;
 
-import static com.mygdx.pmd.controller.Controller.tileBoard;
 
 /**
  * Created by Cameron on 10/18/2016.
@@ -129,7 +127,7 @@ public abstract class DynamicEntity extends Entity{
     }
 
     public void randomizeLocation() {
-        Tile random = Controller.chooseUnoccupiedTile(tileBoardTest);
+        Tile random = Controller.chooseUnoccupiedTile(tileBoard);
 
         if (random.isWalkable) {
             this.setNextTile(random);

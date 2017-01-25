@@ -20,7 +20,6 @@ import com.mygdx.pmd.utils.observers.Observable;
 import com.mygdx.pmd.utils.observers.Observer;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -41,7 +40,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     public Floor floor;
 
     public Tile currentTile;
-    public Tile[][] tileBoardTest;
+    public Tile[][] tileBoard;
 
     public Sprite currentSprite;
     public HashMap<String, PAnimation> animationMap;
@@ -52,7 +51,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
 
     public Entity(Controller controller, int x, int y) {
         this.controller = controller;
-        this.tileBoardTest = controller.tileBoardTest;
+        this.tileBoard = controller.currentFloor.tileBoard;
 
         this.floor = controller.currentFloor;
         this.x = x;

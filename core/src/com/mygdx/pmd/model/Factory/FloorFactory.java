@@ -28,14 +28,22 @@ public class FloorFactory {
     private Array<com.mygdx.pmd.model.Floor.Connector> connectors;
 
     public boolean stopGenerating = false;
+    Floor floor;
+
+    public FloorFactory(Controller controller){
+        floor = new Floor(controller);
+        connectors = new Array<Connector>();
+        rooms = new Array<Room>();
+    }
 
     public Floor createFloor(Controller controller){
-        Floor floor = new Floor(controller);
+        //function needed to clear floor
+
         placeHolder = new Tile[DungeonScreen.windowRows][DungeonScreen.windowCols];
 
         //reset variables - should probably change this
-        connectors = new Array<com.mygdx.pmd.model.Floor.Connector>();
-        rooms = new Array<com.mygdx.pmd.model.Floor.Room>();
+        connectors.clear();
+        rooms.clear();
         stopGenerating = false;
 
         this.createBlankFloor(floor);
@@ -66,7 +74,7 @@ public class FloorFactory {
 
     private void createConnections(Floor floor){
         while(connectors.size > 0 && connectors.size < 20){
-            com.mygdx.pmd.model.Floor.Connector connector = connectors.pop();
+            Connector connector = connectors.pop();
 
             if (connector.connectFrom == ConnectFrom.PATH){
                 int rand = PRandomInt.random(0,1);
@@ -91,9 +99,9 @@ public class FloorFactory {
     private void placeTiles(Floor floor){
         // set sprite based on spriteValue and move placeHolder to tileBoard
         for(int i = 0; i< placeHolder.length; i++) {
-            for (int j = 0; j < floor.tileBoard[0].length; j++) {
+            for (int j = 0; j < placeHolder.length; j++) {
                 Tile tile = placeHolder[i][j];
-                floor.tileBoard[i][j] = placeHolder[i][j];
+                floor.tileBoard[i][j] = tile;
             }
         }
     }

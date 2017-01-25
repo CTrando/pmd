@@ -3,13 +3,11 @@ package com.mygdx.pmd.model.Behavior.Projectile;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Tile.Tile;
 
-import static com.mygdx.pmd.controller.Controller.tileBoard;
 
 /**
  * Created by Cameron on 11/17/2016.
  */
 public class ProjectileRangedMovementBehavior extends ProjectileBehavior {
-
 
     public ProjectileRangedMovementBehavior(Projectile projectile) {
         super(projectile);

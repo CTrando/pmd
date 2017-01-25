@@ -11,7 +11,6 @@ import com.mygdx.pmd.model.Factory.PokemonFactory;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.PRandomInt;
 
-import static com.mygdx.pmd.controller.Controller.tileBoard;
 
 /**
  * Created by Cameron on 12/22/2016.

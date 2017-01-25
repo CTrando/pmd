@@ -46,9 +46,6 @@ public class Controller {
 
     FloorFactory floorFactory;
     public Floor currentFloor;
-    public static Tile[][] tileBoard;
-
-    public Tile[][] tileBoardTest;
 
     public int floorCount = 1;
     public int turns = 20;
@@ -69,10 +66,8 @@ public class Controller {
         renderList = new ArrayList<Renderable>();
 
         //init tileboard
-        floorFactory = new FloorFactory();
+        floorFactory = new FloorFactory(this);
         currentFloor = floorFactory.createFloor(this);
-        tileBoard = currentFloor.tileBoard;
-        tileBoardTest = currentFloor.tileBoard;
 
         //decorate floor
         FloorDecorator.placeItems(currentFloor);
@@ -91,13 +86,11 @@ public class Controller {
     public void nextFloor() {
         floorCount++;
 
+        //does not actually create a new floor object, but basically a new floor
         currentFloor = floorFactory.createFloor(this);
-        tileBoardTest = currentFloor.tileBoard;
-
         FloorDecorator.placeItems(currentFloor);
         FloorDecorator.skinTiles(currentFloor);
         FloorDecorator.placeEventTiles(currentFloor, floorFactory);
-        tileBoard = currentFloor.tileBoard;
 
         this.randomizeAllPokemonLocation();
     }

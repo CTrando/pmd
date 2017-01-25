@@ -8,7 +8,6 @@ import com.mygdx.pmd.model.Behavior.Pokemon.PokemonAnimationBehavior;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.utils.observers.MovementObserver;
 
-import static com.mygdx.pmd.controller.Controller.tileBoard;
 
 public class PokemonPlayer extends Pokemon {
 

@@ -17,9 +17,11 @@ public abstract class PathFind {
     Array<Tile> solutionNodeList;
 
     Tile currentTile;
+    Tile[][] tileBoard;
 
     public PathFind(DynamicEntity dEntity){
         this.dEntity = dEntity;
+        this.tileBoard = dEntity.tileBoard;
         this.currentTile = dEntity.currentTile;
         this.solutionNodeList = new Array<Tile>();
     }
