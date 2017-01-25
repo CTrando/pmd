@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.FloorComponent;
+package com.mygdx.pmd.model.Floor;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.enumerations.ConnectFrom;
@@ -19,14 +19,18 @@ public class Path {
     public Array<Tile> pathConstraints;
 
     public FloorFactory floorFactory;
+    public Floor floor;
+
     Tile[][] placeHolder;
     private int originRow;
     private int originCol;
 
 
-    public Path(FloorFactory floorFactory, Connector connector) {
+    public Path(FloorFactory floorFactory, Floor floor, Connector connector) {
         this.connector = connector;
         this.floorFactory = floorFactory;
+        this.floor = floor;
+
         this.origin = connector.tile;
         this.placeHolder = floorFactory.getPlaceHolder();
         this.pathConstraints = new Array<Tile>();
@@ -43,7 +47,7 @@ public class Path {
                 if (originRow + pathSize >= placeHolder.length) pathSize = placeHolder.length - originRow;
 
                 for (int i = originRow; i < originRow + pathSize; i++) {
-                    placeHolder[i][originCol] = new RoomTile(i, originCol, floorFactory);
+                    placeHolder[i][originCol] = new RoomTile(i, originCol, floor);
                     pathConstraints.add(placeHolder[i][originCol]);
                 }
                 this.terminal = placeHolder[originRow + pathSize-1][originCol];
@@ -52,7 +56,7 @@ public class Path {
                 if (originRow - pathSize <= 0) pathSize = originRow;
 
                 for (int i = originRow; i >= originRow - pathSize; i--) {
-                    placeHolder[i][originCol] = new RoomTile(i, originCol, floorFactory);
+                    placeHolder[i][originCol] = new RoomTile(i, originCol, floor);
                     pathConstraints.add(placeHolder[i][originCol]);
                 }
                 this.terminal = placeHolder[originRow - pathSize+1][originCol];
@@ -61,7 +65,7 @@ public class Path {
                 if (originCol - pathSize <= 0) pathSize = originCol;
 
                 for (int i = originCol; i >= originCol - pathSize; i--) {
-                    placeHolder[originRow][i] = new RoomTile(originRow, i, floorFactory);
+                    placeHolder[originRow][i] = new RoomTile(originRow, i, floor);
                     pathConstraints.add(placeHolder[originRow][i]);
                 }
                 this.terminal = placeHolder[originRow][originCol - pathSize+1];
@@ -70,7 +74,7 @@ public class Path {
                 if (originCol + pathSize >= placeHolder[0].length) pathSize = placeHolder.length - originCol;
 
                 for (int i = originCol; i < originCol + pathSize; i++) {
-                    placeHolder[originRow][i] = new RoomTile(originRow, i, floorFactory);
+                    placeHolder[originRow][i] = new RoomTile(originRow, i, floor);
                     pathConstraints.add(placeHolder[originRow][i]);
                 }
                 this.terminal = placeHolder[originRow][originCol + pathSize-1];

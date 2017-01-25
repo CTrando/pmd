@@ -4,6 +4,7 @@ import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.model.Factory.ItemFactory;
+import com.mygdx.pmd.model.Floor.Floor;
 import com.mygdx.pmd.model.Tile.RoomTile;
 import com.mygdx.pmd.model.Tile.StairTile;
 import com.mygdx.pmd.model.Tile.Tile;
@@ -13,25 +14,25 @@ import com.mygdx.pmd.model.Tile.Tile;
  */
 public class FloorDecorator {
     
-    public static Tile[][] placeItems(Tile[][] tileBoard){
-        ItemFactory.placeItems(tileBoard);
-        return tileBoard;
+    public static Floor placeItems(Floor floor){
+        ItemFactory.placeItems(floor.tileBoard);
+        return floor;
     }
 
-    public static Tile[][] skinTiles(Tile[][] tileBoard){
+    public static Floor skinTiles(Floor floor){
         //check neighbors and set spriteValue
-        for(int i = 0; i< tileBoard.length; i++){
-            for(int j = 0; j< tileBoard[0].length; j++){
-                Tile tile = tileBoard[i][j];
+        for(int i = 0; i< floor.tileBoard.length; i++){
+            for(int j = 0; j< floor.tileBoard[0].length; j++){
+                Tile tile = floor.tileBoard[i][j];
 
-                if(FloorDecorator.isWithinBounds(i+1,j, tileBoard) && tileBoard[i+1][j] instanceof RoomTile) tileBoard[i][j].spriteValue+=1;
-                if(FloorDecorator.isWithinBounds(i+1, j+1, tileBoard) && tileBoard[i+1][j+1] instanceof RoomTile) tileBoard[i][j].spriteValue+=2;
-                if(FloorDecorator.isWithinBounds(i,j+1, tileBoard) && tileBoard[i][j+1] instanceof RoomTile) tileBoard[i][j].spriteValue+=4;
-                if(FloorDecorator.isWithinBounds(i-1, j+1, tileBoard) && tileBoard[i-1][j+1] instanceof RoomTile) tileBoard[i][j].spriteValue+=8;
-                if(FloorDecorator.isWithinBounds(i-1,j, tileBoard) && tileBoard[i-1][j] instanceof RoomTile) tileBoard[i][j].spriteValue+=16;
-                if(FloorDecorator.isWithinBounds(i-1, j-1, tileBoard) && tileBoard[i-1][j-1] instanceof RoomTile) tileBoard[i][j].spriteValue+=32;
-                if(FloorDecorator.isWithinBounds(i,j-1, tileBoard) && tileBoard[i][j-1] instanceof RoomTile) tileBoard[i][j].spriteValue+=64;
-                if(FloorDecorator.isWithinBounds(i+1, j-1, tileBoard) && tileBoard[i+1][j-1] instanceof RoomTile) tileBoard[i][j].spriteValue+=128;
+                if(FloorDecorator.isWithinBounds(i+1,j, floor.tileBoard) && floor.tileBoard[i+1][j] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=1;
+                if(FloorDecorator.isWithinBounds(i+1, j+1, floor.tileBoard) && floor.tileBoard[i+1][j+1] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=2;
+                if(FloorDecorator.isWithinBounds(i,j+1, floor.tileBoard) && floor.tileBoard[i][j+1] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=4;
+                if(FloorDecorator.isWithinBounds(i-1, j+1, floor.tileBoard) && floor.tileBoard[i-1][j+1] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=8;
+                if(FloorDecorator.isWithinBounds(i-1,j, floor.tileBoard) && floor.tileBoard[i-1][j] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=16;
+                if(FloorDecorator.isWithinBounds(i-1, j-1, floor.tileBoard) && floor.tileBoard[i-1][j-1] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=32;
+                if(FloorDecorator.isWithinBounds(i,j-1, floor.tileBoard) && floor.tileBoard[i][j-1] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=64;
+                if(FloorDecorator.isWithinBounds(i+1, j-1, floor.tileBoard) && floor.tileBoard[i+1][j-1] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=128;
 
                 if (tile.spriteValue == 0)
                     tile.sprite = PMD.sprites.get("blacktilesprite");
@@ -45,7 +46,7 @@ public class FloorDecorator {
                     tile.sprite = PMD.sprites.get("bottomlefttilesprite");
             }
         }
-        return tileBoard;
+        return floor;
     }
 
 
@@ -55,13 +56,13 @@ public class FloorDecorator {
         return true;
     }
 
-    public static Tile[][] placeEventTiles(Tile[][] tileBoard, FloorFactory floorFactory){
-        Tile tile = Controller.chooseUnoccupiedTile(tileBoard);
+    public static Floor placeEventTiles(Floor floor, FloorFactory floorFactory){
+        Tile tile = Controller.chooseUnoccupiedTile(floor.tileBoard);
         while(tile.spriteValue <= 250 || tile.hasDynamicEntity()) {
-            tile = Controller.chooseUnoccupiedTile(tileBoard);
+            tile = Controller.chooseUnoccupiedTile(floor.tileBoard);
         }
-        tileBoard[tile.row][tile.col] = new StairTile(tile.row, tile.col, floorFactory);
-        return tileBoard;
+        floor.tileBoard[tile.row][tile.col] = new StairTile(tile.row, tile.col, floor);
+        return floor;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.FloorComponent;
+package com.mygdx.pmd.model.Floor;
 
 import com.mygdx.pmd.enumerations.ConnectFrom;
 import com.mygdx.pmd.enumerations.Direction;

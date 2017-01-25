@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.FloorComponent;
+package com.mygdx.pmd.model.Floor;
 
 
 import com.badlogic.gdx.utils.Array;
@@ -24,13 +24,16 @@ public class Room {
     public int height;
 
     public FloorFactory floorFactory;
+    public Floor floor;
+
     public Tile[][] placeHolder;
     public Array<Tile> borderTiles;
 
     private Direction orientation;
 
-    public Room(FloorFactory floorFactory){
+    public Room(FloorFactory floorFactory, Floor floor){
         this.floorFactory = floorFactory;
+        this.floor = floor;
         this.placeHolder = floorFactory.getPlaceHolder();
 
         startingRow = PRandomInt.random(0, placeHolder.length);
@@ -46,8 +49,10 @@ public class Room {
         this.borderTiles = new Array<Tile>();
     }
 
-    public Room(FloorFactory floorFactory, Connector connector){
+    public Room(FloorFactory floorFactory, Floor floor, Connector connector){
         this.floorFactory = floorFactory;
+        this.floor = floor;
+
         this.placeHolder = floorFactory.getPlaceHolder();
         this.orientation = connector.direction;
 
@@ -74,7 +79,7 @@ public class Room {
     public void createRoom(){
         for(int i = startingRow; i< startingRow+height; i++){
             for(int j = startingCol; j< startingCol + width; j++){
-                placeHolder[i][j] = new RoomTile(i,j,floorFactory);
+                placeHolder[i][j] = new RoomTile(i,j, floor);
 
                 if( i == startingRow ||
                     i == startingRow+height-1 ||
@@ -94,7 +99,7 @@ public class Room {
             if(borderTiles.size == 0) break;
             int randIndex = PRandomInt.random(0,borderTiles.size-1);
             Tile randTile = borderTiles.get(randIndex);
-            placeHolder[randTile.row][randTile.col] = new RoomTile(randTile.row, randTile.col, floorFactory);
+            placeHolder[randTile.row][randTile.col] = new RoomTile(randTile.row, randTile.col, floor);
             borderTiles.removeValue(randTile,false);
             if(randTile == null) System.out.println("ROOM TILE TERRIBLE");
 

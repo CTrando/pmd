@@ -13,8 +13,8 @@ public class MoveFastBehavior extends MoveBehavior {
 
     @Override
     public void execute(){
-        if(!dEntity.equals(dEntity.nextTile)){
-            dEntity.moveToTile(dEntity.nextTile, 5);
+        if(!dEntity.equals(dEntity.getNextTile())){
+            dEntity.moveToTile(dEntity.getNextTile(), 5);
         } else {
             dEntity.setActionState(Action.IDLE);
         }

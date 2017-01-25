@@ -1,5 +1,6 @@
 package com.mygdx.pmd.scenes;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -138,7 +139,7 @@ public class Hud {
 
         onScreenController.right().padRight(10).bottom();
 
-        //if (Gdx.app.getType() == Application.ApplicationType.Android)
+        if (Gdx.app.getType() == Application.ApplicationType.Android)
             stage.addActor(onScreenController);
         stage.addActor(temp);
     }

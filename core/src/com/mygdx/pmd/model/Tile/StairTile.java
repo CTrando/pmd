@@ -5,6 +5,7 @@ import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.Factory.FloorFactory;
+import com.mygdx.pmd.model.Floor.Floor;
 
 /**
  * Created by Cameron on 8/15/2016.
@@ -12,8 +13,8 @@ import com.mygdx.pmd.model.Factory.FloorFactory;
 
 
 public class StairTile extends Tile{
-    public StairTile(int r, int c, FloorFactory floorFactory) {
-        super(r, c, floorFactory, "STAIR");
+    public StairTile(int r, int c, Floor floor) {
+        super(r, c, floor, "STAIR");
         this.isWalkable = true;
         this.sprite = PMD.sprites.get("stairtilesprite");
     }

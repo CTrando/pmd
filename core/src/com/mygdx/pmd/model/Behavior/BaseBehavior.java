@@ -16,12 +16,10 @@ public abstract class BaseBehavior {
     public static final int ANIMATION_BEHAVIOR = 5;
 
     public Controller controller;
-    public Tile[][] tileBoard;
     public Entity entity;
 
     public BaseBehavior(Entity entity){
         this.controller = entity.controller;
-        this.tileBoard = controller.tileBoard;
         this.entity = entity;
     }
 

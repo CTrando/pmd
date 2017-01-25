@@ -11,7 +11,6 @@ import com.mygdx.pmd.model.Tile.Tile;
  */
 public abstract class PathFind {
     public DynamicEntity dEntity;
-    public Tile[][] tileBoard;
 
     Array<Tile> openNodeList;
     Array<Tile> closedNodeList;
@@ -21,7 +20,6 @@ public abstract class PathFind {
 
     public PathFind(DynamicEntity dEntity){
         this.dEntity = dEntity;
-        this.tileBoard = this.dEntity.tileBoard;
         this.currentTile = dEntity.currentTile;
         this.solutionNodeList = new Array<Tile>();
     }

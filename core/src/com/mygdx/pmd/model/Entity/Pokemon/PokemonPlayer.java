@@ -8,6 +8,8 @@ import com.mygdx.pmd.model.Behavior.Pokemon.PokemonAnimationBehavior;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.utils.observers.MovementObserver;
 
+import static com.mygdx.pmd.controller.Controller.tileBoard;
+
 public class PokemonPlayer extends Pokemon {
 
     public PokemonPlayer(Controller controller, int x, int y, PokemonName pokemonName) {
@@ -44,23 +46,6 @@ public class PokemonPlayer extends Pokemon {
     }
 
     public boolean canMove() {
-        try {
-            if (controller.isKeyPressed(Key.down)) {
-                possibleNextTile = (tileBoard[currentTile.row - 1][currentTile.col]);
-            } else if (controller.isKeyPressed(Key.left)) {
-                possibleNextTile = (tileBoard[currentTile.row][currentTile.col - 1]);
-            } else if (controller.isKeyPressed(Key.right)) {
-                possibleNextTile = (tileBoard[currentTile.row][currentTile.col + 1]);
-            } else if (controller.isKeyPressed(Key.up)) {
-                possibleNextTile = (tileBoard[currentTile.row + 1][currentTile.col]);
-            } else {
-                possibleNextTile = (null);
-                return false;
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return false;
-        }
-
         if (isLegalToMoveTo(possibleNextTile)) {
             if (possibleNextTile.dynamicEntities.size > 0) {
                 for (DynamicEntity dEntity : possibleNextTile.dynamicEntities) {
@@ -76,9 +61,48 @@ public class PokemonPlayer extends Pokemon {
         return true;
     }
 
-    public void handleExtraInput() {
-        // set the direction based on key hit - note that one can only change directions and not move when he is not moving
-        if (this.equals(currentTile)) {
+
+    /*
+        These extra inputs do not take turns and can occur as often as the user wishes
+     */
+    public void handleInput() {
+        //TODO work out if this second part of the if statement may cause a graphical bug
+        /*
+            -updates position first - makes action state idle
+            -updates input next - so would be idle and would be able to take in input
+            -updates animation last - meaning change from moving to idle would not be recorded
+         */
+        if (this.equals(currentTile) && getActionState() == Action.IDLE) {
+            //if the user hits K, he will not be able to move, but he will be able to set his direction
+            if (controller.isKeyPressed(Key.k)) {
+                if (controller.isKeyPressed(Key.down)) {
+                    direction = Direction.down;
+                } else if (controller.isKeyPressed(Key.left)) {
+                    direction = Direction.left;
+                } else if (controller.isKeyPressed(Key.right)) {
+                    direction = Direction.right;
+                } else if (controller.isKeyPressed(Key.up)) {
+                    direction = Direction.up;
+                }
+            } else
+                //code for setting the user's next tile
+                try {
+                    if (controller.isKeyPressed(Key.down)) {
+                        possibleNextTile = (tileBoard[currentTile.row - 1][currentTile.col]);
+                    } else if (controller.isKeyPressed(Key.left)) {
+                        possibleNextTile = (tileBoard[currentTile.row][currentTile.col - 1]);
+                    } else if (controller.isKeyPressed(Key.right)) {
+                        possibleNextTile = (tileBoard[currentTile.row][currentTile.col + 1]);
+                    } else if (controller.isKeyPressed(Key.up)) {
+                        possibleNextTile = (tileBoard[currentTile.row + 1][currentTile.col]);
+                    } else {
+                        possibleNextTile = (null);
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                }
+
+            // set the direction based on key hit - note that one can only change directions and not move when he is not moving
+
             if (controller.isKeyPressed(Key.down)) {
                 direction = Direction.down;
             } else if (controller.isKeyPressed(Key.left)) {
@@ -89,23 +113,18 @@ public class PokemonPlayer extends Pokemon {
                 direction = Direction.up;
             }
 
-            if (getActionState() == Action.IDLE) {
-
-                if (controller.isKeyPressed(Key.space)) {
-                    controller.nextFloor();
-                } else if (controller.isKeyPressed(Key.a)) {
-                    turnState = Turn.COMPLETE;
-                    possibleNextTile = null;
-                } else if (controller.isKeyPressed(Key.p)) {
-                    controller.turnsPaused = !controller.turnsPaused;
-                } else if (controller.isKeyPressed(Key.r)) {
-                    controller.controllerScreen.game.setScreen(PMD.endScreen);
-                }
-
+            //actions that do not affect the player's turn or action state
+            if (controller.isKeyPressed(Key.space)) {
+                controller.nextFloor();
+            } else if (controller.isKeyPressed(Key.a)) {
+                turnState = Turn.COMPLETE;
+                possibleNextTile = null;
+            } else if (controller.isKeyPressed(Key.p)) {
+                controller.turnsPaused = !controller.turnsPaused;
+            } else if (controller.isKeyPressed(Key.r)) {
+                controller.controllerScreen.game.setScreen(PMD.endScreen);
             }
         }
-
-
     }
 
     public boolean canAttack() {

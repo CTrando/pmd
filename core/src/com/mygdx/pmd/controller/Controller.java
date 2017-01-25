@@ -14,6 +14,7 @@ import com.mygdx.pmd.model.Factory.PokemonFactory;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
+import com.mygdx.pmd.model.Floor.Floor;
 import com.mygdx.pmd.model.Spawner.MobSpawner;
 import com.mygdx.pmd.model.Tile.RoomTile;
 import com.mygdx.pmd.model.Tile.Tile;
@@ -29,7 +30,6 @@ import static com.mygdx.pmd.PMD.keys;
 
 public class Controller {
     public DungeonScreen controllerScreen;
-    public Tile[][] tileBoard;
     public static final int NUM_MAX_ENTITY = 10;
 
     public boolean turnsPaused;
@@ -45,6 +45,10 @@ public class Controller {
     public MobSpawner mobSpawner;
 
     FloorFactory floorFactory;
+    public Floor currentFloor;
+    public static Tile[][] tileBoard;
+
+    public Tile[][] tileBoardTest;
 
     public int floorCount = 1;
     public int turns = 20;
@@ -65,13 +69,15 @@ public class Controller {
         renderList = new ArrayList<Renderable>();
 
         //init tileboard
-        floorFactory = new FloorFactory(this);
-        tileBoard = floorFactory.createFloor();
+        floorFactory = new FloorFactory();
+        currentFloor = floorFactory.createFloor(this);
+        tileBoard = currentFloor.tileBoard;
+        tileBoardTest = currentFloor.tileBoard;
 
-        //decorate tileboard
-        tileBoard = FloorDecorator.placeItems(tileBoard);
-        tileBoard = FloorDecorator.skinTiles(tileBoard);
-        tileBoard = FloorDecorator.placeEventTiles(tileBoard, floorFactory);
+        //decorate floor
+        FloorDecorator.placeItems(currentFloor);
+        FloorDecorator.skinTiles(currentFloor);
+        FloorDecorator.placeEventTiles(currentFloor, floorFactory);
 
         //load pMob from xml
         this.loadPokemon();
@@ -85,10 +91,13 @@ public class Controller {
     public void nextFloor() {
         floorCount++;
 
-        tileBoard = floorFactory.createFloor();
-        tileBoard = FloorDecorator.placeItems(tileBoard);
-        tileBoard = FloorDecorator.skinTiles(tileBoard);
-        tileBoard = FloorDecorator.placeEventTiles(tileBoard, floorFactory);
+        currentFloor = floorFactory.createFloor(this);
+        tileBoardTest = currentFloor.tileBoard;
+
+        FloorDecorator.placeItems(currentFloor);
+        FloorDecorator.skinTiles(currentFloor);
+        FloorDecorator.placeEventTiles(currentFloor, floorFactory);
+        tileBoard = currentFloor.tileBoard;
 
         this.randomizeAllPokemonLocation();
     }
@@ -160,6 +169,7 @@ public class Controller {
         for (Entity entity : toBeAdded) {
             directlyAddEntity(entity);
         }
+        toBeAdded.clear();
     }
 
     public void directlyAddEntity(Entity entity) {
@@ -195,7 +205,7 @@ public class Controller {
                 dEntities.removeValue((DynamicEntity) entity, true);
             }
         }
-        toBeRemoved = new Array<Entity>();
+        toBeRemoved.clear();
     }
 
     //TODO fix this method so it only removes after the end of an interation

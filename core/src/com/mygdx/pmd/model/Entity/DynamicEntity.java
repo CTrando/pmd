@@ -8,6 +8,8 @@ import com.mygdx.pmd.model.Tile.Tile;
 
 import java.util.ArrayList;
 
+import static com.mygdx.pmd.controller.Controller.tileBoard;
+
 /**
  * Created by Cameron on 10/18/2016.
  */
@@ -22,7 +24,7 @@ public abstract class DynamicEntity extends Entity{
 
     public int hp = 100;
 
-    public Tile nextTile;
+    private Tile nextTile;
     public Tile facingTile;
     public Tile possibleNextTile;
 
@@ -86,8 +88,8 @@ public abstract class DynamicEntity extends Entity{
         this.goToTileImmediately(this.currentTile);
     }
 
-    public boolean isWithinArea(ArrayList<Tile> area) {
-        for (Tile t : area) {
+    public boolean currentTileIsWithinList(ArrayList<Tile> list) {
+        for (Tile t : list) {
             if (t == this.currentTile) {
                 return true;
             }
@@ -127,7 +129,7 @@ public abstract class DynamicEntity extends Entity{
     }
 
     public void randomizeLocation() {
-        Tile random = Controller.chooseUnoccupiedTile(tileBoard);
+        Tile random = Controller.chooseUnoccupiedTile(tileBoardTest);
 
         if (random.isWalkable) {
             this.setNextTile(random);
@@ -213,6 +215,10 @@ public abstract class DynamicEntity extends Entity{
         this.previousState = this.actionState;
         this.actionState = actionState;
         //this.notifyObservers();
+    }
+
+    public boolean isAggressive(){
+        return aggression == Aggression.aggressive;
     }
 
     public Action getActionState(){

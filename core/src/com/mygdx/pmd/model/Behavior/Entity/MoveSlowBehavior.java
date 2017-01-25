@@ -15,8 +15,8 @@ public class MoveSlowBehavior extends MoveBehavior {
 
     @Override
     public void execute(){
-        if(!dEntity.equals(dEntity.nextTile)){
-            dEntity.moveToTile(dEntity.nextTile, 1);
+        if(!dEntity.equals(dEntity.getNextTile())){
+            dEntity.moveToTile(dEntity.getNextTile(), 1);
         } else {
             dEntity.setActionState(Action.IDLE);
         }

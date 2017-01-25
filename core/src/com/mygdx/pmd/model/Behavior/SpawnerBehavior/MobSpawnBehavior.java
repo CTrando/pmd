@@ -11,15 +11,15 @@ import com.mygdx.pmd.model.Factory.PokemonFactory;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.PRandomInt;
 
+import static com.mygdx.pmd.controller.Controller.tileBoard;
+
 /**
  * Created by Cameron on 12/22/2016.
  */
 public class MobSpawnBehavior extends SpawnBehavior {
-    PokemonFactory pokemonFactory;
 
     public MobSpawnBehavior(DynamicEntity dEntity) {
         super(dEntity);
-        pokemonFactory = new PokemonFactory(controller);
     }
 
     @Override
@@ -32,9 +32,11 @@ public class MobSpawnBehavior extends SpawnBehavior {
             int rand = PRandomInt.random(0, 10);
             switch (rand) {
                 case 0:
-                    Pokemon pokemon = pokemonFactory.createPokemon(controller, PokemonName.treeko, PokemonMob.class);
+                    Pokemon pokemon = PokemonFactory.createPokemon(controller, PokemonName.treeko, PokemonMob.class);
                     pokemon.setCurrentTile(tile);
-                    controller.directlyAddEntity(pokemon);
+                    pokemon.setNextTile(tile);
+
+                    controller.toBeAdded(pokemon);
             }
         }
         dEntity.turnState = Turn.COMPLETE;

@@ -3,6 +3,8 @@ package com.mygdx.pmd.model.Behavior.Projectile;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Tile.Tile;
 
+import static com.mygdx.pmd.controller.Controller.tileBoard;
+
 /**
  * Created by Cameron on 11/17/2016.
  */
@@ -31,7 +33,7 @@ public class ProjectileRangedMovementBehavior extends ProjectileBehavior {
                 projectile.x -= projectile.speed;
                 break;
         }
-        projectile.currentTile = Tile.getTileAt(projectile.x, projectile.y, projectile.tileBoard);
+        projectile.currentTile = Tile.getTileAt(projectile.x, projectile.y, tileBoard);
 
         //this code is a range limit on how far away the projectile can go
         if(projectile.parent.currentTile.calculateDistance(projectile.currentTile) > 5*25){

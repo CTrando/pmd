@@ -12,6 +12,7 @@ import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Item.Item;
 import com.mygdx.pmd.model.Entity.StaticEntity;
 import com.mygdx.pmd.model.Factory.FloorFactory;
+import com.mygdx.pmd.model.Floor.Floor;
 import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.utils.MathLogic;
@@ -48,9 +49,9 @@ public abstract class Tile implements Renderable {
     public FloorFactory floorFactory;
     public Array<DynamicEntity> dynamicEntities;
 
-    public Tile(int r, int c, FloorFactory floorFactory, String classifier) {
-        this.controller = floorFactory.controller;
-        this.tileBoard = floorFactory.tileBoard;
+    public Tile(int r, int c, Floor floor, String classifier) {
+        this.controller = floor.controller;
+        this.tileBoard = floor.tileBoard;
         this.floorFactory = floorFactory;
 
         this.x = c * Constants.TILE_SIZE;

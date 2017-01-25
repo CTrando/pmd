@@ -12,6 +12,7 @@ import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.interfaces.Updatable;
 import com.mygdx.pmd.model.Behavior.BaseBehavior;
 import com.mygdx.pmd.model.Behavior.NoBehavior;
+import com.mygdx.pmd.model.Floor.Floor;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.PAnimation;
 import com.mygdx.pmd.utils.observers.NoObserver;
@@ -37,9 +38,10 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     public int row;
     public int col;
 
-    public Tile[][] tileBoard;
+    public Floor floor;
 
     public Tile currentTile;
+    public Tile[][] tileBoardTest;
 
     public Sprite currentSprite;
     public HashMap<String, PAnimation> animationMap;
@@ -50,7 +52,9 @@ public abstract class Entity implements Renderable, Updatable, Observable {
 
     public Entity(Controller controller, int x, int y) {
         this.controller = controller;
-        this.tileBoard = controller.tileBoard;
+        this.tileBoardTest = controller.tileBoardTest;
+
+        this.floor = controller.currentFloor;
         this.x = x;
         this.y = y;
 

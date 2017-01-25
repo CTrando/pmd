@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import static com.mygdx.pmd.PMD.keys;
+import static com.mygdx.pmd.controller.Controller.tileBoard;
 
 public class DungeonScreen extends PScreen implements InputProcessor {
     public final com.mygdx.pmd.PMD game;
@@ -34,7 +35,6 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     Hud hud;
 
     public Controller controller;
-    public Tile[][] tileBoard;
 
     public static final int windowWidth = 1000;
     public static final int windowLength = 1000; //TODO the stutter might be because of having to reload everything on player movement
@@ -71,8 +71,6 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         gamePort = new ScreenViewport(gameCamera);
         hud = new Hud(this, this.batch);
 
-
-        tileBoard = controller.tileBoard;
         stage = new Stage();
 
         inputMultiplexer = new InputMultiplexer();
@@ -97,9 +95,9 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         batch.setProjectionMatrix(gameCamera.combined);
         batch.begin();
 
-        for (int i = 0; i < controller.tileBoard.length; i++) {
-            for (int j = 0; j < controller.tileBoard[0].length; j++) {
-                Tile tile = controller.tileBoard[i][j];
+        for (int i = 0; i < tileBoard.length; i++) {
+            for (int j = 0; j < tileBoard[0].length; j++) {
+                Tile tile = tileBoard[i][j];
                 tile.render(batch);
                 //drawing strings like this is very costly performance wise and causes stuttering
                 //bfont.draw(batch, tile.spriteValue+"", tile.x + 7, tile.y+ 17);

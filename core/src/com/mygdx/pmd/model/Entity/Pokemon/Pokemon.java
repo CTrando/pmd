@@ -15,6 +15,8 @@ import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.*;
 
+import static com.mygdx.pmd.controller.Controller.tileBoard;
+
 
 public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
     public PAnimation currentAnimation;
@@ -45,11 +47,9 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
         if (tile == null) return false;
 
         if(tile.hasDynamicEntity()) {
-            for(Entity entity: tile.getEntityList()) {
-                if(entity instanceof DynamicEntity) {
-                    DynamicEntity dEntity = (DynamicEntity) entity;
-                    if (dEntity.aggression == Aggression.aggressive)
-                        return false;
+            for(DynamicEntity dEntity: tile.dynamicEntities){
+                if(dEntity.isAggressive()){
+                    return false;
                 }
             }
         }

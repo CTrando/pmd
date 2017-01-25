@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.Tile;
 
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.model.Factory.FloorFactory;
+import com.mygdx.pmd.model.Floor.Floor;
 
 import static com.mygdx.pmd.screens.DungeonScreen.windowCols;
 import static com.mygdx.pmd.screens.DungeonScreen.windowRows;
@@ -12,8 +13,8 @@ import static com.mygdx.pmd.screens.DungeonScreen.windowRows;
  */
 public class GenericTile extends Tile {
 
-    public GenericTile(int row, int col, FloorFactory floorFactory) {
-        super(row, col, floorFactory, "GENERIC");
+    public GenericTile(int row, int col, Floor floor) {
+        super(row, col, floor, "GENERIC");
         this.isWalkable = false;
         this.sprite = PMD.sprites.get("generictilesprite");
     }

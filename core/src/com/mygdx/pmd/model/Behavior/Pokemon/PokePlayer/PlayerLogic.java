@@ -20,7 +20,7 @@ public class PlayerLogic extends PokemonBehavior {
     public void execute() {
         if (player.turnState != Turn.WAITING || !player.equals(player.currentTile)) return;
 
-        player.handleExtraInput();
+        player.handleInput();
 
         if (player.canAttack()) {
             player.attack(Move.INSTANT_KILLER);
@@ -32,6 +32,7 @@ public class PlayerLogic extends PokemonBehavior {
         if (player.canMove()) {
             player.turnState = Turn.COMPLETE;
             player.setActionState(Action.MOVING);
+
             if (controller.isKeyPressed(Key.s)) {
                 player.behaviors[2] = new MoveFastBehavior(player);
             } else player.behaviors[2] = player.moveBehavior;
