@@ -20,4 +20,8 @@ public enum Key {
         return value;
     }
 
+    public String toString(){
+        return this.name();
+    }
+
 }

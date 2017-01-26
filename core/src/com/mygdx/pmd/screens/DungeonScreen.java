@@ -6,11 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
@@ -20,10 +17,6 @@ import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.scenes.Hud;
 import com.mygdx.pmd.utils.Constants;
 
-
-import java.awt.*;
-import java.io.IOException;
-import java.util.HashMap;
 
 import static com.mygdx.pmd.PMD.keys;
 
@@ -45,7 +38,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     public static final int V_WIDTH = 1080;
     public static final int V_HEIGHT = 720;
 
-    public BitmapFont bfont = new BitmapFont();
+    public BitmapFont bFont;
 
     public int time =20;
 
@@ -65,6 +58,9 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
         this.game = game;
         batch = game.batch;
+        bFont = new BitmapFont();
+        bFont.getData().setScale(.8f);
+
         shapeRenderer = game.shapeRenderer;
         gameCamera = new OrthographicCamera(PMD.WIDTH, PMD.HEIGHT);
 
@@ -102,7 +98,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
                 Tile tile = controller.currentFloor.tileBoard[i][j];
                 tile.render(batch);
                 //drawing strings like this is very costly performance wise and causes stuttering
-                //bfont.draw(batch, tile.spriteValue+"", tile.x + 7, tile.y+ 17);
+                //bFont.draw(batch, tile.spriteValue+"", tile.x + 5, tile.y+25/2);
             }
         }
 
@@ -143,6 +139,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         //set the global amount of time
         time = 10;
         controller = new Controller(this);
+        hud.reset();
     }
 
     @Override
@@ -175,6 +172,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     public boolean keyDown(int keycode) {
         if (keys.containsKey(keycode))
             keys.get(keycode).set(true);
+        hud.addText(Input.Keys.toString(keycode));
         return false;
     }
 

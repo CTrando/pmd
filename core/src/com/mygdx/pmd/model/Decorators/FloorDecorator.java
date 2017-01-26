@@ -5,6 +5,7 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.model.Factory.ItemFactory;
 import com.mygdx.pmd.model.Floor.Floor;
+import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.RoomTile;
 import com.mygdx.pmd.model.Tile.StairTile;
 import com.mygdx.pmd.model.Tile.Tile;
@@ -22,28 +23,74 @@ public class FloorDecorator {
     public static Floor skinTiles(Floor floor){
         //check neighbors and set spriteValue
         for(int i = 0; i< floor.tileBoard.length; i++){
-            for(int j = 0; j< floor.tileBoard[0].length; j++){
+            for(int j = 0; j< floor.tileBoard[0].length; j++) {
                 Tile tile = floor.tileBoard[i][j];
 
-                if(FloorDecorator.isWithinBounds(i+1,j, floor.tileBoard) && floor.tileBoard[i+1][j] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=1;
-                if(FloorDecorator.isWithinBounds(i+1, j+1, floor.tileBoard) && floor.tileBoard[i+1][j+1] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=2;
-                if(FloorDecorator.isWithinBounds(i,j+1, floor.tileBoard) && floor.tileBoard[i][j+1] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=4;
-                if(FloorDecorator.isWithinBounds(i-1, j+1, floor.tileBoard) && floor.tileBoard[i-1][j+1] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=8;
-                if(FloorDecorator.isWithinBounds(i-1,j, floor.tileBoard) && floor.tileBoard[i-1][j] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=16;
-                if(FloorDecorator.isWithinBounds(i-1, j-1, floor.tileBoard) && floor.tileBoard[i-1][j-1] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=32;
-                if(FloorDecorator.isWithinBounds(i,j-1, floor.tileBoard) && floor.tileBoard[i][j-1] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=64;
-                if(FloorDecorator.isWithinBounds(i+1, j-1, floor.tileBoard) && floor.tileBoard[i+1][j-1] instanceof RoomTile) floor.tileBoard[i][j].spriteValue+=128;
+                if (FloorDecorator.isWithinBounds(i + 1, j, floor.tileBoard) && floor.tileBoard[i + 1][j] instanceof RoomTile)
+                    floor.tileBoard[i][j].spriteValue += 1;
+                if (FloorDecorator.isWithinBounds(i + 1, j + 1, floor.tileBoard) && floor.tileBoard[i + 1][j + 1] instanceof RoomTile)
+                    floor.tileBoard[i][j].spriteValue += 2;
+                if (FloorDecorator.isWithinBounds(i, j + 1, floor.tileBoard) && floor.tileBoard[i][j + 1] instanceof RoomTile)
+                    floor.tileBoard[i][j].spriteValue += 4;
+                if (FloorDecorator.isWithinBounds(i - 1, j + 1, floor.tileBoard) && floor.tileBoard[i - 1][j + 1] instanceof RoomTile)
+                    floor.tileBoard[i][j].spriteValue += 8;
+                if (FloorDecorator.isWithinBounds(i - 1, j, floor.tileBoard) && floor.tileBoard[i - 1][j] instanceof RoomTile)
+                    floor.tileBoard[i][j].spriteValue += 16;
+                if (FloorDecorator.isWithinBounds(i - 1, j - 1, floor.tileBoard) && floor.tileBoard[i - 1][j - 1] instanceof RoomTile)
+                    floor.tileBoard[i][j].spriteValue += 32;
+                if (FloorDecorator.isWithinBounds(i, j - 1, floor.tileBoard) && floor.tileBoard[i][j - 1] instanceof RoomTile)
+                    floor.tileBoard[i][j].spriteValue += 64;
+                if (FloorDecorator.isWithinBounds(i + 1, j - 1, floor.tileBoard) && floor.tileBoard[i + 1][j - 1] instanceof RoomTile)
+                    floor.tileBoard[i][j].spriteValue += 128;
 
-                if (tile.spriteValue == 0)
-                    tile.sprite = PMD.sprites.get("blacktilesprite");
-                else if (tile.spriteValue == 112)
-                    tile.sprite = PMD.sprites.get("toprighttilesprite");
-                else if (tile.spriteValue == 193)
-                    tile.sprite = PMD.sprites.get("bottomrightcornertilesprite");
-                else if (tile.spriteValue == 28)
-                    tile.sprite = PMD.sprites.get("toplefttilesprite");
-                else if (tile.spriteValue == 7)
-                    tile.sprite = PMD.sprites.get("bottomlefttilesprite");
+                if (tile instanceof GenericTile) {
+                    switch (tile.spriteValue) {
+                        case 0:
+                            tile.sprite = PMD.sprites.get("blacktilesprite");
+                            break;
+                        case 112:
+                            tile.sprite = PMD.sprites.get("toprighttilesprite");
+                            break;
+                        case 193:
+                            tile.sprite = PMD.sprites.get("bottomrightcornertilesprite");
+                            break;
+                        case 28:
+                            tile.sprite = PMD.sprites.get("toplefttilesprite");
+                            break;
+                        case 7:
+                            tile.sprite = PMD.sprites.get("bottomlefttilesprite");
+                            break;
+                        case 224:
+                            tile.sprite = PMD.sprites.get("rightbarriersprite");
+                            break;
+                        case 14:
+                            tile.sprite = PMD.sprites.get("leftbarriersprite");
+                            break;
+                        case 56:
+                            tile.sprite = PMD.sprites.get("upbarriersprite");
+                            break;
+                        case 131:
+                            tile.sprite = PMD.sprites.get("downbarriersprite");
+                            break;
+                        case 238:
+                            tile.sprite = PMD.sprites.get("leftrightbarriersprite");
+                            break;
+                        case 187:
+                            tile.sprite = PMD.sprites.get("updownbarriersprite");
+                            break;
+                        case 62:
+                            tile.sprite = PMD.sprites.get("topleftbarriersprite");
+                            break;
+                        case 143:
+                            tile.sprite = PMD.sprites.get("bottomleftbarriersprite");
+                            break;
+                        case 227:
+                            tile.sprite = PMD.sprites.get("bottomrightbarriersprite");
+                            break;
+                        case 248:
+                            tile.sprite = PMD.sprites.get("toprightbarriersprite");
+                    }
+                }
             }
         }
         return floor;

@@ -104,9 +104,14 @@ public class Controller {
 
         Entity entity = turnBasedEntities.get(turnBasedEntityCount);
         if (entity.turnState == Turn.COMPLETE) {
-            if (entity instanceof PokemonPlayer && !this.turnsPaused) {
-                turns--;
+            //update the turns
+            //currently have no better way of updating
+            if (!this.turnsPaused) {
+                if(entity instanceof PokemonPlayer){
+                    turns--;
+                }
             }
+
             if (++turnBasedEntityCount >= turnBasedEntities.size()) {
                 turnBasedEntityCount = 0;
             }

@@ -13,7 +13,7 @@ public class RoomTile extends Tile {
     public RoomTile(int r, int c, Floor floor) {
         super(r, c, floor, "ROOM");
         this.isWalkable = true;
-        this.sprite = PMD.sprites.get("roomtilesprite");
+        this.sprite = PMD.sprites.get("testroomsprite");
 
     }
 

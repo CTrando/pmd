@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -24,17 +25,24 @@ public class Hud {
     public Viewport viewport;
     private float accumTime = 0;
 
+    StringBuilder inputText;
+
     Label timeLabel;
     Label floorLabel;
     Label testLabel;
     Label turnLabel;
+    Label textLabel;
 
     BitmapFont customFont;
+    GlyphLayout gLayout;
     DungeonScreen screen;
 
     public Hud(DungeonScreen screen, SpriteBatch batch) {
+        //TODO organize this badly
         this.screen = screen;
         customFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
+        gLayout = new GlyphLayout(customFont, "");
+        inputText = new StringBuilder();
 
         OrthographicCamera hudCam = new OrthographicCamera();
 
@@ -51,10 +59,10 @@ public class Hud {
         floorLabel = new Label("Floor: " + screen.controller.floorCount, skin);
         timeLabel = new Label("Time left:" + screen.time, skin);
         turnLabel = new Label("Turns left: " + screen.controller.turns, skin);
-
+        textLabel = new Label(inputText.toString(), skin);
 
         Image upImg = new Image(PMD.sprites.get("uparrow"));
-        upImg.setScale(.5f);
+        //upImg.setScale(.5f);
         upImg.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -69,7 +77,7 @@ public class Hud {
         });
 
         Image downImg = new Image(PMD.sprites.get("downarrow"));
-        downImg.setScale(.5f);
+        //downImg.setScale(.5f);
         downImg.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -84,7 +92,7 @@ public class Hud {
         });
 
         Image leftImg = new Image(PMD.sprites.get("leftarrow"));
-        leftImg.setScale(.5f);
+        //leftImg.setScale(.5f);
         leftImg.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -99,7 +107,7 @@ public class Hud {
         });
 
         Image rightImg = new Image(PMD.sprites.get("rightarrow"));
-        rightImg.setScale(.5f);
+        //rightImg.setScale(.5f);
         rightImg.setWidth(rightImg.getWidth()/2);
         rightImg.addListener(new InputListener() {
             @Override
@@ -114,14 +122,32 @@ public class Hud {
             }
         });
 
+        Image attackImg = new Image(PMD.sprites.get("attackimage"));
+        //attackImg.setScale(.5f);
+        attackImg.setWidth(attackImg.getWidth()/2);
+        attackImg.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                PMD.keys.get(Input.Keys.B).set(true);
+                PMD.keys.get(Input.Keys.T).set(true);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                PMD.keys.get(Input.Keys.B).set(false);
+                PMD.keys.get(Input.Keys.T).set(false);
+            }
+        });
+
         onScreenController.debug();
+
         onScreenController.add();
         onScreenController.add(upImg).pad(15, 15, 15, 15);
 
         onScreenController.row();
         onScreenController.add(leftImg).pad(15, 15, 15, 15);
-        onScreenController.add();
-        onScreenController.add();
+        onScreenController.add(attackImg).pad(15, 15, 15, 15);
         onScreenController.add(rightImg).pad(15, 15, 15, 15);
         onScreenController.row();
         onScreenController.add();
@@ -137,10 +163,19 @@ public class Hud {
         temp.row();
         temp.add(turnLabel);
 
+        Table textTable = new Table();
+        textTable.setFillParent(true);
+        textTable.right().top();
+        textTable.debug();
+        textTable.add(textLabel);
+        textTable.row();
+
         onScreenController.right().padRight(10).bottom();
 
         if (Gdx.app.getType() == Application.ApplicationType.Android)
             stage.addActor(onScreenController);
+        
+        stage.addActor(textTable);
         stage.addActor(temp);
     }
 
@@ -153,6 +188,19 @@ public class Hud {
         }
 
         turnLabel.setText("Turns left: " + screen.controller.turns);
+
+        String currentText = inputText.toString();
+        gLayout.setText(customFont, inputText);
+        if(gLayout.width < Gdx.graphics.getWidth())
+            textLabel.setText(currentText);
+        else inputText.setLength(0);
     }
 
+    public void addText(String str){
+        inputText.append(str);
+    }
+
+    public void reset(){
+        inputText.setLength(0);
+    }
 }
