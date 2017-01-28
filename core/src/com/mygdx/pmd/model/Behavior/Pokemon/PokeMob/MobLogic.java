@@ -62,7 +62,6 @@ public class MobLogic extends PokemonBehavior {
     private boolean pathFind() {
         try {
             mob.path = mob.pathFind.pathFind(controller.pokemonPlayer.getNextTile());
-            //solutionNodeList = shortestPath.pathFind(controller.pokemonPlayer.nextTile);
         } catch (PathFindFailureException e) {
             System.out.println("Failed to pathfind");
         }

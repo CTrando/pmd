@@ -32,7 +32,7 @@ public class Controller {
     public DungeonScreen controllerScreen;
     public static final int NUM_MAX_ENTITY = 10;
 
-    public boolean turnsPaused;
+    public boolean turnsPaused = false;
     public ArrayList<Renderable> renderList;
     public ArrayList<Entity> entityList;
     public Array<DynamicEntity> dEntities;

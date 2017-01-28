@@ -121,7 +121,13 @@ public class PokemonPlayer extends Pokemon {
             } else if (controller.isKeyPressed(Key.p)) {
                 controller.turnsPaused = !controller.turnsPaused;
             } else if (controller.isKeyPressed(Key.r)) {
-                controller.controllerScreen.game.setScreen(PMD.endScreen);
+                //controller.controllerScreen.game.setScreen(PMD.endScreen);
+                for(DynamicEntity dEntity: controller.dEntities){
+                    if(dEntity instanceof PokemonMob){
+                        PokemonMob pMob = (PokemonMob) dEntity;
+                        pMob.pathFind = pMob.sPath;
+                    }
+                }
             }
         }
     }

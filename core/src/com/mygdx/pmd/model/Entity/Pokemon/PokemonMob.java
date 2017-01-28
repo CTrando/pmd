@@ -13,14 +13,19 @@ import com.mygdx.pmd.utils.observers.MovementObserver;
 
 public class PokemonMob extends Pokemon {
     public PathFind pathFind;
+
+    public Wander wander;
+    public ShortestPath sPath;
     public Array<Tile> path;
 
     public PokemonMob(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y, pokemonName);
         this.aggression = Aggression.aggressive;
 
-        pathFind = new Wander(this);
-        //pathFind = new ShortestPath(this);
+        wander = new Wander(this);
+        sPath = new ShortestPath(this);
+        //pathFind = new Wander(this);
+        pathFind = wander;
         path = new Array<Tile>();
 
         logic = new MobLogic(this);
