@@ -14,11 +14,4 @@ public class NoBehavior extends BaseBehavior {
     @Override
     public void execute() {
     }
-
-    @Override
-    public boolean canExecute() {
-        return false;
-    }
-
-
 }

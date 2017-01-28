@@ -38,6 +38,7 @@ public class FloorFactory {
 
     public Floor createFloor(Controller controller){
         //function needed to clear floor
+        floor.clear();
 
         placeHolder = new Tile[DungeonScreen.windowRows][DungeonScreen.windowCols];
 

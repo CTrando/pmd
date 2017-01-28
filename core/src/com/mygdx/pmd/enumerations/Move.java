@@ -13,7 +13,7 @@ public enum Move {
     NOMOVE(false,0,1,20),
     SCRATCH(true,20,1,30),
     GROWL(false,0,1,20),
-    POUND(false,10,1,20), INSTANT_KILLER(true,100000000,5,50);
+    POUND(false,10,1,20), INSTANT_KILLER(true,100000000,5,30);
 
     private final boolean isRanged;
     public final int damage;

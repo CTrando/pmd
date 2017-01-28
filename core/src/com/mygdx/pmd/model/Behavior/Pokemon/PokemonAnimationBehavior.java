@@ -13,8 +13,6 @@ public class PokemonAnimationBehavior extends PokemonBehavior {
 
     @Override
     public void execute() {
-        if(!this.canExecute()) return;
-
         switch(pMob.getActionState()) {
             case MOVING:
                 pMob.currentAnimation = pMob.animationMap.get(pMob.direction.toString());
@@ -32,11 +30,4 @@ public class PokemonAnimationBehavior extends PokemonBehavior {
                 pMob.animationMap.get(pMob.direction.toString()).clear();
         }
     }
-
-    @Override
-    public boolean canExecute() {
-        return true;
-    }
-
-
 }

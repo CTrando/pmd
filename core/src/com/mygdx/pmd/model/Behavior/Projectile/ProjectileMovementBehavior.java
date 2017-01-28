@@ -7,15 +7,15 @@ import com.mygdx.pmd.model.Tile.Tile;
 /**
  * Created by Cameron on 11/17/2016.
  */
-public class ProjectileRangedMovementBehavior extends ProjectileBehavior {
+public class ProjectileMovementBehavior extends ProjectileBehavior {
 
-    public ProjectileRangedMovementBehavior(Projectile projectile) {
+    public ProjectileMovementBehavior(Projectile projectile) {
         super(projectile);
     }
 
     @Override
     public void execute() {
-        if (!canExecute()) return;
+        assert projectile.direction != null: "The direction in projectile movement is null";
 
         switch (projectile.direction) {
             case up:
@@ -32,17 +32,5 @@ public class ProjectileRangedMovementBehavior extends ProjectileBehavior {
                 break;
         }
         projectile.currentTile = Tile.getTileAt(projectile.x, projectile.y, tileBoard);
-
-        //this code is a range limit on how far away the projectile can go
-        if(projectile.parent.currentTile.calculateDistance(projectile.currentTile) > 5*25){
-            projectile.dispose();
-        }
     }
-
-    @Override
-    public boolean canExecute() {
-        if (projectile.shouldBeDestroyed) return false;
-        return true;
-    }
-
 }

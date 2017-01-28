@@ -17,9 +17,4 @@ public abstract class SpawnBehavior extends BaseBehavior {
         this.dEntity = dEntity;
         this.tileBoard = dEntity.tileBoard;
     }
-
-    @Override
-    public boolean canExecute() {
-        return false;
-    }
 }

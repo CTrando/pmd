@@ -23,9 +23,4 @@ public class AttackBehavior extends PokemonBehavior {
             pMob.setActionState(Action.IDLE);
         }
     }
-
-    @Override
-    public boolean canExecute() {
-        return true;
-    }
 }

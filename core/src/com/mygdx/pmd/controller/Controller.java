@@ -217,7 +217,7 @@ public class Controller {
 
         Tile chosenTile = tileBoard[randRow][randCol];
 
-        if (chosenTile instanceof RoomTile && chosenTile.isDynamicEntityEmpty()) {
+        if (chosenTile instanceof RoomTile && !chosenTile.hasDynamicEntities()) {
             return tileBoard[randRow][randCol];
         } else return chooseUnoccupiedTile(tileBoard);
     }

@@ -48,9 +48,4 @@ public class MobSpawnBehavior extends SpawnBehavior {
             }
         }
     }
-
-    @Override
-    public boolean canExecute() {
-        return false;
-    }
 }

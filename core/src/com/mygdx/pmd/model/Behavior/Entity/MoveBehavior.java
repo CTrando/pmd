@@ -16,13 +16,7 @@ public abstract class MoveBehavior extends BaseBehavior {
         this.dEntity = dEntity;
     }
 
-    @Override
-    public boolean canExecute() {
-        return true;
-    }
-
     public void setSpeed(int speed){
         this.speed = speed;
     }
-
 }

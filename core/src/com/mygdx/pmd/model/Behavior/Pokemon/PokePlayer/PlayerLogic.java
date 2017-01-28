@@ -40,9 +40,4 @@ public class PlayerLogic extends PokemonBehavior {
             } else player.moveBehavior.setSpeed(1);
         }
     }
-
-    @Override
-    public boolean canExecute() {
-        return false;
-    }
 }

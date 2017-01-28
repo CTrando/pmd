@@ -28,6 +28,7 @@ public abstract class Tile implements Renderable {
     public int y;
 
     public Controller controller;
+    public Floor floor;
 
     public int spriteValue = 0;
 
@@ -42,17 +43,15 @@ public abstract class Tile implements Renderable {
 
     private ArrayList<Entity> entityList;
     private Array<StaticEntity> staticEntities;
+    public Array<DynamicEntity> dynamicEntities;
 
     public Tile[][] tileBoard;
     public Tile parent;
 
-    public FloorFactory floorFactory;
-    public Array<DynamicEntity> dynamicEntities;
-
     public Tile(int r, int c, Floor floor, String classifier) {
         this.controller = floor.controller;
         this.tileBoard = floor.tileBoard;
-        this.floorFactory = floorFactory;
+        this.floor = floor;
 
         this.x = c * Constants.TILE_SIZE;
         this.y = r * Constants.TILE_SIZE;
@@ -260,8 +259,8 @@ public abstract class Tile implements Renderable {
         return false;
     }
 
-    public boolean isDynamicEntityEmpty(){
-        return dynamicEntities.size == 0;
+    public boolean hasDynamicEntities(){
+        return dynamicEntities.size != 0;
     }
 
     public boolean equals(Tile o) {

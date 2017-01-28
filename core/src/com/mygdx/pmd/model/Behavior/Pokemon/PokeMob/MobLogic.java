@@ -83,9 +83,4 @@ public class MobLogic extends PokemonBehavior {
         }
         return true;
     }
-
-    @Override
-    public boolean canExecute() {
-        return false;
-    }
 }

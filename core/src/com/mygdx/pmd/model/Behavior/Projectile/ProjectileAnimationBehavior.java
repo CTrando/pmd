@@ -12,19 +12,13 @@ public class ProjectileAnimationBehavior extends ProjectileBehavior {
 
     @Override
     public void execute() {
-        if(!canExecute()) return;
         switch(projectile.getActionState()){
             case MOVING:
                 projectile.currentSprite = projectile.animationMap.get("movement").getCurrentSprite();
                 break;
-            case DEATH:
+            case COLLISION:
                 projectile.currentSprite = projectile.animationMap.get("death").getCurrentSprite();
                 break;
         }
-    }
-
-    @Override
-    public boolean canExecute() {
-        return true;
     }
 }

@@ -14,7 +14,7 @@ import com.mygdx.pmd.model.Behavior.BaseBehavior;
 import com.mygdx.pmd.model.Behavior.NoBehavior;
 import com.mygdx.pmd.model.Floor.Floor;
 import com.mygdx.pmd.model.Tile.Tile;
-import com.mygdx.pmd.utils.PAnimation;
+import com.mygdx.pmd.utils.*;
 import com.mygdx.pmd.utils.observers.NoObserver;
 import com.mygdx.pmd.utils.observers.Observable;
 import com.mygdx.pmd.utils.observers.Observer;
@@ -49,6 +49,9 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     public Controller controller;
     public Turn turnState;
 
+    /**
+        current tile is defined by the initial x and y
+     */
     public Entity(Controller controller, int x, int y) {
         this.controller = controller;
         this.tileBoard = controller.currentFloor.tileBoard;
@@ -56,6 +59,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         this.floor = controller.currentFloor;
         this.x = x;
         this.y = y;
+        this.currentTile = tileBoard[y/ Constants.TILE_SIZE][x/Constants.TILE_SIZE];
 
         animationMap = new HashMap<String, PAnimation>();
         noBehavior = new NoBehavior(this);
