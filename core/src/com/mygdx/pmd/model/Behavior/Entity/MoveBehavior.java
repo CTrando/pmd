@@ -8,6 +8,8 @@ import com.mygdx.pmd.model.Entity.Entity;
  * Created by Cameron on 11/8/2016.
  */
 public abstract class MoveBehavior extends BaseBehavior {
+    public int speed = 1;
+
     public DynamicEntity dEntity;
     public MoveBehavior(DynamicEntity dEntity) {
         super(dEntity);
@@ -18,4 +20,9 @@ public abstract class MoveBehavior extends BaseBehavior {
     public boolean canExecute() {
         return true;
     }
+
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
+
 }

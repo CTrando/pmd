@@ -1,12 +1,9 @@
 package com.mygdx.pmd.model.Floor;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.enumerations.ConnectFrom;
-import com.mygdx.pmd.enumerations.Direction;
-import com.mygdx.pmd.model.Factory.FloorFactory;
-import com.mygdx.pmd.model.Tile.DoorTile;
-import com.mygdx.pmd.model.Tile.RoomTile;
-import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.model.Factory.*;
+import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.utils.PRandomInt;
 
 /**
@@ -79,9 +76,6 @@ public class Path {
                 }
                 this.terminal = placeHolder[originRow][originCol + pathSize-1];
                 break;
-        }
-        if(!(this.terminal instanceof DoorTile)) {
-            System.out.println("ERROR");
         }
 
         this.setConnectors();

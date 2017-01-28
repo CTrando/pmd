@@ -33,9 +33,11 @@ public class PlayerLogic extends PokemonBehavior {
             player.turnState = Turn.COMPLETE;
             player.setActionState(Action.MOVING);
 
+            player.behaviors[2] = player.moveBehavior;
+
             if (controller.isKeyPressed(Key.s)) {
-                player.behaviors[2] = new MoveFastBehavior(player);
-            } else player.behaviors[2] = player.moveBehavior;
+                player.moveBehavior.setSpeed(5);
+            } else player.moveBehavior.setSpeed(1);
         }
     }
 

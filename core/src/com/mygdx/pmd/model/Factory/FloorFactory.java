@@ -73,6 +73,7 @@ public class FloorFactory {
     }
 
     private void createConnections(Floor floor){
+        System.out.println("Beginning path generation...");
         while(connectors.size > 0 && connectors.size < 20){
             Connector connector = connectors.pop();
 
@@ -91,7 +92,7 @@ public class FloorFactory {
                 path.createPath();
             }
 
-            System.out.println(connectors.size);
+            System.out.println(connectors.size + " connectors");
         }
         System.out.println("Done");
     }

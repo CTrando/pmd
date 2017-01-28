@@ -20,6 +20,8 @@ import com.mygdx.pmd.utils.PAnimation;
  */
 public class Projectile extends DynamicEntity {
 
+    //TODO FIX UP THIS CLASS
+
     private PAnimation projectileAnimation;
     public Pokemon parent;
     public Move move;
@@ -41,17 +43,24 @@ public class Projectile extends DynamicEntity {
 
         behaviors[BaseBehavior.ATTACK_BEHAVIOR] = new ProjectileCollisionLogicBehavior(this);
 
-        if (move.isRanged()) {
-            behaviors[BaseBehavior.LOGIC_BEHAVIOR] = new ProjectileRangedMovementBehavior(this);
-            behaviors[BaseBehavior.ANIMATION_BEHAVIOR] = new ProjectileAnimationBehavior(this);
-            this.setActionState(Action.MOVING);
-        }
 
         projectileAnimation = new PAnimation("attack", move.projectileMovementAnimation, null, 20, true);
         animationMap.put("movement", projectileAnimation);
 
-        projectileAnimation = new PAnimation("death", move.projectileDeathAnimation, null, 20, false);
+        projectileAnimation = new PAnimation("death", move.projectileDeathAnimation, null, move.animationLength, false);
         animationMap.put("death", projectileAnimation);
+
+        behaviors[BaseBehavior.ANIMATION_BEHAVIOR] = new ProjectileAnimationBehavior(this);
+
+        if (move.isRanged()) {
+            behaviors[BaseBehavior.LOGIC_BEHAVIOR] = new ProjectileRangedMovementBehavior(this);
+            this.setActionState(Action.MOVING);
+        } else {
+            for(DynamicEntity dEntity: currentTile.dynamicEntities){
+                dEntity.takeDamage(move.damage);
+            }
+            this.dispose();
+        }
     }
 
     @Override

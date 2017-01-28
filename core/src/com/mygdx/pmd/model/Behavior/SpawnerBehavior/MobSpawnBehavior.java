@@ -23,7 +23,12 @@ public class MobSpawnBehavior extends SpawnBehavior {
 
     @Override
     public void execute() {
-        if (!canExecute()) return;
+        if (dEntity.turnState != Turn.WAITING) {
+            dEntity.turnState = Turn.COMPLETE;
+            return;
+        }
+
+        dEntity.turnState = Turn.COMPLETE;
 
         if(controller.dEntities.size < Controller.NUM_MAX_ENTITY) {
             dEntity.setActionState(Action.SPAWNING);
@@ -36,16 +41,16 @@ public class MobSpawnBehavior extends SpawnBehavior {
                     pokemon.setNextTile(tile);
 
                     controller.toBeAdded(pokemon);
+                    break;
+                default:
+                    dEntity.setActionState(Action.IDLE);
+                    break;
             }
         }
-        dEntity.turnState = Turn.COMPLETE;
     }
 
     @Override
     public boolean canExecute() {
-        if (dEntity.turnState == Turn.WAITING) {
-            return true;
-        }
         return false;
     }
 }

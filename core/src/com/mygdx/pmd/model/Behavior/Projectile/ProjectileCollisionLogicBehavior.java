@@ -24,11 +24,7 @@ public class ProjectileCollisionLogicBehavior extends ProjectileBehavior {
                 for (DynamicEntity dEntity : projectile.currentTile.dynamicEntities) {
                     dEntity.takeDamage(projectile.damage);
                 }
-
-                projectile.takeDamage(1);
-                projectile.shouldBeDestroyed = true;
-                projectile.setActionState(Action.DEATH);
-                PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
+                projectile.dispose();
             }
         }
 

@@ -9,6 +9,7 @@ import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
  * Created by Cameron on 1/20/2017.
  */
 public class MoveSlowBehavior extends MoveBehavior {
+
     public MoveSlowBehavior(DynamicEntity dEntity) {
         super(dEntity);
     }
@@ -16,8 +17,10 @@ public class MoveSlowBehavior extends MoveBehavior {
     @Override
     public void execute(){
         if(!dEntity.equals(dEntity.getNextTile())){
-            dEntity.moveToTile(dEntity.getNextTile(), 1);
-        } else {
+            dEntity.moveToTile(dEntity.getNextTile(), speed);
+        }
+
+        if(dEntity.equals(dEntity.currentTile)) {
             dEntity.setActionState(Action.IDLE);
         }
     }

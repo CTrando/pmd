@@ -5,7 +5,7 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Turnbaseable;
 import com.mygdx.pmd.model.Behavior.BaseBehavior;
-import com.mygdx.pmd.model.Behavior.Entity.MoveSlowBehavior;
+import com.mygdx.pmd.model.Behavior.Entity.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.AttackBehavior;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
@@ -17,7 +17,7 @@ import com.mygdx.pmd.utils.PAnimation;
 public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
     public PAnimation currentAnimation;
     public BaseBehavior attackBehavior;
-    public BaseBehavior moveBehavior;
+    public MoveBehavior moveBehavior;
 
     public PokemonName pokemonName;
     public Projectile projectile;
@@ -42,9 +42,9 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
     public boolean isLegalToMoveTo(Tile tile) {
         if (tile == null) return false;
 
-        if(tile.hasDynamicEntity()) {
-            for(DynamicEntity dEntity: tile.dynamicEntities){
-                if(dEntity.isAggressive()){
+        if (tile.hasDynamicEntity()) {
+            for (DynamicEntity dEntity : tile.dynamicEntities) {
+                if (dEntity.isAggressive()) {
                     return false;
                 }
             }
@@ -56,7 +56,7 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
     }
 
     @Override
-    public void update(){
+    public void update() {
         super.update();
         updateCurrentTile();
         setFacingTileBasedOnDirection(direction);
@@ -65,8 +65,8 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
             behaviors[2] = this.noBehavior;
         }
 
-        if(hp <= 0) shouldBeDestroyed = true;
-        if(shouldBeDestroyed) {
+        if (hp <= 0) shouldBeDestroyed = true;
+        if (shouldBeDestroyed) {
             controller.addToRemoveList(this);
             if (this instanceof PokemonPlayer) controller.controllerScreen.game.dispose();
             System.out.println("WOE IS ME I AM DEAD");
@@ -74,17 +74,17 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
         }
     }
 
-    public void attack(Move move){
+    public void attack(Move move) {
         this.projectile = new Projectile(this, move);
         controller.directlyAddEntity(this.projectile);
     }
 
-    public boolean isEnemyInSight(){
-        if(this.aggression != Aggression.aggressive) return false;
+    public boolean isEnemyInSight() {
+        if (this.aggression != Aggression.aggressive) return false;
         int rOffset = 0;
         int cOffset = 0;
 
-        switch(this.direction){
+        switch (this.direction) {
             case down:
                 rOffset = -1;
                 break;
@@ -97,23 +97,24 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
             case left:
                 cOffset = -1;
         }
-        for(int i = 1; i< 5; i++){
+        for (int i = 1; i < 5; i++) {
             //these are the rules for viewing things
             try {
                 Tile tile = tileBoard[currentTile.row + i * rOffset][currentTile.col + i * cOffset];
-                if(tile instanceof GenericTile) return false;
+                if (tile instanceof GenericTile) return false;
 
-                if (tile.dynamicEntities.size > 0){
-                    if(tile != currentTile && tile.containsAggressionType(Aggression.passive)) {
+                if (tile.dynamicEntities.size > 0) {
+                    if (tile != currentTile && tile.containsAggressionType(Aggression.passive)) {
                         return true;
                     } else return false;
                 }
-            } catch(ArrayIndexOutOfBoundsException e){}
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
         }
         return false;
     }
 
-    public void dispose(){
+    public void dispose() {
         this.currentTile.removeEntity(this);
     }
 }

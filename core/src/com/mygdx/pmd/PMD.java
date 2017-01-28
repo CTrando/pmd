@@ -79,6 +79,8 @@ public class PMD extends Game {
         manager.load("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class);
         manager.load("pokemonassets/PROJECTILE_TEXTURE.atlas", TextureAtlas.class);
         manager.load("pokemonassets/ARROW_SPRITES.atlas", TextureAtlas.class);
+        manager.load("pokemonassets/ATTACK_SPRITES.atlas", TextureAtlas.class);
+
         manager.load("sfx/background.ogg", Music.class);
         manager.load("sfx/wallhit.wav", Sound.class);
         manager.finishLoading();
@@ -88,6 +90,7 @@ public class PMD extends Game {
         this.loadImages(manager.get("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class));
         this.loadImages(manager.get("pokemonassets/PROJECTILE_TEXTURE.atlas", TextureAtlas.class));
         this.loadImages(manager.get("pokemonassets/ARROW_SPRITES.atlas", TextureAtlas.class));
+        this.loadImages(manager.get("pokemonassets/ATTACK_SPRITES.atlas", TextureAtlas.class));
     }
 
 
