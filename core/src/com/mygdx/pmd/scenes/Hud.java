@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.pmd.PMD;
@@ -154,14 +155,15 @@ public class Hud {
         onScreenController.add(downImg).pad(15, 15, 15, 15);
 
         Table temp = new Table();
-        temp.setFillParent(true);
         temp.left().bottom();
         temp.debug();
-        temp.add(testLabel);
+        temp.add(testLabel).fill();
         temp.row();
-        temp.add(floorLabel);
+        temp.add(floorLabel).fill();
         temp.row();
         temp.add(turnLabel);
+        temp.setBackground(new SpriteDrawable(PMD.sprites.get("rightarrow")));
+        temp.pack();
 
         Table textTable = new Table();
         textTable.setFillParent(true);
