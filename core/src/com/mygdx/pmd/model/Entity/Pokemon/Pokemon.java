@@ -6,8 +6,7 @@ import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Turnbaseable;
 import com.mygdx.pmd.model.Behavior.BaseBehavior;
 import com.mygdx.pmd.model.Behavior.Entity.*;
-import com.mygdx.pmd.model.Behavior.Pokemon.AttackBehavior;
-import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
+import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Tile.GenericTile;
@@ -27,7 +26,6 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
     protected Pokemon(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y);
         this.direction = Direction.down;
-        this.pokemonName = pokemonName;
         this.setActionState(Action.IDLE);
 
         this.attackBehavior = new AttackBehavior(this);
@@ -35,6 +33,8 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
 
         this.turnState = Turn.COMPLETE;
         this.isTurnBased = true;
+
+        behaviors[1] = new PokemonAnimationBehavior(this);
         this.registerObservers();
     }
 

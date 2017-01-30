@@ -41,7 +41,7 @@ public class Path {
 
         switch (connector.direction) {
             case up:
-                if (originRow + pathSize >= placeHolder.length) pathSize = placeHolder.length - originRow;
+                if (originRow + pathSize >= placeHolder.length - 1) pathSize = (placeHolder.length - 1) - originRow;
 
                 for (int i = originRow; i < originRow + pathSize; i++) {
                     placeHolder[i][originCol] = new RoomTile(i, originCol, floor);
@@ -50,7 +50,7 @@ public class Path {
                 this.terminal = placeHolder[originRow + pathSize-1][originCol];
                 break;
             case down:
-                if (originRow - pathSize <= 0) pathSize = originRow;
+                if (originRow - pathSize <= 1) pathSize = originRow - 1;
 
                 for (int i = originRow; i >= originRow - pathSize; i--) {
                     placeHolder[i][originCol] = new RoomTile(i, originCol, floor);
@@ -59,7 +59,7 @@ public class Path {
                 this.terminal = placeHolder[originRow - pathSize+1][originCol];
                 break;
             case left:
-                if (originCol - pathSize <= 0) pathSize = originCol;
+                if (originCol - pathSize <= 1) pathSize = originCol - 1;
 
                 for (int i = originCol; i >= originCol - pathSize; i--) {
                     placeHolder[originRow][i] = new RoomTile(originRow, i, floor);
@@ -68,7 +68,7 @@ public class Path {
                 this.terminal = placeHolder[originRow][originCol - pathSize+1];
                 break;
             case right:
-                if (originCol + pathSize >= placeHolder[0].length) pathSize = placeHolder.length - originCol;
+                if (originCol + pathSize >= placeHolder[0].length-1) pathSize = (placeHolder.length - 1) - originCol;
 
                 for (int i = originCol; i < originCol + pathSize; i++) {
                     placeHolder[originRow][i] = new RoomTile(originRow, i, floor);

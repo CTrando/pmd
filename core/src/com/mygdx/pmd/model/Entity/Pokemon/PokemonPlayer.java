@@ -1,5 +1,7 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
+import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.Sound;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
@@ -16,14 +18,7 @@ public class PokemonPlayer extends Pokemon {
         this.turnState = Turn.WAITING;
         this.aggression = Aggression.passive;
 
-        /*behaviors[BaseBehavior.INPUT_BEHAVIOR] = new PlayerInputBehavior(this);
-        behaviors[BaseBehavior.ATTACK_BEHAVIOR] = new PlayerAttackLogicBehavior(this);
-        behaviors[BaseBehavior.LOGIC_BEHAVIOR] = new PlayerMovementLogicBehavior(this);
-        behaviors[BaseBehavior.MOVE_BEHAVIOR] = new MoveSlowBehavior(this);
-        behaviors[BaseBehavior.ANIMATION_BEHAVIOR] = new PokemonAnimationBehavior(this);*/
-
         behaviors[0] = new PlayerLogic(this);
-        behaviors[1] = new PokemonAnimationBehavior(this);
     }
 
     @Override
@@ -73,7 +68,7 @@ public class PokemonPlayer extends Pokemon {
          */
         if (this.equals(currentTile) && getActionState() == Action.IDLE) {
             //if the user hits K, he will not be able to move, but he will be able to set his direction
-            if (controller.isKeyPressed(Key.k)) {
+            if (controller.isKeyPressed(Key.shift)) {
                 if (controller.isKeyPressed(Key.down)) {
                     direction = Direction.down;
                 } else if (controller.isKeyPressed(Key.left)) {
@@ -101,7 +96,7 @@ public class PokemonPlayer extends Pokemon {
                 }
 
             // set the direction based on key hit - note that one can only change directions and not move when he is not moving
-
+            //TODO switch keys to a refresh system - perhaps use an object instead of an enum
             if (controller.isKeyPressed(Key.down)) {
                 direction = Direction.down;
             } else if (controller.isKeyPressed(Key.left)) {
@@ -122,12 +117,22 @@ public class PokemonPlayer extends Pokemon {
                 controller.turnsPaused = !controller.turnsPaused;
             } else if (controller.isKeyPressed(Key.r)) {
                 //controller.controllerScreen.game.setScreen(PMD.endScreen);
-                for(DynamicEntity dEntity: controller.dEntities){
-                    if(dEntity instanceof PokemonMob){
+                for (DynamicEntity dEntity : controller.dEntities) {
+                    if (dEntity instanceof PokemonMob) {
                         PokemonMob pMob = (PokemonMob) dEntity;
                         pMob.pathFind = pMob.sPath;
                     }
                 }
+            } else if (controller.isKeyPressed(Key.m)) {
+                if (!controller.controllerScreen.showHub) {
+                    PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
+                    controller.controllerScreen.showHub = true;
+                }
+            } else if (controller.isKeyPressed(Key.escape) && controller.controllerScreen.showHub){
+                controller.controllerScreen.showHub = false;
+            } else if (controller.isKeyPressed(Key.F11)) {
+                Graphics.DisplayMode mode = Gdx.graphics.getDisplayMode();
+                Gdx.graphics.setFullscreenMode(mode);
             }
         }
     }

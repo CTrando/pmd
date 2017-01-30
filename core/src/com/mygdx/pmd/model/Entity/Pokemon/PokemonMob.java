@@ -31,7 +31,6 @@ public class PokemonMob extends Pokemon {
         logic = new MobLogic(this);
 
         behaviors[0] = logic;
-        behaviors[1] = new PokemonAnimationBehavior(this);
     }
 
     @Override

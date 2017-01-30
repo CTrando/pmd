@@ -22,7 +22,7 @@ import com.mygdx.pmd.utils.PRandomInt;
  * TODO Fix item not being cleared
  */
 public class FloorFactory {
-    Tile[][] placeHolder;
+    private Tile[][] placeHolder;
 
     Array<com.mygdx.pmd.model.Floor.Room> rooms;
     private Array<com.mygdx.pmd.model.Floor.Connector> connectors;
@@ -39,7 +39,6 @@ public class FloorFactory {
     public Floor createFloor(Controller controller){
         //function needed to clear floor
         floor.clear();
-
         placeHolder = new Tile[DungeonScreen.windowRows][DungeonScreen.windowCols];
 
         //reset variables - should probably change this
@@ -75,7 +74,7 @@ public class FloorFactory {
 
     private void createConnections(Floor floor){
         System.out.println("Beginning path generation...");
-        while(connectors.size > 0 && connectors.size < 20){
+        while(connectors.size > 0 && connectors.size < DungeonScreen.MAX_CONNCETORS){
             Connector connector = connectors.pop();
 
             if (connector.connectFrom == ConnectFrom.PATH){

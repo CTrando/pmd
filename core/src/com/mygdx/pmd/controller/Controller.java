@@ -20,6 +20,7 @@ import com.mygdx.pmd.model.Tile.RoomTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.model.Entity.Entity;
+import com.mygdx.pmd.test.TileTester;
 import com.mygdx.pmd.utils.PRandomInt;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ import static com.mygdx.pmd.PMD.keys;
 
 public class Controller {
     public DungeonScreen controllerScreen;
-    public static final int NUM_MAX_ENTITY = 10;
+    public static final int NUM_MAX_ENTITY = 5;
 
     public boolean turnsPaused = false;
     public ArrayList<Renderable> renderList;
@@ -92,6 +93,8 @@ public class Controller {
         FloorDecorator.skinTiles(currentFloor);
         FloorDecorator.placeEventTiles(currentFloor, floorFactory);
 
+        System.out.println(TileTester.checkCorners(getTileBoard()));
+
         this.randomizeAllPokemonLocation();
     }
 
@@ -118,9 +121,11 @@ public class Controller {
 
             entity = turnBasedEntities.get(turnBasedEntityCount);
             entity.turnState = Turn.WAITING;
+
+            //TODO bug here with entities updating even when Turn is pending, and that allows me to move again
+            addEntities();
+            removeEntities();
         }
-        addEntities();
-        removeEntities();
     }
 
     public boolean isKeyPressed(Key key) { //TODO perhaps add a buffer system for more control later
@@ -220,5 +225,9 @@ public class Controller {
         if (chosenTile instanceof RoomTile && !chosenTile.hasDynamicEntities()) {
             return tileBoard[randRow][randCol];
         } else return chooseUnoccupiedTile(tileBoard);
+    }
+
+    public Tile[][] getTileBoard(){
+        return currentFloor.tileBoard;
     }
 }

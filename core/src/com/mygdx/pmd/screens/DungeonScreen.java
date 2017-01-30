@@ -2,21 +2,17 @@ package com.mygdx.pmd.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
-import com.mygdx.pmd.enumerations.Key;
-import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.scenes.Hud;
 import com.mygdx.pmd.utils.Constants;
-
 
 import static com.mygdx.pmd.PMD.keys;
 
@@ -30,15 +26,17 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     public Controller controller;
 
-    public static final int windowWidth = 1000;
-    public static final int windowLength = 1000; //TODO the stutter might be because of having to reload everything on player movement
+    public static final int windowWidth = 10000;
+    public static final int windowLength = 10000; //TODO the stutter might be because of having to reload everything on player movement
     public static final int windowRows = windowLength / Constants.TILE_SIZE;
     public static final int windowCols = windowWidth / Constants.TILE_SIZE;
+    public static final int MAX_CONNCETORS = 500;
 
     public static final int V_WIDTH = 1080;
     public static final int V_HEIGHT = 720;
 
     public BitmapFont bFont;
+    public boolean showHub = false;
 
     public int time =20;
 
@@ -49,7 +47,6 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     private OrthographicCamera gameCamera;
     private Viewport gamePort;
 
-    Stage stage;
     XmlReader xmlReader;
     public boolean timePaused;
 
@@ -58,8 +55,8 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
         this.game = game;
         batch = game.batch;
-        bFont = new BitmapFont();
-        bFont.getData().setScale(.8f);
+        bFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
+        bFont.getData().setScale(.5f);
 
         shapeRenderer = game.shapeRenderer;
         gameCamera = new OrthographicCamera(PMD.WIDTH, PMD.HEIGHT);
@@ -69,11 +66,9 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         hud = new Hud(this, this.batch);
 
         tileBoard = controller.currentFloor.tileBoard;
-        stage = new Stage();
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
-        inputMultiplexer.addProcessor(stage);
         inputMultiplexer.addProcessor(hud.stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
@@ -120,18 +115,18 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
             shapeRenderer.end();
         }
-        stage.draw();
-
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.update(dt);
-        hud.stage.draw();
+
+        if(showHub){
+            hud.stage.draw();
+        }
     }
 
     @Override
     public void dispose() {
         batch.dispose();
         manager.dispose();
-        stage.dispose();
     }
 
     @Override

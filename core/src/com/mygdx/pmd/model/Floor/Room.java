@@ -67,10 +67,10 @@ public class Room {
             case left: startingCol -= width; break;
         }
 
-        if(startingRow <=0) startingRow = 0;
-        if(startingCol <= 0) startingCol = 0;
-        if(startingRow + height >= placeHolder.length) startingRow = placeHolder.length-height;
-        if(startingCol + width >= placeHolder[0].length) startingCol = placeHolder[0].length-width;
+        if(startingRow <= 1) startingRow = 1;
+        if(startingCol <= 1) startingCol = 1;
+        if(startingRow + height >= placeHolder.length -1) startingRow = (placeHolder.length - 1) - height;
+        if(startingCol + width >= placeHolder[0].length -1) startingCol = (placeHolder[0].length - 1)- width;
 
         //set up border tiles - perimeter of rectangle
         this.borderTiles = new Array<Tile>();
@@ -97,11 +97,12 @@ public class Room {
 
         for(int i = 0; i< numConnectors; i++){
             if(borderTiles.size == 0) break;
+
+            //find random tile and set it to a connector
             int randIndex = PRandomInt.random(0,borderTiles.size-1);
             Tile randTile = borderTiles.get(randIndex);
             placeHolder[randTile.row][randTile.col] = new RoomTile(randTile.row, randTile.col, floor);
             borderTiles.removeValue(randTile,false);
-            if(randTile == null) System.out.println("ROOM TILE TERRIBLE");
 
             Array<Tile> neighbors = Tile.getTilesAroundTile(placeHolder,randTile);
             borderTiles.removeAll(neighbors,false);

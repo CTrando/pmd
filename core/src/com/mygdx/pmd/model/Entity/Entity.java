@@ -77,7 +77,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
 
     @Override
     public void update() {
-        for (int i = 0; i < behaviors.length; i++) {
+        for(int i = 0; i < behaviors.length; i++) {
             behaviors[i].execute();
         }
     }
