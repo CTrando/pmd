@@ -11,9 +11,19 @@ public enum Key {
     m(Input.Keys.M), escape(Input.Keys.ESCAPE), shift(Input.Keys.SHIFT_LEFT), F11(Input.Keys.F11);
 
     private final int value;
+    private long lastTimeHit;
 
     Key(final int newValue) {
         value = newValue;
+        lastTimeHit = 0;
+    }
+
+    public void setLastTimeHit(long lastTimeHit){
+        this.lastTimeHit = lastTimeHit;
+    }
+
+    public long getLastTimeHit(){
+        return lastTimeHit;
     }
 
     public int getValue()

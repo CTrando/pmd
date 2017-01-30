@@ -44,6 +44,14 @@ public class PokemonMob extends Pokemon {
         return true;
     }
 
+    public boolean isWithinRange(Pokemon pokemon){
+        int dR = this.currentTile.row - pokemon.currentTile.row;
+        int dC = this.currentTile.col - pokemon.currentTile.col;
+
+        if (dR*dR + dC*dC > 400) return false;
+        return true;
+    }
+
     public boolean canAttack() {
         return isEnemyInSight() && aggression == Aggression.aggressive;
     }

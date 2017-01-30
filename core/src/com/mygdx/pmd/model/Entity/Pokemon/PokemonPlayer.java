@@ -5,9 +5,9 @@ import com.badlogic.gdx.audio.Sound;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer.*;
 import com.mygdx.pmd.model.Entity.*;
+import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.observers.MovementObserver;
 
 
@@ -113,7 +113,7 @@ public class PokemonPlayer extends Pokemon {
             } else if (controller.isKeyPressed(Key.a)) {
                 turnState = Turn.COMPLETE;
                 possibleNextTile = null;
-            } else if (controller.isKeyPressed(Key.p)) {
+            } else if (controller.isKeyPressedTimeSensitive(Key.p)) {
                 controller.turnsPaused = !controller.turnsPaused;
             } else if (controller.isKeyPressed(Key.r)) {
                 //controller.controllerScreen.game.setScreen(PMD.endScreen);
@@ -123,16 +123,20 @@ public class PokemonPlayer extends Pokemon {
                         pMob.pathFind = pMob.sPath;
                     }
                 }
-            } else if (controller.isKeyPressed(Key.m)) {
-                if (!controller.controllerScreen.showHub) {
-                    PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
-                    controller.controllerScreen.showHub = true;
-                }
-            } else if (controller.isKeyPressed(Key.escape) && controller.controllerScreen.showHub){
+            } else if (controller.isKeyPressedTimeSensitive(Key.m)) {
+                controller.controllerScreen.showHub = !controller.controllerScreen.showHub;
+                PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
+            } else if (controller.isKeyPressed(Key.escape) && controller.controllerScreen.showHub) {
                 controller.controllerScreen.showHub = false;
-            } else if (controller.isKeyPressed(Key.F11)) {
+            } else if (controller.isKeyPressedTimeSensitive(Key.F11)) {
                 Graphics.DisplayMode mode = Gdx.graphics.getDisplayMode();
-                Gdx.graphics.setFullscreenMode(mode);
+                if (Gdx.graphics.isFullscreen()) {
+                    Gdx.graphics.setWindowedMode(DungeonScreen.V_WIDTH, DungeonScreen.V_HEIGHT);
+                } else {
+                    Gdx.graphics.setFullscreenMode(mode);
+                }
+                //have to do this because of bug with stuck keys with full screen
+                PMD.keys.get(Input.Keys.F11).set(false);
             }
         }
     }

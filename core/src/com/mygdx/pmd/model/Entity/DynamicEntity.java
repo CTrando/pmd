@@ -28,6 +28,7 @@ public abstract class DynamicEntity extends Entity{
 
     public Direction direction;
     public Aggression aggression;
+    public int speed = 1;
 
     public DynamicEntity(Controller controller, int x, int y) {
         super(controller, x, y);
@@ -221,5 +222,9 @@ public abstract class DynamicEntity extends Entity{
 
     public Action getActionState(){
         return actionState;
+    }
+
+    public void setSpeed(int speed){
+        this.speed = speed;
     }
 }

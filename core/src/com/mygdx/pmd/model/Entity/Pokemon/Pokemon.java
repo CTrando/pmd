@@ -61,9 +61,9 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
         updateCurrentTile();
         setFacingTileBasedOnDirection(direction);
 
-        if (getActionState() == Action.IDLE) {
+       /* if (getActionState() == Action.IDLE) {
             behaviors[2] = this.noBehavior;
-        }
+        }*/
 
         if (hp <= 0) shouldBeDestroyed = true;
         if (shouldBeDestroyed) {

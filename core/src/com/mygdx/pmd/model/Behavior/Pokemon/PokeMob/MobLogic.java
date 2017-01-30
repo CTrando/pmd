@@ -47,17 +47,23 @@ public class MobLogic extends PokemonBehavior {
             else
             //check to see if it can pathfind
             if (pathFind()) {
-                mob.setActionState(Action.MOVING);
-                mob.behaviors[2] = mob.moveBehavior;
+                if(mob.isWithinRange(controller.pokemonPlayer)) {
+                    mob.setActionState(Action.MOVING);
+                    mob.behaviors[2] = mob.moveBehavior;
+                    mob.setSpeed(1);
+                } else {
+                    mob.behaviors[2] = mob.moveBehavior;
+                    mob.setSpeed(25);
+                    mob.setActionState(Action.IDLE);
+                }
                 //TODO replace filler name
             }
 
             if (controller.isKeyPressed(Key.s)) {
-                mob.moveBehavior.setSpeed(5);
-            } else mob.moveBehavior.setSpeed(1);
+                mob.setSpeed(5);
+            }
         }
     }
-
 
     private boolean pathFind() {
         try {

@@ -26,11 +26,11 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     public Controller controller;
 
-    public static final int windowWidth = 10000;
-    public static final int windowLength = 10000; //TODO the stutter might be because of having to reload everything on player movement
+    public static final int windowWidth = 5000;
+    public static final int windowLength = 5000; //TODO the stutter might be because of having to reload everything on player movement
     public static final int windowRows = windowLength / Constants.TILE_SIZE;
     public static final int windowCols = windowWidth / Constants.TILE_SIZE;
-    public static final int MAX_CONNCETORS = 500;
+    public static final int MAX_CONNCETORS = 50;
 
     public static final int V_WIDTH = 1080;
     public static final int V_HEIGHT = 720;
@@ -167,6 +167,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     public boolean keyDown(int keycode) {
         if (keys.containsKey(keycode))
             keys.get(keycode).set(true);
+
         hud.addText(Input.Keys.toString(keycode));
         return false;
     }
@@ -176,6 +177,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         if (keys.containsKey(keycode))
             keys.get(keycode).set(false);
         return false;
+
     }
 
     @Override

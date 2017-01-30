@@ -2,8 +2,7 @@ package com.mygdx.pmd.controller;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.comparators.PokemonDistanceComparator;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Renderable;
@@ -31,7 +30,7 @@ import static com.mygdx.pmd.PMD.keys;
 
 public class Controller {
     public DungeonScreen controllerScreen;
-    public static final int NUM_MAX_ENTITY = 5;
+    public static final int NUM_MAX_ENTITY = 7;
 
     public boolean turnsPaused = false;
     public ArrayList<Renderable> renderList;
@@ -39,6 +38,9 @@ public class Controller {
     public Array<DynamicEntity> dEntities;
     public ArrayList<Entity> turnBasedEntities;
     public Pokemon pokemonPlayer;
+
+    private long lastTimeKeyHit = 0;
+
 
     private Array<Entity> toBeRemoved;
     private Array<Entity> toBeAdded;
@@ -130,6 +132,21 @@ public class Controller {
 
     public boolean isKeyPressed(Key key) { //TODO perhaps add a buffer system for more control later
         return keys.get(key.getValue()).get();
+    }
+
+    /**
+     * Time sensitive key hits - hits are not consecutive
+     * @param key the key entered
+     * @return true if the key has been pressed after a certain period of time - returns false if the key is not pressed or if the key has been pressed too soon
+     */
+    public boolean isKeyPressedTimeSensitive(Key key){
+        if(keys.get(key.getValue()).get()){
+            if(TimeUtils.timeSinceMillis(key.getLastTimeHit()) > 1000) {
+                key.setLastTimeHit(TimeUtils.millis());
+                return true;
+            }
+        }
+        return false;
     }
 
     public void loadPokemon() {
