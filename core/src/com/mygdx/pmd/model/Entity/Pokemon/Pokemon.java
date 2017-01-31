@@ -31,7 +31,7 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
         this.attackBehavior = new AttackBehavior(this);
         this.moveBehavior = new MoveSlowBehavior(this);
 
-        this.turnState = Turn.COMPLETE;
+        this.setTurnState(Turn.COMPLETE);
         this.isTurnBased = true;
 
         behaviors[1] = new PokemonAnimationBehavior(this);

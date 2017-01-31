@@ -30,9 +30,10 @@ public class EndScreen extends PScreen {
         table = new Table();
         Skin skin = new Skin(Gdx.files.internal("ui/test.json"));
 
-        gameOverLabel = new Label("Click to play again", skin);
+        gameOverLabel = new Label("You died! \n Click to play again", skin);
         table.add(gameOverLabel).center();
         table.setFillParent(true);
+        table.pack();
 
         stage.addActor(table);
     }

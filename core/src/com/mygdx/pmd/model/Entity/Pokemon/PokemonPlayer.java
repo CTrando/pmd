@@ -15,7 +15,7 @@ public class PokemonPlayer extends Pokemon {
 
     public PokemonPlayer(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y, pokemonName);
-        this.turnState = Turn.WAITING;
+        this.setTurnState(Turn.WAITING);
         this.aggression = Aggression.passive;
 
         behaviors[0] = new PlayerLogic(this);
@@ -29,7 +29,7 @@ public class PokemonPlayer extends Pokemon {
     @Override
     public void randomizeLocation() {
         super.randomizeLocation();
-        this.turnState = Turn.WAITING;
+        this.setTurnState(Turn.WAITING);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class PokemonPlayer extends Pokemon {
             if (controller.isKeyPressed(Key.space)) {
                 controller.nextFloor();
             } else if (controller.isKeyPressed(Key.a)) {
-                turnState = Turn.COMPLETE;
+                this.setTurnState(Turn.COMPLETE);
                 possibleNextTile = null;
             } else if (controller.isKeyPressedTimeSensitive(Key.p)) {
                 controller.turnsPaused = !controller.turnsPaused;
@@ -142,6 +142,11 @@ public class PokemonPlayer extends Pokemon {
     }
 
     public boolean canAttack() {
-        return (controller.isKeyPressed(Key.b) && controller.isKeyPressed(Key.t));
+        if (controller.isKeyPressed(Key.b) && controller.isKeyPressed(Key.t)) {
+            return true;
+        } else if(controller.isKeyPressed(Key.IK)){
+            return true;
+        }
+        return false;
     }
 }

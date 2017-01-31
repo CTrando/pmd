@@ -19,48 +19,47 @@ public class MobLogic extends PokemonBehavior {
     @Override
     public void execute() {
         //ensure that when this runs the pokemon's turn is always waiting
-        if(mob.turnState != Turn.WAITING) return;
-
-        //make sure that if the pokemon is moving, it's turn will be set to complete and the algorithm will no longer run
-        if (!mob.equals(mob.currentTile)) {
-            mob.turnState = Turn.COMPLETE;
-            return;
-        }
-
-        if (mob.canAttack()) {
-            mob.attack(Move.SCRATCH);
-            mob.turnState = Turn.PENDING;
-            mob.setActionState(Action.ATTACKING);
-
-            mob.behaviors[2] = mob.attackBehavior;
-            return;
-        }
-
-        if (mob.canMove()) {
-            mob.turnState = Turn.COMPLETE;
-
-            if(mob.isForcedMove){
-                mob.setActionState(Action.MOVING);
-                mob.behaviors[2] = mob.moveBehavior;
-                mob.isForcedMove = false;
+        if(mob.isTurnWaiting()) {
+            //make sure that if the pokemon is moving, it's turn will be set to complete and the algorithm will no longer run
+            if (!mob.equals(mob.currentTile)) {
+                mob.setTurnState(Turn.COMPLETE);
+                return;
             }
-            else
-            //check to see if it can pathfind
-            if (pathFind()) {
-                if(mob.isWithinRange(controller.pokemonPlayer)) {
+
+            if (mob.canAttack()) {
+                mob.attack(Move.SCRATCH);
+                mob.setTurnState(Turn.PENDING);
+                mob.setActionState(Action.ATTACKING);
+
+                mob.behaviors[2] = mob.attackBehavior;
+                return;
+            }
+
+            if (mob.canMove()) {
+                mob.setTurnState(Turn.COMPLETE);
+
+                if (mob.isForcedMove) {
                     mob.setActionState(Action.MOVING);
                     mob.behaviors[2] = mob.moveBehavior;
-                    mob.setSpeed(1);
-                } else {
-                    mob.behaviors[2] = mob.moveBehavior;
-                    mob.setSpeed(25);
-                    mob.setActionState(Action.IDLE);
-                }
-                //TODO replace filler name
-            }
+                    mob.isForcedMove = false;
+                } else
+                    //check to see if it can pathfind
+                    if (pathFind()) {
+                        if (mob.isWithinRange(controller.pokemonPlayer)) {
+                            mob.setActionState(Action.MOVING);
+                            mob.behaviors[2] = mob.moveBehavior;
+                            mob.setSpeed(1);
+                        } else {
+                            mob.behaviors[2] = mob.moveBehavior;
+                            mob.setSpeed(25);
+                            mob.setActionState(Action.IDLE);
+                        }
+                        //TODO replace filler name
+                    }
 
-            if (controller.isKeyPressed(Key.s)) {
-                mob.setSpeed(5);
+                if (controller.isKeyPressed(Key.s)) {
+                    mob.setSpeed(5);
+                }
             }
         }
     }

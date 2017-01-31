@@ -47,7 +47,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     public Observer[] observers;
 
     public Controller controller;
-    public Turn turnState;
+    private Turn turnState;
 
     /**
         current tile is defined by the initial x and y
@@ -129,5 +129,22 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //methods for turn state
+    public boolean isTurnComplete(){
+        return turnState == Turn.COMPLETE;
+    }
+
+    public boolean isTurnWaiting(){
+        return turnState == Turn.WAITING;
+    }
+
+    public Turn getTurnState() {
+        return turnState;
+    }
+
+    public void setTurnState(Turn turnState) {
+        this.turnState = turnState;
     }
 }

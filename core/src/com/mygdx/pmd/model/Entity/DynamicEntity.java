@@ -137,7 +137,7 @@ public abstract class DynamicEntity extends Entity{
         } else randomizeLocation();
 
         this.setActionState(Action.IDLE);
-        this.turnState = Turn.COMPLETE;
+        this.setTurnState(Turn.COMPLETE);
     }
 
     public int getHp() {

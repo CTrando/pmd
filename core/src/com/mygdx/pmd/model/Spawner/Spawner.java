@@ -14,7 +14,7 @@ public class Spawner extends DynamicEntity implements Turnbaseable {
 
     public Spawner(Controller controller, int x, int y) {
         super(controller, x, y);
-        turnState = Turn.COMPLETE;
+        this.setTurnState(Turn.COMPLETE);
         isTurnBased = true;
         setActionState(Action.IDLE);
     }

@@ -16,7 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.pmd.PMD;
+import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.screens.DungeonScreen;
+
+import javax.xml.soap.Text;
 
 /**
  * Created by Cameron on 11/26/2016.
@@ -61,6 +64,37 @@ public class Hud {
         timeLabel = new Label("Time left:" + screen.time, skin);
         turnLabel = new Label("Turns left: " + screen.controller.turns, skin);
         textLabel = new Label(inputText.toString(), skin);
+
+        TextButton attackText = new TextButton("Swiper no Swiping", skin);
+        attackText.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                PMD.keys.get(Input.Keys.B).set(true);
+                PMD.keys.get(Input.Keys.T).set(true);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                PMD.keys.get(Input.Keys.B).set(false);
+                PMD.keys.get(Input.Keys.T).set(false);
+            }
+        });
+
+        TextButton test = new TextButton("INSTANT KILLER", skin);
+        test.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                PMD.keys.get(Key.IK.getValue()).set(true);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                PMD.keys.get(Key.IK.getValue()).set(false);
+            }
+        });
+
 
         Image upImg = new Image(PMD.sprites.get("uparrow"));
         //upImg.setScale(.5f);
@@ -161,7 +195,11 @@ public class Hud {
         temp.row();
         temp.add(floorLabel).fill();
         temp.row();
-        temp.add(turnLabel);
+        temp.add(turnLabel).fill();
+        temp.row();
+        temp.add(attackText).fill();
+        temp.row();
+        temp.add(test).fill();
         temp.setBackground(new SpriteDrawable(PMD.sprites.get("rightarrow")));
         temp.pack();
 

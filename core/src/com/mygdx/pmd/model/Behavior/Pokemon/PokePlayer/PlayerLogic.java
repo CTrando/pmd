@@ -18,26 +18,30 @@ public class PlayerLogic extends PokemonBehavior {
 
     @Override
     public void execute() {
-        if (player.turnState != Turn.WAITING || !player.equals(player.currentTile)) return;
+        if (player.isTurnWaiting() && player.equals(player.currentTile)) {
+            player.handleInput();
 
-        player.handleInput();
+            if (player.canAttack()) {
+                if (controller.isKeyPressed(Key.b) && controller.isKeyPressed(Key.t)) {
+                    player.attack(Move.SWIPERNOSWIPING);
+                } else if(controller.isKeyPressed(Key.IK)){
+                    player.attack(Move.INSTANT_KILLER);
+                }
 
-        if (player.canAttack()) {
-            player.attack(Move.INSTANT_KILLER);
-            player.setActionState(Action.ATTACKING);
-            player.turnState = Turn.PENDING;
+                player.setActionState(Action.ATTACKING);
+                player.setTurnState(Turn.PENDING);
 
-            player.behaviors[2] = player.attackBehavior;
-        } else
-        if (player.canMove()) {
-            player.turnState = Turn.COMPLETE;
-            player.setActionState(Action.MOVING);
+                player.behaviors[2] = player.attackBehavior;
+            } else if (player.canMove()) {
+                player.setTurnState(Turn.COMPLETE);
+                player.setActionState(Action.MOVING);
 
-            player.behaviors[2] = player.moveBehavior;
+                player.behaviors[2] = player.moveBehavior;
 
-            if (controller.isKeyPressed(Key.s)) {
-                player.setSpeed(5);
-            } else player.setSpeed(1);
+                if (controller.isKeyPressed(Key.s)) {
+                    player.setSpeed(5);
+                } else player.setSpeed(1);
+            }
         }
     }
 }

@@ -102,19 +102,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         }
 
         batch.end();
-        if (controller.isKeyPressed(Key.t)) {
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.setColor(1, 1, 0, 1);
-            shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-            for (int i = 0; i < tileBoard.length; i++) {
-                for (int j = 0; j < tileBoard[0].length; j++) {
-                    Tile tile = tileBoard[i][j];
-                    shapeRenderer.rect(tile.x, tile.y, Constants.TILE_SIZE, Constants.TILE_SIZE);
-                }
-            }
 
-            shapeRenderer.end();
-        }
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.update(dt);
 

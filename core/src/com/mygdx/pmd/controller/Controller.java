@@ -39,9 +39,6 @@ public class Controller {
     public ArrayList<Entity> turnBasedEntities;
     public Pokemon pokemonPlayer;
 
-    private long lastTimeKeyHit = 0;
-
-
     private Array<Entity> toBeRemoved;
     private Array<Entity> toBeAdded;
 
@@ -108,7 +105,7 @@ public class Controller {
         }
 
         Entity entity = turnBasedEntities.get(turnBasedEntityCount);
-        if (entity.turnState == Turn.COMPLETE) {
+        if (entity.isTurnComplete()) {
             //update the turns
             //currently have no better way of updating
             if (!this.turnsPaused) {
@@ -122,12 +119,14 @@ public class Controller {
             }
 
             entity = turnBasedEntities.get(turnBasedEntityCount);
-            entity.turnState = Turn.WAITING;
+            entity.setTurnState(Turn.WAITING);
 
             //TODO bug here with entities updating even when Turn is pending, and that allows me to move again
+            //only add entities when turns are complete so they don't mess up the counter's position
             addEntities();
-            removeEntities();
         }
+        //remove entities regardless so they don't get updated again
+        removeEntities();
     }
 
     public boolean isKeyPressed(Key key) { //TODO perhaps add a buffer system for more control later
