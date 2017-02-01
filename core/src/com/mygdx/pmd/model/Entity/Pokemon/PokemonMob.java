@@ -5,6 +5,7 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonAnimationBehavior;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokeMob.MobLogic;
+import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.AI.PathFind;
 import com.mygdx.pmd.utils.AI.ShortestPath;
@@ -20,7 +21,8 @@ public class PokemonMob extends Pokemon {
 
     public PokemonMob(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y, pokemonName);
-        this.aggression = Aggression.aggressive;
+        this.aggression = Aggression.passive;
+        this.target = controller.pokemonPlayer;
 
         wander = new Wander(this);
         sPath = new ShortestPath(this);
@@ -63,5 +65,13 @@ public class PokemonMob extends Pokemon {
     @Override
     public void registerObservers() {
         observers[0] = new MovementObserver(this);
+    }
+
+    //need to fix for single responsibility principle
+    @Override
+    public void takeDamage(DynamicEntity aggressor, int damage){
+        super.takeDamage(aggressor, damage);
+        this.aggression = Aggression.aggressive;
+        this.target = aggressor;
     }
 }

@@ -30,7 +30,7 @@ import static com.mygdx.pmd.PMD.keys;
 
 public class Controller {
     public DungeonScreen controllerScreen;
-    public static final int NUM_MAX_ENTITY = 7;
+    public static final int NUM_MAX_ENTITY = 100;
 
     public boolean turnsPaused = false;
     public ArrayList<Renderable> renderList;

@@ -18,6 +18,8 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
     public BaseBehavior attackBehavior;
     public MoveBehavior moveBehavior;
 
+    public DynamicEntity target;
+
     public PokemonName pokemonName;
     public Projectile projectile;
 
@@ -103,11 +105,14 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
                 Tile tile = tileBoard[currentTile.row + i * rOffset][currentTile.col + i * cOffset];
                 if (tile instanceof GenericTile) return false;
 
-                if (tile.dynamicEntities.size > 0) {
-                    if (tile != currentTile && tile.containsAggressionType(Aggression.passive)) {
+                if(tile == currentTile) return false;
+
+                for(DynamicEntity dEntity: tile.dynamicEntities){
+                    if(dEntity == target){
                         return true;
-                    } else return false;
+                    }
                 }
+
             } catch (ArrayIndexOutOfBoundsException e) {
             }
         }

@@ -26,6 +26,16 @@ public class MobLogic extends PokemonBehavior {
                 return;
             }
 
+            //will turn to face the player if the mob is aggressive
+            if(mob.isAggressive()) {
+                mob.setDirectionBasedOnTile(mob.target.currentTile);
+                mob.setFacingTileBasedOnDirection(mob.direction);
+            }
+
+            if(mob.target == null){
+                mob.aggression = Aggression.passive;
+            }
+
             if (mob.canAttack()) {
                 mob.attack(Move.SCRATCH);
                 mob.setTurnState(Turn.PENDING);
@@ -43,6 +53,9 @@ public class MobLogic extends PokemonBehavior {
                     mob.behaviors[2] = mob.moveBehavior;
                     mob.isForcedMove = false;
                 } else
+                    if(mob.isAggressive()){
+                        mob.pathFind = mob.sPath;
+                    }
                     //check to see if it can pathfind
                     if (pathFind()) {
                         if (mob.isWithinRange(controller.pokemonPlayer)) {
@@ -54,7 +67,6 @@ public class MobLogic extends PokemonBehavior {
                             mob.setSpeed(25);
                             mob.setActionState(Action.IDLE);
                         }
-                        //TODO replace filler name
                     }
 
                 if (controller.isKeyPressed(Key.s)) {
@@ -66,7 +78,7 @@ public class MobLogic extends PokemonBehavior {
 
     private boolean pathFind() {
         try {
-            mob.path = mob.pathFind.pathFind(controller.pokemonPlayer.getNextTile());
+            mob.path = mob.pathFind.pathFind(mob.target.getNextTile());
         } catch (PathFindFailureException e) {
             System.out.println("Failed to pathfind");
         }

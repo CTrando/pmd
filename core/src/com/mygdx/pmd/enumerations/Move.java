@@ -1,7 +1,9 @@
 package com.mygdx.pmd.enumerations;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.PMD;
 
 /**
@@ -10,64 +12,45 @@ import com.mygdx.pmd.PMD;
 public enum Move {
 
 
-    NOMOVE(false,0,1,20),
-    SCRATCH(true,20,1,30),
-    SWIPERNOSWIPING(false, 10, 1, 30),
-    GROWL(false,0,1,20),
-    POUND(false,10,1,20), INSTANT_KILLER(true,100000000,5,30);
+    NOMOVE(false,0,1,20, "",""),
+    SCRATCH(true,20,1,30, "projectilemotion", "claw"),
+    SWIPERNOSWIPING(false, 10, 1, 30, "projectilemotion", "claw"),
+    INSTANT_KILLER(true,100000000,5,20, "projectilemotion", "explosion");
 
     private final boolean isRanged;
     public final int damage;
     public final int speed;
     public final Array<Sprite> projectileMovementAnimation;
-    public final Array<Sprite> projectileDeathAnimation;
+    public final Array<Sprite> projectileCollisionAnimation;
     public final int animationLength;
+    public JsonReader jsonReader;
 
-    Move(final boolean isRanged, int damage, int speed, int animationLength){
+    Move(final boolean isRanged, int damage, int speed, int animationLength, String motionHandle, String collisionHandle){
         this.isRanged = isRanged;
         this.damage = damage;
         this.speed = speed;
         this.animationLength = animationLength;
+        this.jsonReader = new JsonReader();
 
-        //this.projectileDeathAnimation = getDeathSprites();
-        this.projectileDeathAnimation = getClawSprites();
-        this.projectileMovementAnimation = getMovementSprites();
+        this.projectileCollisionAnimation = getSpritesFromJson(Gdx.files.internal("utils/MoveStorage.json"), collisionHandle); // getClawSprites();
+        this.projectileMovementAnimation = getSpritesFromJson(Gdx.files.internal("utils/MoveStorage.json"), motionHandle);
     }
 
     public boolean isRanged(){
         return isRanged;
     }
 
-    //I don't want to construct the animation object here because I don't want them to share the same animation object, only the same sprites
-
-    public Array<Sprite> getMovementSprites(){
+    public Array<Sprite> getSpritesFromJson(FileHandle file, String classifier){
         Array<Sprite> retArr = new Array<Sprite>();
-        retArr.add(PMD.sprites.get("projectile1"));
-        retArr.add(PMD.sprites.get("projectile2"));
-        retArr.add(PMD.sprites.get("projectile3"));
+        JsonValue jsonValue = jsonReader.parse(file);
+        JsonValue spritesJson = jsonValue.get(classifier);
 
-        return retArr;
-    }
-
-    public Array<Sprite> getDeathSprites(){
-        Array<Sprite> retArr = new Array<Sprite>();
-        retArr.add(PMD.sprites.get("projectiledeath1"));
-        retArr.add(PMD.sprites.get("projectiledeath2"));
-        retArr.add(PMD.sprites.get("projectiledeath3"));
-
-        return retArr;
-    }
-
-    public Array<Sprite> getClawSprites() {
-        Array<Sprite> retArr = new Array<Sprite>();
-        retArr.add(PMD.sprites.get("claw1"));
-        retArr.add(PMD.sprites.get("claw2"));
-        retArr.add(PMD.sprites.get("claw3"));
-        retArr.add(PMD.sprites.get("claw4"));
-        retArr.add(PMD.sprites.get("claw5"));
-        retArr.add(PMD.sprites.get("claw6"));
-        retArr.add(PMD.sprites.get("claw7"));
-
+        if(spritesJson != null) {
+            for (JsonValue spriteJson : spritesJson.iterator()) {
+                Sprite sprite = PMD.sprites.get(spriteJson.asString());
+                retArr.add(sprite);
+            }
+        }
         return retArr;
     }
 

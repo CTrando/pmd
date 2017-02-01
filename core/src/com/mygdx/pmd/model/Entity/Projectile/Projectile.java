@@ -4,7 +4,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Move;
-import com.mygdx.pmd.model.Behavior.*;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileAnimationBehavior;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileCollisionBehavior;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileMovementBehavior;
@@ -73,7 +72,7 @@ public class Projectile extends DynamicEntity {
         projectileAnimation = new PAnimation("attack", move.projectileMovementAnimation, null, 20, true);
         animationMap.put("movement", projectileAnimation);
 
-        projectileAnimation = new PAnimation("death", move.projectileDeathAnimation, null, move.animationLength, false);
+        projectileAnimation = new PAnimation("death", move.projectileCollisionAnimation, null, move.animationLength, false);
         animationMap.put("death", projectileAnimation);
 
         behaviors[1] = new ProjectileAnimationBehavior(this);
@@ -88,7 +87,7 @@ public class Projectile extends DynamicEntity {
 
         if (projectileAnimation.isFinished() && this.shouldBeDestroyed) {
             for (DynamicEntity dEntity : currentTile.dynamicEntities) {
-                dEntity.takeDamage(move.damage);
+                dEntity.takeDamage(parent, move.damage);
             }
 
             controller.addToRemoveList(this);

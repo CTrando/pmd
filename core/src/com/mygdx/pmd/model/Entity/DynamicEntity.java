@@ -155,7 +155,7 @@ public abstract class DynamicEntity extends Entity{
         }
     }
 
-    public void takeDamage(int damage) {
+    public void takeDamage(DynamicEntity aggressor, int damage) {
         this.setHp(this.getHp() - damage);
     }
 

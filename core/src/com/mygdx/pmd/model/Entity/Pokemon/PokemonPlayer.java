@@ -41,11 +41,11 @@ public class PokemonPlayer extends Pokemon {
 
     public boolean canMove() {
         if (isLegalToMoveTo(possibleNextTile)) {
-            if (possibleNextTile.dynamicEntities.size > 0) {
+            /*if (possibleNextTile.dynamicEntities.size > 0) {
                 for (DynamicEntity dEntity : possibleNextTile.dynamicEntities) {
                     dEntity.forceMoveToTile(currentTile);
                 }
-            }
+            }*/
             setNextTile(possibleNextTile);
         } else {
             return false;
