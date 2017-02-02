@@ -18,19 +18,20 @@ import static com.mygdx.pmd.PMD.keys;
 
 public class DungeonScreen extends PScreen implements InputProcessor {
     public final com.mygdx.pmd.PMD game;
-    SpriteBatch batch;
-    ShapeRenderer shapeRenderer;
-    Hud hud;
+    private SpriteBatch batch;
+    private ShapeRenderer shapeRenderer;
+    public Hud hud;
 
     public Tile[][] tileBoard;
 
     public Controller controller;
 
-    public static final int windowWidth = 5000;
-    public static final int windowLength = 5000; //TODO the stutter might be because of having to reload everything on player movement
+    public static final int windowWidth = 1000;
+    public static final int windowLength = 1000; //TODO the stutter might be because of having to reload everything on player movement
+
     public static final int windowRows = windowLength / Constants.TILE_SIZE;
     public static final int windowCols = windowWidth / Constants.TILE_SIZE;
-    public static final int MAX_CONNCETORS = 50;
+    public static final int MAX_CONNCETORS = 20;
 
     public static final int V_WIDTH = 1080;
     public static final int V_HEIGHT = 720;
@@ -38,30 +39,22 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     public BitmapFont bFont;
     public boolean showHub = false;
 
-    public int time =20;
-
-    public AssetManager manager;
-
-    InputMultiplexer inputMultiplexer;
+    private InputMultiplexer inputMultiplexer;
 
     private OrthographicCamera gameCamera;
     private Viewport gamePort;
 
-    XmlReader xmlReader;
-    public boolean timePaused;
-
     public DungeonScreen(final PMD game) {
+        this.game = game;
+        this.batch = game.batch;
         controller = new Controller(this);
 
-        this.game = game;
-        batch = game.batch;
         bFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
         bFont.getData().setScale(.5f);
 
         shapeRenderer = game.shapeRenderer;
         gameCamera = new OrthographicCamera(PMD.WIDTH, PMD.HEIGHT);
 
-        //gamePort = new FitViewport(PMD.WIDTH, PMD.HEIGHT, gameCamera);\
         gamePort = new ScreenViewport(gameCamera);
         hud = new Hud(this, this.batch);
 
@@ -71,8 +64,6 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         inputMultiplexer.addProcessor(this);
         inputMultiplexer.addProcessor(hud.stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
-
-        //manager.get("sfx/background.ogg", Music.class).play();
     }
 
     @Override
@@ -114,13 +105,11 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     @Override
     public void dispose() {
         batch.dispose();
-        manager.dispose();
     }
 
     @Override
     public void show() {
         //set the global amount of time
-        time = 10;
         controller = new Controller(this);
         hud.reset();
     }

@@ -23,7 +23,7 @@ public class ProjectileCollisionBehavior extends ProjectileBehavior {
      */
     @Override
     public void execute() {
-        if (projectile.currentTile.hasDynamicEntities() && projectile.equals(projectile.currentTile)) {
+        if (projectile.currentTile.hasDynamicEntity() && projectile.equals(projectile.currentTile)) {
             projectile.collide();
         }
 
@@ -32,7 +32,7 @@ public class ProjectileCollisionBehavior extends ProjectileBehavior {
         }
 
         //this code is a range limit on how far away the projectile can go
-        if (projectile.parent.currentTile.calculateDistance(projectile.currentTile) > 5 * 25) {
+        if (projectile.parent.currentTile.calculateDistance(projectile.currentTile) > projectile.move.range * 25) {
             projectile.collide();
         }
     }

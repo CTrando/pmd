@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Behavior.Entity.MoveFastBehavior;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
+import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 
 /**
@@ -22,17 +23,25 @@ public class PlayerLogic extends PokemonBehavior {
             player.handleInput();
 
             if (player.canAttack()) {
-                if (controller.isKeyPressed(Key.b) && controller.isKeyPressed(Key.t)) {
-                    player.attack(Move.SWIPERNOSWIPING);
-                } else if(controller.isKeyPressed(Key.IK)){
-                    player.attack(Move.INSTANT_KILLER);
-                }
+                player.attack(player.move);
+                player.move = null;
 
                 player.setActionState(Action.ATTACKING);
                 player.setTurnState(Turn.PENDING);
 
                 player.behaviors[2] = player.attackBehavior;
             } else if (player.canMove()) {
+                player.setNextTile(player.possibleNextTile);
+                player.possibleNextTile = null;
+
+                if (player.getNextTile().hasDynamicEntity()) {
+                    for (DynamicEntity dEntity : player.getNextTile().dynamicEntities) {
+                        if (dEntity != player) {
+                            dEntity.forceMoveToTile(player.currentTile);
+                        }
+                    }
+                }
+
                 player.setTurnState(Turn.COMPLETE);
                 player.setActionState(Action.MOVING);
 

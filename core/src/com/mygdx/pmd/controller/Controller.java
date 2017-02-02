@@ -34,17 +34,15 @@ public class Controller {
 
     public boolean turnsPaused = false;
     public ArrayList<Renderable> renderList;
-    public ArrayList<Entity> entityList;
+    private ArrayList<Entity> entityList;
     public Array<DynamicEntity> dEntities;
-    public ArrayList<Entity> turnBasedEntities;
+    private ArrayList<Entity> turnBasedEntities;
     public Pokemon pokemonPlayer;
 
     private Array<Entity> toBeRemoved;
     private Array<Entity> toBeAdded;
 
-    public MobSpawner mobSpawner;
-
-    FloorFactory floorFactory;
+    private FloorFactory floorFactory;
     public Floor currentFloor;
 
     public int floorCount = 1;
@@ -79,7 +77,7 @@ public class Controller {
         this.randomizeAllPokemonLocation();
 
         //add in a mob spawner
-        mobSpawner = new MobSpawner(this);
+        MobSpawner mobSpawner = new MobSpawner(this);
         this.directlyAddEntity(mobSpawner);
     }
 
@@ -99,13 +97,14 @@ public class Controller {
 
     public void update() {
         //watch for modulus errors so don't use it
-        Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
-        for (int i = 0; i < entityList.size(); i++) {
-            entityList.get(i).update();
+        for (Entity entity : entityList) {
+            entity.update();
         }
 
         Entity entity = turnBasedEntities.get(turnBasedEntityCount);
         if (entity.isTurnComplete()) {
+            //watch for this method it can mess up the order of the entities
+            Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
             //update the turns
             //currently have no better way of updating
             if (!this.turnsPaused) {
@@ -121,11 +120,11 @@ public class Controller {
             entity = turnBasedEntities.get(turnBasedEntityCount);
             entity.setTurnState(Turn.WAITING);
 
+            //TODO fix all these bugs
             //TODO bug here with entities updating even when Turn is pending, and that allows me to move again
-            //only add entities when turns are complete so they don't mess up the counter's position
-            addEntities();
         }
         //remove entities regardless so they don't get updated again
+        addEntities();
         removeEntities();
     }
 
@@ -238,7 +237,7 @@ public class Controller {
 
         Tile chosenTile = tileBoard[randRow][randCol];
 
-        if (chosenTile instanceof RoomTile && !chosenTile.hasDynamicEntities()) {
+        if (chosenTile instanceof RoomTile && !chosenTile.hasDynamicEntity()) {
             return tileBoard[randRow][randCol];
         } else return chooseUnoccupiedTile(tileBoard);
     }

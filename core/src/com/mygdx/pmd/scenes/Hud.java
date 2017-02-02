@@ -8,11 +8,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.*;
+import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.pmd.PMD;
@@ -31,6 +31,8 @@ public class Hud {
 
     StringBuilder inputText;
 
+    Skin skin;
+
     Label timeLabel;
     Label floorLabel;
     Label testLabel;
@@ -41,7 +43,7 @@ public class Hud {
     GlyphLayout gLayout;
     DungeonScreen screen;
 
-    public Hud(DungeonScreen screen, SpriteBatch batch) {
+    public Hud(final DungeonScreen screen, SpriteBatch batch) {
         //TODO organize this badly
         this.screen = screen;
         customFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
@@ -57,41 +59,26 @@ public class Hud {
         onScreenController.center();
         onScreenController.top();
         onScreenController.setFillParent(true);
-        Skin skin = new Skin(Gdx.files.internal("ui/test.json"));
+        skin = new Skin(Gdx.files.internal("ui/test.json"));
 
         testLabel = new Label("HP: " + screen.controller.pokemonPlayer.hp, skin);
         floorLabel = new Label("Floor: " + screen.controller.floorCount, skin);
-        timeLabel = new Label("Time left:" + screen.time, skin);
         turnLabel = new Label("Turns left: " + screen.controller.turns, skin);
         textLabel = new Label(inputText.toString(), skin);
 
         TextButton attackText = new TextButton("Swiper no Swiping", skin);
-        attackText.addListener(new InputListener(){
+        attackText.addListener(new ChangeListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                PMD.keys.get(Input.Keys.B).set(true);
-                PMD.keys.get(Input.Keys.T).set(true);
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                PMD.keys.get(Input.Keys.B).set(false);
-                PMD.keys.get(Input.Keys.T).set(false);
+            public void changed(ChangeEvent event, Actor actor) {
+                screen.controller.pokemonPlayer.move = Move.SWIPERNOSWIPING;
             }
         });
 
         TextButton test = new TextButton("INSTANT KILLER", skin);
-        test.addListener(new InputListener(){
+        test.addListener(new ChangeListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                PMD.keys.get(Key.IK.getValue()).set(true);
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                PMD.keys.get(Key.IK.getValue()).set(false);
+            public void changed(ChangeEvent event, Actor actor) {
+                screen.controller.pokemonPlayer.move = Move.INSTANT_KILLER;
             }
         });
 
@@ -197,9 +184,10 @@ public class Hud {
         temp.row();
         temp.add(turnLabel).fill();
         temp.row();
-        temp.add(attackText).fill();
+        loadAttackTextButtons(temp);
+       /* temp.add(attackText).fill();
         temp.row();
-        temp.add(test).fill();
+        temp.add(test).fill();*/
         temp.setBackground(new SpriteDrawable(PMD.sprites.get("rightarrow")));
         temp.pack();
 
@@ -242,5 +230,23 @@ public class Hud {
 
     public void reset(){
         inputText.setLength(0);
+    }
+
+    public void loadAttackTextButtons(Table table){
+        JsonReader reader = new JsonReader();
+        JsonValue value = reader.parse(Gdx.files.internal("ui/menu.json"));
+        JsonValue moves = value.get("moves");
+
+        for(final JsonValue move: moves.iterator()){
+            TextButton test = new TextButton(move.asString().toLowerCase(), skin);
+            test.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    screen.controller.pokemonPlayer.move = Enum.valueOf(Move.class, move.asString());
+                }
+            });
+            table.add(test).fill();
+            table.row();
+        }
     }
 }

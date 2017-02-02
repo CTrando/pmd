@@ -259,10 +259,6 @@ public abstract class Tile implements Renderable {
         return false;
     }
 
-    public boolean hasDynamicEntities(){
-        return dynamicEntities.size != 0;
-    }
-
     public boolean equals(Tile o) {
         return (this.row == o.row && this.col == o.col);
     }

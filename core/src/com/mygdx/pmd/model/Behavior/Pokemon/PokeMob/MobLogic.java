@@ -19,7 +19,7 @@ public class MobLogic extends PokemonBehavior {
     @Override
     public void execute() {
         //ensure that when this runs the pokemon's turn is always waiting
-        if(mob.isTurnWaiting()) {
+        if (mob.isTurnWaiting()) {
             //make sure that if the pokemon is moving, it's turn will be set to complete and the algorithm will no longer run
             if (!mob.equals(mob.currentTile)) {
                 mob.setTurnState(Turn.COMPLETE);
@@ -27,12 +27,12 @@ public class MobLogic extends PokemonBehavior {
             }
 
             //will turn to face the player if the mob is aggressive
-            if(mob.isAggressive()) {
+            if (mob.isAggressive()) {
                 mob.setDirectionBasedOnTile(mob.target.currentTile);
                 mob.setFacingTileBasedOnDirection(mob.direction);
             }
 
-            if(mob.target == null){
+            if (mob.target == null) {
                 mob.aggression = Aggression.passive;
             }
 
@@ -46,14 +46,14 @@ public class MobLogic extends PokemonBehavior {
             }
 
             if (mob.canMove()) {
-                mob.setTurnState(Turn.COMPLETE);
-
                 if (mob.isForcedMove) {
                     mob.setActionState(Action.MOVING);
+
+                    mob.setSpeed(1);
                     mob.behaviors[2] = mob.moveBehavior;
                     mob.isForcedMove = false;
-                } else
-                    if(mob.isAggressive()){
+                } else {
+                    if (mob.isAggressive()) {
                         mob.pathFind = mob.sPath;
                     }
                     //check to see if it can pathfind
@@ -68,10 +68,14 @@ public class MobLogic extends PokemonBehavior {
                             mob.setActionState(Action.IDLE);
                         }
                     }
+                }
 
                 if (controller.isKeyPressed(Key.s)) {
                     mob.setSpeed(5);
                 }
+
+                mob.setDirectionBasedOnTile(mob.getNextTile());
+                mob.setTurnState(Turn.COMPLETE);
             }
         }
     }
@@ -91,8 +95,6 @@ public class MobLogic extends PokemonBehavior {
         mob.path.removeValue(this.mob.possibleNextTile, true);
 
         if (this.mob.isLegalToMoveTo(this.mob.possibleNextTile)) {
-            this.mob.setDirectionBasedOnTile(this.mob.possibleNextTile);
-
             this.mob.setNextTile(this.mob.possibleNextTile);
             this.mob.possibleNextTile = null;
         } else {

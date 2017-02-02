@@ -18,8 +18,6 @@ public abstract class DynamicEntity extends Entity{
 
     public boolean isForcedMove;
 
-    public boolean shouldBeDestroyed;
-
     public int hp = 100;
 
     private Tile nextTile;
@@ -33,6 +31,7 @@ public abstract class DynamicEntity extends Entity{
     public DynamicEntity(Controller controller, int x, int y) {
         super(controller, x, y);
         this.direction = Direction.down;
+        this.setFacingTileBasedOnDirection(direction);
     }
 
     public abstract boolean isLegalToMoveTo(Tile tile);
@@ -43,8 +42,8 @@ public abstract class DynamicEntity extends Entity{
     }
 
     public void forceMoveToTile(Tile nextTile){
-        isForcedMove = true;
         this.setNextTile(nextTile);
+        isForcedMove = true;
     }
 
     public void moveToTile(Tile nextTile, int speed) {

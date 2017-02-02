@@ -40,24 +40,11 @@ public class PokemonPlayer extends Pokemon {
     }
 
     public boolean canMove() {
-        if (isLegalToMoveTo(possibleNextTile)) {
-            /*if (possibleNextTile.dynamicEntities.size > 0) {
-                for (DynamicEntity dEntity : possibleNextTile.dynamicEntities) {
-                    dEntity.forceMoveToTile(currentTile);
-                }
-            }*/
-            setNextTile(possibleNextTile);
-        } else {
-            return false;
-        }
-        possibleNextTile = null;
-
-        return true;
+        return isLegalToMoveTo(possibleNextTile);
     }
 
-
     /*
-        These extra inputs do not take turns and can occur as often as the user wishes
+        handles all input - including movement, attack and menus
      */
     public void handleInput() {
         //TODO work out if this second part of the if statement may cause a graphical bug
@@ -138,15 +125,23 @@ public class PokemonPlayer extends Pokemon {
                 //have to do this because of bug with stuck keys with full screen
                 PMD.keys.get(Input.Keys.F11).set(false);
             }
+
+            //these are for the attacks
+            if (controller.isKeyPressed(Key.b) && controller.isKeyPressed(Key.t)) {
+                move = Move.SWIPERNOSWIPING;
+            }
         }
     }
 
+    /**
+     * @return true if the pokemon has a move available, false if not
+     */
     public boolean canAttack() {
-        if (controller.isKeyPressed(Key.b) && controller.isKeyPressed(Key.t)) {
-            return true;
-        } else if(controller.isKeyPressed(Key.IK)){
-            return true;
-        }
-        return false;
+        return move != null;
+    }
+
+    @Override
+    public String toString(){
+        return super.toString() + " player";
     }
 }

@@ -74,4 +74,9 @@ public class PokemonMob extends Pokemon {
         this.aggression = Aggression.aggressive;
         this.target = aggressor;
     }
+
+    @Override
+    public String toString(){
+        return super.toString() + " mob";
+    }
 }

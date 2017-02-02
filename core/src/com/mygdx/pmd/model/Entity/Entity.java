@@ -87,7 +87,6 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         if (currentSprite != null) {
             batch.draw(currentSprite, x, y, currentSprite.getWidth(), currentSprite.getHeight());
         }
-        //I've done the previous sprite thing here before and for whatever reason it didn't work out so don't try it
     }
 
     public void notifyObservers(){
