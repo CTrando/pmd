@@ -1,8 +1,5 @@
 package com.mygdx.pmd.model.Behavior.Projectile;
 
-import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Behavior.*;
-import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 
 /**
@@ -23,16 +20,16 @@ public class ProjectileCollisionBehavior extends ProjectileBehavior {
      */
     @Override
     public void execute() {
-        if (projectile.currentTile.hasDynamicEntity() && projectile.equals(projectile.currentTile)) {
+        if (projectile.getCurrentTile().hasDynamicEntity() && projectile.equals(projectile.getCurrentTile())) {
             projectile.collide();
         }
 
-        if (!projectile.isLegalToMoveTo(projectile.currentTile)) {
+        if (!projectile.isLegalToMoveTo(projectile.getCurrentTile())) {
             projectile.collide();
         }
 
         //this code is a range limit on how far away the projectile can go
-        if (projectile.parent.currentTile.calculateDistance(projectile.currentTile) > projectile.move.range * 25) {
+        if (projectile.parent.getCurrentTile().calculateDistanceTo(projectile.getCurrentTile()) > projectile.move.range * 25) {
             projectile.collide();
         }
     }

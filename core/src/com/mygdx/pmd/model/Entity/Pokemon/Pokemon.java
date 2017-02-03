@@ -67,8 +67,8 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
 
         if (hp <= 0) shouldBeDestroyed = true;
         if (shouldBeDestroyed) {
-            controller.addToRemoveList(this);
-            if (this instanceof PokemonPlayer) controller.controllerScreen.game.dispose();
+            controller.toBeRemoved(this);
+            if (this instanceof PokemonPlayer) controller.screen.game.dispose();
             System.out.println("WOE IS ME I AM DEAD");
             this.dispose();
         }
@@ -101,10 +101,10 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
         for (int i = 1; i < VISIBILITY_RANGE; i++) {
             //these are the rules for viewing things
             try {
-                Tile tile = tileBoard[currentTile.row + i * rOffset][currentTile.col + i * cOffset];
+                Tile tile = tileBoard[getCurrentTile().row + i * rOffset][getCurrentTile().col + i * cOffset];
                 if (tile instanceof GenericTile) return false;
 
-                if(tile == currentTile) return false;
+                if(tile == getCurrentTile()) return false;
 
                 for(DynamicEntity dEntity: tile.dynamicEntities){
                     if(dEntity == target){
@@ -123,6 +123,6 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
     }
 
     public void dispose() {
-        this.currentTile.removeEntity(this);
+        this.getCurrentTile().removeEntity(this);
     }
 }

@@ -7,7 +7,7 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer.*;
 import com.mygdx.pmd.model.Entity.*;
-import com.mygdx.pmd.screens.DungeonScreen;
+import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.utils.observers.MovementObserver;
 
 
@@ -35,7 +35,7 @@ public class PokemonPlayer extends Pokemon {
     @Override
     public void dispose() {
         super.dispose();
-        controller.controllerScreen.game.setScreen(PMD.endScreen);
+        controller.screen.game.setScreen(PMD.endScreen);
         //PMD.manager.get("sfx/background.ogg", Music.class).play();
     }
 
@@ -53,7 +53,7 @@ public class PokemonPlayer extends Pokemon {
             -updates input next - so would be idle and would be able to take in input
             -updates animation last - meaning change from moving to idle would not be recorded
          */
-        if (this.equals(currentTile) && getActionState() == Action.IDLE) {
+        if (this.equals(getCurrentTile()) && getActionState() == Action.IDLE) {
             //if the user hits K, he will not be able to move, but he will be able to set his direction
             if (controller.isKeyPressed(Key.shift)) {
                 if (controller.isKeyPressed(Key.down)) {
@@ -69,13 +69,13 @@ public class PokemonPlayer extends Pokemon {
                 //code for setting the user's next tile
                 try {
                     if (controller.isKeyPressed(Key.down)) {
-                        possibleNextTile = (tileBoard[currentTile.row - 1][currentTile.col]);
+                        possibleNextTile = (tileBoard[getCurrentTile().row - 1][getCurrentTile().col]);
                     } else if (controller.isKeyPressed(Key.left)) {
-                        possibleNextTile = (tileBoard[currentTile.row][currentTile.col - 1]);
+                        possibleNextTile = (tileBoard[getCurrentTile().row][getCurrentTile().col - 1]);
                     } else if (controller.isKeyPressed(Key.right)) {
-                        possibleNextTile = (tileBoard[currentTile.row][currentTile.col + 1]);
+                        possibleNextTile = (tileBoard[getCurrentTile().row][getCurrentTile().col + 1]);
                     } else if (controller.isKeyPressed(Key.up)) {
-                        possibleNextTile = (tileBoard[currentTile.row + 1][currentTile.col]);
+                        possibleNextTile = (tileBoard[getCurrentTile().row + 1][getCurrentTile().col]);
                     } else {
                         possibleNextTile = (null);
                     }
@@ -103,7 +103,7 @@ public class PokemonPlayer extends Pokemon {
             } else if (controller.isKeyPressedTimeSensitive(Key.p)) {
                 controller.turnsPaused = !controller.turnsPaused;
             } else if (controller.isKeyPressed(Key.r)) {
-                //controller.controllerScreen.game.setScreen(PMD.endScreen);
+                //controller.screen.game.setScreen(PMD.endScreen);
                 for (DynamicEntity dEntity : controller.dEntities) {
                     if (dEntity instanceof PokemonMob) {
                         PokemonMob pMob = (PokemonMob) dEntity;
@@ -111,14 +111,14 @@ public class PokemonPlayer extends Pokemon {
                     }
                 }
             } else if (controller.isKeyPressedTimeSensitive(Key.m)) {
-                controller.controllerScreen.showHub = !controller.controllerScreen.showHub;
+                controller.screen.toggleHub();
                 PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
-            } else if (controller.isKeyPressed(Key.escape) && controller.controllerScreen.showHub) {
-                controller.controllerScreen.showHub = false;
+            } else if (controller.isKeyPressed(Key.escape) && controller.screen.showHub) {
+                controller.screen.toggleHub();
             } else if (controller.isKeyPressedTimeSensitive(Key.F11)) {
                 Graphics.DisplayMode mode = Gdx.graphics.getDisplayMode();
                 if (Gdx.graphics.isFullscreen()) {
-                    Gdx.graphics.setWindowedMode(DungeonScreen.V_WIDTH, DungeonScreen.V_HEIGHT);
+                    Gdx.graphics.setWindowedMode(Constants.V_WIDTH, Constants.V_HEIGHT);
                 } else {
                     Gdx.graphics.setFullscreenMode(mode);
                 }

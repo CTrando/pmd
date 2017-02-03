@@ -27,21 +27,21 @@ public class ShortestPath extends PathFind {
             Tile.resetTileArrayParents(tileBoard);
 
             this.resetLists();
-            openNodeList.add(dEntity.currentTile);
+            openNodeList.add(dEntity.getCurrentTile());
 
             while (currentTile != destination) {
                 currentTile = openNodeList.get(0); //TODO Index out of bounds exception occuring here which means that entity.currentTile = null
                 this.evaluateTile(currentTile, destination);
             }
 
-            dEntity.currentTile.setParent(null);
+            dEntity.getCurrentTile().setParent(null);
             Tile backTrack = destination;
 
             while (backTrack.getParent() != null) {
                 backTrack = backTrack.getParent();
                 solutionNodeList.insert(0, backTrack);
             }
-            solutionNodeList.removeValue(dEntity.currentTile, false);
+            solutionNodeList.removeValue(dEntity.getCurrentTile(), false);
             return solutionNodeList;
         } catch(NullPointerException e){
             throw new PathFindFailureException("Null somewhere in here");

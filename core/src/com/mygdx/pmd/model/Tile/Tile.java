@@ -11,7 +11,6 @@ import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Item.Item;
 import com.mygdx.pmd.model.Entity.StaticEntity;
-import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.model.Floor.Floor;
 import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.model.Entity.Entity;
@@ -24,16 +23,16 @@ import java.util.ArrayList;
  * Created by Cameron on 6/17/2016.
  */
 public abstract class Tile implements Renderable {
-    public int x;
-    public int y;
-
     public Controller controller;
     public Floor floor;
 
-    public int spriteValue = 0;
+    public int x;
+    public int y;
 
     public int row;
     public int col;
+
+    public int spriteValue = 0;
 
     public Sprite sprite;
     private Sprite debug = PMD.sprites.get("debugtilesprite");
@@ -89,40 +88,12 @@ public abstract class Tile implements Renderable {
         staticEntities.clear();
     }
 
-    public abstract boolean isLegal();
-
-    public Tile calculateClosestNeighbor(ArrayList<Tile> tiles) {
-        Tile retTile = null;
-        double min = Integer.MAX_VALUE;
-        for (Tile t : tiles) {
-            if (t != this) {
-                double dist = this.calculateDistance(t);
-                if (dist < min) {
-                    min = dist;
-                    retTile = t;
-                }
-            }
-        }
-        return retTile;
+    public double calculateDistanceTo(Tile tile) {
+        return Tile.calculateDistanceTo(this, tile);
     }
 
-    public Tile calculateClosestNeighbor(ArrayList<Tile> tiles, Tile tile) {
-        Tile retTile = null;
-        double min = Integer.MAX_VALUE;
-        for (Tile t : tiles) {
-            if (t != this && t != tile) {
-                double dist = this.calculateDistance(t);
-                if (dist < min) {
-                    min = dist;
-                    retTile = t;
-                }
-            }
-        }
-        return retTile;
-    }
-
-    public double calculateDistance(Tile tile) {
-        return Tile.calculateDistance(this, tile);
+    public static double calculateDistanceTo(Tile t1, Tile t2) {
+        return MathLogic.calculateDistance(t1.x, t1.y, t2.x, t2.y);
     }
 
     public static boolean tileExists(Tile[][] tileBoard, int row, int col) {
@@ -134,10 +105,6 @@ public abstract class Tile implements Renderable {
             return false;
         }
         return true;
-    }
-
-    public static double calculateDistance(Tile t1, Tile t2) {
-        return MathLogic.calculateDistance(t1.x, t1.y, t2.x, t2.y);
     }
 
     public static void resetTileArrayParents(Tile[][] tileBoard) {
@@ -260,6 +227,7 @@ public abstract class Tile implements Renderable {
     }
 
     public boolean equals(Tile o) {
+        if (o == null) return false;
         return (this.row == o.row && this.col == o.col);
     }
 

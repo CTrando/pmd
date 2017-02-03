@@ -1,44 +1,27 @@
 package com.mygdx.pmd.screens;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
-import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.scenes.Hud;
 import com.mygdx.pmd.utils.Constants;
 
-import static com.mygdx.pmd.PMD.keys;
-
 public class DungeonScreen extends PScreen implements InputProcessor {
-    public final com.mygdx.pmd.PMD game;
+
+    public final PMD game;
     private SpriteBatch batch;
-    private ShapeRenderer shapeRenderer;
-    public Hud hud;
 
-    public Tile[][] tileBoard;
-
-    public Controller controller;
-
-    public static final int windowWidth = 1000;
-    public static final int windowLength = 1000; //TODO the stutter might be because of having to reload everything on player movement
-
-    public static final int windowRows = windowLength / Constants.TILE_SIZE;
-    public static final int windowCols = windowWidth / Constants.TILE_SIZE;
-    public static final int MAX_CONNCETORS = 20;
-
-    public static final int V_WIDTH = 1080;
-    public static final int V_HEIGHT = 720;
-
-    public BitmapFont bFont;
+    private Hud hud;
     public boolean showHub = false;
 
+    public Controller controller;
+    public Tile[][] tileBoard;
+
+    public BitmapFont bFont;
     private InputMultiplexer inputMultiplexer;
 
     private OrthographicCamera gameCamera;
@@ -48,31 +31,31 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         this.game = game;
         this.batch = game.batch;
         controller = new Controller(this);
+        tileBoard = controller.currentFloor.tileBoard;
 
         bFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
         bFont.getData().setScale(.5f);
 
-        shapeRenderer = game.shapeRenderer;
         gameCamera = new OrthographicCamera(PMD.WIDTH, PMD.HEIGHT);
-
         gamePort = new ScreenViewport(gameCamera);
-        hud = new Hud(this, this.batch);
 
-        tileBoard = controller.currentFloor.tileBoard;
+        hud = new Hud(this, this.batch);
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(this);
         inputMultiplexer.addProcessor(hud.stage);
+
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
     public void render(float dt) {
         if(controller.turns < 0){
-            game.setScreen(PMD.endScreen);
+            game.switchScreen(PMD.endScreen);
         }
 
         controller.update();
+
         this.updateCamera();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -87,11 +70,9 @@ public class DungeonScreen extends PScreen implements InputProcessor {
                 //bFont.draw(batch, tile.spriteValue+"", tile.x + 5, tile.y+25/2);
             }
         }
-
         for (int i = 0; i< controller.renderList.size(); i++){
             controller.renderList.get(i).render(batch);
         }
-
         batch.end();
 
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -110,6 +91,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     @Override
     public void show() {
         //set the global amount of time
+        //need to reset this
         controller = new Controller(this);
         hud.reset();
     }
@@ -135,15 +117,15 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     }
 
-    public void updateCamera() {
+    private void updateCamera() {
         gameCamera.position.set(controller.pokemonPlayer.x, controller.pokemonPlayer.y, 0);
         gameCamera.update();
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keys.containsKey(keycode))
-            keys.get(keycode).set(true);
+        if (PMD.keys.containsKey(keycode))
+            PMD.keys.get(keycode).set(true);
 
         hud.addText(Input.Keys.toString(keycode));
         return false;
@@ -151,8 +133,8 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        if (keys.containsKey(keycode))
-            keys.get(keycode).set(false);
+        if (PMD.keys.containsKey(keycode))
+            PMD.keys.get(keycode).set(false);
         return false;
 
     }
@@ -185,5 +167,9 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    public void toggleHub(){
+        showHub = !showHub;
     }
 }

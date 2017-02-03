@@ -86,11 +86,11 @@ public class Projectile extends DynamicEntity {
         }
 
         if (projectileAnimation.isFinished() && this.shouldBeDestroyed) {
-            for (DynamicEntity dEntity : currentTile.dynamicEntities) {
+            for (DynamicEntity dEntity : getCurrentTile().dynamicEntities) {
                 dEntity.takeDamage(parent, move.damage);
             }
 
-            controller.addToRemoveList(this);
+            controller.toBeRemoved(this);
 
             //setting this to null so parent will know that the attack has finished
             this.parent.projectile = null;

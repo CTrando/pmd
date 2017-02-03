@@ -9,7 +9,7 @@ import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 import com.mygdx.pmd.model.Factory.PokemonFactory;
 import com.mygdx.pmd.model.Tile.Tile;
-import com.mygdx.pmd.utils.PRandomInt;
+import com.mygdx.pmd.utils.*;
 
 
 /**
@@ -26,9 +26,9 @@ public class MobSpawnBehavior extends SpawnBehavior {
         if(dEntity.isTurnWaiting()) {
             dEntity.setTurnState(Turn.COMPLETE);
 
-            if (controller.dEntities.size < Controller.NUM_MAX_ENTITY) {
+            if (controller.dEntities.size < Constants.NUM_MAX_ENTITY) {
                 dEntity.setActionState(Action.SPAWNING);
-                Tile tile = Controller.chooseUnoccupiedTile(tileBoard);
+                Tile tile = dEntity.floor.chooseUnoccupiedTile();
                 int rand = PRandomInt.random(0, 10);
                 switch (rand) {
                     case 0:

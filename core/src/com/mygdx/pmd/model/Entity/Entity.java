@@ -39,7 +39,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
 
     public Floor floor;
 
-    public Tile currentTile;
+    private Tile currentTile;
     public Tile[][] tileBoard;
 
     public Sprite currentSprite;
@@ -146,4 +146,13 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     public void setTurnState(Turn turnState) {
         this.turnState = turnState;
     }
+
+    public void setCurrentTile(Tile nextTile) {
+        this.currentTile = nextTile;
+    }
+
+    public Tile getCurrentTile() {
+        return currentTile;
+    }
+
 }

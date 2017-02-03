@@ -19,7 +19,7 @@ public class PlayerLogic extends PokemonBehavior {
 
     @Override
     public void execute() {
-        if (player.isTurnWaiting() && player.equals(player.currentTile)) {
+        if (player.isTurnWaiting() && player.equals(player.getCurrentTile())) {
             player.handleInput();
 
             if (player.canAttack()) {
@@ -37,7 +37,7 @@ public class PlayerLogic extends PokemonBehavior {
                 if (player.getNextTile().hasDynamicEntity()) {
                     for (DynamicEntity dEntity : player.getNextTile().dynamicEntities) {
                         if (dEntity != player) {
-                            dEntity.forceMoveToTile(player.currentTile);
+                            dEntity.forceMoveToTile(player.getCurrentTile());
                         }
                     }
                 }

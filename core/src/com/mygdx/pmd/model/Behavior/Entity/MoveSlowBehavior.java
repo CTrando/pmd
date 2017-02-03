@@ -20,7 +20,7 @@ public class MoveSlowBehavior extends MoveBehavior {
             dEntity.moveToTile(dEntity.getNextTile(), dEntity.speed);
         }
 
-        if(dEntity.equals(dEntity.currentTile)) {
+        if(dEntity.equals(dEntity.getCurrentTile())) {
             dEntity.setActionState(Action.IDLE);
             dEntity.behaviors[2] = dEntity.noBehavior;
         }

@@ -21,19 +21,21 @@ public class MobLogic extends PokemonBehavior {
         //ensure that when this runs the pokemon's turn is always waiting
         if (mob.isTurnWaiting()) {
             //make sure that if the pokemon is moving, it's turn will be set to complete and the algorithm will no longer run
-            if (!mob.equals(mob.currentTile)) {
+            if (!mob.equals(mob.getCurrentTile())) {
                 mob.setTurnState(Turn.COMPLETE);
                 return;
             }
 
             //will turn to face the player if the mob is aggressive
             if (mob.isAggressive()) {
-                mob.setDirectionBasedOnTile(mob.target.currentTile);
+                mob.setDirectionBasedOnTile(mob.target.getCurrentTile());
                 mob.setFacingTileBasedOnDirection(mob.direction);
-            }
 
-            if (mob.target == null) {
-                mob.aggression = Aggression.passive;
+                if (mob.target.shouldBeDestroyed) {
+                    mob.target = controller.pokemonPlayer;
+                    mob.aggression = Aggression.passive;
+                    mob.pathFind = mob.wander;
+                }
             }
 
             if (mob.canAttack()) {

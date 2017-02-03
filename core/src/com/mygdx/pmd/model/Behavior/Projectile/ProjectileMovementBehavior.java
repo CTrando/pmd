@@ -31,6 +31,9 @@ public class ProjectileMovementBehavior extends ProjectileBehavior {
                 projectile.x -= projectile.speed;
                 break;
         }
-        projectile.currentTile = Tile.getTileAt(projectile.x, projectile.y, tileBoard);
+        Tile tile = Tile.getTileAt(projectile.x, projectile.y, tileBoard);
+        if(projectile.equals(tile)){
+            projectile.setCurrentTile(tile);
+        }
     }
 }

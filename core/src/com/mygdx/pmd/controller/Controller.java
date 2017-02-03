@@ -29,10 +29,8 @@ import java.util.Collections;
 import static com.mygdx.pmd.PMD.keys;
 
 public class Controller {
-    public DungeonScreen controllerScreen;
-    public static final int NUM_MAX_ENTITY = 100;
+    public DungeonScreen screen;
 
-    public boolean turnsPaused = false;
     public ArrayList<Renderable> renderList;
     private ArrayList<Entity> entityList;
     public Array<DynamicEntity> dEntities;
@@ -47,11 +45,11 @@ public class Controller {
 
     public int floorCount = 1;
     public int turns = 20;
-
     private int turnBasedEntityCount;
+    public boolean turnsPaused = false;
 
-    public Controller(DungeonScreen controllerScreen) {
-        this.controllerScreen = controllerScreen;
+    public Controller(DungeonScreen screen) {
+        this.screen = screen;
 
         //list of entities
         turnBasedEntities = new ArrayList<Entity>();
@@ -70,7 +68,7 @@ public class Controller {
         //decorate floor
         FloorDecorator.placeItems(currentFloor);
         FloorDecorator.skinTiles(currentFloor);
-        FloorDecorator.placeEventTiles(currentFloor, floorFactory);
+        FloorDecorator.placeEventTiles(currentFloor);
 
         //load pMob from xml
         this.loadPokemon();
@@ -84,13 +82,13 @@ public class Controller {
     public void nextFloor() {
         floorCount++;
 
-        //does not actually create a new floor object, but basically a new floor
+        //does not actually create a new floor object, resets the floor
         currentFloor = floorFactory.createFloor(this);
         FloorDecorator.placeItems(currentFloor);
         FloorDecorator.skinTiles(currentFloor);
-        FloorDecorator.placeEventTiles(currentFloor, floorFactory);
+        FloorDecorator.placeEventTiles(currentFloor);
 
-        System.out.println(TileTester.checkCorners(getTileBoard()));
+        if (!TileTester.checkCorners(getTileBoard())) throw new AssertionError("Uh oh, this floor is invalid!");
 
         this.randomizeAllPokemonLocation();
     }
@@ -108,7 +106,7 @@ public class Controller {
             //update the turns
             //currently have no better way of updating
             if (!this.turnsPaused) {
-                if(entity instanceof PokemonPlayer){
+                if (entity instanceof PokemonPlayer) {
                     turns--;
                 }
             }
@@ -128,26 +126,7 @@ public class Controller {
         removeEntities();
     }
 
-    public boolean isKeyPressed(Key key) { //TODO perhaps add a buffer system for more control later
-        return keys.get(key.getValue()).get();
-    }
-
-    /**
-     * Time sensitive key hits - hits are not consecutive
-     * @param key the key entered
-     * @return true if the key has been pressed after a certain period of time - returns false if the key is not pressed or if the key has been pressed too soon
-     */
-    public boolean isKeyPressedTimeSensitive(Key key){
-        if(keys.get(key.getValue()).get()){
-            if(TimeUtils.timeSinceMillis(key.getLastTimeHit()) > 1000) {
-                key.setLastTimeHit(TimeUtils.millis());
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void loadPokemon() {
+    private void loadPokemon() {
         XmlReader xmlReader = new XmlReader();
         XmlReader.Element root = null;
 
@@ -173,24 +152,13 @@ public class Controller {
         }
     }
 
-    public void randomizeAllPokemonLocation() {
+    private void randomizeAllPokemonLocation() {
         for (DynamicEntity dEntity : dEntities) {
             dEntity.randomizeLocation();
         }
     }
 
-    public void toBeAdded(Entity entity){
-        toBeAdded.add(entity);
-    }
-
-    public void addEntities() {
-        for (Entity entity : toBeAdded) {
-            directlyAddEntity(entity);
-        }
-        toBeAdded.clear();
-    }
-
-    public void directlyAddEntity(Entity entity) {
+    private void directlyAddEntity(Entity entity) {
         renderList.add(entity);
         entityList.add(entity);
 
@@ -198,7 +166,6 @@ public class Controller {
             dEntities.add((DynamicEntity) entity);
         }
 
-        //TODO decouple turn based entities from dynamic entities
         if (entity.isTurnBaseable()) {
             turnBasedEntities.add(entity);
         }
@@ -206,6 +173,13 @@ public class Controller {
         if (entity instanceof PokemonPlayer) {
             pokemonPlayer = (PokemonPlayer) entity;
         }
+    }
+
+    private void addEntities() {
+        for (Entity entity : toBeAdded) {
+            directlyAddEntity(entity);
+        }
+        toBeAdded.clear();
     }
 
     private void removeEntities() {
@@ -226,23 +200,34 @@ public class Controller {
         toBeRemoved.clear();
     }
 
-    //TODO fix this method so it only removes after the end of an interation
-    public void addToRemoveList(Entity entity) {
+    public void toBeAdded(Entity entity) {
+        toBeAdded.add(entity);
+    }
+    public void toBeRemoved(Entity entity) {
         toBeRemoved.add(entity);
     }
 
-    public static Tile chooseUnoccupiedTile(Tile[][] tileBoard) {
-        int randRow = PRandomInt.random(0, tileBoard.length - 1);
-        int randCol = PRandomInt.random(0, tileBoard[0].length - 1);
-
-        Tile chosenTile = tileBoard[randRow][randCol];
-
-        if (chosenTile instanceof RoomTile && !chosenTile.hasDynamicEntity()) {
-            return tileBoard[randRow][randCol];
-        } else return chooseUnoccupiedTile(tileBoard);
+    public boolean isKeyPressed(Key key) { //TODO perhaps add a buffer system for more control later
+        return keys.get(key.getValue()).get();
     }
 
-    public Tile[][] getTileBoard(){
+    /**
+     * Time sensitive key hits - hits are not consecutive
+     *
+     * @param key the key entered
+     * @return true if the key has been pressed after a certain period of time - returns false if the key is not pressed or if the key has been pressed too soon
+     */
+    public boolean isKeyPressedTimeSensitive(Key key) {
+        if (keys.get(key.getValue()).get()) {
+            if (TimeUtils.timeSinceMillis(key.getLastTimeHit()) > 1000) {
+                key.setLastTimeHit(TimeUtils.millis());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Tile[][] getTileBoard() {
         return currentFloor.tileBoard;
     }
 }

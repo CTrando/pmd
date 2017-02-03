@@ -10,30 +10,29 @@ import com.mygdx.pmd.utils.PRandomInt;
  * Created by Cameron on 12/15/2016.
  */
 public class Path {
-    public Connector connector;
-    public Tile origin;
-    public Tile terminal;
-    public Array<Tile> pathConstraints;
+    private FloorFactory floorFactory;
+    private Floor floor;
 
-    public FloorFactory floorFactory;
-    public Floor floor;
+    private Connector connector;
+    private Tile originTile;
+    private Tile terminalTile;
+    private Array<Tile> pathConstraints;
 
-    Tile[][] placeHolder;
+    private Tile[][] placeHolder;
     private int originRow;
     private int originCol;
-
 
     public Path(FloorFactory floorFactory, Floor floor, Connector connector) {
         this.connector = connector;
         this.floorFactory = floorFactory;
         this.floor = floor;
 
-        this.origin = connector.tile;
+        this.originTile = connector.tile;
         this.placeHolder = floorFactory.getPlaceHolder();
         this.pathConstraints = new Array<Tile>();
 
-        originRow = origin.row;
-        originCol = origin.col;
+        originRow = originTile.row;
+        originCol = originTile.col;
     }
 
     public void createPath() {
@@ -47,7 +46,7 @@ public class Path {
                     placeHolder[i][originCol] = new RoomTile(i, originCol, floor);
                     pathConstraints.add(placeHolder[i][originCol]);
                 }
-                this.terminal = placeHolder[originRow + pathSize-1][originCol];
+                this.terminalTile = placeHolder[originRow + pathSize-1][originCol];
                 break;
             case down:
                 if (originRow - pathSize <= 1) pathSize = originRow - 1;
@@ -56,7 +55,7 @@ public class Path {
                     placeHolder[i][originCol] = new RoomTile(i, originCol, floor);
                     pathConstraints.add(placeHolder[i][originCol]);
                 }
-                this.terminal = placeHolder[originRow - pathSize+1][originCol];
+                this.terminalTile = placeHolder[originRow - pathSize+1][originCol];
                 break;
             case left:
                 if (originCol - pathSize <= 1) pathSize = originCol - 1;
@@ -65,7 +64,7 @@ public class Path {
                     placeHolder[originRow][i] = new RoomTile(originRow, i, floor);
                     pathConstraints.add(placeHolder[originRow][i]);
                 }
-                this.terminal = placeHolder[originRow][originCol - pathSize+1];
+                this.terminalTile = placeHolder[originRow][originCol - pathSize+1];
                 break;
             case right:
                 if (originCol + pathSize >= placeHolder[0].length-1) pathSize = (placeHolder.length - 1) - originCol;
@@ -74,19 +73,19 @@ public class Path {
                     placeHolder[originRow][i] = new RoomTile(originRow, i, floor);
                     pathConstraints.add(placeHolder[originRow][i]);
                 }
-                this.terminal = placeHolder[originRow][originCol + pathSize-1];
+                this.terminalTile = placeHolder[originRow][originCol + pathSize-1];
                 break;
         }
 
         this.setConnectors();
     }
 
-    public void setConnectors() {
-        Connector connector = new Connector(this.terminal, this.getDirection(), ConnectFrom.PATH);
+    private void setConnectors() {
+        Connector connector = new Connector(this.terminalTile, this.getDirection(), ConnectFrom.PATH);
         floorFactory.addConnector(connector);
     }
 
-    public Direction getDirection() {
+    private Direction getDirection() {
         Direction retDir = getRandomDirection();
         if (retDir != connector.direction.getOppositeDirection()) {
             return retDir;
@@ -96,7 +95,7 @@ public class Path {
         return retDir;
     }
 
-    public Direction getRandomDirection() {
+    private Direction getRandomDirection() {
         int rand = PRandomInt.random(0, 3); //possible error here with PRandomInt
         switch (rand) {
             case 0:

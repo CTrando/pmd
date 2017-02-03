@@ -47,8 +47,8 @@ public class PokemonMob extends Pokemon {
     }
 
     public boolean isWithinRange(Pokemon pokemon){
-        int dR = this.currentTile.row - pokemon.currentTile.row;
-        int dC = this.currentTile.col - pokemon.currentTile.col;
+        int dR = this.getCurrentTile().row - pokemon.getCurrentTile().row;
+        int dC = this.getCurrentTile().col - pokemon.getCurrentTile().col;
 
         if (dR*dR + dC*dC > 400) return false;
         return true;

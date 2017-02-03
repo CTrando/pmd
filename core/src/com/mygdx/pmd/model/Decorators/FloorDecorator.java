@@ -16,7 +16,7 @@ import com.mygdx.pmd.model.Tile.Tile;
 public class FloorDecorator {
     
     public static Floor placeItems(Floor floor){
-        ItemFactory.placeItems(floor.tileBoard);
+        ItemFactory.placeItems(floor);
         return floor;
     }
 
@@ -103,10 +103,10 @@ public class FloorDecorator {
         return true;
     }
 
-    public static Floor placeEventTiles(Floor floor, FloorFactory floorFactory){
-        Tile tile = Controller.chooseUnoccupiedTile(floor.tileBoard);
+    public static Floor placeEventTiles(Floor floor){
+        Tile tile = floor.chooseUnoccupiedTile();
         while(tile.spriteValue <= 250 || tile.hasDynamicEntity()) {
-            tile = Controller.chooseUnoccupiedTile(floor.tileBoard);
+            tile = floor.chooseUnoccupiedTile();
         }
         floor.tileBoard[tile.row][tile.col] = new StairTile(tile.row, tile.col, floor);
         return floor;

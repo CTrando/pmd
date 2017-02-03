@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.Factory;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.model.Entity.Item.Berry;
 import com.mygdx.pmd.model.Entity.Item.Item;
+import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.Tile;
 
 /**
@@ -10,9 +11,9 @@ import com.mygdx.pmd.model.Tile.Tile;
  */
 public class ItemFactory {
 
-    public static void placeItems(Tile[][] tileBoard){
+    public static void placeItems(Floor floor){
         for(int i = 0; i< 20; i++) {
-            Tile rand = Controller.chooseUnoccupiedTile(tileBoard);
+            Tile rand = floor.chooseUnoccupiedTile();
             Item item = new Berry(rand);
 
             rand.addEntity(item);

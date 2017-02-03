@@ -10,7 +10,7 @@ import com.mygdx.pmd.model.Floor.Path;
 import com.mygdx.pmd.model.Floor.Room;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.screens.DungeonScreen;
-import com.mygdx.pmd.utils.PRandomInt;
+import com.mygdx.pmd.utils.*;
 
 
 /**
@@ -22,13 +22,11 @@ import com.mygdx.pmd.utils.PRandomInt;
  * TODO Fix item not being cleared
  */
 public class FloorFactory {
+    private Array<Room> rooms;
+    private Array<Connector> connectors;
+
+    private Floor floor;
     private Tile[][] placeHolder;
-
-    Array<com.mygdx.pmd.model.Floor.Room> rooms;
-    private Array<com.mygdx.pmd.model.Floor.Connector> connectors;
-
-    public boolean stopGenerating = false;
-    Floor floor;
 
     public FloorFactory(Controller controller){
         floor = new Floor(controller);
@@ -39,12 +37,11 @@ public class FloorFactory {
     public Floor createFloor(Controller controller){
         //function needed to clear floor
         floor.clear();
-        placeHolder = new Tile[DungeonScreen.windowRows][DungeonScreen.windowCols];
+        placeHolder = new Tile[Constants.tileBoardRows][Constants.tileBoardCols];
 
         //reset variables - should probably change this
         connectors.clear();
         rooms.clear();
-        stopGenerating = false;
 
         this.createBlankFloor(floor);
         //create the first room
@@ -74,7 +71,7 @@ public class FloorFactory {
 
     private void createConnections(Floor floor){
         System.out.println("Beginning path generation...");
-        while(connectors.size > 0 && connectors.size < DungeonScreen.MAX_CONNCETORS){
+        while(connectors.size > 0 && connectors.size < Constants.MAX_CONNCETORS){
             Connector connector = connectors.pop();
 
             if (connector.connectFrom == ConnectFrom.PATH){
@@ -94,7 +91,7 @@ public class FloorFactory {
 
             System.out.println(connectors.size + " connectors");
         }
-        System.out.println("Done");
+        System.out.println("Done generating");
     }
 
     private void placeTiles(Floor floor){
@@ -110,12 +107,6 @@ public class FloorFactory {
     public void addConnector(Connector connector){
         connectors.add(connector);
     }
-
-   /* public boolean isWithinBounds(int row, int col){
-        if(row >= tileBoard.length || row < 0) return false;
-        if(col >= tileBoard[0].length || col < 0) return false;
-        return true;
-    }*/
 
     public Tile[][] getPlaceHolder() {
         return placeHolder;

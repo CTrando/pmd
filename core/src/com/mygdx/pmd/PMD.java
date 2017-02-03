@@ -46,14 +46,14 @@ public class PMD extends Game {
         manager = new AssetManager();
         sprites = new HashMap<String, Sprite>();
 
-
         this.loadKeys();
         this.loadManager();
+        this.loadSprites();
 
         dungeonScreen = new DungeonScreen(this);
         endScreen = new EndScreen(this);
 
-        this.setScreen(dungeonScreen);
+        this.switchScreen(dungeonScreen);
     }
 
     public void render() {
@@ -61,18 +61,17 @@ public class PMD extends Game {
     }
 
     public void dispose() {
-        //TODO fix this
-      //  batch.dispose();
+        manager.dispose();
+        batch.dispose();
     }
 
-    public void loadImages(TextureAtlas textureAtlas) {
-        for (TextureAtlas.AtlasRegion textureRegion : textureAtlas.getRegions()) {
-            Sprite sprite = textureAtlas.createSprite(textureRegion.name);
-            sprites.put(textureRegion.name, sprite);
+    private void loadKeys() {
+        for (Key key : Key.values()) {
+            keys.put(key.getValue(), new AtomicBoolean(false));
         }
     }
 
-    public void loadManager() {
+    private void loadManager() {
 
         manager.load("pokemonassets/TREEKO_WALKSHEET.atlas", TextureAtlas.class);
         manager.load("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class);
@@ -84,7 +83,9 @@ public class PMD extends Game {
         manager.load("sfx/background.ogg", Music.class);
         manager.load("sfx/wallhit.wav", Sound.class);
         manager.finishLoading();
+    }
 
+    private void loadSprites() {
         this.loadImages(manager.get("pokemonassets/TREEKO_WALKSHEET.atlas", TextureAtlas.class));
         this.loadImages(manager.get("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class));
         this.loadImages(manager.get("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class));
@@ -93,15 +94,15 @@ public class PMD extends Game {
         this.loadImages(manager.get("pokemonassets/ATTACK_SPRITES.atlas", TextureAtlas.class));
     }
 
-
-    public void loadKeys() {
-        for (Key key : Key.values()) {
-            keys.put(key.getValue(), new AtomicBoolean(false));
+    private void loadImages(TextureAtlas textureAtlas) {
+        for (TextureAtlas.AtlasRegion textureRegion : textureAtlas.getRegions()) {
+            Sprite sprite = textureAtlas.createSprite(textureRegion.name);
+            sprites.put(textureRegion.name, sprite);
         }
     }
 
     //TODO add buffer screen system using stacks
-    public void switchScreen(PScreen screen){
+    public void switchScreen(PScreen screen) {
         this.setScreen(screen);
     }
 }

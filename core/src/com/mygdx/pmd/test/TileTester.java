@@ -8,10 +8,12 @@ import com.mygdx.pmd.model.Tile.*;
 public class TileTester {
 
     public static boolean checkCorners(Tile[][] tileBoard){
-        for(int i = 0; i< tileBoard.length; i++){
-            for(int j = 0; j< tileBoard[0].length; j++){
+        for(int i = 0; i< tileBoard.length-1; i++){
+            for(int j = 0; j< tileBoard[0].length-1; j++){
                 if(i == 0 || i == tileBoard.length-1 || j == 0 || j == tileBoard[0].length-1) {
-                    if (tileBoard[i][j].isWalkable) return false;
+                    if (tileBoard[i][j].isWalkable) {
+                        return false;
+                    }
                 }
             }
         }

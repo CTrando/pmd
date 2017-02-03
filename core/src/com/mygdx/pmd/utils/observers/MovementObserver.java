@@ -15,6 +15,6 @@ public class MovementObserver extends Observer {
 
     @Override
     public void update() {
-        entity.currentTile.playEvents(dEntity);
+        entity.getCurrentTile().playEvents(dEntity);
     }
 }

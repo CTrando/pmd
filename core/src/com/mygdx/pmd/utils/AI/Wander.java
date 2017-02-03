@@ -19,7 +19,7 @@ public class Wander extends PathFind {
 
     @Override
     public Array<Tile> pathFind(Tile tile) throws PathFindFailureException {
-        Tile currentTile = dEntity.currentTile;
+        Tile currentTile = dEntity.getCurrentTile();
         Tile nextTile = this.chooseRandomTile(currentTile);
 
         while(!nextTile.isWalkable){

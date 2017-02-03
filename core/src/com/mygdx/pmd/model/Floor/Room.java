@@ -15,19 +15,18 @@ import java.util.ArrayList;
  * Created by Cameron on 6/17/2016.
  */
 public class Room {
-    public ArrayList<Tile> roomConstraints;
 
-    public int startingRow;   //HEIGHT and width are expressed in tiles
-    public int startingCol;
+    private int startingRow;   //HEIGHT and width are expressed in tiles
+    private int startingCol;
 
-    public int width;
-    public int height;
+    private int width;
+    private int height;
 
-    public FloorFactory floorFactory;
-    public Floor floor;
+    private FloorFactory floorFactory;
+    private Floor floor;
 
-    public Tile[][] placeHolder;
-    public Array<Tile> borderTiles;
+    private Tile[][] placeHolder;
+    private Array<Tile> borderTiles;
 
     private Direction orientation;
 
@@ -36,16 +35,16 @@ public class Room {
         this.floor = floor;
         this.placeHolder = floorFactory.getPlaceHolder();
 
-        startingRow = PRandomInt.random(0, placeHolder.length);
-        startingCol = PRandomInt.random(0, placeHolder[0].length);
+        startingRow = PRandomInt.random(1, placeHolder.length);
+        startingCol = PRandomInt.random(1, placeHolder[0].length);
 
         height = PRandomInt.random(2,3);
         width = PRandomInt.random(2, 3);
 
-        if(startingRow + height > placeHolder.length) startingRow = 0;
-        if(startingCol + width > placeHolder[0].length) startingCol = 0;
+        if(startingRow + height > placeHolder.length) startingRow = 1;
+        if(startingCol + width > placeHolder[0].length) startingCol = 1;
 
-        //set up border tiles - perimeter of rectangle
+        //setup border tiles - perimeter of rectangle
         this.borderTiles = new Array<Tile>();
     }
 
@@ -72,7 +71,7 @@ public class Room {
         if(startingRow + height >= placeHolder.length -1) startingRow = (placeHolder.length - 1) - height;
         if(startingCol + width >= placeHolder[0].length -1) startingCol = (placeHolder[0].length - 1)- width;
 
-        //set up border tiles - perimeter of rectangle
+        //setup border tiles - perimeter of rectangle
         this.borderTiles = new Array<Tile>();
     }
 
@@ -91,7 +90,7 @@ public class Room {
         this.setConnectors();
     }
 
-    public void setConnectors(){
+    private void setConnectors(){
         if(borderTiles.size <= 0) return;
         int numConnectors = PRandomInt.random(1,3);
 
@@ -113,13 +112,11 @@ public class Room {
     }
 
 
-    public Direction getDirection(Tile borderTile){
+    private Direction getDirection(Tile borderTile){
         if(borderTile.row == startingRow) return Direction.down;
         if(borderTile.row == startingRow+height-1) return Direction.up;
         if(borderTile.col == startingCol) return Direction.left;
         if(borderTile.col == startingCol+width-1) return Direction.right;
         return null;
-
-        //fix this method if you want to fix the one room thing with one border tile against the tileBoard edge
     }
 }

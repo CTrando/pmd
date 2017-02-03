@@ -243,6 +243,7 @@ public class Hud {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     screen.controller.pokemonPlayer.move = Enum.valueOf(Move.class, move.asString());
+                    screen.toggleHub();
                 }
             });
             table.add(test).fill();

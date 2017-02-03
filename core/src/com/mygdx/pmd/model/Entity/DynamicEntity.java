@@ -14,14 +14,22 @@ import java.util.ArrayList;
 public abstract class DynamicEntity extends Entity{
     public boolean isTurnBased;
     private Action actionState;
-    public Action previousState;
+    private Action previousState;
 
     public boolean isForcedMove;
 
     public int hp = 100;
-
+    /**
+     * The next tile the entity will move to
+     */
     private Tile nextTile;
+    /**
+     * The tile the entity is facing
+     */
     public Tile facingTile;
+    /**
+     * Tile that needs to be legalized before it becomes the next tile, prerequisite of tile movement system
+     */
     public Tile possibleNextTile;
 
     public Direction direction;
@@ -73,36 +81,12 @@ public abstract class DynamicEntity extends Entity{
         }
     }
 
-    public void goToTileImmediately(Tile nextTile) {
+    @Override
+    public void setCurrentTile(Tile nextTile) {
+        super.setCurrentTile(nextTile);
+        //TODO do stuff for projectiles
         this.x = nextTile.x;
         this.y = nextTile.y;
-    }
-
-    public void moveSlow() {
-        this.moveToTile(this.nextTile, 1);
-    }
-
-    public void moveFast() {
-        this.goToTileImmediately(this.currentTile);
-    }
-
-    public boolean currentTileIsWithinList(ArrayList<Tile> list) {
-        for (Tile t : list) {
-            if (t == this.currentTile) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Tile getCurrentTile() {
-        return currentTile;
-    }
-
-    public void setCurrentTile(Tile nextTile) {
-        this.currentTile = nextTile;
-        this.x = currentTile.x;
-        this.y = currentTile.y;
         this.notifyObservers();
     }
 
@@ -110,11 +94,14 @@ public abstract class DynamicEntity extends Entity{
         return nextTile;
     }
 
+    /**
+     * Sets the tile and adds the entity to the next tile and removes it from the current tile
+     */
     public void setNextTile(Tile tile) {
         if (tile == null) return;
 
-        if (this.currentTile != null)
-            this.currentTile.removeEntity(this);
+        if (this.getCurrentTile() != null)
+            this.getCurrentTile().removeEntity(this);
         tile.addEntity(this);
 
         this.nextTile = tile;
@@ -127,7 +114,7 @@ public abstract class DynamicEntity extends Entity{
     }
 
     public void randomizeLocation() {
-        Tile random = Controller.chooseUnoccupiedTile(tileBoard);
+        Tile random = floor.chooseUnoccupiedTile();
 
         if (random.isWalkable) {
             this.setNextTile(random);
@@ -166,16 +153,16 @@ public abstract class DynamicEntity extends Entity{
         try {
             switch (direction) {
                 case up:
-                    facingTile = tileBoard[currentTile.row + 1][currentTile.col];
+                    facingTile = tileBoard[getCurrentTile().row + 1][getCurrentTile().col];
                     break;
                 case down:
-                    facingTile = tileBoard[currentTile.row - 1][currentTile.col];
+                    facingTile = tileBoard[getCurrentTile().row - 1][getCurrentTile().col];
                     break;
                 case right:
-                    facingTile = tileBoard[currentTile.row][currentTile.col + 1];
+                    facingTile = tileBoard[getCurrentTile().row][getCurrentTile().col + 1];
                     break;
                 case left:
-                    facingTile = tileBoard[currentTile.row][currentTile.col - 1];
+                    facingTile = tileBoard[getCurrentTile().row][getCurrentTile().col - 1];
                     break;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -193,20 +180,20 @@ public abstract class DynamicEntity extends Entity{
             this.direction = Direction.up;
     }
 
-    public boolean isToRight(Tile tile) {
-        return currentTile.x > tile.x;
+    private boolean isToRight(Tile tile) {
+        return getCurrentTile().x > tile.x;
     }
 
-    public boolean isToLeft(Tile tile) {
-        return currentTile.x < tile.x;
+    private boolean isToLeft(Tile tile) {
+        return getCurrentTile().x < tile.x;
     }
 
-    public boolean isAbove(Tile tile) {
-        return currentTile.y > tile.y;
+    private boolean isAbove(Tile tile) {
+        return getCurrentTile().y > tile.y;
     }
 
-    public boolean isBelow(Tile tile) {
-        return currentTile.y < tile.y;
+    private boolean isBelow(Tile tile) {
+        return getCurrentTile().y < tile.y;
     }
 
     public void setActionState(Action actionState){
