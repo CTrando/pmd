@@ -1,0 +1,271 @@
+TREEKO_WALKSHEET.png
+size: 27, 909
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+treekodefaultdown
+  rotate: false
+  xy: 0, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekodefaultleft
+  rotate: false
+  xy: 0, 25
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekodefaultright
+  rotate: false
+  xy: 0, 50
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekodefaultup
+  rotate: false
+  xy: 0, 75
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekodown1
+  rotate: false
+  xy: 0, 100
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekodown2
+  rotate: false
+  xy: 0, 125
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekodown3
+  rotate: false
+  xy: 0, 150
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekodownattack1
+  rotate: false
+  xy: 0, 175
+  size: 22, 22
+  orig: 22, 22
+  offset: 0, 0
+  index: -1
+treekodownattack2
+  rotate: false
+  xy: 0, 197
+  size: 20, 22
+  orig: 20, 22
+  offset: 0, 0
+  index: -1
+treekodownattack3
+  rotate: false
+  xy: 0, 219
+  size: 14, 19
+  orig: 14, 19
+  offset: 0, 0
+  index: -1
+treekodownleft1
+  rotate: false
+  xy: 0, 238
+  size: 21, 20
+  orig: 21, 20
+  offset: 0, 0
+  index: -1
+treekodownleft2
+  rotate: false
+  xy: 0, 258
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+treekodownleft3
+  rotate: false
+  xy: 0, 278
+  size: 23, 21
+  orig: 23, 21
+  offset: 0, 0
+  index: -1
+treekodownright1
+  rotate: false
+  xy: 0, 299
+  size: 21, 20
+  orig: 21, 20
+  offset: 0, 0
+  index: -1
+treekodownright2
+  rotate: false
+  xy: 0, 319
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+treekodownright3
+  rotate: false
+  xy: 0, 339
+  size: 23, 21
+  orig: 23, 21
+  offset: 0, 0
+  index: -1
+treekoleft1
+  rotate: false
+  xy: 0, 360
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekoleft2
+  rotate: false
+  xy: 0, 385
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekoleft3
+  rotate: false
+  xy: 0, 410
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekoleftattack1
+  rotate: false
+  xy: 0, 435
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekoleftattack2
+  rotate: false
+  xy: 0, 460
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekoright1
+  rotate: false
+  xy: 0, 485
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekoright2
+  rotate: false
+  xy: 0, 510
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekoright3
+  rotate: false
+  xy: 0, 535
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekorightattack1
+  rotate: false
+  xy: 0, 560
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekorightattack2
+  rotate: false
+  xy: 0, 585
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekoup1
+  rotate: false
+  xy: 0, 610
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekoup2
+  rotate: false
+  xy: 0, 635
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekoup3
+  rotate: false
+  xy: 0, 660
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekoupattack1
+  rotate: false
+  xy: 0, 685
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekoupattack2
+  rotate: false
+  xy: 0, 710
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekoupattack3
+  rotate: false
+  xy: 0, 735
+  size: 25, 30
+  orig: 25, 30
+  offset: 0, 0
+  index: -1
+treekoupleft1
+  rotate: false
+  xy: 0, 765
+  size: 24, 23
+  orig: 24, 23
+  offset: 0, 0
+  index: -1
+treekoupleft2
+  rotate: false
+  xy: 0, 788
+  size: 27, 24
+  orig: 27, 24
+  offset: 0, 0
+  index: -1
+treekoupleft3
+  rotate: false
+  xy: 0, 812
+  size: 24, 25
+  orig: 24, 25
+  offset: 0, 0
+  index: -1
+treekoupright1
+  rotate: false
+  xy: 0, 837
+  size: 24, 23
+  orig: 24, 23
+  offset: 0, 0
+  index: -1
+treekoupright2
+  rotate: false
+  xy: 0, 860
+  size: 27, 24
+  orig: 27, 24
+  offset: 0, 0
+  index: -1
+treekoupright3
+  rotate: false
+  xy: 0, 884
+  size: 24, 25
+  orig: 24, 25
+  offset: 0, 0
+  index: -1

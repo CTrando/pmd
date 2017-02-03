@@ -1,0 +1,82 @@
+ATTACK_SPRITES.png
+size: 275, 25
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+claw1
+  rotate: false
+  xy: 0, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+claw2
+  rotate: false
+  xy: 25, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+claw3
+  rotate: false
+  xy: 50, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+claw4
+  rotate: false
+  xy: 75, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+claw5
+  rotate: false
+  xy: 100, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+claw6
+  rotate: false
+  xy: 125, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+claw7
+  rotate: false
+  xy: 150, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+claw8
+  rotate: false
+  xy: 175, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+claw9
+  rotate: false
+  xy: 200, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+claw10
+  rotate: false
+  xy: 225, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+claw11
+  rotate: false
+  xy: 250, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1

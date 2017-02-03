@@ -9,8 +9,9 @@
 .idea/tasks.xml
 
 # Folders
-android 
-build 
+android/*
+!android/assets
+build
 classes
 
 # Sensitive or high-churn files:
