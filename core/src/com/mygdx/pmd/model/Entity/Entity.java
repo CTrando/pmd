@@ -3,8 +3,7 @@ package com.mygdx.pmd.model.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
@@ -108,7 +107,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         return (tile.x == x && tile.y == y);
     }
 
-    public void loadAnimations(PokemonName pokemonName) {
+    /*public void loadAnimations(PokemonName pokemonName) {
         XmlReader xmlReader = new XmlReader();
         try {
             XmlReader.Element root = xmlReader.parse(Gdx.files.internal("utils/AnimationStorage.xml"));
@@ -127,6 +126,23 @@ public abstract class Entity implements Renderable, Updatable, Observable {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+*/
+    public void loadAnimations(PokemonName pokemonName){
+        JsonReader jsonReader = new JsonReader();
+        JsonValue animations = jsonReader.parse(Gdx.files.internal("utils/AnimationStorage.json"));
+
+        for(JsonValue animationInfo: animations.iterator()){
+            Array<Sprite> spriteArray = new Array<Sprite>();
+            for(JsonValue spriteNames: animationInfo.get("sprites")){
+                spriteArray.add(PMD.sprites.get(pokemonName + spriteNames.asString()));
+            }
+            Sprite finalSprite = PMD.sprites.get(pokemonName + animationInfo.get("finalSprite").asString());
+            PAnimation animation = new PAnimation(animationInfo.name, spriteArray, finalSprite,
+                    animationInfo.getInt("length"), animationInfo.getBoolean("loop"));
+
+            animationMap.put(animationInfo.name, animation);
         }
     }
 

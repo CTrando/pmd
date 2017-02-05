@@ -20,11 +20,6 @@ public class StairTile extends Tile{
     }
 
     @Override
-    public boolean isLegal() {
-        return false;
-    }
-
-    @Override
     public void playEvents(DynamicEntity dEntity) {
         if (dEntity instanceof PokemonPlayer) {
             controller.nextFloor();

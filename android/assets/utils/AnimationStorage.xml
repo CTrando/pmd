@@ -99,7 +99,6 @@
     <Animation name = "noanimation" key ="up">
         <finalsprite name =""/>
         <loopstatus looping = "true"/>
-
     </Animation>
 
 </AnimationStorage>
