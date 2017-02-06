@@ -22,6 +22,7 @@ public class AttackBehavior extends PokemonBehavior {
             pMob.setTurnState(Turn.COMPLETE);
             pMob.setActionState(Action.IDLE);
             pMob.behaviors[2] = pMob.noBehavior;
+            pMob.currentAnimation.clear();
         }
     }
 }

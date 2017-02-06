@@ -17,7 +17,7 @@
         ],
         "finalsprite": "nothing",
         "loop": true,
-        "length": 60
+        "length": 30
     },
     "down": {
         "sprites": [
@@ -37,7 +37,7 @@
         ],
         "finalsprite": "nothing",
         "loop": true,
-        "length": 60
+        "length": 30
     },
     "right": {
         "sprites": [
@@ -57,7 +57,7 @@
         ],
         "finalsprite": "nothing",
         "loop": true,
-        "length": 60
+        "length": 30
     },
     "left": {
         "sprites": [
@@ -77,7 +77,7 @@
         ],
         "finalsprite": "nothing",
         "loop": true,
-        "length": 60
+        "length": 30
     },
     "upattack": {
         "sprites": [

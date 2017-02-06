@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
 
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Turnbaseable;
@@ -68,7 +69,9 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
         if (hp <= 0) shouldBeDestroyed = true;
         if (shouldBeDestroyed) {
             controller.toBeRemoved(this);
-            if (this instanceof PokemonPlayer) controller.screen.game.dispose();
+            if (this instanceof PokemonPlayer) {//controller.screen.game.dispose();
+                controller.screen.game.switchScreen(PMD.endScreen);
+            }
             System.out.println("WOE IS ME I AM DEAD");
             this.dispose();
         }

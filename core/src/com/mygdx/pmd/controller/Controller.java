@@ -122,33 +122,29 @@ public class Controller {
             //TODO bug here with entities updating even when Turn is pending, and that allows me to move again
         }
         //remove entities regardless so they don't get updated again
+        //TODO bug when something dies is because turn counter loses its place
         addEntities();
         removeEntities();
     }
 
-    private void loadPokemon() {
-        XmlReader xmlReader = new XmlReader();
-        XmlReader.Element root = null;
+    private void loadPokemon(){
+        JsonReader json = new JsonReader();
+        JsonValue entities = json.parse(Gdx.files.internal("utils/PokemonStorage.json"));
 
-        try {
-            root = xmlReader.parse(Gdx.files.internal("utils/PokemonStorage.xml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Array<XmlReader.Element> elementList = root.getChildrenByName("Pokemon");
-        XmlReader.Element player = root.getChildByName("PokemonPlayer");
-        PokemonName playerName = Enum.valueOf(PokemonName.class, player.get("name"));
-
-        //init player
-        Pokemon pokemonPlayer = PokemonFactory.createPokemon(this, playerName, PokemonPlayer.class);
-        this.directlyAddEntity(pokemonPlayer);
-
-        //init mobs
-        for (XmlReader.Element e : elementList) {
-            PokemonName pokemonName = Enum.valueOf(PokemonName.class, e.get("name"));
-            Pokemon pokemon = PokemonFactory.createPokemon(this, pokemonName, PokemonMob.class);
-            this.directlyAddEntity(pokemon);
+        for(JsonValue entity: entities.get("entities")){
+            //check for key player
+            if(entity.getString("type").contains("player")){
+                //init players
+                Pokemon pokemonPlayer = PokemonFactory.createPokemon(this,
+                        Enum.valueOf(PokemonName.class, entity.getString("name")), PokemonPlayer.class);
+                this.directlyAddEntity(pokemonPlayer);
+            //check for key mob
+            } else if(entity.getString("type").contains("mob")){
+                //init mobs
+                Pokemon mob = PokemonFactory.createPokemon(this, Enum.valueOf(PokemonName.class,
+                        entity.getString("name")), PokemonMob.class);
+                this.directlyAddEntity(mob);
+            }
         }
     }
 

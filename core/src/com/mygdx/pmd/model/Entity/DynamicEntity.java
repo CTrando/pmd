@@ -100,11 +100,11 @@ public abstract class DynamicEntity extends Entity{
     public void setNextTile(Tile tile) {
         if (tile == null) return;
 
-        if (this.getCurrentTile() != null)
-            this.getCurrentTile().removeEntity(this);
+        this.getCurrentTile().removeEntity(this);
         tile.addEntity(this);
 
         this.nextTile = tile;
+        this.setDirectionBasedOnTile(nextTile);
     }
 
     public void updateCurrentTile(){

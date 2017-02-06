@@ -1,0 +1,21 @@
+{
+    "entities":[
+        {
+            "type": "player",
+            "name": "treeko"
+        },
+        {
+            "type": "mob",
+            "name": "squirtle"
+        },
+        {
+            "type": "mob",
+            "name": "squirtle"
+        },
+        {
+            "type": "mob",
+            "name": "squirtle"
+        }
+    ]
+
+}

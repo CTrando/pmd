@@ -16,7 +16,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     private SpriteBatch batch;
 
     private Hud hud;
-    public boolean showHub = false;
+    public boolean showHub = true;
 
     public Controller controller;
     public Tile[][] tileBoard;

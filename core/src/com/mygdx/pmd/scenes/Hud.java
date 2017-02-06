@@ -162,11 +162,11 @@ public class Hud {
             }
         });
 
+        //TODO fix the controller so it is its own thing
         onScreenController.debug();
 
         onScreenController.add();
         onScreenController.add(upImg).pad(15, 15, 15, 15);
-
         onScreenController.row();
         onScreenController.add(leftImg).pad(15, 15, 15, 15);
         onScreenController.add(attackImg).pad(15, 15, 15, 15);

@@ -173,7 +173,7 @@ public abstract class Tile implements Renderable {
         entityList.remove(entity);
 
         if(entity instanceof DynamicEntity){
-            dynamicEntities.removeValue((DynamicEntity) entity, true);
+            dynamicEntities.removeValue((DynamicEntity) entity, false);
         }
 
         if(entity instanceof StaticEntity){

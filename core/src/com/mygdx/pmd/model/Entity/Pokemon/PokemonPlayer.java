@@ -65,7 +65,7 @@ public class PokemonPlayer extends Pokemon {
                 } else if (controller.isKeyPressed(Key.up)) {
                     direction = Direction.up;
                 }
-            } else
+            } else {
                 //code for setting the user's next tile
                 try {
                     if (controller.isKeyPressed(Key.down)) {
@@ -81,7 +81,7 @@ public class PokemonPlayer extends Pokemon {
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {
                 }
-
+            }
             // set the direction based on key hit - note that one can only change directions and not move when he is not moving
             //TODO switch keys to a refresh system - perhaps use an object instead of an enum
             if (controller.isKeyPressed(Key.down)) {
