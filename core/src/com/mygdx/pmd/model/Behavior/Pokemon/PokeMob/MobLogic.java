@@ -25,6 +25,7 @@ public class MobLogic extends PokemonBehavior {
                 mob.setTurnState(Turn.COMPLETE);
                 return;
             }
+            mob.setTurnState(Turn.COMPLETE);
 
             //will turn to face the player if the mob is aggressive
             if (mob.isAggressive()) {

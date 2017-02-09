@@ -38,6 +38,7 @@ public class PlayerLogic extends PokemonBehavior {
                     for (DynamicEntity dEntity : player.getNextTile().dynamicEntities) {
                         if (dEntity != player) {
                             dEntity.forceMoveToTile(player.getCurrentTile());
+                            dEntity.direction = player.direction.getOppositeDirection();
                         }
                     }
                 }
@@ -51,6 +52,11 @@ public class PlayerLogic extends PokemonBehavior {
                     player.setSpeed(5);
                 } else player.setSpeed(1);
             }
+
+        } else
+        if(player.getActionState() == Action.IDLE) {
+            System.out.println(player.getTurnState());
+            System.out.println(player.getActionState());
         }
     }
 }

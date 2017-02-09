@@ -26,7 +26,7 @@ public class PokemonMob extends Pokemon {
 
         wander = new Wander(this);
         sPath = new ShortestPath(this);
-        //pathFind = new Wander(this);
+
         pathFind = wander;
         path = new Array<Tile>();
 

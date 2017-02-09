@@ -9,6 +9,7 @@ import java.util.Comparator;
  */
 public class PokemonDistanceComparator implements Comparator<Entity> {
 
+    //TODO should probably take in tile distance instead of straight line distance
     Entity entity;
 
     public PokemonDistanceComparator(Entity entity) {

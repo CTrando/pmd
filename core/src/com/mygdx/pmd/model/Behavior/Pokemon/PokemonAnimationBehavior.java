@@ -1,6 +1,6 @@
 package com.mygdx.pmd.model.Behavior.Pokemon;
 
-import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
+import com.mygdx.pmd.model.Entity.Pokemon.*;
 
 /**
  * Created by Cameron on 11/8/2016.
@@ -20,7 +20,6 @@ public class PokemonAnimationBehavior extends PokemonBehavior {
                 break;
             case ATTACKING:
                 pMob.currentAnimation = pMob.animationMap.get(pMob.direction.toString() + "attack");
-                //pMob.currentSprite = pMob.animationMap.get(pMob.direction.toString() + "attack").getCurrentSprite();
                 break;
             case IDLE:
              /*   if(pMob.currentAnimation != null)

@@ -23,8 +23,7 @@ import com.mygdx.pmd.test.TileTester;
 import com.mygdx.pmd.utils.PRandomInt;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 import static com.mygdx.pmd.PMD.keys;
 
@@ -34,7 +33,11 @@ public class Controller {
     public ArrayList<Renderable> renderList;
     private ArrayList<Entity> entityList;
     public Array<DynamicEntity> dEntities;
-    private ArrayList<Entity> turnBasedEntities;
+    //private ArrayList<Entity> turnBasedEntities;
+
+    private LinkedList<Entity> turnBasedEntities;
+    public Entity updatedTurnEntity;
+
     public Pokemon pokemonPlayer;
 
     private Array<Entity> toBeRemoved;
@@ -52,7 +55,7 @@ public class Controller {
         this.screen = screen;
 
         //list of entities
-        turnBasedEntities = new ArrayList<Entity>();
+        turnBasedEntities = new LinkedList<Entity>();
         dEntities = new Array<DynamicEntity>();
         entityList = new ArrayList<Entity>();
         toBeRemoved = new Array<Entity>();
@@ -73,6 +76,7 @@ public class Controller {
         //load pMob from xml
         this.loadPokemon();
         this.randomizeAllPokemonLocation();
+        updatedTurnEntity = turnBasedEntities.poll();
 
         //add in a mob spawner
         MobSpawner mobSpawner = new MobSpawner(this);
@@ -94,52 +98,71 @@ public class Controller {
     }
 
     public void update() {
-        //watch for modulus errors so don't use it
-        for (Entity entity : entityList) {
+        //first update entities, then their turns should turn immediately to complete which allows them to continue on with the next one
+        //this process allows for super quick movement
+        for (int i = 0; i< entityList.size(); i++) {
+            Entity entity = entityList.get(i);
             entity.update();
-        }
 
-        Entity entity = turnBasedEntities.get(turnBasedEntityCount);
-        if (entity.isTurnComplete()) {
-            //watch for this method it can mess up the order of the entities
-            Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
-            //update the turns
-            //currently have no better way of updating
-            if (!this.turnsPaused) {
-                if (entity instanceof PokemonPlayer) {
-                    turns--;
+            if (updatedTurnEntity.isTurnComplete()) {
+                if (!this.turnsPaused) {
+                    if (updatedTurnEntity instanceof PokemonPlayer) {
+                        turns--;
+                    }
                 }
+
+                //need to sort both entity list and turn based entities in order to update them in order
+                if (updatedTurnEntity instanceof PokemonPlayer) {
+                    Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
+                    Collections.sort(entityList, new PokemonDistanceComparator(this.pokemonPlayer));
+                }
+
+                turnBasedEntities.offer(updatedTurnEntity);
+                updatedTurnEntity = turnBasedEntities.poll();
+                updatedTurnEntity.setTurnState(Turn.WAITING);
             }
-
-            if (++turnBasedEntityCount >= turnBasedEntities.size()) {
-                turnBasedEntityCount = 0;
-            }
-
-            entity = turnBasedEntities.get(turnBasedEntityCount);
-            entity.setTurnState(Turn.WAITING);
-
-            //TODO fix all these bugs
-            //TODO bug here with entities updating even when Turn is pending, and that allows me to move again
         }
+
+       /* for(Entity entity: turnBasedEntities) {
+            //Entity entity = turnBasedEntities.get(turnBasedEntityCount);
+            if (entity.isTurnComplete()) {
+                //watch for this method it can mess up the order of the entities
+                Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
+                //update the turns
+                //currently have no better way of updating
+*//*
+                if (++turnBasedEntityCount >= turnBasedEntities.size()) {
+                    turnBasedEntityCount = 0;
+                }*//*
+
+                //entity = turnBasedEntities.get(turnBasedEntityCount);
+                //entity.setTurnState(Turn.WAITING);
+
+
+                turnBasedEntities.get(turnBasedEntities.indexOf(entity)+1).setTurnState(Turn.WAITING);
+                //TODO fix all these bugs
+                //TODO bug here with entities updating even when Turn is pending, and that allows me to move again
+            }
+        }*/
         //remove entities regardless so they don't get updated again
         //TODO bug when something dies is because turn counter loses its place
-        addEntities();
         removeEntities();
+        addEntities();
     }
 
-    private void loadPokemon(){
+    private void loadPokemon() {
         JsonReader json = new JsonReader();
         JsonValue entities = json.parse(Gdx.files.internal("utils/PokemonStorage.json"));
 
-        for(JsonValue entity: entities.get("entities")){
+        for (JsonValue entity : entities.get("entities")) {
             //check for key player
-            if(entity.getString("type").contains("player")){
+            if (entity.getString("type").contains("player")) {
                 //init players
                 Pokemon pokemonPlayer = PokemonFactory.createPokemon(this,
                         Enum.valueOf(PokemonName.class, entity.getString("name")), PokemonPlayer.class);
                 this.directlyAddEntity(pokemonPlayer);
-            //check for key mob
-            } else if(entity.getString("type").contains("mob")){
+                //check for key mob
+            } else if (entity.getString("type").contains("mob")) {
                 //init mobs
                 Pokemon mob = PokemonFactory.createPokemon(this, Enum.valueOf(PokemonName.class,
                         entity.getString("name")), PokemonMob.class);
@@ -163,7 +186,7 @@ public class Controller {
         }
 
         if (entity.isTurnBaseable()) {
-            turnBasedEntities.add(entity);
+            turnBasedEntities.addLast(entity);
         }
 
         if (entity instanceof PokemonPlayer) {
@@ -199,6 +222,7 @@ public class Controller {
     public void toBeAdded(Entity entity) {
         toBeAdded.add(entity);
     }
+
     public void toBeRemoved(Entity entity) {
         toBeRemoved.add(entity);
     }

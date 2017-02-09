@@ -54,7 +54,6 @@ public class PokemonPlayer extends Pokemon {
             -updates animation last - meaning change from moving to idle would not be recorded
          */
         if (this.equals(getCurrentTile()) && getActionState() == Action.IDLE) {
-            //if the user hits K, he will not be able to move, but he will be able to set his direction
             if (controller.isKeyPressed(Key.shift)) {
                 if (controller.isKeyPressed(Key.down)) {
                     direction = Direction.down;
@@ -82,6 +81,7 @@ public class PokemonPlayer extends Pokemon {
                 } catch (ArrayIndexOutOfBoundsException e) {
                 }
             }
+            //if the user hits K, he will not be able to move, but he will be able to set his direction
             // set the direction based on key hit - note that one can only change directions and not move when he is not moving
             //TODO switch keys to a refresh system - perhaps use an object instead of an enum
             if (controller.isKeyPressed(Key.down)) {

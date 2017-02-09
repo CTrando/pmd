@@ -16,7 +16,7 @@ public class Constants {
     public static final int V_WIDTH = 1080;
     public static final int V_HEIGHT = 720;
 
-    public static final int NUM_MAX_ENTITY = 100;
+    public static final int NUM_MAX_ENTITY = 1000;
 }
 
 
