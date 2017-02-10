@@ -74,6 +74,26 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         }
     }
 
+    /**
+     * @param controller
+     * For those entities that do not have a position - for example spawners
+     */
+    public Entity(Controller controller){
+        this.controller = controller;
+
+        noBehavior = new NoBehavior(this);
+
+        //initialize behaviors array
+        behaviors = new BaseBehavior[10];
+        for (int i = 0; i < behaviors.length; i++) {
+            behaviors[i] = this.noBehavior;
+        }
+        observers = new Observer[10];
+        for(int i = 0; i< observers.length; i++){
+            observers[i] = new NoObserver(this);
+        }
+    }
+
     @Override
     public void update() {
         for(int i = 0; i < behaviors.length; i++) {

@@ -3,17 +3,19 @@ package com.mygdx.pmd.screens;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.scenes.Hud;
-import com.mygdx.pmd.utils.Constants;
 
 public class DungeonScreen extends PScreen implements InputProcessor {
-
     public final PMD game;
     private SpriteBatch batch;
+
+    public Array<Renderable> renderList;
 
     private Hud hud;
     public boolean showHub = true;
@@ -28,17 +30,22 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     private Viewport gamePort;
 
     public DungeonScreen(final PMD game) {
+        //init rendering stuff first
         this.game = game;
         this.batch = game.batch;
+        this.renderList = new Array<Renderable>();
+
+        gameCamera = new OrthographicCamera(PMD.WIDTH, PMD.HEIGHT);
+        gamePort = new ScreenViewport(gameCamera);
+
+        //init stuff for updating
         controller = new Controller(this);
         tileBoard = controller.currentFloor.tileBoard;
 
         bFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
         bFont.getData().setScale(.5f);
 
-        gameCamera = new OrthographicCamera(PMD.WIDTH, PMD.HEIGHT);
-        gamePort = new ScreenViewport(gameCamera);
-
+        //init stuff that needs the controller
         hud = new Hud(this, this.batch);
 
         inputMultiplexer = new InputMultiplexer();
@@ -50,34 +57,24 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     @Override
     public void render(float dt) {
-        if(controller.turns < 0){
+        if(Controller.turns < 0){
             game.switchScreen(PMD.endScreen);
         }
 
         controller.update();
-
         this.updateCamera();
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(gameCamera.combined);
         batch.begin();
-
-        for (int i = 0; i < controller.currentFloor.tileBoard.length; i++) {
-            for (int j = 0; j < controller.currentFloor.tileBoard[0].length; j++) {
-                Tile tile = controller.currentFloor.tileBoard[i][j];
-                tile.render(batch);
-                //drawing strings like this is very costly performance wise and causes stuttering
-                //bFont.draw(batch, tile.spriteValue+"", tile.x + 5, tile.y+25/2);
-            }
-        }
-        for (int i = 0; i< controller.renderList.size(); i++){
-            controller.renderList.get(i).render(batch);
+        for (int i = 0; i< renderList.size; i++){
+            renderList.get(i).render(batch);
         }
         batch.end();
-
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.update(dt);
 
+        hud.update(dt);
         if(showHub){
             hud.stage.draw();
         }
@@ -90,9 +87,8 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
     @Override
     public void show() {
-        //set the global amount of time
-        //need to reset this
-        controller = new Controller(this);
+        renderList.clear();
+        controller.reset();
         hud.reset();
     }
 

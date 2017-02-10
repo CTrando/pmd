@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.pmd.PMD;
+import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 
@@ -62,8 +63,8 @@ public class Hud {
         skin = new Skin(Gdx.files.internal("ui/test.json"));
 
         testLabel = new Label("HP: " + screen.controller.pokemonPlayer.hp, skin);
-        floorLabel = new Label("Floor: " + screen.controller.floorCount, skin);
-        turnLabel = new Label("Turns left: " + screen.controller.turns, skin);
+        floorLabel = new Label("Floor: " + Controller.floorCount, skin);
+        turnLabel = new Label("Turns left: " + Controller.turns, skin);
         textLabel = new Label(inputText.toString(), skin);
 
         TextButton attackText = new TextButton("Swiper no Swiping", skin);
@@ -210,12 +211,12 @@ public class Hud {
     public void update(float dt) {
         //reason why not appearing is because did not include : in bit map font
         testLabel.setText("HP: " + screen.controller.pokemonPlayer.hp);
-        floorLabel.setText("Floor: " + screen.controller.floorCount);
-        if(screen.controller.turnsPaused){
+        floorLabel.setText("Floor: " + Controller.floorCount);
+        if(Controller.turnsPaused){
             customFont.setColor(Color.BLUE);
         }
 
-        turnLabel.setText("Turns left: " + screen.controller.turns);
+        turnLabel.setText("Turns left: " + Controller.turns);
 
         String currentText = inputText.toString();
         gLayout.setText(customFont, inputText);

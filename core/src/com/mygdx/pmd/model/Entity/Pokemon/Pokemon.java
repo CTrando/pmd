@@ -4,7 +4,7 @@ package com.mygdx.pmd.model.Entity.Pokemon;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.Turnbaseable;
+import com.mygdx.pmd.interfaces.TurnBased;
 import com.mygdx.pmd.model.Behavior.BaseBehavior;
 import com.mygdx.pmd.model.Behavior.Entity.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.*;
@@ -14,7 +14,7 @@ import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.PAnimation;
 
-public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
+public abstract class Pokemon extends DynamicEntity implements TurnBased {
     private static final int VISIBILITY_RANGE = 3;
     public PAnimation currentAnimation;
     public BaseBehavior attackBehavior;
@@ -55,8 +55,8 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
             }
         }
 
-        if (!tile.isWalkable)
-            return false;
+        if (!tile.isWalkable) return false;
+
         return true;
     }
 
@@ -68,7 +68,9 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
 
         if (hp <= 0) shouldBeDestroyed = true;
         if (shouldBeDestroyed) {
+            this.setTurnState(Turn.COMPLETE);
             controller.toBeRemoved(this);
+
             if (this instanceof PokemonPlayer) {//controller.screen.game.dispose();
                 controller.screen.game.switchScreen(PMD.endScreen);
             }
@@ -83,7 +85,7 @@ public abstract class Pokemon extends DynamicEntity implements Turnbaseable {
         controller.toBeAdded(this.projectile);
     }
 
-    public boolean isEnemyInSight() {
+    public boolean canSeeEnemy() {
         if (this.aggression != Aggression.aggressive) return false;
         int rOffset = 0;
         int cOffset = 0;

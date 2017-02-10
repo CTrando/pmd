@@ -3,7 +3,6 @@ package com.mygdx.pmd.model.Entity.Pokemon;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Behavior.Pokemon.PokemonAnimationBehavior;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokeMob.MobLogic;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Tile.Tile;
@@ -55,7 +54,7 @@ public class PokemonMob extends Pokemon {
     }
 
     public boolean canAttack() {
-        return isEnemyInSight() && aggression == Aggression.aggressive;
+        return canSeeEnemy() && aggression == Aggression.aggressive;
     }
 
     public boolean canMove() {

@@ -101,7 +101,7 @@ public class PokemonPlayer extends Pokemon {
                 this.setTurnState(Turn.COMPLETE);
                 possibleNextTile = null;
             } else if (controller.isKeyPressedTimeSensitive(Key.p)) {
-                controller.turnsPaused = !controller.turnsPaused;
+                Controller.turnsPaused = !Controller.turnsPaused;
             } else if (controller.isKeyPressed(Key.r)) {
                 //controller.screen.game.setScreen(PMD.endScreen);
                 for (DynamicEntity dEntity : controller.dEntities) {

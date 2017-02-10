@@ -1,5 +1,6 @@
 package com.mygdx.pmd.model.Floor;
 
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.model.Entity.*;
@@ -10,14 +11,13 @@ import com.mygdx.pmd.utils.*;
 /**
  * Created by Cameron on 1/24/2017.
  */
-public class Floor {
+public class Floor extends Entity{
 
     public Tile[][] tileBoard;
-    public Controller controller;
-    public Array<StaticEntity> staticEntities;
+    private Array<StaticEntity> staticEntities;
 
     public Floor(Controller controller){
-        this.controller = controller;
+        super(controller);
         tileBoard = new Tile[Constants.tileBoardRows][Constants.tileBoardCols];
 
         staticEntities = new Array<StaticEntity>();
@@ -40,6 +40,7 @@ public class Floor {
     }
 
     /**
+     * Recursive method
      * @return Returns an unoccupied room tile
      */
     public Tile chooseUnoccupiedTile() {
@@ -51,5 +52,22 @@ public class Floor {
         if (chosenTile instanceof RoomTile && !chosenTile.hasDynamicEntity()) {
             return tileBoard[randRow][randCol];
         } else return chooseUnoccupiedTile();
+    }
+
+    @Override
+    public void registerObservers() {
+
+    }
+
+    @Override
+    public void render(SpriteBatch batch){
+        for (int i = 0; i < tileBoard.length; i++) {
+            for (int j = 0; j < tileBoard[0].length; j++) {
+                Tile tile = controller.currentFloor.tileBoard[i][j];
+                tile.render(batch);
+                //drawing strings like this is very costly performance wise and causes stuttering
+                //bFont.draw(batch, tile.spriteValue+"", tile.x + 5, tile.y+25/2);
+            }
+        }
     }
 }

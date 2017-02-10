@@ -5,24 +5,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.comparators.PokemonDistanceComparator;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.Renderable;
-import com.mygdx.pmd.model.Decorators.FloorDecorator;
-import com.mygdx.pmd.model.Entity.DynamicEntity;
-import com.mygdx.pmd.model.Factory.FloorFactory;
-import com.mygdx.pmd.model.Factory.PokemonFactory;
-import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
-import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
-import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
-import com.mygdx.pmd.model.Floor.Floor;
-import com.mygdx.pmd.model.Spawner.MobSpawner;
-import com.mygdx.pmd.model.Tile.RoomTile;
-import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.Decorators.*;
+import com.mygdx.pmd.model.Entity.*;
+import com.mygdx.pmd.model.Entity.Pokemon.*;
+import com.mygdx.pmd.model.Factory.*;
+import com.mygdx.pmd.model.Floor.*;
+import com.mygdx.pmd.model.Spawner.*;
+import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.screens.DungeonScreen;
-import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.test.TileTester;
-import com.mygdx.pmd.utils.PRandomInt;
 
-import java.io.IOException;
 import java.util.*;
 
 import static com.mygdx.pmd.PMD.keys;
@@ -30,13 +22,10 @@ import static com.mygdx.pmd.PMD.keys;
 public class Controller {
     public DungeonScreen screen;
 
-    public ArrayList<Renderable> renderList;
     private ArrayList<Entity> entityList;
     public Array<DynamicEntity> dEntities;
-    //private ArrayList<Entity> turnBasedEntities;
-
     private LinkedList<Entity> turnBasedEntities;
-    public Entity updatedTurnEntity;
+    private Entity updatedTurnEntity;
 
     public Pokemon pokemonPlayer;
 
@@ -46,14 +35,17 @@ public class Controller {
     private FloorFactory floorFactory;
     public Floor currentFloor;
 
-    public int floorCount = 1;
-    public int turns = 20;
-    private int turnBasedEntityCount;
-    public boolean turnsPaused = false;
+    public static int floorCount = 1;
+    public static int turns = 20;
+    public static boolean turnsPaused = false;
+
 
     public Controller(DungeonScreen screen) {
         this.screen = screen;
+        this.reset();
+    }
 
+    public void reset(){
         //list of entities
         turnBasedEntities = new LinkedList<Entity>();
         dEntities = new Array<DynamicEntity>();
@@ -61,12 +53,10 @@ public class Controller {
         toBeRemoved = new Array<Entity>();
         toBeAdded = new Array<Entity>();
 
-        //list of renderables
-        renderList = new ArrayList<Renderable>();
-
         //init tileboard
         floorFactory = new FloorFactory(this);
         currentFloor = floorFactory.createFloor(this);
+        this.directlyAddEntity(currentFloor);
 
         //decorate floor
         FloorDecorator.placeItems(currentFloor);
@@ -100,19 +90,17 @@ public class Controller {
     public void update() {
         //first update entities, then their turns should turn immediately to complete which allows them to continue on with the next one
         //this process allows for super quick movement
-        for (int i = 0; i< entityList.size(); i++) {
+        for (int i = 0; i < entityList.size(); i++) {
             Entity entity = entityList.get(i);
             entity.update();
 
             if (updatedTurnEntity.isTurnComplete()) {
-                if (!this.turnsPaused) {
-                    if (updatedTurnEntity instanceof PokemonPlayer) {
-                        turns--;
-                    }
-                }
-
                 //need to sort both entity list and turn based entities in order to update them in order
                 if (updatedTurnEntity instanceof PokemonPlayer) {
+                    if (!turnsPaused) {
+                        turns--;
+                    }
+
                     Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
                     Collections.sort(entityList, new PokemonDistanceComparator(this.pokemonPlayer));
                 }
@@ -122,30 +110,6 @@ public class Controller {
                 updatedTurnEntity.setTurnState(Turn.WAITING);
             }
         }
-
-       /* for(Entity entity: turnBasedEntities) {
-            //Entity entity = turnBasedEntities.get(turnBasedEntityCount);
-            if (entity.isTurnComplete()) {
-                //watch for this method it can mess up the order of the entities
-                Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
-                //update the turns
-                //currently have no better way of updating
-*//*
-                if (++turnBasedEntityCount >= turnBasedEntities.size()) {
-                    turnBasedEntityCount = 0;
-                }*//*
-
-                //entity = turnBasedEntities.get(turnBasedEntityCount);
-                //entity.setTurnState(Turn.WAITING);
-
-
-                turnBasedEntities.get(turnBasedEntities.indexOf(entity)+1).setTurnState(Turn.WAITING);
-                //TODO fix all these bugs
-                //TODO bug here with entities updating even when Turn is pending, and that allows me to move again
-            }
-        }*/
-        //remove entities regardless so they don't get updated again
-        //TODO bug when something dies is because turn counter loses its place
         removeEntities();
         addEntities();
     }
@@ -178,7 +142,7 @@ public class Controller {
     }
 
     private void directlyAddEntity(Entity entity) {
-        renderList.add(entity);
+        screen.renderList.add(entity);
         entityList.add(entity);
 
         if (entity instanceof DynamicEntity) {
@@ -205,7 +169,7 @@ public class Controller {
         if (toBeRemoved.size == 0) return;
 
         for (Entity entity : toBeRemoved) {
-            renderList.remove(entity);
+            screen.renderList.removeValue(entity, true);
             entityList.remove(entity);
 
             if (entity.isTurnBaseable()) {
