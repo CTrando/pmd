@@ -10,9 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.Key;
-import com.mygdx.pmd.screens.DungeonScreen;
-import com.mygdx.pmd.screens.EndScreen;
-import com.mygdx.pmd.screens.PScreen;
+import com.mygdx.pmd.screens.*;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -31,6 +29,7 @@ public class PMD extends Game {
 
     public static PScreen dungeonScreen;
     public static PScreen endScreen;
+    public static PScreen introScreen;
 
     public SpriteBatch batch;
     public ShapeRenderer shapeRenderer;
@@ -50,10 +49,12 @@ public class PMD extends Game {
         this.loadManager();
         this.loadSprites();
 
+
+        introScreen = new IntroScreen(this);
         dungeonScreen = new DungeonScreen(this);
         endScreen = new EndScreen(this);
 
-        this.switchScreen(dungeonScreen);
+        this.switchScreen(introScreen);
     }
 
     public void render() {

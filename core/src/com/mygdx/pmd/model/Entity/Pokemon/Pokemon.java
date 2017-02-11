@@ -1,7 +1,8 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
 
-import com.mygdx.pmd.PMD;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.TurnBased;
@@ -12,10 +13,9 @@ import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.Tile;
-import com.mygdx.pmd.utils.PAnimation;
+import com.mygdx.pmd.utils.*;
 
 public abstract class Pokemon extends DynamicEntity implements TurnBased {
-    private static final int VISIBILITY_RANGE = 3;
     public PAnimation currentAnimation;
     public BaseBehavior attackBehavior;
     public MoveBehavior moveBehavior;
@@ -24,14 +24,22 @@ public abstract class Pokemon extends DynamicEntity implements TurnBased {
     public Projectile projectile;
 
     public PokemonBehavior logic;
-    public PokemonName pokemonName;
-    public Move move;
+    private PokemonName pokemonName;
+
+    public Array<Move> moves;
+    public Move currentMove;
 
     protected Pokemon(Controller controller, int x, int y, PokemonName pokemonName) {
         super(controller, x, y);
         this.direction = Direction.down;
         this.setActionState(Action.IDLE);
+
+        //initialize moves and add default move
+        moves = new Array<Move>(4);
+        moves.add(Move.SCRATCH);
+
         this.pokemonName = pokemonName;
+        this.loadAnimations(pokemonName);
 
         this.attackBehavior = new AttackBehavior(this);
         this.moveBehavior = new MoveSlowBehavior(this);
@@ -65,27 +73,21 @@ public abstract class Pokemon extends DynamicEntity implements TurnBased {
         super.update();
         updateCurrentTile();
         setFacingTileBasedOnDirection(direction);
-
-        if (hp <= 0) shouldBeDestroyed = true;
-        if (shouldBeDestroyed) {
-            this.setTurnState(Turn.COMPLETE);
-            controller.toBeRemoved(this);
-
-            if (this instanceof PokemonPlayer) {//controller.screen.game.dispose();
-                controller.screen.game.switchScreen(PMD.endScreen);
-            }
-            System.out.println("WOE IS ME I AM DEAD");
-            this.dispose();
-        }
     }
 
-    public void attack(Move move) {
-        this.move = move;
-        this.projectile = new Projectile(this, move);
+    public void attack(){
+        this.currentMove = moves.random();
+        this.projectile = new Projectile(this, currentMove);
         controller.toBeAdded(this.projectile);
     }
 
-    public boolean canSeeEnemy() {
+    public void attack(Move move) {
+        this.currentMove = move;
+        this.projectile = new Projectile(this, currentMove);
+        controller.toBeAdded(this.projectile);
+    }
+
+    protected boolean canSeeEnemy() {
         if (this.aggression != Aggression.aggressive) return false;
         int rOffset = 0;
         int cOffset = 0;
@@ -103,7 +105,7 @@ public abstract class Pokemon extends DynamicEntity implements TurnBased {
             case left:
                 cOffset = -1;
         }
-        for (int i = 1; i < VISIBILITY_RANGE; i++) {
+        for (int i = 1; i < Constants.VISIBILITY_RANGE; i++) {
             //these are the rules for viewing things
             try {
                 Tile tile = tileBoard[getCurrentTile().row + i * rOffset][getCurrentTile().col + i * cOffset];
@@ -130,4 +132,5 @@ public abstract class Pokemon extends DynamicEntity implements TurnBased {
     public void dispose() {
         this.getCurrentTile().removeEntity(this);
     }
+
 }

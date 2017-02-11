@@ -18,7 +18,7 @@ import com.mygdx.pmd.utils.PAnimation;
 public class Projectile extends DynamicEntity {
     public Pokemon parent;
 
-    //instance fields from move
+    //instance fields from currentMove
     public Move move;
     public boolean isRanged;
     public int damage;
@@ -34,7 +34,7 @@ public class Projectile extends DynamicEntity {
         this.isTurnBased = false;
         this.direction = parent.direction;
 
-        //store move data
+        //store currentMove data
         this.move = move;
         this.damage = move.damage;
         this.speed = move.speed;
@@ -53,7 +53,7 @@ public class Projectile extends DynamicEntity {
     /**
      * set a behavior that will allow for movement
      */
-    public void loadMovementLogic() {
+    private void loadMovementLogic() {
         behaviors[2] = new ProjectileMovementBehavior(this);
         this.setActionState(Action.MOVING);
     }
@@ -61,14 +61,14 @@ public class Projectile extends DynamicEntity {
     /**
      * set collision logic
      */
-    public void loadCollisionLogic() {
+    private void loadCollisionLogic() {
         behaviors[0] = new ProjectileCollisionBehavior(this);
     }
 
     /**
      * initialize animations - include adding animation behavior
      */
-    public void loadAnimations() {
+    private void loadAnimations() {
         projectileAnimation = new PAnimation("attack", move.projectileMovementAnimation, null, 20, true);
         animationMap.put("movement", projectileAnimation);
 
@@ -91,6 +91,10 @@ public class Projectile extends DynamicEntity {
             }
 
             controller.toBeRemoved(this);
+
+            if(move.equals(Move.INSTANT_KILLER)){
+                System.out.println("RKO OUT OF NOWHERE");
+            }
 
             //setting this to null so parent will know that the attack has finished
             this.parent.projectile = null;

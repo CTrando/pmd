@@ -95,7 +95,7 @@ public class FloorFactory {
     }
 
     private void placeTiles(Floor floor){
-        // set sprite based on spriteValue and move placeHolder to tileBoard
+        // set sprite based on spriteValue and currentMove placeHolder to tileBoard
         for(int i = 0; i< placeHolder.length; i++) {
             for (int j = 0; j < placeHolder.length; j++) {
                 Tile tile = placeHolder[i][j];

@@ -18,6 +18,17 @@ public class MobLogic extends PokemonBehavior {
 
     @Override
     public void execute() {
+        if (mob.hp <= 0) {
+            mob.shouldBeDestroyed = true;
+        }
+
+        if (mob.shouldBeDestroyed) {
+            mob.setTurnState(Turn.COMPLETE);
+            controller.toBeRemoved(mob);
+            System.out.println("WOE IS ME I AM DEAD");
+            mob.dispose();
+        }
+
         //ensure that when this runs the pokemon's turn is always waiting
         if (mob.isTurnWaiting()) {
             //make sure that if the pokemon is moving, it's turn will be set to complete and the algorithm will no longer run
@@ -40,7 +51,8 @@ public class MobLogic extends PokemonBehavior {
             }
 
             if (mob.canAttack()) {
-                mob.attack(Move.SCRATCH);
+                mob.attack();
+
                 mob.setTurnState(Turn.PENDING);
                 mob.setActionState(Action.ATTACKING);
 

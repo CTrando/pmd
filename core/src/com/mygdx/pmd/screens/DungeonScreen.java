@@ -47,12 +47,6 @@ public class DungeonScreen extends PScreen implements InputProcessor {
 
         //init stuff that needs the controller
         hud = new Hud(this, this.batch);
-
-        inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(this);
-        inputMultiplexer.addProcessor(hud.stage);
-
-        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
@@ -90,6 +84,12 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         renderList.clear();
         controller.reset();
         hud.reset();
+
+        inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(this);
+        inputMultiplexer.addProcessor(hud.stage);
+
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer;
 
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Behavior.Entity.MoveFastBehavior;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
@@ -19,12 +19,25 @@ public class PlayerLogic extends PokemonBehavior {
 
     @Override
     public void execute() {
+        if (player.hp <= 0) {
+            player.shouldBeDestroyed = true;
+        }
+
+        if (player.shouldBeDestroyed) {
+            player.setTurnState(Turn.COMPLETE);
+            controller.toBeRemoved(player);
+            controller.screen.game.switchScreen(PMD.endScreen);
+
+            System.out.println("WOE IS ME I AM DEAD");
+            player.dispose();
+        }
+
         if (player.isTurnWaiting() && player.equals(player.getCurrentTile())) {
             player.handleInput();
 
             if (player.canAttack()) {
-                player.attack(player.move);
-                player.move = null;
+                player.attack(player.currentMove);
+                player.currentMove = null;
 
                 player.setActionState(Action.ATTACKING);
                 player.setTurnState(Turn.PENDING);
@@ -53,8 +66,7 @@ public class PlayerLogic extends PokemonBehavior {
                 } else player.setSpeed(1);
             }
 
-        } else
-        if(player.getActionState() == Action.IDLE) {
+        } else if (player.getActionState() == Action.IDLE) {
             System.out.println(player.getTurnState());
             System.out.println(player.getActionState());
         }

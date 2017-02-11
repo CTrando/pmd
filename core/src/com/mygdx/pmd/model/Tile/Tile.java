@@ -216,16 +216,6 @@ public abstract class Tile implements Renderable {
         return false;
     }
 
-    public boolean containsAggressionType(Aggression type){
-        //TODO seeing me in the place of the other so still attacking, need to change it so that if it sees obstacle don't attack
-        for(DynamicEntity dEntity: dynamicEntities){
-            if(dEntity.aggression == type){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean equals(Tile o) {
         if (o == null) return false;
         return (this.row == o.row && this.col == o.col);

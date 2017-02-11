@@ -20,7 +20,7 @@ public abstract class DynamicEntity extends Entity{
 
     public int hp = 100;
     /**
-     * The next tile the entity will move to
+     * The next tile the entity will currentMove to
      */
     private Tile nextTile;
     /**
@@ -84,7 +84,6 @@ public abstract class DynamicEntity extends Entity{
     @Override
     public void setCurrentTile(Tile nextTile) {
         super.setCurrentTile(nextTile);
-        //TODO do stuff for projectiles
         this.x = nextTile.x;
         this.y = nextTile.y;
         this.notifyObservers();

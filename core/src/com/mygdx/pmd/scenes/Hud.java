@@ -20,8 +20,6 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 
-import javax.xml.soap.Text;
-
 /**
  * Created by Cameron on 11/26/2016.
  */
@@ -71,7 +69,7 @@ public class Hud {
         attackText.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                screen.controller.pokemonPlayer.move = Move.SWIPERNOSWIPING;
+                screen.controller.pokemonPlayer.currentMove = Move.SWIPERNOSWIPING;
             }
         });
 
@@ -79,10 +77,9 @@ public class Hud {
         test.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                screen.controller.pokemonPlayer.move = Move.INSTANT_KILLER;
+                screen.controller.pokemonPlayer.currentMove = Move.INSTANT_KILLER;
             }
         });
-
 
         Image upImg = new Image(PMD.sprites.get("uparrow"));
         //upImg.setScale(.5f);
@@ -163,7 +160,7 @@ public class Hud {
             }
         });
 
-        //TODO fix the controller so it is its own thing
+        //TODO fix the controller so it is its own thing also fix for being able to press when off screen
         onScreenController.debug();
 
         onScreenController.add();
@@ -243,7 +240,7 @@ public class Hud {
             test.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    screen.controller.pokemonPlayer.move = Enum.valueOf(Move.class, move.asString());
+                    screen.controller.pokemonPlayer.currentMove = Enum.valueOf(Move.class, move.asString());
                     screen.toggleHub();
                 }
             });

@@ -127,28 +127,6 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         return (tile.x == x && tile.y == y);
     }
 
-    /*public void loadAnimations(PokemonName pokemonName) {
-        XmlReader xmlReader = new XmlReader();
-        try {
-            XmlReader.Element root = xmlReader.parse(Gdx.files.internal("utils/AnimationStorage.xml"));
-            for (XmlReader.Element element : root.getChildrenByName("Animation")) {
-                String name = element.get("name");
-                Array<Sprite> spriteArray = new Array<Sprite>();
-                for (XmlReader.Element child : element.getChildrenByName("sprite")) {
-                    Sprite sprite = PMD.sprites.get(pokemonName + child.get("name"));
-                    if (sprite != null)
-                        spriteArray.add(sprite);
-                }
-                Sprite finalSprite = PMD.sprites.get(pokemonName + element.getChildByName("finalsprite").get("name"));
-                boolean isLooping = element.getChildByName("loopstatus").getBoolean("looping");
-                PAnimation animation = new PAnimation(name, spriteArray, finalSprite, 30, isLooping);
-                animationMap.put(name, animation);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-*/
     public void loadAnimations(PokemonName pokemonName){
         JsonReader jsonReader = new JsonReader();
         JsonValue animations = jsonReader.parse(Gdx.files.internal("utils/AnimationStorage.json"));

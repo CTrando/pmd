@@ -2,6 +2,7 @@ package com.mygdx.pmd.controller;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.comparators.PokemonDistanceComparator;
 import com.mygdx.pmd.enumerations.*;
@@ -45,7 +46,11 @@ public class Controller {
         this.reset();
     }
 
-    public void reset(){
+    public void reset() {
+        turns = 20;
+        turnsPaused = false;
+        floorCount = 1;
+
         //list of entities
         turnBasedEntities = new LinkedList<Entity>();
         dEntities = new Array<DynamicEntity>();
@@ -64,7 +69,7 @@ public class Controller {
         FloorDecorator.placeEventTiles(currentFloor);
 
         //load pMob from xml
-        this.loadPokemon();
+        this.loadPokemonFromJson(Gdx.files.internal("utils/PokemonStorage.json"));
         this.randomizeAllPokemonLocation();
         updatedTurnEntity = turnBasedEntities.poll();
 
@@ -105,6 +110,8 @@ public class Controller {
                     Collections.sort(entityList, new PokemonDistanceComparator(this.pokemonPlayer));
                 }
 
+                //stack system
+                //TODO replace with custom data structure
                 turnBasedEntities.offer(updatedTurnEntity);
                 updatedTurnEntity = turnBasedEntities.poll();
                 updatedTurnEntity.setTurnState(Turn.WAITING);
@@ -114,24 +121,13 @@ public class Controller {
         addEntities();
     }
 
-    private void loadPokemon() {
+    private void loadPokemonFromJson(FileHandle file) {
         JsonReader json = new JsonReader();
-        JsonValue entities = json.parse(Gdx.files.internal("utils/PokemonStorage.json"));
+        JsonValue entities = json.parse(file);
 
         for (JsonValue entity : entities.get("entities")) {
-            //check for key player
-            if (entity.getString("type").contains("player")) {
-                //init players
-                Pokemon pokemonPlayer = PokemonFactory.createPokemon(this,
-                        Enum.valueOf(PokemonName.class, entity.getString("name")), PokemonPlayer.class);
-                this.directlyAddEntity(pokemonPlayer);
-                //check for key mob
-            } else if (entity.getString("type").contains("mob")) {
-                //init mobs
-                Pokemon mob = PokemonFactory.createPokemon(this, Enum.valueOf(PokemonName.class,
-                        entity.getString("name")), PokemonMob.class);
-                this.directlyAddEntity(mob);
-            }
+            Pokemon pokemon = PokemonFactory.createPokemonFromJson(this, entity);
+            this.directlyAddEntity(pokemon);
         }
     }
 

@@ -8,7 +8,7 @@ import com.mygdx.pmd.model.Tile.Tile;
  *
  *
  * Object of this class designed to be placed within tiles
- * They do not move
+ * They do not currentMove
  * All items must extend this class
  */
 public class StaticEntity extends Entity{

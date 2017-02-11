@@ -35,7 +35,6 @@ public class PokemonPlayer extends Pokemon {
     @Override
     public void dispose() {
         super.dispose();
-        controller.screen.game.setScreen(PMD.endScreen);
         //PMD.manager.get("sfx/background.ogg", Music.class).play();
     }
 
@@ -47,7 +46,6 @@ public class PokemonPlayer extends Pokemon {
         handles all input - including movement, attack and menus
      */
     public void handleInput() {
-        //TODO work out if this second part of the if statement may cause a graphical bug
         /*
             -updates position first - makes action state idle
             -updates input next - so would be idle and would be able to take in input
@@ -81,8 +79,8 @@ public class PokemonPlayer extends Pokemon {
                 } catch (ArrayIndexOutOfBoundsException e) {
                 }
             }
-            //if the user hits K, he will not be able to move, but he will be able to set his direction
-            // set the direction based on key hit - note that one can only change directions and not move when he is not moving
+            //if the user hits K, he will not be able to currentMove, but he will be able to set his direction
+            // set the direction based on key hit - note that one can only change directions and not currentMove when he is not moving
             //TODO switch keys to a refresh system - perhaps use an object instead of an enum
             if (controller.isKeyPressed(Key.down)) {
                 direction = Direction.down;
@@ -128,16 +126,16 @@ public class PokemonPlayer extends Pokemon {
 
             //these are for the attacks
             if (controller.isKeyPressed(Key.b) && controller.isKeyPressed(Key.t)) {
-                move = Move.SWIPERNOSWIPING;
+                currentMove = Move.SWIPERNOSWIPING;
             }
         }
     }
 
     /**
-     * @return true if the pokemon has a move available, false if not
+     * @return true if the pokemon has a currentMove available, false if not
      */
     public boolean canAttack() {
-        return move != null;
+        return currentMove != null;
     }
 
     @Override

@@ -7,7 +7,7 @@ public class Constants {
     public static final int TILE_SIZE = 25;
 
     private static final int tileBoardWidth = 1000;
-    private static final int tileBoardHeight = 1000; //TODO the stutter might be because of having to reload everything on player movement
+    private static final int tileBoardHeight = 1000;
 
     public static final int tileBoardRows = tileBoardHeight / Constants.TILE_SIZE;
     public static final int tileBoardCols = tileBoardWidth / Constants.TILE_SIZE;
@@ -17,6 +17,7 @@ public class Constants {
     public static final int V_HEIGHT = 720;
 
     public static final int NUM_MAX_ENTITY = 1000;
+    public static final int VISIBILITY_RANGE = 3;
 }
 
 
