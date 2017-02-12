@@ -5,9 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
@@ -64,6 +62,11 @@ public class Hud {
         floorLabel = new Label("Floor: " + Controller.floorCount, skin);
         turnLabel = new Label("Turns left: " + Controller.turns, skin);
         textLabel = new Label(inputText.toString(), skin);
+
+        testLabel.setAlignment(Align.center);
+        floorLabel.setAlignment(Align.center);
+        turnLabel.setAlignment(Align.center);
+        textLabel.setAlignment(Align.center);
 
         TextButton attackText = new TextButton("Swiper no Swiping", skin);
         attackText.addListener(new ChangeListener() {
@@ -186,9 +189,8 @@ public class Hud {
        /* temp.add(attackText).fill();
         temp.row();
         temp.add(test).fill();*/
-        temp.setBackground(new SpriteDrawable(PMD.sprites.get("rightarrow")));
         temp.pack();
-
+        temp.setBackground(skin.getDrawable("background.9"));
         Table textTable = new Table();
         textTable.setFillParent(true);
         textTable.right().top();

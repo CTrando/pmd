@@ -1,6 +1,6 @@
 package com.mygdx.pmd;
 
-import com.badlogic.gdx.Game;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -20,9 +20,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Created by Cameron on 9/11/2016.
  */
 public class PMD extends Game {
-    public static final int WIDTH = 1080;
-    public static final int HEIGHT = 720;
-
     public static final String TITLE = "Pokemon Mystery Dungeon";
     public static HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
     public static HashMap<Integer, AtomicBoolean> keys;

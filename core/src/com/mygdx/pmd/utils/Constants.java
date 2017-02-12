@@ -1,9 +1,14 @@
 package com.mygdx.pmd.utils;
 
+import com.badlogic.gdx.Gdx;
+
 /**
  * Created by Cameron on 11/1/2016.
  */
 public class Constants {
+    public static int WIDTH = Gdx.graphics.getWidth();
+    public static int HEIGHT = Gdx.graphics.getHeight();
+
     public static final int TILE_SIZE = 25;
 
     private static final int tileBoardWidth = 1000;

@@ -47,7 +47,7 @@ public class EndScreen extends PScreen {
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(Gdx.input.justTouched()){
-            game.setScreen(PMD.dungeonScreen);
+            game.setScreen(PMD.introScreen);
         }
         batch.begin();
         stage.draw();

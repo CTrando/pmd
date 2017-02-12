@@ -10,6 +10,7 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.scenes.Hud;
+import com.mygdx.pmd.utils.Constants;
 
 public class DungeonScreen extends PScreen implements InputProcessor {
     public final PMD game;
@@ -35,7 +36,7 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         this.batch = game.batch;
         this.renderList = new Array<Renderable>();
 
-        gameCamera = new OrthographicCamera(PMD.WIDTH, PMD.HEIGHT);
+        gameCamera = new OrthographicCamera(Constants.WIDTH, Constants.HEIGHT);
         gamePort = new ScreenViewport(gameCamera);
 
         //init stuff for updating

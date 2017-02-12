@@ -4,11 +4,13 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
+import com.mygdx.pmd.utils.Constants;
 
 import javax.xml.soap.Text;
 
@@ -18,48 +20,78 @@ import javax.xml.soap.Text;
 public class IntroScreen extends PScreen implements InputProcessor{
     PMD game;
     OrthographicCamera gameCamera;
+    Viewport view;
     Stage stage;
     Skin skin;
-    InputMultiplexer inputMultiplexer;
+    private InputMultiplexer inputMultiplexer;
 
     public IntroScreen(final PMD game) {
         this.game = game;
-        gameCamera = new OrthographicCamera(PMD.WIDTH, PMD.HEIGHT);
-        stage = new Stage(new ScreenViewport(gameCamera));
+
+        Table mainTable = new Table();
+
+        gameCamera = new OrthographicCamera(Constants.WIDTH, Constants.HEIGHT);
+        view = new FitViewport(Constants.WIDTH, Constants.HEIGHT, gameCamera);
+        stage = new Stage(view);
         skin = new Skin(Gdx.files.internal("ui/test.json"));
 
-        TextButton button = new TextButton("Hello", skin);
-        button.setSize(Gdx.graphics.getWidth(), 100);
-        button.setPosition(0, Gdx.graphics.getHeight() - 100);
+        Label label = new Label("Welcome to this poorly made UI", skin);
+        label.setWidth(Constants.WIDTH);
+        label.setPosition(0, Constants.HEIGHT*.9f);
+        label.setAlignment(Align.center);
 
-        button.addListener(new ChangeListener() {
+        TextButton playButton = new TextButton("Click to play", skin);
+        playButton.setPosition(Constants.WIDTH*.1f, Constants.HEIGHT*.3f);
+        playButton.addAction(Actions.repeat(RepeatAction.FOREVER,Actions.sequence(Actions.moveTo(Constants.WIDTH*.1f,Constants.HEIGHT*.3f,1),
+                Actions.moveTo(Constants.WIDTH*.1f,Gdx.graphics.getHeight()*.28f,1))));
+
+        playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.switchScreen(PMD.dungeonScreen);
             }
         });
-        stage.addActor(button);
 
+        TextButton optionsButton = new TextButton("Click me to go to the options", skin);
+        optionsButton.setPosition(Constants.WIDTH*.7f, Constants.HEIGHT*.3f);
+        optionsButton.addAction(Actions.repeat(RepeatAction.FOREVER,Actions.sequence(Actions.moveTo(Constants.WIDTH*.7f,Constants.HEIGHT*.3f,1),
+                Actions.moveTo(Constants.WIDTH*.7f,Gdx.graphics.getHeight()*.28f,1))));
+
+
+        mainTable.debug();
+        mainTable.addActor(label);
+        mainTable.addActor(playButton);
+        mainTable.addActor(optionsButton);
+
+        mainTable.setFillParent(true);
+        mainTable.setBackground(skin.getDrawable("background.9"));
+        stage.addActor(mainTable);
+
+
+        inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(this);
+        inputMultiplexer.addProcessor(stage);
     }
 
     @Override
     public void show() {
-        inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(this);
-        inputMultiplexer.addProcessor(stage);
-
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act();
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
+        Constants.WIDTH = Gdx.graphics.getWidth();
+        Constants.HEIGHT = Gdx.graphics.getHeight();
 
+        stage.getViewport().update(width,height,true);
+        view.update(width, height, true);
     }
 
     @Override
