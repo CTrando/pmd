@@ -35,6 +35,12 @@ public class PokemonPlayer extends Pokemon {
     @Override
     public void dispose() {
         super.dispose();
+
+        this.setTurnState(Turn.COMPLETE);
+        controller.screen.game.switchScreen(PMD.endScreen);
+
+        System.out.println("WOE IS ME I AM DEAD");
+
         //PMD.manager.get("sfx/background.ogg", Music.class).play();
     }
 
@@ -111,7 +117,7 @@ public class PokemonPlayer extends Pokemon {
             } else if (controller.isKeyPressedTimeSensitive(Key.m)) {
                 controller.screen.toggleHub();
                 PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
-            } else if (controller.isKeyPressed(Key.escape) && controller.screen.showHub) {
+            } else if (controller.isKeyPressed(Key.escape)) {
                 controller.screen.toggleHub();
             } else if (controller.isKeyPressedTimeSensitive(Key.F11)) {
                 Graphics.DisplayMode mode = Gdx.graphics.getDisplayMode();
@@ -139,7 +145,7 @@ public class PokemonPlayer extends Pokemon {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString() + " player";
     }
 }

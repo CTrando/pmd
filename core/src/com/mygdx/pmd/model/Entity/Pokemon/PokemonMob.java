@@ -45,11 +45,11 @@ public class PokemonMob extends Pokemon {
         return true;
     }
 
-    public boolean isWithinRange(Pokemon pokemon){
+    public boolean isWithinRange(Pokemon pokemon) {
         int dR = this.getCurrentTile().row - pokemon.getCurrentTile().row;
         int dC = this.getCurrentTile().col - pokemon.getCurrentTile().col;
 
-        if (dR*dR + dC*dC > 400) return false;
+        if (dR * dR + dC * dC > 400) return false;
         return true;
     }
 
@@ -68,14 +68,22 @@ public class PokemonMob extends Pokemon {
 
     //need to fix for single responsibility principle
     @Override
-    public void takeDamage(DynamicEntity aggressor, int damage){
+    public void takeDamage(DynamicEntity aggressor, int damage) {
         super.takeDamage(aggressor, damage);
         this.aggression = Aggression.aggressive;
         this.target = aggressor;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString() + " mob";
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+
+        this.setTurnState(Turn.COMPLETE);
+        System.out.println("WOE IS ME I AM DEAD");
     }
 }

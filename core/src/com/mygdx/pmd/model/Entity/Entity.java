@@ -169,4 +169,5 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         return currentTile;
     }
 
+    public abstract void dispose();
 }

@@ -20,4 +20,9 @@ public class StaticEntity extends Entity{
     public void registerObservers() {
 
     }
+
+    @Override
+    public void dispose() {
+
+    }
 }

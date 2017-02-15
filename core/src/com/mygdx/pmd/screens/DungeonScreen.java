@@ -3,6 +3,8 @@ package com.mygdx.pmd.screens;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
@@ -12,14 +14,14 @@ import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.scenes.Hud;
 import com.mygdx.pmd.utils.Constants;
 
-public class DungeonScreen extends PScreen implements InputProcessor {
+public class DungeonScreen extends PScreen implements GestureDetector.GestureListener, InputProcessor {
     public final PMD game;
     private SpriteBatch batch;
 
     public Array<Renderable> renderList;
 
     private Hud hud;
-    public boolean showHub = true;
+    private boolean showHub;
 
     public Controller controller;
     public Tile[][] tileBoard;
@@ -87,8 +89,10 @@ public class DungeonScreen extends PScreen implements InputProcessor {
         hud.reset();
 
         inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(new GestureDetector(this));
         inputMultiplexer.addProcessor(this);
-        inputMultiplexer.addProcessor(hud.stage);
+
+        setShowHud(true);
 
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
@@ -167,6 +171,68 @@ public class DungeonScreen extends PScreen implements InputProcessor {
     }
 
     public void toggleHub(){
-        showHub = !showHub;
+        if(showHub) {
+            setShowHud(false);
+        } else {
+            setShowHud(true);
+        }
+    }
+
+    private void setShowHud(boolean show){
+        showHub = show;
+        if(showHub) {
+            inputMultiplexer.addProcessor(hud.stage);
+        } else {
+            inputMultiplexer.removeProcessor(hud.stage);
+        }
+    }
+
+    @Override
+    public boolean touchDown(float x, float y, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean tap(float x, float y, int count, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean longPress(float x, float y) {
+        return false;
+    }
+
+    @Override
+    public boolean fling(float velocityX, float velocityY, int button) {
+        if(velocityY < -100){
+            toggleHub();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
+        return false;
+    }
+
+    @Override
+    public boolean panStop(float x, float y, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean zoom(float initialDistance, float distance) {
+        return false;
+    }
+
+    @Override
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+        return false;
+    }
+
+    @Override
+    public void pinchStop() {
+
     }
 }

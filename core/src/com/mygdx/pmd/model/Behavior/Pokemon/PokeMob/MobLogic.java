@@ -22,12 +22,7 @@ public class MobLogic extends PokemonBehavior {
             mob.shouldBeDestroyed = true;
         }
 
-        if (mob.shouldBeDestroyed) {
-            mob.setTurnState(Turn.COMPLETE);
-            controller.toBeRemoved(mob);
-            System.out.println("WOE IS ME I AM DEAD");
-            mob.dispose();
-        }
+        if(mob.shouldBeDestroyed) return;
 
         //ensure that when this runs the pokemon's turn is always waiting
         if (mob.isTurnWaiting()) {

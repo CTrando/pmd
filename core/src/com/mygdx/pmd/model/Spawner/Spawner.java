@@ -28,4 +28,9 @@ public class Spawner extends DynamicEntity implements TurnBased {
     public boolean isLegalToMoveTo(Tile tile) {
         return false;
     }
+
+    @Override
+    public void dispose() {
+
+    }
 }

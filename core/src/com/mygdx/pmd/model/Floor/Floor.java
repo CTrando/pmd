@@ -70,4 +70,9 @@ public class Floor extends Entity{
             }
         }
     }
+
+    @Override
+    public void dispose() {
+
+    }
 }

@@ -23,15 +23,6 @@ public class PlayerLogic extends PokemonBehavior {
             player.shouldBeDestroyed = true;
         }
 
-        if (player.shouldBeDestroyed) {
-            player.setTurnState(Turn.COMPLETE);
-            controller.toBeRemoved(player);
-            controller.screen.game.switchScreen(PMD.endScreen);
-
-            System.out.println("WOE IS ME I AM DEAD");
-            player.dispose();
-        }
-
         if (player.isTurnWaiting() && player.equals(player.getCurrentTile())) {
             player.handleInput();
 

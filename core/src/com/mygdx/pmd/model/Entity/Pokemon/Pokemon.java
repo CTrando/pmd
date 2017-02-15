@@ -132,5 +132,4 @@ public abstract class Pokemon extends DynamicEntity implements TurnBased {
     public void dispose() {
         this.getCurrentTile().removeEntity(this);
     }
-
 }

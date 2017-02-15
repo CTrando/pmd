@@ -85,7 +85,7 @@ public class Projectile extends DynamicEntity {
             super.update();
         }
 
-        if (projectileAnimation.isFinished() && this.shouldBeDestroyed) {
+        if (projectileAnimation.isFinished() && this.getActionState() == Action.COLLISION) {
             for (DynamicEntity dEntity : getCurrentTile().dynamicEntities) {
                 dEntity.takeDamage(parent, move.damage);
             }
@@ -98,11 +98,11 @@ public class Projectile extends DynamicEntity {
 
             //setting this to null so parent will know that the attack has finished
             this.parent.projectile = null;
+            this.shouldBeDestroyed = true;
         }
     }
 
     public void collide() {
-        this.shouldBeDestroyed = true;
         this.setActionState(Action.COLLISION);
 
         // play sound effect
@@ -120,6 +120,11 @@ public class Projectile extends DynamicEntity {
 
     @Override
     public void registerObservers() {
+
+    }
+
+    @Override
+    public void dispose() {
 
     }
 }

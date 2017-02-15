@@ -116,6 +116,11 @@ public class Controller {
                 updatedTurnEntity = turnBasedEntities.poll();
                 updatedTurnEntity.setTurnState(Turn.WAITING);
             }
+
+            if(entity.shouldBeDestroyed){
+                entity.dispose();
+                this.toBeRemoved(entity);
+            }
         }
         removeEntities();
         addEntities();

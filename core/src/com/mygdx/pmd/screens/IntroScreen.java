@@ -12,8 +12,6 @@ import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.utils.Constants;
 
-import javax.xml.soap.Text;
-
 /**
  * Created by Cameron on 2/10/2017.
  */
