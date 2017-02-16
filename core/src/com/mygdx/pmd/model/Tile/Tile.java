@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.controller.Controller;
-import com.mygdx.pmd.enumerations.Aggression;
 import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Item.Item;
@@ -23,7 +21,6 @@ import java.util.ArrayList;
  * Created by Cameron on 6/17/2016.
  */
 public abstract class Tile implements Renderable {
-    public Controller controller;
     public Floor floor;
 
     public int x;
@@ -38,17 +35,16 @@ public abstract class Tile implements Renderable {
     private Sprite debug = PMD.sprites.get("debugtilesprite");
 
     public boolean isWalkable;
-    public String classifier; //for toString purposes
+    private String classifier; //for toString purposes
 
     private ArrayList<Entity> entityList;
-    private Array<StaticEntity> staticEntities;
+    private Array<Item> items;
     public Array<DynamicEntity> dynamicEntities;
 
     public Tile[][] tileBoard;
-    public Tile parent;
+    private Tile parent;
 
     public Tile(int r, int c, Floor floor, String classifier) {
-        this.controller = floor.controller;
         this.tileBoard = floor.tileBoard;
         this.floor = floor;
 
@@ -60,13 +56,13 @@ public abstract class Tile implements Renderable {
         this.classifier = classifier;
 
         entityList = new ArrayList<Entity>();
-        staticEntities = new Array<StaticEntity>();
+        items = new Array<Item>();
         dynamicEntities = new Array<DynamicEntity>();
     }
 
     public void render(SpriteBatch batch) {
         batch.draw(sprite, x, y);
-        for(StaticEntity sEntity: staticEntities){
+        for (StaticEntity sEntity : items) {
             sEntity.render(batch);
         }
     }
@@ -80,12 +76,11 @@ public abstract class Tile implements Renderable {
     }
 
     public void playEvents(DynamicEntity receiver) {
-        for(StaticEntity sEntity: staticEntities){
-            if(sEntity instanceof Item){
-                ((Item) sEntity).playEvents(receiver);
-            }
+        for (Item item : items) {
+            item.playEvents(receiver);
+            items.removeValue(item, true);
+            floor.removeItem(item);
         }
-        staticEntities.clear();
     }
 
     public double calculateDistanceTo(Tile tile) {
@@ -160,41 +155,25 @@ public abstract class Tile implements Renderable {
         if (!entityList.contains(entity))
             entityList.add(entity);
 
-        if(entity instanceof StaticEntity){
-            staticEntities.add((StaticEntity)entity);
+        if (entity instanceof Item) {
+            items.add((Item) entity);
         }
 
-        if(entity instanceof DynamicEntity){
-            dynamicEntities.add((DynamicEntity)entity);
+        if (entity instanceof DynamicEntity) {
+            dynamicEntities.add((DynamicEntity) entity);
         }
     }
 
     public void removeEntity(Entity entity) {
         entityList.remove(entity);
 
-        if(entity instanceof DynamicEntity){
+        if (entity instanceof DynamicEntity) {
             dynamicEntities.removeValue((DynamicEntity) entity, false);
         }
 
-        if(entity instanceof StaticEntity){
-            staticEntities.removeValue((StaticEntity) entity, true);
+        if (entity instanceof Item) {
+            items.removeValue((Item) entity, true);
         }
-    }
-
-    public boolean isAbove(Tile other) {
-        return other.row < this.row;
-    }
-
-    public boolean isBelows(Tile other) {
-        return other.row > this.row;
-    }
-
-    public boolean isToLeft(Tile other) {
-        return other.col > this.col;
-    }
-
-    public boolean isToRight(Tile other) {
-        return (other.col < this.col);
     }
 
     public static Tile getTileAt(int x, int y, Tile[][] tileBoard) {

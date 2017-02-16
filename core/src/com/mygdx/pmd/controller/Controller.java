@@ -12,13 +12,10 @@ import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.model.Factory.*;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Spawner.*;
-import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.test.TileTester;
 
 import java.util.*;
-
-import static com.mygdx.pmd.PMD.keys;
 
 public class Controller {
     public DungeonScreen screen;
@@ -34,7 +31,7 @@ public class Controller {
     private Array<Entity> toBeAdded;
 
     private FloorFactory floorFactory;
-    public Floor currentFloor;
+    public Floor floor;
 
     public static int floorCount = 1;
     public static int turns = 20;
@@ -60,13 +57,13 @@ public class Controller {
 
         //init tileboard
         floorFactory = new FloorFactory(this);
-        currentFloor = floorFactory.createFloor(this);
-        this.directlyAddEntity(currentFloor);
+        floor = floorFactory.createFloor();
+        this.directlyAddEntity(floor);
 
         //decorate floor
-        FloorDecorator.placeItems(currentFloor);
-        FloorDecorator.skinTiles(currentFloor);
-        FloorDecorator.placeEventTiles(currentFloor);
+        FloorDecorator.placeItems(floor);
+        FloorDecorator.skinTiles(floor);
+        FloorDecorator.placeEventTiles(floor);
 
         //load pMob from xml
         this.loadPokemonFromJson(Gdx.files.internal("utils/PokemonStorage.json"));
@@ -74,7 +71,7 @@ public class Controller {
         updatedTurnEntity = turnBasedEntities.poll();
 
         //add in a mob spawner
-        MobSpawner mobSpawner = new MobSpawner(this);
+        MobSpawner mobSpawner = new MobSpawner(floor);
         this.directlyAddEntity(mobSpawner);
     }
 
@@ -82,12 +79,12 @@ public class Controller {
         floorCount++;
 
         //does not actually create a new floor object, resets the floor
-        currentFloor = floorFactory.createFloor(this);
-        FloorDecorator.placeItems(currentFloor);
-        FloorDecorator.skinTiles(currentFloor);
-        FloorDecorator.placeEventTiles(currentFloor);
+        floor = floorFactory.createFloor();
+        FloorDecorator.placeItems(floor);
+        FloorDecorator.skinTiles(floor);
+        FloorDecorator.placeEventTiles(floor);
 
-        if (!TileTester.checkCorners(getTileBoard())) throw new AssertionError("Uh oh, this floor is invalid!");
+        if (!TileTester.checkCorners(floor.tileBoard)) throw new AssertionError("Uh oh, this floor is invalid!");
 
         this.randomizeAllPokemonLocation();
     }
@@ -131,7 +128,7 @@ public class Controller {
         JsonValue entities = json.parse(file);
 
         for (JsonValue entity : entities.get("entities")) {
-            Pokemon pokemon = PokemonFactory.createPokemonFromJson(this, entity);
+            Pokemon pokemon = PokemonFactory.createPokemonFromJson(floor, entity);
             this.directlyAddEntity(pokemon);
         }
     }
@@ -192,27 +189,4 @@ public class Controller {
         toBeRemoved.add(entity);
     }
 
-    public boolean isKeyPressed(Key key) { //TODO perhaps add a buffer system for more control later
-        return keys.get(key.getValue()).get();
-    }
-
-    /**
-     * Time sensitive key hits - hits are not consecutive
-     *
-     * @param key the key entered
-     * @return true if the key has been pressed after a certain period of time - returns false if the key is not pressed or if the key has been pressed too soon
-     */
-    public boolean isKeyPressedTimeSensitive(Key key) {
-        if (keys.get(key.getValue()).get()) {
-            if (TimeUtils.timeSinceMillis(key.getLastTimeHit()) > 1000) {
-                key.setLastTimeHit(TimeUtils.millis());
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Tile[][] getTileBoard() {
-        return currentFloor.tileBoard;
-    }
 }

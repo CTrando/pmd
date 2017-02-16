@@ -17,7 +17,7 @@ public class ItemFactory {
             Item item = new Berry(rand);
 
             rand.addEntity(item);
-            rand.floor.addEntity(item);
+            rand.floor.addItem(item);
         }
     }
 }

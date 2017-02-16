@@ -13,7 +13,7 @@ import com.mygdx.pmd.model.Tile.Tile;
 public abstract class Item extends StaticEntity{
 
     public Item(Tile tile) {
-        super(tile.controller, tile.x, tile.y);
+        super(tile.floor, tile.x, tile.y);
     }
 
     @Override

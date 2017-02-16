@@ -7,25 +7,26 @@ import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
+import com.mygdx.pmd.model.Floor.*;
 
 /**
  * Created by Cameron on 11/6/2016.
  */
 public class PokemonFactory {
 
-    public static Pokemon createPokemonFromJson(Controller controller, JsonValue entity) {
+    public static Pokemon createPokemonFromJson(Floor floor, JsonValue entity) {
         Pokemon pokemon;
         PokemonName name = Enum.valueOf(PokemonName.class, entity.getString("name"));
         //check for key player
         if (entity.getString("type").contains("player")) {
             //init players
-            pokemon = new PokemonPlayer(controller, 0, 0, name);
+            pokemon = new PokemonPlayer(floor, name);
             //check for key mob
         } else if (entity.getString("type").contains("mob")) {
             //init mobs
-            pokemon = new PokemonMob(controller, 0, 0, name);
+            pokemon = new PokemonMob(floor, name);
         } else {
-            pokemon = new PokemonMob(controller, 0, 0, name);
+            pokemon = new PokemonMob(floor, name);
         }
 
         //add custom moves
@@ -40,12 +41,12 @@ public class PokemonFactory {
         return pokemon;
     }
 
-    public static Pokemon createPokemon(Controller controller, PokemonName name, Class ident) {
+    public static Pokemon createPokemon(Floor floor, PokemonName name, Class ident) {
         Pokemon pokemon = null;
         if (ident == PokemonMob.class) {
-            pokemon = new PokemonMob(controller, 0, 0, name);
+            pokemon = new PokemonMob(floor, name);
         } else if (ident == PokemonPlayer.class) {
-            pokemon = new PokemonPlayer(controller, 0, 0, name);
+            pokemon = new PokemonPlayer(floor, name);
         }
         return pokemon;
     }

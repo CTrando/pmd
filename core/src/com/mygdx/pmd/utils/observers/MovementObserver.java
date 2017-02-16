@@ -13,8 +13,11 @@ public class MovementObserver extends Observer {
         this.dEntity = dEntity;
     }
 
+    /**
+     * This class is actually used
+     */
     @Override
     public void update() {
-        entity.getCurrentTile().playEvents(dEntity);
+       entity.getCurrentTile().playEvents(dEntity);
     }
 }

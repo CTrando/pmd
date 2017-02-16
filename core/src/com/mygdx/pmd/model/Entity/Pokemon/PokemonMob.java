@@ -5,6 +5,7 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokeMob.MobLogic;
 import com.mygdx.pmd.model.Entity.*;
+import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.AI.PathFind;
 import com.mygdx.pmd.utils.AI.ShortestPath;
@@ -18,10 +19,14 @@ public class PokemonMob extends Pokemon {
     public ShortestPath sPath;
     public Array<Tile> path;
 
-    public PokemonMob(Controller controller, int x, int y, PokemonName pokemonName) {
-        super(controller, x, y, pokemonName);
+    public PokemonMob(Floor floor, PokemonName name){
+        this(floor, 0, 0, name);
+    }
+
+    public PokemonMob(Floor floor, int x, int y, PokemonName pokemonName) {
+        super(floor, x, y, pokemonName);
         this.aggression = Aggression.passive;
-        this.target = controller.pokemonPlayer;
+        this.target = floor.getPlayer();
 
         wander = new Wander(this);
         sPath = new ShortestPath(this);
@@ -45,7 +50,7 @@ public class PokemonMob extends Pokemon {
         return true;
     }
 
-    public boolean isWithinRange(Pokemon pokemon) {
+    public boolean isWithinRange(DynamicEntity pokemon) {
         int dR = this.getCurrentTile().row - pokemon.getCurrentTile().row;
         int dC = this.getCurrentTile().col - pokemon.getCurrentTile().col;
 

@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Entity.Item;
 
 import com.mygdx.pmd.PMD;
+import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.Factory.FloorFactory;
@@ -19,8 +20,8 @@ public class Berry extends Item {
     @Override
     public void playEvents(DynamicEntity receiver){
         receiver.setHp(receiver.getHp()+20);
-        //breaks code complete's demeters principle
+
         if(receiver instanceof PokemonPlayer)
-            controller.turns+=10;
+            Controller.turns+=10;
     }
 }

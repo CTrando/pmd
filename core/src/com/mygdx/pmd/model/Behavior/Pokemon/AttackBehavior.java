@@ -18,7 +18,7 @@ public class AttackBehavior extends PokemonBehavior {
 
     @Override
     public void execute() {
-        if (pMob.projectile == null && pMob.currentAnimation.isFinished()) {
+        if (pMob.children.size == 0 && pMob.currentAnimation.isFinished()) {
             pMob.setTurnState(Turn.COMPLETE);
             pMob.setActionState(Action.IDLE);
             pMob.behaviors[2] = pMob.noBehavior;

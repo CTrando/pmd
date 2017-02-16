@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.Key;
 import com.mygdx.pmd.screens.*;
@@ -102,5 +103,25 @@ public class PMD extends Game {
     //TODO add buffer screen system using stacks
     public void switchScreen(PScreen screen) {
         this.setScreen(screen);
+    }
+
+    public static boolean isKeyPressed(Key key) { //TODO perhaps add a buffer system for more control later
+        return keys.get(key.getValue()).get();
+    }
+
+    /**
+     * Time sensitive key hits - hits are not consecutive
+     *
+     * @param key the key entered
+     * @return true if the key has been pressed after a certain period of time - returns false if the key is not pressed or if the key has been pressed too soon
+     */
+    public static boolean isKeyPressedTimeSensitive(Key key) {
+        if (keys.get(key.getValue()).get()) {
+            if (TimeUtils.timeSinceMillis(key.getLastTimeHit()) > 1000) {
+                key.setLastTimeHit(TimeUtils.millis());
+                return true;
+            }
+        }
+        return false;
     }
 }

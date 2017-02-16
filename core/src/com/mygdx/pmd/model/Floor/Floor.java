@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.model.Entity.*;
+import com.mygdx.pmd.model.Entity.Item.*;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.*;
@@ -14,29 +15,44 @@ import com.mygdx.pmd.utils.*;
 public class Floor extends Entity{
 
     public Tile[][] tileBoard;
-    private Array<StaticEntity> staticEntities;
+    private Array<Item> items;
+    private Controller controller;
 
     public Floor(Controller controller){
-        super(controller);
+        super();
+        this.controller = controller;
         tileBoard = new Tile[Constants.tileBoardRows][Constants.tileBoardCols];
 
-        staticEntities = new Array<StaticEntity>();
+        items = new Array<Item>();
     }
 
     /**
      * Keep track of the items on the floor
      */
     public void addEntity(Entity entity){
-        if(entity instanceof StaticEntity){
+        /*if(entity instanceof StaticEntity){
             staticEntities.add((StaticEntity) entity);
-        }
+        }*/
+        controller.toBeAdded(entity);
+    }
+
+    public void addItem(Item item){
+        items.add(item);
+    }
+
+    public void removeItem(Item item){
+        items.removeValue(item, true);
+    }
+
+    public void removeEntity(Entity entity){
+        controller.toBeRemoved(entity);
     }
 
     /**
      * clear everything necessary
      */
     public void clear(){
-        staticEntities.clear();
+        items.clear();
     }
 
     /**
@@ -63,7 +79,7 @@ public class Floor extends Entity{
     public void render(SpriteBatch batch){
         for (int i = 0; i < tileBoard.length; i++) {
             for (int j = 0; j < tileBoard[0].length; j++) {
-                Tile tile = controller.currentFloor.tileBoard[i][j];
+                Tile tile = tileBoard[i][j];
                 tile.render(batch);
                 //drawing strings like this is very costly performance wise and causes stuttering
                 //bFont.draw(batch, tile.spriteValue+"", tile.x + 5, tile.y+25/2);
@@ -74,5 +90,29 @@ public class Floor extends Entity{
     @Override
     public void dispose() {
 
+    }
+
+    public DynamicEntity getPlayer() {
+        return controller.pokemonPlayer;
+    }
+
+    public DungeonScreen getScreen(){
+        return controller.screen;
+    }
+
+    public Controller getController(){
+        return controller;
+    }
+
+    public void nextFloor() {
+        controller.nextFloor();
+    }
+
+    public Array<Item> getItems(){
+        return items;
+    }
+
+    public Array<DynamicEntity> getDynamicEntities(){
+        return controller.dEntities;
     }
 }

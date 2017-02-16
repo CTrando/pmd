@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.interfaces.Updatable;
@@ -18,7 +17,6 @@ import com.mygdx.pmd.utils.observers.NoObserver;
 import com.mygdx.pmd.utils.observers.Observable;
 import com.mygdx.pmd.utils.observers.Observer;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -43,51 +41,41 @@ public abstract class Entity implements Renderable, Updatable, Observable {
 
     public Sprite currentSprite;
     public HashMap<String, PAnimation> animationMap;
-    public Observer[] observers;
+    protected Observer[] observers;
 
-    public Controller controller;
     private Turn turnState;
+
+    public Entity(){
+        initBehaviors();
+    }
 
     /**
         current tile is defined by the initial x and y
      */
-    public Entity(Controller controller, int x, int y) {
-        this.controller = controller;
-        this.tileBoard = controller.currentFloor.tileBoard;
-
-        this.floor = controller.currentFloor;
-        this.x = x;
-        this.y = y;
+    public Entity(Floor floor, int x, int y) {
+        this.floor = floor;
+        this.tileBoard = floor.tileBoard;
         this.currentTile = tileBoard[y/ Constants.TILE_SIZE][x/Constants.TILE_SIZE];
 
+        this.x = x;
+        this.y = y;
+
         animationMap = new HashMap<String, PAnimation>();
-        noBehavior = new NoBehavior(this);
 
         //initialize behaviors array
+        initBehaviors();
+        initObservers();
+    }
+
+    private void initBehaviors(){
+        noBehavior = new NoBehavior(this);
         behaviors = new BaseBehavior[10];
         for (int i = 0; i < behaviors.length; i++) {
             behaviors[i] = this.noBehavior;
-        }
-        observers = new Observer[10];
-        for(int i = 0; i< observers.length; i++){
-            observers[i] = new NoObserver(this);
         }
     }
 
-    /**
-     * @param controller
-     * For those entities that do not have a position - for example spawners
-     */
-    public Entity(Controller controller){
-        this.controller = controller;
-
-        noBehavior = new NoBehavior(this);
-
-        //initialize behaviors array
-        behaviors = new BaseBehavior[10];
-        for (int i = 0; i < behaviors.length; i++) {
-            behaviors[i] = this.noBehavior;
-        }
+    private void initObservers(){
         observers = new Observer[10];
         for(int i = 0; i< observers.length; i++){
             observers[i] = new NoObserver(this);

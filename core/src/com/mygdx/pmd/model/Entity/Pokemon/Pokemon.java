@@ -1,9 +1,8 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
 
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.*;
-import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.TurnBased;
 import com.mygdx.pmd.model.Behavior.BaseBehavior;
@@ -11,6 +10,7 @@ import com.mygdx.pmd.model.Behavior.Entity.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
+import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.*;
@@ -20,8 +20,9 @@ public abstract class Pokemon extends DynamicEntity implements TurnBased {
     public BaseBehavior attackBehavior;
     public MoveBehavior moveBehavior;
 
+    public Array<DynamicEntity> children;
+
     public DynamicEntity target;
-    public Projectile projectile;
 
     public PokemonBehavior logic;
     private PokemonName pokemonName;
@@ -29,10 +30,12 @@ public abstract class Pokemon extends DynamicEntity implements TurnBased {
     public Array<Move> moves;
     public Move currentMove;
 
-    protected Pokemon(Controller controller, int x, int y, PokemonName pokemonName) {
-        super(controller, x, y);
+    protected Pokemon(Floor floor, int x, int y, PokemonName pokemonName) {
+        super(floor, x, y);
         this.direction = Direction.down;
         this.setActionState(Action.IDLE);
+
+        this.children = new Array<DynamicEntity>();
 
         //initialize moves and add default move
         moves = new Array<Move>(4);
@@ -71,20 +74,47 @@ public abstract class Pokemon extends DynamicEntity implements TurnBased {
     @Override
     public void update() {
         super.update();
+
+        for(DynamicEntity child: children){
+            child.update();
+        }
+
         updateCurrentTile();
         setFacingTileBasedOnDirection(direction);
     }
 
+    @Override
+    public void render(SpriteBatch batch){
+        super.render(batch);
+
+        for(DynamicEntity child: children){
+            child.render(batch);
+        }
+    }
+
     public void attack(){
         this.currentMove = moves.random();
-        this.projectile = new Projectile(this, currentMove);
-        controller.toBeAdded(this.projectile);
+        Projectile projectile = new Projectile(this, currentMove);
+        this.children.add(projectile);
     }
 
     public void attack(Move move) {
         this.currentMove = move;
-        this.projectile = new Projectile(this, currentMove);
-        controller.toBeAdded(this.projectile);
+        Projectile projectile = new Projectile(this, currentMove);
+        this.children.add(projectile);
+    }
+
+    public void randomizeLocation() {
+        Tile random = floor.chooseUnoccupiedTile();
+
+        if (random.isWalkable) {
+            this.setNextTile(random);
+            this.setCurrentTile(random);
+            this.possibleNextTile = null;
+        } else randomizeLocation();
+
+        this.setActionState(Action.IDLE);
+        this.setTurnState(Turn.COMPLETE);
     }
 
     protected boolean canSeeEnemy() {

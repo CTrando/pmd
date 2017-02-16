@@ -1,11 +1,8 @@
 package com.mygdx.pmd.model.Entity;
 
-import com.mygdx.pmd.interfaces.Damageable;
-import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.Tile;
-
-import java.util.ArrayList;
 
 
 /**
@@ -36,8 +33,12 @@ public abstract class DynamicEntity extends Entity{
     public Aggression aggression;
     public int speed = 1;
 
-    public DynamicEntity(Controller controller, int x, int y) {
-        super(controller, x, y);
+    public DynamicEntity(Floor floor){
+        this(floor, 0, 0);
+    }
+
+    public DynamicEntity(Floor floor, int x, int y) {
+        super(floor, x, y);
         this.direction = Direction.down;
         this.setFacingTileBasedOnDirection(direction);
     }
@@ -112,18 +113,7 @@ public abstract class DynamicEntity extends Entity{
             this.setCurrentTile(tile);
     }
 
-    public void randomizeLocation() {
-        Tile random = floor.chooseUnoccupiedTile();
-
-        if (random.isWalkable) {
-            this.setNextTile(random);
-            this.setCurrentTile(random);
-            this.possibleNextTile = null;
-        } else randomizeLocation();
-
-        this.setActionState(Action.IDLE);
-        this.setTurnState(Turn.COMPLETE);
-    }
+    public abstract void randomizeLocation();
 
     public int getHp() {
         return hp;
@@ -142,10 +132,6 @@ public abstract class DynamicEntity extends Entity{
 
     public void takeDamage(DynamicEntity aggressor, int damage) {
         this.setHp(this.getHp() - damage);
-    }
-
-    public void dealDamage(Damageable damageable, int damage) {
-        damageable.takeDamage(damage);
     }
 
     public void setFacingTileBasedOnDirection(Direction d) {

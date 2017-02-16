@@ -6,8 +6,6 @@ import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.model.Tile.Tile;
 
-import static com.mygdx.pmd.controller.Controller.*;
-
 
 /**
  * Created by Cameron on 12/10/2016.

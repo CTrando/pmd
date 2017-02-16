@@ -52,7 +52,7 @@ public class PlayerLogic extends PokemonBehavior {
 
                 player.behaviors[2] = player.moveBehavior;
 
-                if (controller.isKeyPressed(Key.s)) {
+                if (PMD.isKeyPressed(Key.s)) {
                     player.setSpeed(5);
                 } else player.setSpeed(1);
             }

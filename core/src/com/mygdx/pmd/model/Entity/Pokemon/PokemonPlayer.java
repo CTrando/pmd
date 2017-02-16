@@ -7,14 +7,19 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer.*;
 import com.mygdx.pmd.model.Entity.*;
+import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.utils.Constants;
 import com.mygdx.pmd.utils.observers.MovementObserver;
 
 
 public class PokemonPlayer extends Pokemon {
 
-    public PokemonPlayer(Controller controller, int x, int y, PokemonName pokemonName) {
-        super(controller, x, y, pokemonName);
+    public PokemonPlayer(Floor floor, PokemonName name){
+        this(floor, 0, 0, name);
+    }
+
+    public PokemonPlayer(Floor floor, int x, int y, PokemonName pokemonName) {
+        super(floor, x, y, pokemonName);
         this.setTurnState(Turn.WAITING);
         this.aggression = Aggression.passive;
 
@@ -37,7 +42,7 @@ public class PokemonPlayer extends Pokemon {
         super.dispose();
 
         this.setTurnState(Turn.COMPLETE);
-        controller.screen.game.switchScreen(PMD.endScreen);
+        floor.getScreen().game.switchScreen(PMD.endScreen);
 
         System.out.println("WOE IS ME I AM DEAD");
 
@@ -58,26 +63,26 @@ public class PokemonPlayer extends Pokemon {
             -updates animation last - meaning change from moving to idle would not be recorded
          */
         if (this.equals(getCurrentTile()) && getActionState() == Action.IDLE) {
-            if (controller.isKeyPressed(Key.shift)) {
-                if (controller.isKeyPressed(Key.down)) {
+            if (PMD.isKeyPressed(Key.shift)) {
+                if (PMD.isKeyPressed(Key.down)) {
                     direction = Direction.down;
-                } else if (controller.isKeyPressed(Key.left)) {
+                } else if (PMD.isKeyPressed(Key.left)) {
                     direction = Direction.left;
-                } else if (controller.isKeyPressed(Key.right)) {
+                } else if (PMD.isKeyPressed(Key.right)) {
                     direction = Direction.right;
-                } else if (controller.isKeyPressed(Key.up)) {
+                } else if (PMD.isKeyPressed(Key.up)) {
                     direction = Direction.up;
                 }
             } else {
                 //code for setting the user's next tile
                 try {
-                    if (controller.isKeyPressed(Key.down)) {
+                    if (PMD.isKeyPressed(Key.down)) {
                         possibleNextTile = (tileBoard[getCurrentTile().row - 1][getCurrentTile().col]);
-                    } else if (controller.isKeyPressed(Key.left)) {
+                    } else if (PMD.isKeyPressed(Key.left)) {
                         possibleNextTile = (tileBoard[getCurrentTile().row][getCurrentTile().col - 1]);
-                    } else if (controller.isKeyPressed(Key.right)) {
+                    } else if (PMD.isKeyPressed(Key.right)) {
                         possibleNextTile = (tileBoard[getCurrentTile().row][getCurrentTile().col + 1]);
-                    } else if (controller.isKeyPressed(Key.up)) {
+                    } else if (PMD.isKeyPressed(Key.up)) {
                         possibleNextTile = (tileBoard[getCurrentTile().row + 1][getCurrentTile().col]);
                     } else {
                         possibleNextTile = (null);
@@ -88,38 +93,38 @@ public class PokemonPlayer extends Pokemon {
             //if the user hits K, he will not be able to currentMove, but he will be able to set his direction
             // set the direction based on key hit - note that one can only change directions and not currentMove when he is not moving
             //TODO switch keys to a refresh system - perhaps use an object instead of an enum
-            if (controller.isKeyPressed(Key.down)) {
+            if (PMD.isKeyPressed(Key.down)) {
                 direction = Direction.down;
-            } else if (controller.isKeyPressed(Key.left)) {
+            } else if (PMD.isKeyPressed(Key.left)) {
                 direction = Direction.left;
-            } else if (controller.isKeyPressed(Key.right)) {
+            } else if (PMD.isKeyPressed(Key.right)) {
                 direction = Direction.right;
-            } else if (controller.isKeyPressed(Key.up)) {
+            } else if (PMD.isKeyPressed(Key.up)) {
                 direction = Direction.up;
             }
 
             //actions that do not affect the player's turn or action state
-            if (controller.isKeyPressed(Key.space)) {
-                controller.nextFloor();
-            } else if (controller.isKeyPressed(Key.a)) {
+            if (PMD.isKeyPressed(Key.space)) {
+                floor.nextFloor();
+            } else if (PMD.isKeyPressed(Key.a)) {
                 this.setTurnState(Turn.COMPLETE);
                 possibleNextTile = null;
-            } else if (controller.isKeyPressedTimeSensitive(Key.p)) {
+            } else if (PMD.isKeyPressedTimeSensitive(Key.p)) {
                 Controller.turnsPaused = !Controller.turnsPaused;
-            } else if (controller.isKeyPressed(Key.r)) {
-                //controller.screen.game.setScreen(PMD.endScreen);
-                for (DynamicEntity dEntity : controller.dEntities) {
+            } else if (PMD.isKeyPressed(Key.r)) {
+                //PMD.screen.game.setScreen(PMD.endScreen);
+                for (DynamicEntity dEntity : floor.getDynamicEntities()) {
                     if (dEntity instanceof PokemonMob) {
                         PokemonMob pMob = (PokemonMob) dEntity;
                         pMob.pathFind = pMob.sPath;
                     }
                 }
-            } else if (controller.isKeyPressedTimeSensitive(Key.m)) {
-                controller.screen.toggleHub();
+            } else if (PMD.isKeyPressedTimeSensitive(Key.m)) {
+                floor.getScreen().toggleHub();
                 PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
-            } else if (controller.isKeyPressed(Key.escape)) {
-                controller.screen.toggleHub();
-            } else if (controller.isKeyPressedTimeSensitive(Key.F11)) {
+            } else if (PMD.isKeyPressed(Key.escape)) {
+                floor.getScreen().toggleHub();
+            } else if (PMD.isKeyPressedTimeSensitive(Key.F11)) {
                 Graphics.DisplayMode mode = Gdx.graphics.getDisplayMode();
                 if (Gdx.graphics.isFullscreen()) {
                     Gdx.graphics.setWindowedMode(Constants.V_WIDTH, Constants.V_HEIGHT);
@@ -131,7 +136,7 @@ public class PokemonPlayer extends Pokemon {
             }
 
             //these are for the attacks
-            if (controller.isKeyPressed(Key.b) && controller.isKeyPressed(Key.t)) {
+            if (PMD.isKeyPressed(Key.b) && PMD.isKeyPressed(Key.t)) {
                 currentMove = Move.SWIPERNOSWIPING;
             }
         }

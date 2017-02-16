@@ -22,7 +22,7 @@ public class StairTile extends Tile{
     @Override
     public void playEvents(DynamicEntity dEntity) {
         if (dEntity instanceof PokemonPlayer) {
-            controller.nextFloor();
+            floor.nextFloor();
         }
     }
 }

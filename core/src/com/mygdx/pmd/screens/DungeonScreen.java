@@ -43,7 +43,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
         //init stuff for updating
         controller = new Controller(this);
-        tileBoard = controller.currentFloor.tileBoard;
+        tileBoard = controller.floor.tileBoard;
 
         bFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
         bFont.getData().setScale(.5f);

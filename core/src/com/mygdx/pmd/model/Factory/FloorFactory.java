@@ -34,7 +34,7 @@ public class FloorFactory {
         rooms = new Array<Room>();
     }
 
-    public Floor createFloor(Controller controller){
+    public Floor createFloor(){
         //function needed to clear floor
         floor.clear();
         placeHolder = new Tile[Constants.tileBoardRows][Constants.tileBoardCols];

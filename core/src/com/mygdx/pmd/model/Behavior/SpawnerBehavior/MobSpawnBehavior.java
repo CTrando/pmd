@@ -26,17 +26,17 @@ public class MobSpawnBehavior extends SpawnBehavior {
         if(dEntity.isTurnWaiting()) {
             dEntity.setTurnState(Turn.COMPLETE);
 
-            if (controller.dEntities.size < Constants.NUM_MAX_ENTITY) {
+            if (floor.getDynamicEntities().size < Constants.NUM_MAX_ENTITY) {
                 dEntity.setActionState(Action.SPAWNING);
                 Tile tile = dEntity.floor.chooseUnoccupiedTile();
                 int rand = PRandomInt.random(0, 10);
                 switch (rand) {
                     case 0:
-                        Pokemon pokemon = PokemonFactory.createPokemon(controller, PokemonName.getRandomName(), PokemonMob.class);
+                        Pokemon pokemon = PokemonFactory.createPokemon(floor, PokemonName.getRandomName(), PokemonMob.class);
                         pokemon.setCurrentTile(tile);
                         pokemon.setNextTile(tile);
 
-                        controller.toBeAdded(pokemon);
+                        floor.addEntity(pokemon);
                         break;
                     default:
                         dEntity.setActionState(Action.IDLE);

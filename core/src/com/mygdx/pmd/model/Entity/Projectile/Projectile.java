@@ -29,7 +29,7 @@ public class Projectile extends DynamicEntity {
         // put down location as the parent's facing tile's location
         // set default values
         // TODO what if facing tile is null
-        super(parent.controller, parent.facingTile.x, parent.facingTile.y);
+        super(parent.floor, parent.facingTile.x, parent.facingTile.y);
         this.parent = parent;
         this.isTurnBased = false;
         this.direction = parent.direction;
@@ -90,14 +90,12 @@ public class Projectile extends DynamicEntity {
                 dEntity.takeDamage(parent, move.damage);
             }
 
-            controller.toBeRemoved(this);
-
             if(move.equals(Move.INSTANT_KILLER)){
                 System.out.println("RKO OUT OF NOWHERE");
             }
 
             //setting this to null so parent will know that the attack has finished
-            this.parent.projectile = null;
+            this.parent.children.removeValue(this, true);
             this.shouldBeDestroyed = true;
         }
     }
@@ -116,6 +114,11 @@ public class Projectile extends DynamicEntity {
     @Override
     public boolean isLegalToMoveTo(Tile tile) {
         return tile.isWalkable;
+    }
+
+    @Override
+    public void randomizeLocation() {
+
     }
 
     @Override

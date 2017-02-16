@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Entity;
 
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.Tile;
 
 /**
@@ -12,8 +13,8 @@ import com.mygdx.pmd.model.Tile.Tile;
  * All items must extend this class
  */
 public class StaticEntity extends Entity{
-    public StaticEntity(Controller controller, int x, int y) {
-        super(controller, x, y);
+    public StaticEntity(Floor floor, int x, int y) {
+        super(floor, x, y);
     }
 
     @Override

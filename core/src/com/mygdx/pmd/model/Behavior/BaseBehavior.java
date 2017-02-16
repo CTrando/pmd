@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Behavior;
 
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.model.Entity.Entity;
 
@@ -15,11 +16,11 @@ public abstract class BaseBehavior {
     public static final int MOVE_BEHAVIOR = 4;
     public static final int ANIMATION_BEHAVIOR = 5;
 
-    public Controller controller;
+    public Floor floor;
     public Entity entity;
 
     public BaseBehavior(Entity entity){
-        this.controller = entity.controller;
+        this.floor = entity.floor;
         this.entity = entity;
     }
 

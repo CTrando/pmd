@@ -1,5 +1,6 @@
 package com.mygdx.pmd.model.Behavior.Pokemon.PokeMob;
 
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
@@ -39,7 +40,7 @@ public class MobLogic extends PokemonBehavior {
                 mob.setFacingTileBasedOnDirection(mob.direction);
 
                 if (mob.target.shouldBeDestroyed) {
-                    mob.target = controller.pokemonPlayer;
+                    mob.target = floor.getPlayer();
                     mob.aggression = Aggression.passive;
                     mob.pathFind = mob.wander;
                 }
@@ -68,7 +69,7 @@ public class MobLogic extends PokemonBehavior {
                     }
                     //check to see if it can pathfind
                     if (pathFind()) {
-                        if (mob.isWithinRange(controller.pokemonPlayer)) {
+                        if (mob.isWithinRange(floor.getPlayer())) {
                             mob.setActionState(Action.MOVING);
                             mob.behaviors[2] = mob.moveBehavior;
                             mob.setSpeed(1);
@@ -80,7 +81,7 @@ public class MobLogic extends PokemonBehavior {
                     }
                 }
 
-                if (controller.isKeyPressed(Key.s)) {
+                if (PMD.isKeyPressed(Key.s)) {
                     mob.setSpeed(5);
                 }
 
