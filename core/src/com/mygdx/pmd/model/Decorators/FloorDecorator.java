@@ -1,7 +1,7 @@
 package com.mygdx.pmd.model.Decorators;
 
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.model.Factory.ItemFactory;
+//import com.mygdx.pmd.model.Factory.ItemFactory;
 import com.mygdx.pmd.model.Floor.Floor;
 import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.RoomTile;
@@ -14,7 +14,7 @@ import com.mygdx.pmd.model.Tile.Tile;
 public class FloorDecorator {
     
     public static Floor placeItems(Floor floor){
-        ItemFactory.placeItems(floor);
+        //ItemFactory.placeItems(floor);
         return floor;
     }
 

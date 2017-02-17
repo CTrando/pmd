@@ -1,3 +1,4 @@
+/*
 package com.mygdx.pmd.model.Entity.Projectile;
 
 import com.badlogic.gdx.audio.Sound;
@@ -12,9 +13,11 @@ import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.utils.PAnimation;
 
+*/
 /**
  * Created by Cameron on 10/18/2016.
- */
+ *//*
+
 public class Projectile extends Entity {
     public Pokemon parent;
 
@@ -50,9 +53,11 @@ public class Projectile extends Entity {
         this.loadAnimations();
     }
 
-    /**
+    */
+/**
      * initialize animations - include adding animation behavior
-     */
+     *//*
+
     private void loadAnimations() {
         projectileAnimation = new PAnimation("attack", move.projectileMovementAnimation, null, 20, true);
         animationMap.put("movement", projectileAnimation);
@@ -106,3 +111,4 @@ public class Projectile extends Entity {
     }
 }
 
+*/

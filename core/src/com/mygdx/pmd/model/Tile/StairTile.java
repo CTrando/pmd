@@ -18,10 +18,10 @@ public class StairTile extends Tile{
         this.sprite = PMD.sprites.get("stairtilesprite");
     }
 
-    @Override
+  /*  @Override
     public void playEvents(Entity entity) {
-        if (entity instanceof PokemonPlayer) {
+        //if (entity instanceof PokemonPlayer) {
             floor.nextFloor();
-        }
-    }
+        //}
+    }*/
 }

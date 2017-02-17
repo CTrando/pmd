@@ -1,11 +1,12 @@
 package com.mygdx.pmd.model.Floor;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.model.Entity.*;
-import com.mygdx.pmd.model.Entity.Item.*;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.*;
@@ -15,10 +16,10 @@ import java.util.*;
 /**
  * Created by Cameron on 1/24/2017.
  */
-public class Floor extends Entity{
+public class Floor extends Entity implements Renderable{
 
     public Tile[][] tileBoard;
-    private Array<Item> items;
+   // private Array<Item> items;
     private Controller controller;
 
     public Floor(Controller controller){
@@ -26,7 +27,7 @@ public class Floor extends Entity{
         this.controller = controller;
         tileBoard = new Tile[Constants.tileBoardRows][Constants.tileBoardCols];
 
-        items = new Array<Item>();
+        //items = new Array<Item>();
     }
 
     /**
@@ -36,27 +37,27 @@ public class Floor extends Entity{
         /*if(entity instanceof StaticEntity){
             staticEntities.add((StaticEntity) entity);
         }*/
-        controller.toBeAdded(entity);
+        //controller.toBeAdded(entity);
     }
-
+/*
     public void addItem(Item item){
         items.add(item);
-    }
+    }*/
 
-    public void removeItem(Item item){
+  /*  public void removeItem(Item item){
         items.removeValue(item, true);
-    }
+    }*/
 
-    public void removeEntity(Entity entity){
+  /*  public void removeEntity(Entity entity){
         controller.toBeRemoved(entity);
-    }
+    }*/
 
     /**
      * clear everything necessary
      */
-    public void clear(){
+    /*public void clear(){
         items.clear();
-    }
+    }*/
 
     /**
      * Recursive method
@@ -74,11 +75,6 @@ public class Floor extends Entity{
     }
 
     @Override
-    public void registerObservers() {
-
-    }
-
-    @Override
     public void render(SpriteBatch batch){
         for (int i = 0; i < tileBoard.length; i++) {
             for (int j = 0; j < tileBoard[0].length; j++) {
@@ -88,20 +84,6 @@ public class Floor extends Entity{
                 //bFont.draw(batch, tile.spriteValue+"", tile.x + 5, tile.y+25/2);
             }
         }
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
-    public void randomizeLocation(){
-
-    }
-
-    public Entity getPlayer() {
-        return controller.pokemonPlayer;
     }
 
     public DungeonScreen getScreen(){
@@ -116,11 +98,7 @@ public class Floor extends Entity{
         controller.nextFloor();
     }
 
-    public Array<Item> getItems(){
+/*    public Array<Item> getItems(){
         return items;
-    }
-
-    public ArrayList<Entity> entities(){
-        return controller.getEntities();
-    }
+    }*/
 }

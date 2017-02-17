@@ -1,3 +1,4 @@
+/*
 package com.mygdx.pmd.model.Spawner;
 
 import com.mygdx.pmd.interfaces.TurnBased;
@@ -7,9 +8,11 @@ import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.Tile;
 
+*/
 /**
  * Created by Cameron on 12/21/2016.
- */
+ *//*
+
 public class Spawner extends Entity implements TurnBased {
 
     public Spawner(Floor floor) {
@@ -29,3 +32,4 @@ public class Spawner extends Entity implements TurnBased {
 
     }
 }
+*/

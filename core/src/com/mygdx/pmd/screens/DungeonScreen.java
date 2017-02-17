@@ -10,8 +10,9 @@ import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.interfaces.Renderable;
+import com.mygdx.pmd.model.Behavior.*;
 import com.mygdx.pmd.model.Tile.*;
-import com.mygdx.pmd.scenes.Hud;
+//import com.mygdx.pmd.scenes.Hud;
 import com.mygdx.pmd.utils.Constants;
 
 public class DungeonScreen extends PScreen implements GestureDetector.GestureListener, InputProcessor {
@@ -20,7 +21,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     public Array<Renderable> renderList;
 
-    private Hud hud;
+    //private Hud hud;
     private boolean showHub;
 
     public Controller controller;
@@ -49,7 +50,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         bFont.getData().setScale(.5f);
 
         //init stuff that needs the controller
-        hud = new Hud(this, this.batch);
+        //hud = new Hud(this, this.batch);
     }
 
     @Override
@@ -69,12 +70,12 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
             renderList.get(i).render(batch);
         }
         batch.end();
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        //batch.setProjectionMatrix(hud.stage.getCamera().combined);
 
-        hud.update(dt);
+        /*hud.update(dt);
         if(showHub){
             hud.stage.draw();
-        }
+        }*/
     }
 
     @Override
@@ -86,7 +87,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     public void show() {
         renderList.clear();
         controller.reset();
-        hud.reset();
+        //hud.reset();
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(new GestureDetector(this));
@@ -99,7 +100,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public void resize(int width, int height) {
-        hud.viewport.update(width, height, true);
+       // hud.viewport.update(width, height, true);
         gamePort.update(width, height, true);
     }
 
@@ -119,7 +120,8 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     }
 
     private void updateCamera() {
-        gameCamera.position.set(controller.pokemonPlayer.x, controller.pokemonPlayer.y, 0);
+        PositionComponent pm = Mappers.pm.get(controller.player);
+        gameCamera.position.set(pm.x, pm.y, 0);
         gameCamera.update();
     }
 
@@ -128,7 +130,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         if (PMD.keys.containsKey(keycode))
             PMD.keys.get(keycode).set(true);
 
-        hud.addText(Input.Keys.toString(keycode));
+        //hud.addText(Input.Keys.toString(keycode));
         return false;
     }
 
@@ -179,12 +181,12 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     }
 
     private void setShowHud(boolean show){
-        showHub = show;
+        /*showHub = show;
         if(showHub) {
             inputMultiplexer.addProcessor(hud.stage);
         } else {
             inputMultiplexer.removeProcessor(hud.stage);
-        }
+        }*/
     }
 
     @Override

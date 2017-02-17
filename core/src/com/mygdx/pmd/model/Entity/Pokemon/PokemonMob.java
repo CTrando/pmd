@@ -1,8 +1,8 @@
+/*
 package com.mygdx.pmd.model.Entity.Pokemon;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Behavior.Pokemon.PokeMob.MobLogicComponent;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.Tile;
@@ -87,3 +87,4 @@ public class PokemonMob extends Pokemon {
         System.out.println("WOE IS ME I AM DEAD");
     }
 }
+*/

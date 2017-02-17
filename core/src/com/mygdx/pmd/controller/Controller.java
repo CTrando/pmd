@@ -1,17 +1,21 @@
 package com.mygdx.pmd.controller;
 
 
+import com.badlogic.ashley.core.*;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.comparators.PokemonDistanceComparator;
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.model.Behavior.*;
+import com.mygdx.pmd.model.Behavior.Entity.*;
+import com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer.*;
 import com.mygdx.pmd.model.Decorators.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.model.Factory.*;
 import com.mygdx.pmd.model.Floor.*;
-import com.mygdx.pmd.model.Spawner.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.test.TileTester;
 
@@ -20,7 +24,7 @@ import java.util.*;
 public class Controller {
     public DungeonScreen screen;
 
-    public ArrayList<Entity> entities;
+   /* public ArrayList<Entity> entities;
     private LinkedList<Entity> turnBasedEntities;
     private Entity updatedTurnEntity;
 
@@ -28,7 +32,9 @@ public class Controller {
 
     //must be lists
     private Array<Entity> toBeRemoved;
-    private Array<Entity> toBeAdded;
+    private Array<Entity> toBeAdded;*/
+
+    public PokemonPlayer player;
 
     private FloorFactory floorFactory;
     public Floor floor;
@@ -36,6 +42,8 @@ public class Controller {
     public static int floorCount = 1;
     public static int turns = 20;
     public static boolean turnsPaused = false;
+
+    public Engine engine;
 
 
     public Controller(DungeonScreen screen) {
@@ -48,16 +56,24 @@ public class Controller {
         turnsPaused = false;
         floorCount = 1;
 
+        engine = new Engine();
+        engine.addSystem(new PlayerLogicSystem());
+        engine.addSystem(new MoveSystem());
+        engine.addSystem(new RenderSystem());
+
+        //engine.addSystem(new MobLogicSystem());
+
         //list of entities
-        turnBasedEntities = new LinkedList<Entity>();
+       /* turnBasedEntities = new LinkedList<Entity>();
         entities = new ArrayList<Entity>();
         toBeRemoved = new Array<Entity>();
-        toBeAdded = new Array<Entity>();
+        toBeAdded = new Array<Entity>();*/
 
         //init tileboard
         floorFactory = new FloorFactory(this);
         floor = floorFactory.createFloor();
-        this.directlyAddEntity(floor);
+        screen.renderList.add(floor);
+        //this.directlyAddEntity(floor);
 
         //decorate floor
         FloorDecorator.placeItems(floor);
@@ -66,12 +82,12 @@ public class Controller {
 
         //load pMob from xml
         this.loadPokemonFromJson(Gdx.files.internal("utils/PokemonStorage.json"));
-        this.randomizeAllPokemonLocation();
-        updatedTurnEntity = turnBasedEntities.peek();
+        //this.randomizeAllPokemonLocation();
+        //updatedTurnEntity = turnBasedEntities.peek();
 
         //add in a mob spawner
-        MobSpawner mobSpawner = new MobSpawner(floor);
-        this.directlyAddEntity(mobSpawner);
+        //MobSpawner mobSpawner = new MobSpawner(floor);
+        //this.directlyAddEntity(mobSpawner);
     }
 
     public void nextFloor() {
@@ -85,13 +101,26 @@ public class Controller {
 
         if (!TileTester.checkCorners(floor.tileBoard)) throw new AssertionError("Uh oh, this floor is invalid!");
 
-        this.randomizeAllPokemonLocation();
+        //this.randomizeAllPokemonLocation();
     }
 
     public void update() {
         //first update entities, then their turns should turn immediately to complete which allows them to continue on with the next one
         //this process allows for super quick movement
-        for (int i = 0; i < entities.size(); i++) {
+
+        engine.update(0);
+
+        ImmutableArray<Entity> turnBasedEntities = engine.getEntitiesFor(Family.all(TurnComponent.class).get());
+
+        for(int i = 0; i< turnBasedEntities.size(); i++){
+            TurnComponent tm = Mappers.tm.get(turnBasedEntities.get(i));
+            if(tm.isTurnComplete())
+                TurnComponent tm1 = Mappers.tm.get(turnBasedEntities.get(i+1));
+                tm1.setTurnState(Turn.WAITING);
+            }
+        }
+
+       /* for (int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
             entity.update();
 
@@ -120,7 +149,7 @@ public class Controller {
             }
         }
         removeEntities();
-        addEntities();
+        addEntities();*/
     }
 
     private void loadPokemonFromJson(FileHandle file) {
@@ -129,17 +158,24 @@ public class Controller {
 
         for (JsonValue entity : entities.get("entities")) {
             Pokemon pokemon = PokemonFactory.createPokemonFromJson(floor, entity);
-            this.directlyAddEntity(pokemon);
+
+            if(pokemon instanceof PokemonPlayer){
+                player = (PokemonPlayer) pokemon;
+            }
+            screen.renderList.add(pokemon);
+            engine.addEntity(pokemon);
         }
     }
+/*
 
     private void randomizeAllPokemonLocation() {
         for (Entity entity : entities) {
             entity.randomizeLocation();
         }
     }
+*/
 
-    private void directlyAddEntity(Entity entity) {
+   /* private void directlyAddEntity(Entity entity) {
         screen.renderList.add(entity);
         entities.add(entity);
 
@@ -151,9 +187,9 @@ public class Controller {
         if (entity instanceof PokemonPlayer) {
             pokemonPlayer = (PokemonPlayer) entity;
         }
-    }
+    }*/
 
-    private void addEntities() {
+  /*  private void addEntities() {
         for (Entity entity : toBeAdded) {
             directlyAddEntity(entity);
         }
@@ -166,12 +202,12 @@ public class Controller {
         for (Entity entity : toBeRemoved) {
             screen.renderList.removeValue(entity, true);
             entities.remove(entity);
-/*
 
             if (entity.isTurnBaseable()) {
                 turnBasedEntities.remove(entity);
             }
-*/
+
+
         }
         toBeRemoved.clear();
     }
@@ -186,5 +222,5 @@ public class Controller {
 
     public ArrayList<Entity> getEntities(){
         return entities;
-    }
+    }*/
 }

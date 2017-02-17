@@ -1,3 +1,4 @@
+/*
 package com.mygdx.pmd.model.Behavior.Projectile;
 
 import com.mygdx.pmd.model.Behavior.*;
@@ -5,9 +6,11 @@ import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Tile.Tile;
 
 
+*/
 /**
  * Created by Cameron on 11/17/2016.
- */
+ *//*
+
 public class ProjectileMovementComponent extends Component {
 
     Projectile projectile;
@@ -40,3 +43,4 @@ public class ProjectileMovementComponent extends Component {
         }
     }
 }
+*/

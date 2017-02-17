@@ -10,7 +10,7 @@ import com.mygdx.pmd.model.Tile.Tile;
  * Created by Cameron on 12/10/2016.
  */
 public class Wander extends PathFind {
-    public Wander(Entity entity) {
+    /*public Wander(Entity entity) {
         super(entity);
     }
 
@@ -50,7 +50,7 @@ public class Wander extends PathFind {
             return chooseRandomTile(curTile);
         }
         return null;
-    }
+    }*/
 
     public boolean isLegal(Tile tile){
         return true;

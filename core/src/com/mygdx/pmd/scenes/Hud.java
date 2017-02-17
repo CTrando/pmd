@@ -1,3 +1,4 @@
+/*
 package com.mygdx.pmd.scenes;
 
 import com.badlogic.gdx.Application;
@@ -18,9 +19,11 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 
+*/
 /**
  * Created by Cameron on 11/26/2016.
- */
+ *//*
+
 public class Hud {
     public Stage stage;
     public Viewport viewport;
@@ -186,9 +189,11 @@ public class Hud {
         temp.add(turnLabel).fill();
         temp.row();
         loadAttackTextButtons(temp);
-       /* temp.add(attackText).fill();
+       */
+/* temp.add(attackText).fill();
         temp.row();
-        temp.add(test).fill();*/
+        temp.add(test).fill();*//*
+
         temp.pack();
         temp.setBackground(skin.getDrawable("background.9"));
         Table textTable = new Table();
@@ -251,3 +256,4 @@ public class Hud {
         }
     }
 }
+*/

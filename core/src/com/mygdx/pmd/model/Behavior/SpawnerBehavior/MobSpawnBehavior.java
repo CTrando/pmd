@@ -1,3 +1,4 @@
+/*
 package com.mygdx.pmd.model.Behavior.SpawnerBehavior;
 
 import com.mygdx.pmd.enumerations.Action;
@@ -11,9 +12,11 @@ import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.*;
 
 
+*/
 /**
  * Created by Cameron on 12/22/2016.
- */
+ *//*
+
 public class MobSpawnBehavior extends SpawnComponent {
 
     public MobSpawnBehavior(Entity entity) {
@@ -45,3 +48,4 @@ public class MobSpawnBehavior extends SpawnComponent {
         }
     }
 }
+*/

@@ -36,7 +36,7 @@ public class FloorFactory {
 
     public Floor createFloor(){
         //function needed to clear floor
-        floor.clear();
+        //floor.clear();
         placeHolder = new Tile[Constants.tileBoardRows][Constants.tileBoardCols];
 
         //reset variables - should probably change this

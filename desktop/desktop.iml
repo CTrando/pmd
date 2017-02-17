@@ -31,6 +31,7 @@
     <orderEntry type="library" exported="" name="gdx-backend-lwjgl-1.9.5" level="project" />
     <orderEntry type="library" exported="" name="gdx-platform-1.9.5-natives-desktop" level="project" />
     <orderEntry type="library" exported="" name="gdx-box2d-platform-1.9.5-natives-desktop" level="project" />
+    <orderEntry type="library" exported="" name="ashley-1.7.0" level="project" />
     <orderEntry type="library" exported="" name="gdx-1.9.5" level="project" />
     <orderEntry type="library" exported="" name="lwjgl-2.9.2" level="project" />
     <orderEntry type="library" exported="" name="lwjgl_util-2.9.2" level="project" />
@@ -44,5 +45,6 @@
     <orderEntry type="library" exported="" name="jinput-platform-2.0.5-natives-linux" level="project" />
     <orderEntry type="library" exported="" name="jinput-platform-2.0.5-natives-windows" level="project" />
     <orderEntry type="library" exported="" name="jinput-platform-2.0.5-natives-osx" level="project" />
+    <orderEntry type="library" exported="" name="desktop.desktop-1.0" level="project" />
   </component>
 </module>

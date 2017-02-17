@@ -1,11 +1,14 @@
+/*
 package com.mygdx.pmd.model.Behavior.Projectile;
 
 import com.mygdx.pmd.model.Behavior.*;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 
+*/
 /**
  * Created by Cameron on 11/25/2016.
- */
+ *//*
+
 public class ProjectileAnimationComponent extends Component {
     public ProjectileAnimationComponent(Projectile projectile) {
         super(projectile);
@@ -23,3 +26,4 @@ public class ProjectileAnimationComponent extends Component {
         }
     }
 }
+*/

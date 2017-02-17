@@ -1,16 +1,15 @@
 package com.mygdx.pmd.model.Tile;
 
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.interfaces.Renderable;
-import com.mygdx.pmd.model.Entity.Item.Item;
-import com.mygdx.pmd.model.Entity.StaticEntity;
+//import com.mygdx.pmd.model.Entity.Item.Item;
 import com.mygdx.pmd.model.Floor.Floor;
 import com.mygdx.pmd.utils.Constants;
-import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.utils.MathLogic;
 
 
@@ -37,7 +36,7 @@ public abstract class Tile implements Renderable {
     private String classifier; //for toString purposes
 
     public Array<Entity> entities;
-    private Array<Item> items;
+    //private Array<Item> items;
 
     public Tile[][] tileBoard;
     private Tile parent;
@@ -54,14 +53,14 @@ public abstract class Tile implements Renderable {
         this.classifier = classifier;
 
         entities = new Array<Entity>();
-        items = new Array<Item>();
+        //items = new Array<Item>();
     }
 
     public void render(SpriteBatch batch) {
         batch.draw(sprite, x, y);
-        for (StaticEntity sEntity : items) {
+       /* for (StaticEntity sEntity : items) {
             sEntity.render(batch);
-        }
+        }*/
     }
 
     public void renderDebug(SpriteBatch batch) {
@@ -73,11 +72,11 @@ public abstract class Tile implements Renderable {
     }
 
     public void playEvents(Entity receiver) {
-        for (Item item : items) {
+     /*   for (Item item : items) {
             item.playEvents(receiver);
             items.removeValue(item, true);
             floor.removeItem(item);
-        }
+        }*/
     }
 
     public double calculateDistanceTo(Tile tile) {
@@ -149,18 +148,18 @@ public abstract class Tile implements Renderable {
     }
 
     public void addEntity(Entity entity) {
-        if (entity instanceof Item) {
+       /* if (entity instanceof Item) {
             items.add((Item) entity);
-        }
+        }*/
         entities.add(entity);
     }
 
     public void removeEntity(Entity entity) {
         entities.removeValue(entity, true);
 
-        if (entity instanceof Item) {
+        /*if (entity instanceof Item) {
             items.removeValue((Item) entity, true);
-        }
+        }*/
     }
 
     public static Tile getTileAt(int x, int y, Tile[][] tileBoard) {

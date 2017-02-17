@@ -10,7 +10,7 @@ import com.mygdx.pmd.model.Tile.Tile;
  * Created by Cameron on 10/30/2016.
  */
 public class ShortestPath extends PathFind {
-
+/*
     public ShortestPath(Entity entity) {
         super(entity);
     }
@@ -95,5 +95,5 @@ public class ShortestPath extends PathFind {
         openNodeList.removeValue(tile, false);
         if (!closedNodeList.contains(tile, false))
             closedNodeList.add(tile);
-    }
+    }*/
 }

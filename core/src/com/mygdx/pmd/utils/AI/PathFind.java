@@ -9,7 +9,7 @@ import com.mygdx.pmd.model.Tile.Tile;
  * Created by Cameron on 11/11/2016.
  */
 public abstract class PathFind {
-    public Entity entity;
+   /* public Entity entity;
 
     Array<Tile> openNodeList;
     Array<Tile> closedNodeList;
@@ -27,5 +27,5 @@ public abstract class PathFind {
 
     public Array<Tile> pathFind(Tile tile) throws PathFindFailureException{
         return null;
-    }
+    }*/
 }
