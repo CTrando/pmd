@@ -2,9 +2,8 @@ package com.mygdx.pmd.model.Tile;
 
 
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.model.Entity.DynamicEntity;
+import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
-import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.model.Floor.Floor;
 
 /**
@@ -20,8 +19,8 @@ public class StairTile extends Tile{
     }
 
     @Override
-    public void playEvents(DynamicEntity dEntity) {
-        if (dEntity instanceof PokemonPlayer) {
+    public void playEvents(Entity entity) {
+        if (entity instanceof PokemonPlayer) {
             floor.nextFloor();
         }
     }

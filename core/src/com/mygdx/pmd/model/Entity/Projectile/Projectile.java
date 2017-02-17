@@ -4,18 +4,18 @@ import com.badlogic.gdx.audio.Sound;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Move;
-import com.mygdx.pmd.model.Behavior.Projectile.ProjectileAnimationBehavior;
-import com.mygdx.pmd.model.Behavior.Projectile.ProjectileCollisionBehavior;
-import com.mygdx.pmd.model.Behavior.Projectile.ProjectileMovementBehavior;
-import com.mygdx.pmd.model.Entity.DynamicEntity;
+import com.mygdx.pmd.model.Behavior.*;
+import com.mygdx.pmd.model.Behavior.Projectile.ProjectileAnimationComponent;
+import com.mygdx.pmd.model.Behavior.Projectile.ProjectileCollisionComponent;
+import com.mygdx.pmd.model.Behavior.Projectile.ProjectileMovementComponent;
+import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
-import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.PAnimation;
 
 /**
  * Created by Cameron on 10/18/2016.
  */
-public class Projectile extends DynamicEntity {
+public class Projectile extends Entity {
     public Pokemon parent;
 
     //instance fields from currentMove
@@ -25,7 +25,7 @@ public class Projectile extends DynamicEntity {
     public int speed;
     private PAnimation projectileAnimation;
 
-    public Projectile(Pokemon parent, Move move) {
+    public Projectile(Pokemon parent) {
         // put down location as the parent's facing tile's location
         // set default values
         // TODO what if facing tile is null
@@ -35,34 +35,19 @@ public class Projectile extends DynamicEntity {
         this.direction = parent.direction;
 
         //store currentMove data
-        this.move = move;
+        this.move = parent.currentMove;
         this.damage = move.damage;
         this.speed = move.speed;
         this.isRanged = move.isRanged();
 
         // load all the things
         if (move.isRanged()) {
-            this.loadMovementLogic();
-            this.loadCollisionLogic();
+            this.addComponent(Component.MOVE, new ProjectileMovementComponent(this));
+            this.addComponent(Component.COLLISION, new ProjectileCollisionComponent(this));
         } else {
             this.collide();
         }
         this.loadAnimations();
-    }
-
-    /**
-     * set a behavior that will allow for movement
-     */
-    private void loadMovementLogic() {
-        behaviors[2] = new ProjectileMovementBehavior(this);
-        this.setActionState(Action.MOVING);
-    }
-
-    /**
-     * set collision logic
-     */
-    private void loadCollisionLogic() {
-        behaviors[0] = new ProjectileCollisionBehavior(this);
     }
 
     /**
@@ -74,8 +59,6 @@ public class Projectile extends DynamicEntity {
 
         projectileAnimation = new PAnimation("death", move.projectileCollisionAnimation, null, move.animationLength, false);
         animationMap.put("death", projectileAnimation);
-
-        behaviors[1] = new ProjectileAnimationBehavior(this);
     }
 
     @Override
@@ -86,8 +69,9 @@ public class Projectile extends DynamicEntity {
         }
 
         if (projectileAnimation.isFinished() && this.getActionState() == Action.COLLISION) {
-            for (DynamicEntity dEntity : getCurrentTile().dynamicEntities) {
-                dEntity.takeDamage(parent, move.damage);
+            for (Entity entity : getCurrentTile().entities) {
+                // use hp component for this
+                //entity.takeDamage(parent, move.damage);
             }
 
             if(move.equals(Move.INSTANT_KILLER)){
@@ -107,18 +91,8 @@ public class Projectile extends DynamicEntity {
         PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
 
         // ensure that the collision class and movement class don't run anymore
-        this.behaviors[0] = this.noBehavior;
-        this.behaviors[2] = this.noBehavior;
-    }
-
-    @Override
-    public boolean isLegalToMoveTo(Tile tile) {
-        return tile.isWalkable;
-    }
-
-    @Override
-    public void randomizeLocation() {
-
+        this.removeComponent(Component.MOVE);
+        this.removeComponent(Component.COLLISION);
     }
 
     @Override

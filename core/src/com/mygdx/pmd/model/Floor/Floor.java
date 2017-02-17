@@ -3,11 +3,14 @@ package com.mygdx.pmd.model.Floor;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Item.*;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.*;
+
+import java.util.*;
 
 /**
  * Created by Cameron on 1/24/2017.
@@ -65,7 +68,7 @@ public class Floor extends Entity{
 
         Tile chosenTile = tileBoard[randRow][randCol];
 
-        if (chosenTile instanceof RoomTile && !chosenTile.hasDynamicEntity()) {
+        if (chosenTile instanceof RoomTile && !chosenTile.hasEntity()) {
             return tileBoard[randRow][randCol];
         } else return chooseUnoccupiedTile();
     }
@@ -92,7 +95,12 @@ public class Floor extends Entity{
 
     }
 
-    public DynamicEntity getPlayer() {
+    @Override
+    public void randomizeLocation(){
+
+    }
+
+    public Entity getPlayer() {
         return controller.pokemonPlayer;
     }
 
@@ -112,7 +120,7 @@ public class Floor extends Entity{
         return items;
     }
 
-    public Array<DynamicEntity> getDynamicEntities(){
-        return controller.dEntities;
+    public ArrayList<Entity> entities(){
+        return controller.getEntities();
     }
 }

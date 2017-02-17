@@ -8,8 +8,8 @@ import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.interfaces.Updatable;
-import com.mygdx.pmd.model.Behavior.BaseBehavior;
-import com.mygdx.pmd.model.Behavior.NoBehavior;
+import com.mygdx.pmd.model.Behavior.*;
+import com.mygdx.pmd.model.Behavior.Entity.*;
 import com.mygdx.pmd.model.Floor.Floor;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.*;
@@ -23,10 +23,33 @@ import java.util.HashMap;
  * Created by Cameron on 10/18/2016.
  */
 public abstract class Entity implements Renderable, Updatable, Observable {
-    public BaseBehavior[] behaviors;
+    public Array<Component> components;
+
+    private Action actionState;
+    private Action previousState;
+
+    public boolean isTurnBased; // replace with turn component
+
+    public int hp = 100;
+    /**
+     * The next tile the entity will currentMove to
+     */
+    private Tile nextTile;
+    /**
+     * The tile the entity is facing
+     */
+    public Tile facingTile;
+    /**
+     * Tile that needs to be legalized before it becomes the next tile, prerequisite of tile movement system
+     */
+    public Tile possibleNextTile;
+
+    public Direction direction;
+    public int speed = 1;
+
+    public PAnimation currentAnimation;
 
     public boolean shouldBeDestroyed;
-    public BaseBehavior noBehavior;
 
     public int x;
     public int y;
@@ -46,7 +69,7 @@ public abstract class Entity implements Renderable, Updatable, Observable {
     private Turn turnState;
 
     public Entity(){
-        initBehaviors();
+        initComponents();
     }
 
     /**
@@ -63,16 +86,31 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         animationMap = new HashMap<String, PAnimation>();
 
         //initialize behaviors array
-        initBehaviors();
         initObservers();
+        initComponents();
     }
 
-    private void initBehaviors(){
-        noBehavior = new NoBehavior(this);
-        behaviors = new BaseBehavior[10];
-        for (int i = 0; i < behaviors.length; i++) {
-            behaviors[i] = this.noBehavior;
+    public void initComponents(){
+        components = new Array<Component>();
+        for(int i = 0; i< 10; i++) {
+            components.add(Component.NOCOMPONENT);
         }
+    }
+
+    public boolean componentExists(int index){
+        return components.get(index) != null;
+    }
+
+    public void addComponent(int index,  Component component){
+        components.set(index, component);
+    }
+
+    public void removeComponent(int index){
+        components.removeIndex(index);
+    }
+
+    public Component getComponent(int index){
+        return components.get(index);
     }
 
     private void initObservers(){
@@ -84,8 +122,8 @@ public abstract class Entity implements Renderable, Updatable, Observable {
 
     @Override
     public void update() {
-        for(int i = 0; i < behaviors.length; i++) {
-            behaviors[i].execute();
+        for(Component component: components){
+            component.update();
         }
     }
 
@@ -102,34 +140,22 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         }
     }
 
-    public void setBehavior(BaseBehavior behavior, int index) {
-        behaviors[index] = behavior;
-    }
+    public void randomizeLocation() {
+        Tile random = floor.chooseUnoccupiedTile();
 
-    public boolean isTurnBaseable(){
-        return turnState != null;
+        if (random.isWalkable) {
+            this.setNextTile(random);
+            this.setCurrentTile(random);
+            this.possibleNextTile = null;
+        } else randomizeLocation();
+
+        this.setActionState(Action.IDLE);
+        this.setTurnState(Turn.COMPLETE);
     }
 
     public boolean equals(Tile tile) {
         if(tile == null) return false;
         return (tile.x == x && tile.y == y);
-    }
-
-    public void loadAnimations(PokemonName pokemonName){
-        JsonReader jsonReader = new JsonReader();
-        JsonValue animations = jsonReader.parse(Gdx.files.internal("utils/AnimationStorage.json"));
-
-        for(JsonValue animationInfo: animations.iterator()){
-            Array<Sprite> spriteArray = new Array<Sprite>();
-            for(JsonValue spriteNames: animationInfo.get("sprites")){
-                spriteArray.add(PMD.sprites.get(pokemonName + spriteNames.asString()));
-            }
-            Sprite finalSprite = PMD.sprites.get(pokemonName + animationInfo.get("finalSprite").asString());
-            PAnimation animation = new PAnimation(animationInfo.name, spriteArray, finalSprite,
-                    animationInfo.getInt("length"), animationInfo.getBoolean("loop"));
-
-            animationMap.put(animationInfo.name, animation);
-        }
     }
 
     //methods for turn state
@@ -149,13 +175,46 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         this.turnState = turnState;
     }
 
+
+
+
     public void setCurrentTile(Tile nextTile) {
         this.currentTile = nextTile;
+        this.x = nextTile.x;
+        this.y = nextTile.y;
+        this.notifyObservers();
     }
 
     public Tile getCurrentTile() {
         return currentTile;
     }
 
+    public Tile getNextTile(){ return nextTile;}
+
+    public void setNextTile(Tile nextTile) {
+        this.nextTile = nextTile;
+        if (nextTile == null) return;
+
+        currentTile.removeEntity(this);
+        nextTile.addEntity(this);
+
+        // should be done in main logic  entity.directionComponent.setFacingTile(nextTile);
+    }
+
     public abstract void dispose();
+
+
+    public void setActionState(Action actionState){
+        this.previousState = this.actionState;
+        this.actionState = actionState;
+    }
+
+    public Action getActionState(){
+        return actionState;
+    }
+
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
+
 }

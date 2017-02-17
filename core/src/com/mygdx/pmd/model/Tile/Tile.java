@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.interfaces.Renderable;
-import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Item.Item;
 import com.mygdx.pmd.model.Entity.StaticEntity;
 import com.mygdx.pmd.model.Floor.Floor;
@@ -37,9 +36,8 @@ public abstract class Tile implements Renderable {
     public boolean isWalkable;
     private String classifier; //for toString purposes
 
-    private ArrayList<Entity> entityList;
+    public Array<Entity> entities;
     private Array<Item> items;
-    public Array<DynamicEntity> dynamicEntities;
 
     public Tile[][] tileBoard;
     private Tile parent;
@@ -55,9 +53,8 @@ public abstract class Tile implements Renderable {
         this.col = c;
         this.classifier = classifier;
 
-        entityList = new ArrayList<Entity>();
+        entities = new Array<Entity>();
         items = new Array<Item>();
-        dynamicEntities = new Array<DynamicEntity>();
     }
 
     public void render(SpriteBatch batch) {
@@ -75,7 +72,7 @@ public abstract class Tile implements Renderable {
 
     }
 
-    public void playEvents(DynamicEntity receiver) {
+    public void playEvents(Entity receiver) {
         for (Item item : items) {
             item.playEvents(receiver);
             items.removeValue(item, true);
@@ -135,8 +132,8 @@ public abstract class Tile implements Renderable {
         return returnTileList;
     }
 
-    public boolean hasDynamicEntity() {
-        return (dynamicEntities.size > 0);
+    public boolean hasEntity() {
+        return (entities.size > 0);
     }
 
     public void setParent(Tile parent) {
@@ -152,24 +149,14 @@ public abstract class Tile implements Renderable {
     }
 
     public void addEntity(Entity entity) {
-        if (!entityList.contains(entity))
-            entityList.add(entity);
-
         if (entity instanceof Item) {
             items.add((Item) entity);
         }
-
-        if (entity instanceof DynamicEntity) {
-            dynamicEntities.add((DynamicEntity) entity);
-        }
+        entities.add(entity);
     }
 
     public void removeEntity(Entity entity) {
-        entityList.remove(entity);
-
-        if (entity instanceof DynamicEntity) {
-            dynamicEntities.removeValue((DynamicEntity) entity, false);
-        }
+        entities.removeValue(entity, true);
 
         if (entity instanceof Item) {
             items.removeValue((Item) entity, true);
@@ -187,21 +174,9 @@ public abstract class Tile implements Renderable {
         return retTile;
     }
 
-    public boolean containsEntityType(Class type) {
-        for (Entity entity : entityList) {
-            if (type.isInstance(entity))
-                return true;
-        }
-        return false;
-    }
-
     public boolean equals(Tile o) {
         if (o == null) return false;
         return (this.row == o.row && this.col == o.col);
-    }
-
-    public ArrayList<Entity> getEntityList() {
-        return entityList;
     }
 
     public void print() {

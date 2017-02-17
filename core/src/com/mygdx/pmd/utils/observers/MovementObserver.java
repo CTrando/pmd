@@ -1,16 +1,14 @@
 package com.mygdx.pmd.utils.observers;
 
-import com.mygdx.pmd.model.Entity.DynamicEntity;
 
+import com.mygdx.pmd.model.Entity.*;
 
 /**
  * Created by Cameron on 12/4/2016.
  */
 public class MovementObserver extends Observer {
-    public DynamicEntity dEntity;
-    public MovementObserver(DynamicEntity dEntity) {
-        super(dEntity);
-        this.dEntity = dEntity;
+    public MovementObserver(Entity entity) {
+        super(entity);
     }
 
     /**
@@ -18,6 +16,6 @@ public class MovementObserver extends Observer {
      */
     @Override
     public void update() {
-       entity.getCurrentTile().playEvents(dEntity);
+       entity.getCurrentTile().playEvents(entity);
     }
 }

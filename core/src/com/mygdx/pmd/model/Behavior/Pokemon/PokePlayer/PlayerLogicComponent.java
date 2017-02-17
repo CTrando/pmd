@@ -2,23 +2,24 @@ package com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer;
 
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
+import com.mygdx.pmd.model.Behavior.*;
+import com.mygdx.pmd.model.Behavior.Entity.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 
 /**
  * Created by Cameron on 1/21/2017.
  */
-public class PlayerLogic extends PokemonBehavior {
+public class PlayerLogicComponent extends Component {
     private PokemonPlayer player;
 
-    public PlayerLogic(PokemonPlayer player) {
+    public PlayerLogicComponent(PokemonPlayer player) {
         super(player);
         this.player = player;
     }
 
     @Override
-    public void execute() {
+    public void update() {
         if (player.hp <= 0) {
             player.shouldBeDestroyed = true;
         }
@@ -33,16 +34,24 @@ public class PlayerLogic extends PokemonBehavior {
                 player.setActionState(Action.ATTACKING);
                 player.setTurnState(Turn.PENDING);
 
-                player.behaviors[2] = player.attackBehavior;
+                //player.behaviors[2] = player.attackBehavior;
             } else if (player.canMove()) {
                 player.setNextTile(player.possibleNextTile);
                 player.possibleNextTile = null;
 
-                if (player.getNextTile().hasDynamicEntity()) {
-                    for (DynamicEntity dEntity : player.getNextTile().dynamicEntities) {
-                        if (dEntity != player) {
-                            dEntity.forceMoveToTile(player.getCurrentTile());
-                            dEntity.direction = player.direction.getOppositeDirection();
+                if(player.componentExists(Component.DIRECTION)){
+                    DirectionComponent directionComponent = (DirectionComponent) player.getComponent(Component.DIRECTION);
+                    directionComponent.setFacingTile(player.getNextTile());
+                }
+
+                if (player.getNextTile().hasEntity()) {
+                    for (Entity entity : player.getNextTile().entities) {
+                        if (entity != player) {
+                            if(entity.componentExists(Component.MOVE)){
+                                MoveComponent moveComponent = (MoveComponent) entity.getComponent(Component.MOVE);
+                                moveComponent.forceMoveToTile(player.getCurrentTile());
+                            }
+                            entity.direction = player.direction.getOppositeDirection();
                         }
                     }
                 }
@@ -50,7 +59,7 @@ public class PlayerLogic extends PokemonBehavior {
                 player.setTurnState(Turn.COMPLETE);
                 player.setActionState(Action.MOVING);
 
-                player.behaviors[2] = player.moveBehavior;
+                //player.behaviors[2] = player.moveBehavior;
 
                 if (PMD.isKeyPressed(Key.s)) {
                     player.setSpeed(5);

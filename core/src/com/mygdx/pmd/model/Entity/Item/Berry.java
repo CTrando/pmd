@@ -2,11 +2,9 @@ package com.mygdx.pmd.model.Entity.Item;
 
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
-import com.mygdx.pmd.model.Entity.DynamicEntity;
+import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
-import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.model.Tile.Tile;
-import com.mygdx.pmd.screens.DungeonScreen;
 
 /**
  * Created by Cameron on 12/22/2016.
@@ -18,8 +16,8 @@ public class Berry extends Item {
     }
 
     @Override
-    public void playEvents(DynamicEntity receiver){
-        receiver.setHp(receiver.getHp()+20);
+    public void playEvents(Entity receiver){
+        //receiver.hpComponent.setHp(receiver.hp + 20);
 
         if(receiver instanceof PokemonPlayer)
             Controller.turns+=10;

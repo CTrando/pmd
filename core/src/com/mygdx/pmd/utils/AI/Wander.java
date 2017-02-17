@@ -2,8 +2,7 @@ package com.mygdx.pmd.utils.AI;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
-import com.mygdx.pmd.model.Entity.DynamicEntity;
-import com.mygdx.pmd.model.Entity.Entity;
+import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Tile.Tile;
 
 
@@ -11,20 +10,20 @@ import com.mygdx.pmd.model.Tile.Tile;
  * Created by Cameron on 12/10/2016.
  */
 public class Wander extends PathFind {
-    public Wander(DynamicEntity dEntity) {
-        super(dEntity);
+    public Wander(Entity entity) {
+        super(entity);
     }
 
     @Override
     public Array<Tile> pathFind(Tile tile) throws PathFindFailureException {
-        Tile currentTile = dEntity.getCurrentTile();
+        Tile currentTile = entity.getCurrentTile();
         Tile nextTile = this.chooseRandomTile(currentTile);
 
         while(!nextTile.isWalkable){
             nextTile = chooseRandomTile(currentTile);
         }
 
-        if (nextTile != null && dEntity.isLegalToMoveTo(nextTile)) {
+        if (nextTile != null && isLegal(nextTile)) {
             solutionNodeList.add(nextTile);
         }
         return solutionNodeList;
@@ -51,6 +50,10 @@ public class Wander extends PathFind {
             return chooseRandomTile(curTile);
         }
         return null;
+    }
+
+    public boolean isLegal(Tile tile){
+        return true;
     }
 
 

@@ -21,9 +21,7 @@ public class PokemonPlayer extends Pokemon {
     public PokemonPlayer(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y, pokemonName);
         this.setTurnState(Turn.WAITING);
-        this.aggression = Aggression.passive;
-
-        behaviors[0] = new PlayerLogic(this);
+        //this.aggression = Aggression.passive;
     }
 
     @Override
@@ -47,10 +45,6 @@ public class PokemonPlayer extends Pokemon {
         System.out.println("WOE IS ME I AM DEAD");
 
         //PMD.manager.get("sfx/background.ogg", Music.class).play();
-    }
-
-    public boolean canMove() {
-        return isLegalToMoveTo(possibleNextTile);
     }
 
     /*
@@ -113,9 +107,9 @@ public class PokemonPlayer extends Pokemon {
                 Controller.turnsPaused = !Controller.turnsPaused;
             } else if (PMD.isKeyPressed(Key.r)) {
                 //PMD.screen.game.setScreen(PMD.endScreen);
-                for (DynamicEntity dEntity : floor.getDynamicEntities()) {
-                    if (dEntity instanceof PokemonMob) {
-                        PokemonMob pMob = (PokemonMob) dEntity;
+                for (Entity entity : floor.entities()) {
+                    if (entity instanceof PokemonMob) {
+                        PokemonMob pMob = (PokemonMob) entity;
                         pMob.pathFind = pMob.sPath;
                     }
                 }

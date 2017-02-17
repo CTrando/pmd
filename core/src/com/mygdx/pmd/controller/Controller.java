@@ -20,13 +20,13 @@ import java.util.*;
 public class Controller {
     public DungeonScreen screen;
 
-    private ArrayList<Entity> entityList;
-    public Array<DynamicEntity> dEntities;
+    public ArrayList<Entity> entities;
     private LinkedList<Entity> turnBasedEntities;
     private Entity updatedTurnEntity;
 
     public Pokemon pokemonPlayer;
 
+    //must be lists
     private Array<Entity> toBeRemoved;
     private Array<Entity> toBeAdded;
 
@@ -50,8 +50,7 @@ public class Controller {
 
         //list of entities
         turnBasedEntities = new LinkedList<Entity>();
-        dEntities = new Array<DynamicEntity>();
-        entityList = new ArrayList<Entity>();
+        entities = new ArrayList<Entity>();
         toBeRemoved = new Array<Entity>();
         toBeAdded = new Array<Entity>();
 
@@ -68,7 +67,7 @@ public class Controller {
         //load pMob from xml
         this.loadPokemonFromJson(Gdx.files.internal("utils/PokemonStorage.json"));
         this.randomizeAllPokemonLocation();
-        updatedTurnEntity = turnBasedEntities.poll();
+        updatedTurnEntity = turnBasedEntities.peek();
 
         //add in a mob spawner
         MobSpawner mobSpawner = new MobSpawner(floor);
@@ -92,8 +91,8 @@ public class Controller {
     public void update() {
         //first update entities, then their turns should turn immediately to complete which allows them to continue on with the next one
         //this process allows for super quick movement
-        for (int i = 0; i < entityList.size(); i++) {
-            Entity entity = entityList.get(i);
+        for (int i = 0; i < entities.size(); i++) {
+            Entity entity = entities.get(i);
             entity.update();
 
             if (updatedTurnEntity.isTurnComplete()) {
@@ -104,13 +103,14 @@ public class Controller {
                     }
 
                     Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
-                    Collections.sort(entityList, new PokemonDistanceComparator(this.pokemonPlayer));
+                    Collections.sort(entities, new PokemonDistanceComparator(this.pokemonPlayer));
                 }
 
                 //stack system
                 //TODO replace with custom data structure
+                turnBasedEntities.remove(updatedTurnEntity);
                 turnBasedEntities.offer(updatedTurnEntity);
-                updatedTurnEntity = turnBasedEntities.poll();
+                updatedTurnEntity = turnBasedEntities.peek();
                 updatedTurnEntity.setTurnState(Turn.WAITING);
             }
 
@@ -134,20 +134,17 @@ public class Controller {
     }
 
     private void randomizeAllPokemonLocation() {
-        for (DynamicEntity dEntity : dEntities) {
-            dEntity.randomizeLocation();
+        for (Entity entity : entities) {
+            entity.randomizeLocation();
         }
     }
 
     private void directlyAddEntity(Entity entity) {
         screen.renderList.add(entity);
-        entityList.add(entity);
+        entities.add(entity);
 
-        if (entity instanceof DynamicEntity) {
-            dEntities.add((DynamicEntity) entity);
-        }
-
-        if (entity.isTurnBaseable()) {
+        //fix later
+        if (entity.getTurnState() != null) {
             turnBasedEntities.addLast(entity);
         }
 
@@ -168,15 +165,13 @@ public class Controller {
 
         for (Entity entity : toBeRemoved) {
             screen.renderList.removeValue(entity, true);
-            entityList.remove(entity);
+            entities.remove(entity);
+/*
 
             if (entity.isTurnBaseable()) {
                 turnBasedEntities.remove(entity);
             }
-
-            if (entity instanceof DynamicEntity) {
-                dEntities.removeValue((DynamicEntity) entity, true);
-            }
+*/
         }
         toBeRemoved.clear();
     }
@@ -189,4 +184,7 @@ public class Controller {
         toBeRemoved.add(entity);
     }
 
+    public ArrayList<Entity> getEntities(){
+        return entities;
+    }
 }

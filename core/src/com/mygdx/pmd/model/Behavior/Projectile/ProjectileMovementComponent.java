@@ -1,5 +1,6 @@
 package com.mygdx.pmd.model.Behavior.Projectile;
 
+import com.mygdx.pmd.model.Behavior.*;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Tile.Tile;
 
@@ -7,14 +8,16 @@ import com.mygdx.pmd.model.Tile.Tile;
 /**
  * Created by Cameron on 11/17/2016.
  */
-public class ProjectileMovementBehavior extends ProjectileBehavior {
+public class ProjectileMovementComponent extends Component {
 
-    public ProjectileMovementBehavior(Projectile projectile) {
+    Projectile projectile;
+    public ProjectileMovementComponent(Projectile projectile) {
         super(projectile);
+        projectile = (Projectile) entity;
     }
 
     @Override
-    public void execute() {
+    public void update() {
         assert projectile.direction != null: "The direction in projectile movement is null";
 
         switch (projectile.direction) {
@@ -31,7 +34,7 @@ public class ProjectileMovementBehavior extends ProjectileBehavior {
                 projectile.x -= projectile.speed;
                 break;
         }
-        Tile tile = Tile.getTileAt(projectile.x, projectile.y, tileBoard);
+        Tile tile = Tile.getTileAt(projectile.x, projectile.y, projectile.tileBoard);
         if(projectile.equals(tile)){
             projectile.setCurrentTile(tile);
         }

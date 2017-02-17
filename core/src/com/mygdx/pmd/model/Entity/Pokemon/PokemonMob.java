@@ -1,9 +1,8 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Behavior.Pokemon.PokeMob.MobLogic;
+import com.mygdx.pmd.model.Behavior.Pokemon.PokeMob.MobLogicComponent;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.Tile;
@@ -25,7 +24,7 @@ public class PokemonMob extends Pokemon {
 
     public PokemonMob(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y, pokemonName);
-        this.aggression = Aggression.passive;
+        //this.aggression = Aggression.passive;
         this.target = floor.getPlayer();
 
         wander = new Wander(this);
@@ -33,24 +32,24 @@ public class PokemonMob extends Pokemon {
 
         pathFind = wander;
         path = new Array<Tile>();
+    }
 
-        logic = new MobLogic(this);
-
-        behaviors[0] = logic;
+    public boolean canMove(){
+        return true;
     }
 
     @Override
     public boolean isLegalToMoveTo(Tile tile) {
         if (tile == null) return false;
 
-        if (tile.hasDynamicEntity())
+        if (tile.hasEntity())
             return false;
         if (!tile.isWalkable)
             return false;
         return true;
     }
 
-    public boolean isWithinRange(DynamicEntity pokemon) {
+    public boolean isWithinRange(Entity pokemon) {
         int dR = this.getCurrentTile().row - pokemon.getCurrentTile().row;
         int dC = this.getCurrentTile().col - pokemon.getCurrentTile().col;
 
@@ -59,11 +58,8 @@ public class PokemonMob extends Pokemon {
     }
 
     public boolean canAttack() {
-        return canSeeEnemy() && aggression == Aggression.aggressive;
-    }
-
-    public boolean canMove() {
-        return true;
+        return false;
+        //return canSeeEnemy() && aggression == Aggression.aggressive;
     }
 
     @Override
@@ -72,10 +68,9 @@ public class PokemonMob extends Pokemon {
     }
 
     //need to fix for single responsibility principle
-    @Override
-    public void takeDamage(DynamicEntity aggressor, int damage) {
+    public void takeDamage(Entity aggressor, int damage) {
         super.takeDamage(aggressor, damage);
-        this.aggression = Aggression.aggressive;
+        //this.aggression = Aggression.aggressive;
         this.target = aggressor;
     }
 
