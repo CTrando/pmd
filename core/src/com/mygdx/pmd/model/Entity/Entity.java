@@ -1,14 +1,12 @@
 package com.mygdx.pmd.model.Entity;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.*;
-import com.mygdx.pmd.model.Behavior.BaseBehavior;
-import com.mygdx.pmd.model.Behavior.NoBehavior;
-import com.mygdx.pmd.model.Floor.Floor;
-import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.Behavior.*;
+import com.mygdx.pmd.model.Floor.*;
+import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.utils.*;
 
 import java.util.HashMap;
@@ -98,8 +96,7 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
     }
 
     public boolean equals(Tile tile) {
-        if(tile == null) return false;
-        return (tile.x == x && tile.y == y);
+        return tile != null && (tile.x == x && tile.y == y);
     }
 
     public void setDirection(Tile tile) {
@@ -159,6 +156,5 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
 
     @Override
     public void dispose() {
-
     }
 }

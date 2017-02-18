@@ -10,7 +10,7 @@ import com.mygdx.pmd.PMD;
  * Created by Cameron on 7/23/2016.
  */
 public enum Move {
-
+    //TODO make this class more generic
 
     NOMOVE(false,0,1,1,20, "",""),
     SCRATCH(false,3,20,1,30, "projectilemotion", "claw"),

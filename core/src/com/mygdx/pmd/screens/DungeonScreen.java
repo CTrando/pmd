@@ -12,11 +12,13 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.scenes.Hud;
-import com.mygdx.pmd.utils.Constants;
+import com.mygdx.pmd.utils.*;
 
 public class DungeonScreen extends PScreen implements GestureDetector.GestureListener, InputProcessor {
     public final PMD game;
     private SpriteBatch batch;
+
+    ParticleEffect pe;
 
     public Array<Renderable> renderList;
 
@@ -37,6 +39,8 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         this.game = game;
         this.batch = game.batch;
         this.renderList = new Array<Renderable>();
+        this.pe = new ParticleEffect();
+
 
         gameCamera = new OrthographicCamera(Constants.WIDTH, Constants.HEIGHT);
         gamePort = new ScreenViewport(gameCamera);
@@ -58,6 +62,12 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
             game.switchScreen(PMD.endScreen);
         }
 
+        /*for(ParticleEmitter pm: pe.getEmitters()){
+            pm.getAngle().setLow(PRandomInt.random(0,180));
+            pm.getAngle().setHigh(PRandomInt.random(180,360));
+        }
+        pe.setPosition(controller.pokemonPlayer.x + 12,controller.pokemonPlayer.y + 12);*/
+       // pe.update(dt);
         controller.update();
         this.updateCamera();
 
@@ -68,6 +78,10 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         for (int i = 0; i< renderList.size; i++){
             renderList.get(i).render(batch);
         }
+        /*if (pe.isComplete())
+            pe.reset();*/
+
+        //pe.draw(batch, dt);
         batch.end();
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
 

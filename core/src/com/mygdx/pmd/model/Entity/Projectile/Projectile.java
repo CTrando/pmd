@@ -1,18 +1,20 @@
 package com.mygdx.pmd.model.Entity.Projectile;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Move;
 import com.mygdx.pmd.interfaces.Damageable;
-import com.mygdx.pmd.model.Behavior.Projectile.ProjectileAnimationBehavior;
+import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileCollisionBehavior;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileMovementBehavior;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Tile.Tile;
-import com.mygdx.pmd.utils.PAnimation;
+import com.mygdx.pmd.utils.*;
 
 /**
  * Created by Cameron on 10/18/2016.
@@ -20,12 +22,16 @@ import com.mygdx.pmd.utils.PAnimation;
 public class Projectile extends DynamicEntity {
     public Pokemon parent;
 
+    public static final String MOVE_CLASSIFIER = "movement";
+
     //instance fields from currentMove
     public Move move;
     public boolean isRanged;
     public int damage;
     public int speed;
     private PAnimation projectileAnimation;
+
+    private ParticleEffect pe;
 
     public Projectile(Pokemon parent, Move move) {
         // put down location as the parent's facing tile's location
@@ -42,13 +48,18 @@ public class Projectile extends DynamicEntity {
         this.isRanged = move.isRanged();
 
         // load all the things
+        this.loadAnimations();
         if (move.isRanged()) {
             this.loadMovementLogic();
             this.loadCollisionLogic();
         } else {
             this.collide();
         }
-        this.loadAnimations();
+
+        pe = new ParticleEffect();
+        pe.load(Gdx.files.internal("pokemonassets/particles"), Gdx.files.internal("pokemonassets"));
+        pe.setPosition(x, y);
+        pe.start();
     }
 
     /**
@@ -76,7 +87,17 @@ public class Projectile extends DynamicEntity {
         projectileAnimation = new PAnimation("death", move.projectileCollisionAnimation, null, move.animationLength, false);
         animationMap.put("death", projectileAnimation);
 
-        behaviors[1] = new ProjectileAnimationBehavior(this);
+        behaviors[1] = new AnimationBehavior(this);
+    }
+
+    @Override
+    public void render(SpriteBatch batch){
+        super.render(batch);
+        if(getActionState() == Action.COLLISION) {
+            pe.setPosition(x + Constants.TILE_SIZE/2, y + Constants.TILE_SIZE/2);
+            pe.update(0.06f);
+            pe.draw(batch);
+        }
     }
 
     @Override
