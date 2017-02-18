@@ -10,7 +10,6 @@ import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.AI.PathFind;
 import com.mygdx.pmd.utils.AI.ShortestPath;
 import com.mygdx.pmd.utils.AI.Wander;
-import com.mygdx.pmd.utils.observers.MovementObserver;
 
 public class PokemonMob extends Pokemon {
     public PathFind pathFind;
@@ -30,10 +29,8 @@ public class PokemonMob extends Pokemon {
 
         wander = new Wander(this);
         sPath = new ShortestPath(this);
-
         pathFind = wander;
         path = new Array<Tile>();
-
         logic = new MobLogic(this);
 
         behaviors[0] = logic;
@@ -67,16 +64,10 @@ public class PokemonMob extends Pokemon {
     }
 
     @Override
-    public void registerObservers() {
-        observers[0] = new MovementObserver(this);
-    }
-
-    //need to fix for single responsibility principle
-    @Override
-    public void takeDamage(DynamicEntity aggressor, int damage) {
-        super.takeDamage(aggressor, damage);
+    public void takeDamage(Pokemon parent, int damage) {
+        super.takeDamage(parent, damage);
         this.aggression = Aggression.aggressive;
-        this.target = aggressor;
+        this.target = parent;
     }
 
     @Override

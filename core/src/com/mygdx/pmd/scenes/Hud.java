@@ -58,7 +58,7 @@ public class Hud {
         onScreenController.setFillParent(true);
         skin = new Skin(Gdx.files.internal("ui/test.json"));
 
-        testLabel = new Label("HP: " + screen.controller.pokemonPlayer.hp, skin);
+        testLabel = new Label("HP: " + screen.controller.pokemonPlayer.getHP(), skin);
         floorLabel = new Label("Floor: " + Controller.floorCount, skin);
         turnLabel = new Label("Turns left: " + Controller.turns, skin);
         textLabel = new Label(inputText.toString(), skin);
@@ -209,7 +209,7 @@ public class Hud {
 
     public void update(float dt) {
         //reason why not appearing is because did not include : in bit map font
-        testLabel.setText("HP: " + screen.controller.pokemonPlayer.hp);
+        testLabel.setText("HP: " + screen.controller.pokemonPlayer.getHP());
         floorLabel.setText("Floor: " + Controller.floorCount);
         if(Controller.turnsPaused){
             customFont.setColor(Color.BLUE);

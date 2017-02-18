@@ -19,11 +19,11 @@ public class PlayerLogic extends PokemonBehavior {
 
     @Override
     public void execute() {
-        if (player.hp <= 0) {
+        if (player.getHP() <= 0) {
             player.shouldBeDestroyed = true;
         }
 
-        if (player.isTurnWaiting() && player.equals(player.getCurrentTile())) {
+        if (player.getTurnState() == Turn.WAITING && player.equals(player.getCurrentTile())) {
             player.handleInput();
 
             if (player.canAttack()) {
@@ -42,7 +42,7 @@ public class PlayerLogic extends PokemonBehavior {
                     for (DynamicEntity dEntity : player.getNextTile().dynamicEntities) {
                         if (dEntity != player) {
                             dEntity.forceMoveToTile(player.getCurrentTile());
-                            dEntity.direction = player.direction.getOppositeDirection();
+                            dEntity.setDirection(player.getDirection().getOppositeDirection());
                         }
                     }
                 }

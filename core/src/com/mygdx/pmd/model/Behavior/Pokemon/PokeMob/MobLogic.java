@@ -19,14 +19,14 @@ public class MobLogic extends PokemonBehavior {
 
     @Override
     public void execute() {
-        if (mob.hp <= 0) {
+        if (mob.getHP() <= 0) {
             mob.shouldBeDestroyed = true;
         }
 
         if(mob.shouldBeDestroyed) return;
 
         //ensure that when this runs the pokemon's turn is always waiting
-        if (mob.isTurnWaiting()) {
+        if (mob.getTurnState() == Turn.WAITING) {
             //make sure that if the pokemon is moving, it's turn will be set to complete and the algorithm will no longer run
             if (!mob.equals(mob.getCurrentTile())) {
                 mob.setTurnState(Turn.COMPLETE);
@@ -36,8 +36,8 @@ public class MobLogic extends PokemonBehavior {
 
             //will turn to face the player if the mob is aggressive
             if (mob.isAggressive()) {
-                mob.setDirectionBasedOnTile(mob.target.getCurrentTile());
-                mob.setFacingTileBasedOnDirection(mob.direction);
+                mob.setDirection(mob.target.getCurrentTile());
+                mob.setFacingTile(mob.getDirection());
 
                 if (mob.target.shouldBeDestroyed) {
                     mob.target = floor.getPlayer();
@@ -85,7 +85,7 @@ public class MobLogic extends PokemonBehavior {
                     mob.setSpeed(5);
                 }
 
-                mob.setDirectionBasedOnTile(mob.getNextTile());
+                mob.setDirection(mob.getNextTile());
                 mob.setTurnState(Turn.COMPLETE);
             }
         }

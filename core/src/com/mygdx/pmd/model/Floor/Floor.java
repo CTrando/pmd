@@ -71,11 +71,6 @@ public class Floor extends Entity{
     }
 
     @Override
-    public void registerObservers() {
-
-    }
-
-    @Override
     public void render(SpriteBatch batch){
         for (int i = 0; i < tileBoard.length; i++) {
             for (int j = 0; j < tileBoard[0].length; j++) {
@@ -85,11 +80,6 @@ public class Floor extends Entity{
                 //bFont.draw(batch, tile.spriteValue+"", tile.x + 5, tile.y+25/2);
             }
         }
-    }
-
-    @Override
-    public void dispose() {
-
     }
 
     public DynamicEntity getPlayer() {

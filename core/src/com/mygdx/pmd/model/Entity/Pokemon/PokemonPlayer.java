@@ -5,14 +5,13 @@ import com.badlogic.gdx.audio.Sound;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.interfaces.PlayerControlled;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.utils.Constants;
-import com.mygdx.pmd.utils.observers.MovementObserver;
 
-
-public class PokemonPlayer extends Pokemon {
+public class PokemonPlayer extends Pokemon implements PlayerControlled {
 
     public PokemonPlayer(Floor floor, PokemonName name){
         this(floor, 0, 0, name);
@@ -24,11 +23,6 @@ public class PokemonPlayer extends Pokemon {
         this.aggression = Aggression.passive;
 
         behaviors[0] = new PlayerLogic(this);
-    }
-
-    @Override
-    public void registerObservers() {
-        observers[0] = new MovementObserver(this);
     }
 
     @Override
@@ -65,43 +59,38 @@ public class PokemonPlayer extends Pokemon {
         if (this.equals(getCurrentTile()) && getActionState() == Action.IDLE) {
             if (PMD.isKeyPressed(Key.shift)) {
                 if (PMD.isKeyPressed(Key.down)) {
-                    direction = Direction.down;
+                    setDirection(Direction.down);
                 } else if (PMD.isKeyPressed(Key.left)) {
-                    direction = Direction.left;
+                    setDirection(Direction.left);
                 } else if (PMD.isKeyPressed(Key.right)) {
-                    direction = Direction.right;
+                    setDirection(Direction.right);
                 } else if (PMD.isKeyPressed(Key.up)) {
-                    direction = Direction.up;
+                    setDirection(Direction.up);
                 }
             } else {
                 //code for setting the user's next tile
                 try {
                     if (PMD.isKeyPressed(Key.down)) {
                         possibleNextTile = (tileBoard[getCurrentTile().row - 1][getCurrentTile().col]);
+                        setDirection(Direction.down);
                     } else if (PMD.isKeyPressed(Key.left)) {
                         possibleNextTile = (tileBoard[getCurrentTile().row][getCurrentTile().col - 1]);
+                        setDirection(Direction.left);
                     } else if (PMD.isKeyPressed(Key.right)) {
                         possibleNextTile = (tileBoard[getCurrentTile().row][getCurrentTile().col + 1]);
+                        setDirection(Direction.right);
                     } else if (PMD.isKeyPressed(Key.up)) {
                         possibleNextTile = (tileBoard[getCurrentTile().row + 1][getCurrentTile().col]);
+                        setDirection(Direction.up);
                     } else {
                         possibleNextTile = (null);
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {
                 }
             }
-            //if the user hits K, he will not be able to currentMove, but he will be able to set his direction
-            // set the direction based on key hit - note that one can only change directions and not currentMove when he is not moving
+
             //TODO switch keys to a refresh system - perhaps use an object instead of an enum
-            if (PMD.isKeyPressed(Key.down)) {
-                direction = Direction.down;
-            } else if (PMD.isKeyPressed(Key.left)) {
-                direction = Direction.left;
-            } else if (PMD.isKeyPressed(Key.right)) {
-                direction = Direction.right;
-            } else if (PMD.isKeyPressed(Key.up)) {
-                direction = Direction.up;
-            }
+
 
             //actions that do not affect the player's turn or action state
             if (PMD.isKeyPressed(Key.space)) {

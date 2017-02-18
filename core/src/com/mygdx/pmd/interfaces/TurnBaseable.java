@@ -5,5 +5,7 @@ import com.mygdx.pmd.enumerations.Turn;
 /**
  * Created by Cameron on 12/22/2016.
  */
-public interface TurnBased {
+public interface TurnBaseable {
+    public void setTurnState(Turn turnState);
+    public Turn getTurnState();
 }

@@ -1,49 +1,50 @@
 package com.mygdx.pmd.model.Entity;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.*;
-import com.mygdx.pmd.PMD;
+import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.Renderable;
-import com.mygdx.pmd.interfaces.Updatable;
+import com.mygdx.pmd.interfaces.*;
 import com.mygdx.pmd.model.Behavior.BaseBehavior;
 import com.mygdx.pmd.model.Behavior.NoBehavior;
 import com.mygdx.pmd.model.Floor.Floor;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.*;
-import com.mygdx.pmd.utils.observers.NoObserver;
-import com.mygdx.pmd.utils.observers.Observable;
-import com.mygdx.pmd.utils.observers.Observer;
 
 import java.util.HashMap;
 
 /**
  * Created by Cameron on 10/18/2016.
  */
-public abstract class Entity implements Renderable, Updatable, Observable {
+public class Entity implements Renderable, Updatable, Disposable, Directional, ActionStateable {
     public BaseBehavior[] behaviors;
 
+    /******************************************/
+    //Inherited variables from interfaces
+    private Action actionState;
+    private Direction direction;
+    protected Turn turnState;
+
     public boolean shouldBeDestroyed;
+    /******************************************/
+
     public BaseBehavior noBehavior;
 
+    /*-----------------------------------------*/
+    //Position variables
     public int x;
     public int y;
-
-    public int row;
-    public int col;
-
     public Floor floor;
-
     private Tile currentTile;
     public Tile[][] tileBoard;
+    /*-----------------------------------------*/
 
+    /*******************************************/
+    //Render variables
     public Sprite currentSprite;
     public HashMap<String, PAnimation> animationMap;
-    protected Observer[] observers;
-
-    private Turn turnState;
+    public PAnimation currentAnimation;
+    /********************************************/
 
     public Entity(){
         initBehaviors();
@@ -53,18 +54,21 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         current tile is defined by the initial x and y
      */
     public Entity(Floor floor, int x, int y) {
+        this.shouldBeDestroyed = false;
+
         this.floor = floor;
         this.tileBoard = floor.tileBoard;
-        this.currentTile = tileBoard[y/ Constants.TILE_SIZE][x/Constants.TILE_SIZE];
-
         this.x = x;
         this.y = y;
+        this.currentTile = tileBoard[y/ Constants.TILE_SIZE][x/Constants.TILE_SIZE];
+
+        setDirection(Direction.down);
+        setActionState(Action.IDLE);
 
         animationMap = new HashMap<String, PAnimation>();
 
         //initialize behaviors array
         initBehaviors();
-        initObservers();
     }
 
     private void initBehaviors(){
@@ -72,13 +76,6 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         behaviors = new BaseBehavior[10];
         for (int i = 0; i < behaviors.length; i++) {
             behaviors[i] = this.noBehavior;
-        }
-    }
-
-    private void initObservers(){
-        observers = new Observer[10];
-        for(int i = 0; i< observers.length; i++){
-            observers[i] = new NoObserver(this);
         }
     }
 
@@ -96,16 +93,6 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         }
     }
 
-    public void notifyObservers(){
-        for(int i = 0; i< observers.length; i++){
-            observers[i].update();
-        }
-    }
-
-    public void setBehavior(BaseBehavior behavior, int index) {
-        behaviors[index] = behavior;
-    }
-
     public boolean isTurnBaseable(){
         return turnState != null;
     }
@@ -115,38 +102,31 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         return (tile.x == x && tile.y == y);
     }
 
-    public void loadAnimations(PokemonName pokemonName){
-        JsonReader jsonReader = new JsonReader();
-        JsonValue animations = jsonReader.parse(Gdx.files.internal("utils/AnimationStorage.json"));
-
-        for(JsonValue animationInfo: animations.iterator()){
-            Array<Sprite> spriteArray = new Array<Sprite>();
-            for(JsonValue spriteNames: animationInfo.get("sprites")){
-                spriteArray.add(PMD.sprites.get(pokemonName + spriteNames.asString()));
-            }
-            Sprite finalSprite = PMD.sprites.get(pokemonName + animationInfo.get("finalSprite").asString());
-            PAnimation animation = new PAnimation(animationInfo.name, spriteArray, finalSprite,
-                    animationInfo.getInt("length"), animationInfo.getBoolean("loop"));
-
-            animationMap.put(animationInfo.name, animation);
-        }
+    public void setDirection(Tile tile) {
+        if (this.isToLeft(tile))
+            setDirection(Direction.right);
+        if (this.isToRight(tile))
+            setDirection(Direction.left);
+        if (this.isAbove(tile))
+            setDirection(Direction.down);
+        if (this.isBelow(tile))
+            setDirection(Direction.up);
     }
 
-    //methods for turn state
-    public boolean isTurnComplete(){
-        return turnState == Turn.COMPLETE;
+    private boolean isToRight(Tile tile) {
+        return getCurrentTile().x > tile.x;
     }
 
-    public boolean isTurnWaiting(){
-        return turnState == Turn.WAITING;
+    private boolean isToLeft(Tile tile) {
+        return getCurrentTile().x < tile.x;
     }
 
-    public Turn getTurnState() {
-        return turnState;
+    private boolean isAbove(Tile tile) {
+        return getCurrentTile().y > tile.y;
     }
 
-    public void setTurnState(Turn turnState) {
-        this.turnState = turnState;
+    private boolean isBelow(Tile tile) {
+        return getCurrentTile().y < tile.y;
     }
 
     public void setCurrentTile(Tile nextTile) {
@@ -157,5 +137,28 @@ public abstract class Entity implements Renderable, Updatable, Observable {
         return currentTile;
     }
 
-    public abstract void dispose();
+    @Override
+    public void setActionState(Action actionState){
+        this.actionState = actionState;
+    }
+
+    @Override
+    public Action getActionState(){
+        return actionState;
+    }
+
+    @Override
+    public Direction getDirection() {
+        return direction;
+    }
+
+    @Override
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    @Override
+    public void dispose() {
+
+    }
 }

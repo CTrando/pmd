@@ -187,14 +187,6 @@ public abstract class Tile implements Renderable {
         return retTile;
     }
 
-    public boolean containsEntityType(Class type) {
-        for (Entity entity : entityList) {
-            if (type.isInstance(entity))
-                return true;
-        }
-        return false;
-    }
-
     public boolean equals(Tile o) {
         if (o == null) return false;
         return (this.row == o.row && this.col == o.col);
@@ -204,8 +196,14 @@ public abstract class Tile implements Renderable {
         return entityList;
     }
 
-    public void print() {
-        System.out.println(this.row + "," + this.col);
+    public Array getEntities(Class type){
+        Array retArray = new Array();
+        for(Entity entity: entityList){
+            if(type.isInstance(entity)){
+                retArray.add(type.cast(entity));
+            }
+        }
+        return retArray;
     }
 
     public String toString() {

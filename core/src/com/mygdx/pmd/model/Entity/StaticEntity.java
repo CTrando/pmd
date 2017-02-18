@@ -16,14 +16,4 @@ public class StaticEntity extends Entity{
     public StaticEntity(Floor floor, int x, int y) {
         super(floor, x, y);
     }
-
-    @Override
-    public void registerObservers() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
 }

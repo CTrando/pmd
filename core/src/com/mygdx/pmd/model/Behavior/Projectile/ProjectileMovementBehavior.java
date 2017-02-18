@@ -15,9 +15,9 @@ public class ProjectileMovementBehavior extends ProjectileBehavior {
 
     @Override
     public void execute() {
-        assert projectile.direction != null: "The direction in projectile movement is null";
+        assert projectile.getDirection() != null: "The direction in projectile movement is null";
 
-        switch (projectile.direction) {
+        switch (projectile.getDirection()) {
             case up:
                 projectile.y += projectile.speed;
                 break;

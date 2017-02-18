@@ -6,6 +6,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.comparators.PokemonDistanceComparator;
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.interfaces.TurnBaseable;
 import com.mygdx.pmd.model.Decorators.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.*;
@@ -23,7 +24,7 @@ public class Controller {
     private ArrayList<Entity> entityList;
     public Array<DynamicEntity> dEntities;
     private LinkedList<Entity> turnBasedEntities;
-    private Entity updatedTurnEntity;
+    private TurnBaseable updatedTurnEntity;
 
     public Pokemon pokemonPlayer;
 
@@ -68,7 +69,7 @@ public class Controller {
         //load pMob from xml
         this.loadPokemonFromJson(Gdx.files.internal("utils/PokemonStorage.json"));
         this.randomizeAllPokemonLocation();
-        updatedTurnEntity = turnBasedEntities.poll();
+        updatedTurnEntity = (TurnBaseable) turnBasedEntities.poll();
 
         //add in a mob spawner
         MobSpawner mobSpawner = new MobSpawner(floor);
@@ -96,7 +97,7 @@ public class Controller {
             Entity entity = entityList.get(i);
             entity.update();
 
-            if (updatedTurnEntity.isTurnComplete()) {
+            if (updatedTurnEntity.getTurnState() == Turn.COMPLETE) {
                 //need to sort both entity list and turn based entities in order to update them in order
                 if (updatedTurnEntity instanceof PokemonPlayer) {
                     if (!turnsPaused) {
@@ -109,8 +110,8 @@ public class Controller {
 
                 //stack system
                 //TODO replace with custom data structure
-                turnBasedEntities.offer(updatedTurnEntity);
-                updatedTurnEntity = turnBasedEntities.poll();
+                turnBasedEntities.offer((Entity) updatedTurnEntity);
+                updatedTurnEntity = (TurnBaseable) turnBasedEntities.poll();
                 updatedTurnEntity.setTurnState(Turn.WAITING);
             }
 
@@ -147,7 +148,7 @@ public class Controller {
             dEntities.add((DynamicEntity) entity);
         }
 
-        if (entity.isTurnBaseable()) {
+        if (entity instanceof TurnBaseable) {
             turnBasedEntities.addLast(entity);
         }
 

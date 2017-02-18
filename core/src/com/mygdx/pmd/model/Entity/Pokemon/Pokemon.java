@@ -4,7 +4,7 @@ package com.mygdx.pmd.model.Entity.Pokemon;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.TurnBased;
+import com.mygdx.pmd.interfaces.*;
 import com.mygdx.pmd.model.Behavior.BaseBehavior;
 import com.mygdx.pmd.model.Behavior.Entity.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.*;
@@ -15,10 +15,11 @@ import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.*;
 
-public abstract class Pokemon extends DynamicEntity implements TurnBased {
-    public PAnimation currentAnimation;
+public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Damageable, Aggressible {
     public BaseBehavior attackBehavior;
     public MoveBehavior moveBehavior;
+
+    private int hp;
 
     public Array<DynamicEntity> children;
 
@@ -32,26 +33,22 @@ public abstract class Pokemon extends DynamicEntity implements TurnBased {
 
     protected Pokemon(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y);
-        this.direction = Direction.down;
-        this.setActionState(Action.IDLE);
+        setHP(100);
+        setTurnState(Turn.COMPLETE);
+        setAggression(Aggression.passive);
 
+        this.pokemonName = pokemonName;
         this.children = new Array<DynamicEntity>();
 
         //initialize moves and add default move
         moves = new Array<Move>(4);
         moves.add(Move.SCRATCH);
 
-        this.pokemonName = pokemonName;
-        this.loadAnimations(pokemonName);
 
         this.attackBehavior = new AttackBehavior(this);
-        this.moveBehavior = new MoveSlowBehavior(this);
+        this.moveBehavior = new MoveBehavior(this);
 
-        this.setTurnState(Turn.COMPLETE);
-        this.isTurnBased = true;
-
-        behaviors[1] = new PokemonAnimationBehavior(this);
-        this.registerObservers();
+        behaviors[1] = new AnimationBehavior(this);
     }
 
     @Override
@@ -80,7 +77,7 @@ public abstract class Pokemon extends DynamicEntity implements TurnBased {
         }
 
         updateCurrentTile();
-        setFacingTileBasedOnDirection(direction);
+        setFacingTile(getDirection());
     }
 
     @Override
@@ -117,12 +114,22 @@ public abstract class Pokemon extends DynamicEntity implements TurnBased {
         this.setTurnState(Turn.COMPLETE);
     }
 
-    protected boolean canSeeEnemy() {
+    @Override
+    public Aggression getAggression() {
+        return aggression;
+    }
+
+    @Override
+    public void setAggression(Aggression aggression) {
+        this.aggression = aggression;
+    }
+
+    public boolean canSeeEnemy() {
         if (this.aggression != Aggression.aggressive) return false;
         int rOffset = 0;
         int cOffset = 0;
 
-        switch (this.direction) {
+        switch (getDirection()) {
             case down:
                 rOffset = -1;
                 break;
@@ -153,6 +160,35 @@ public abstract class Pokemon extends DynamicEntity implements TurnBased {
             }
         }
         return false;
+    }
+
+    @Override
+    public void takeDamage(Pokemon parent, int damage) {
+        this.setHP(this.getHP() - damage);
+    }
+
+    public int getHP() {
+        return hp;
+    }
+
+    @Override
+    public void setHP(int HP) {
+        this.hp = HP;
+        if (this.hp <= 0) {
+            this.hp = 0;
+        }
+
+        if(this.hp > 100){
+            this.hp = 100;
+        }
+    }
+
+    public Turn getTurnState() {
+        return turnState;
+    }
+
+    public void setTurnState(Turn turnState) {
+        this.turnState = turnState;
     }
 
     public String toString(){

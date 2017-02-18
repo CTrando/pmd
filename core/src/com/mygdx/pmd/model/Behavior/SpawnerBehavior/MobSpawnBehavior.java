@@ -8,6 +8,7 @@ import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 import com.mygdx.pmd.model.Factory.PokemonFactory;
+import com.mygdx.pmd.model.Spawner.*;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.*;
 
@@ -17,18 +18,18 @@ import com.mygdx.pmd.utils.*;
  */
 public class MobSpawnBehavior extends SpawnBehavior {
 
-    public MobSpawnBehavior(DynamicEntity dEntity) {
-        super(dEntity);
+    public MobSpawnBehavior(Spawner spawner) {
+        super(spawner);
     }
 
     @Override
     public void execute() {
-        if(dEntity.isTurnWaiting()) {
-            dEntity.setTurnState(Turn.COMPLETE);
+        if(spawner.getTurnState() == Turn.WAITING) {
+            spawner.setTurnState(Turn.COMPLETE);
 
             if (floor.getDynamicEntities().size < Constants.NUM_MAX_ENTITY) {
-                dEntity.setActionState(Action.SPAWNING);
-                Tile tile = dEntity.floor.chooseUnoccupiedTile();
+                spawner.setActionState(Action.SPAWNING);
+                Tile tile = spawner.floor.chooseUnoccupiedTile();
                 int rand = PRandomInt.random(0, 10);
                 switch (rand) {
                     case 0:
@@ -39,7 +40,7 @@ public class MobSpawnBehavior extends SpawnBehavior {
                         floor.addEntity(pokemon);
                         break;
                     default:
-                        dEntity.setActionState(Action.IDLE);
+                        spawner.setActionState(Action.IDLE);
                         break;
                 }
             }

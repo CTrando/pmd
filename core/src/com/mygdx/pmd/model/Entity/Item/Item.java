@@ -12,16 +12,11 @@ import com.mygdx.pmd.model.Tile.Tile;
  */
 public abstract class Item extends StaticEntity{
 
-    public Item(Tile tile) {
+    protected Item(Tile tile) {
         super(tile.floor, tile.x, tile.y);
     }
 
-    @Override
-    public void registerObservers() {
-
-    }
-
-    public void playEvents(DynamicEntity receiver){
+    public void playEvents(Entity receiver){
     }
 
 }

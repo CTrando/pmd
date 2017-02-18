@@ -1,9 +1,11 @@
 package com.mygdx.pmd.model.Entity.Projectile;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Move;
+import com.mygdx.pmd.interfaces.Damageable;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileAnimationBehavior;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileCollisionBehavior;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileMovementBehavior;
@@ -31,8 +33,7 @@ public class Projectile extends DynamicEntity {
         // TODO what if facing tile is null
         super(parent.floor, parent.facingTile.x, parent.facingTile.y);
         this.parent = parent;
-        this.isTurnBased = false;
-        this.direction = parent.direction;
+        this.setDirection(parent.getDirection());
 
         //store currentMove data
         this.move = move;
@@ -86,8 +87,8 @@ public class Projectile extends DynamicEntity {
         }
 
         if (projectileAnimation.isFinished() && this.getActionState() == Action.COLLISION) {
-            for (DynamicEntity dEntity : getCurrentTile().dynamicEntities) {
-                dEntity.takeDamage(parent, move.damage);
+            for (Damageable damageable : (Array<Damageable>) getCurrentTile().getEntities(Damageable.class)) {
+                damageable.takeDamage(parent, move.damage);
             }
 
             if(move.equals(Move.INSTANT_KILLER)){
@@ -95,7 +96,6 @@ public class Projectile extends DynamicEntity {
             }
 
             //setting this to null so parent will know that the attack has finished
-            this.parent.children.removeValue(this, true);
             this.shouldBeDestroyed = true;
         }
     }
@@ -114,16 +114,6 @@ public class Projectile extends DynamicEntity {
     @Override
     public boolean isLegalToMoveTo(Tile tile) {
         return tile.isWalkable;
-    }
-
-    @Override
-    public void randomizeLocation() {
-
-    }
-
-    @Override
-    public void registerObservers() {
-
     }
 
     @Override
