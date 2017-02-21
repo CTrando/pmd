@@ -8,7 +8,7 @@ import com.mygdx.pmd.interfaces.*;
 import com.mygdx.pmd.model.Behavior.BaseBehavior;
 import com.mygdx.pmd.model.Behavior.Entity.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.*;
-import com.mygdx.pmd.model.Entity.DynamicEntity;
+import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.GenericTile;
@@ -51,13 +51,18 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
         behaviors[1] = new AnimationBehavior(this);
     }
 
+    /**
+     * Possible error with this because of casting - will try to avoid later
+     * @param tile
+     * @return
+     */
     @Override
     public boolean isLegalToMoveTo(Tile tile) {
         if (tile == null) return false;
 
-        if (tile.hasDynamicEntity()) {
-            for (DynamicEntity dEntity : tile.dynamicEntities) {
-                if (dEntity.isAggressive()) {
+        if (tile.hasMovableEntity()) {
+            for (Aggressible aggressible : PUtils.getObjectsOfType(Aggressible.class, tile.getEntityList())) {
+                if (aggressible.isAggressive()) {
                     return false;
                 }
             }
@@ -150,8 +155,8 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
 
                 if(tile == getCurrentTile()) return false;
 
-                for(DynamicEntity dEntity: tile.dynamicEntities){
-                    if(dEntity == target){
+                for(Entity entity: tile.getEntityList()){
+                    if(entity == target){
                         return true;
                     }
                 }

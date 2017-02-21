@@ -105,7 +105,7 @@ public class FloorDecorator {
 
     public static Floor placeEventTiles(Floor floor){
         Tile tile = floor.chooseUnoccupiedTile();
-        while(tile.spriteValue <= 250 || tile.hasDynamicEntity()) {
+        while(tile.spriteValue <= 250 || tile.hasMovableEntity()) {
             tile = floor.chooseUnoccupiedTile();
         }
         floor.tileBoard[tile.row][tile.col] = new StairTile(tile.row, tile.col, floor);

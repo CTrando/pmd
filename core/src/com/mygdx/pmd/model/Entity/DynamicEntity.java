@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Entity;
 
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.interfaces.Movable;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.Tile;
 
@@ -8,7 +9,7 @@ import com.mygdx.pmd.model.Tile.Tile;
 /**
  * Created by Cameron on 10/18/2016.
  */
-public abstract class DynamicEntity extends Entity {
+public abstract class DynamicEntity extends Entity implements Movable {
     public boolean isForcedMove;
 
     /**

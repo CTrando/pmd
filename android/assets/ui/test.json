@@ -15,5 +15,14 @@
   },
   "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
     "default": { "down": "label.9", "up": "label.9", "font": "text", "fontColor": "white" }
+  },
+  "com.kotcrab.vis.ui.widget.VisTextButton$VisTextButtonStyle": {
+    "default": { "down": "label.9", "up": "label.9", "font": "text", "fontColor": "white" }
+  },
+  "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+    "default": { "titleFont": "text", "background": "label.9", "titleFontColor": "white" }
+  },
+  "com.kotcrab.vis.ui.Sizes": {
+    "default": {"spacingTop": 1,"spacingBottom": 1, "spacingRight":1, "spacingLeft":1}
   }
 }

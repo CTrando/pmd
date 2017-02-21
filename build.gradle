@@ -16,6 +16,7 @@ allprojects {
     ext {
         appName = "pmd"
         gdxVersion = '1.9.5'
+        visuiVersion = '1.2.5'
     }
 
     repositories {
@@ -67,6 +68,7 @@ project(":core") {
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compile "com.kotcrab.vis:vis-ui:$visuiVersion"
 
        /* compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"*/

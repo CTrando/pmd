@@ -5,6 +5,7 @@ import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
+import com.mygdx.pmd.utils.PUtils;
 
 /**
  * Created by Cameron on 1/21/2017.
@@ -38,8 +39,8 @@ public class PlayerLogic extends PokemonBehavior {
                 player.setNextTile(player.possibleNextTile);
                 player.possibleNextTile = null;
 
-                if (player.getNextTile().hasDynamicEntity()) {
-                    for (DynamicEntity dEntity : player.getNextTile().dynamicEntities) {
+                if (player.getNextTile().hasMovableEntity()) {
+                    for (DynamicEntity dEntity : PUtils.getObjectsOfType(DynamicEntity.class, player.getNextTile().getEntityList())) {
                         if (dEntity != player) {
                             dEntity.forceMoveToTile(player.getCurrentTile());
                             dEntity.setDirection(player.getDirection().getOppositeDirection());

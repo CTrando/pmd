@@ -4,6 +4,7 @@ package com.mygdx.pmd.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.*;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.comparators.PokemonDistanceComparator;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.TurnBaseable;
@@ -91,6 +92,9 @@ public class Controller {
     }
 
     public void update() {
+        if(turns < 0){
+            screen.game.switchScreen(PMD.endScreen);
+        }
         //first update entities, then their turns should turn immediately to complete which allows them to continue on with the next one
         //this process allows for super quick movement
         for (int i = 0; i < entityList.size(); i++) {

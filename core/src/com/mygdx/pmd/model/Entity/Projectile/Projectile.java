@@ -20,14 +20,17 @@ import com.mygdx.pmd.utils.*;
  * Created by Cameron on 10/18/2016.
  */
 public class Projectile extends DynamicEntity {
+    private ParticleEffect bs;
     public Pokemon parent;
+
+    //TODO fix up this class man
 
     public static final String MOVE_CLASSIFIER = "movement";
 
     //instance fields from currentMove
     public Move move;
-    public boolean isRanged;
-    public int damage;
+    private boolean isRanged;
+    private int damage;
     public int speed;
     private PAnimation projectileAnimation;
 
@@ -50,12 +53,29 @@ public class Projectile extends DynamicEntity {
         // load all the things
         this.loadAnimations();
         if (move.isRanged()) {
+            this.setActionState(Action.MOVING);
             this.loadMovementLogic();
             this.loadCollisionLogic();
         } else {
             this.collide();
         }
+        
+        bs = new ParticleEffect();
+        bs.load(Gdx.files.internal("pokemonassets/energyball"), Gdx.files.internal("pokemonassets"));
+        bs.setPosition(x,y);
+        bs.setDuration(10000000);
+        switch(getDirection()){
+            case up:
+                for(ParticleEmitter particleEmitter: bs.getEmitters()){
+                    particleEmitter.getAngle().setHigh(90);
+                    particleEmitter.getAngle().setLow(90);
+                    particleEmitter.getXOffsetValue().setLow(-5);
+                }
+                break;
+        }
 
+        bs.start();
+        
         pe = new ParticleEffect();
         pe.load(Gdx.files.internal("pokemonassets/particles"), Gdx.files.internal("pokemonassets"));
         pe.setPosition(x, y);
@@ -67,7 +87,6 @@ public class Projectile extends DynamicEntity {
      */
     private void loadMovementLogic() {
         behaviors[2] = new ProjectileMovementBehavior(this);
-        this.setActionState(Action.MOVING);
     }
 
     /**
@@ -93,6 +112,12 @@ public class Projectile extends DynamicEntity {
     @Override
     public void render(SpriteBatch batch){
         super.render(batch);
+        if(getActionState() == Action.MOVING && parent.currentAnimation.isFinished()) {
+            bs.setPosition(x + Constants.TILE_SIZE/2, y + Constants.TILE_SIZE/2);
+            bs.update(0.06f);
+            bs.draw(batch);
+        }
+
         if(getActionState() == Action.COLLISION) {
             pe.setPosition(x + Constants.TILE_SIZE/2, y + Constants.TILE_SIZE/2);
             pe.update(0.06f);
@@ -108,7 +133,7 @@ public class Projectile extends DynamicEntity {
         }
 
         if (projectileAnimation.isFinished() && this.getActionState() == Action.COLLISION) {
-            for (Damageable damageable : (Array<Damageable>) getCurrentTile().getEntities(Damageable.class)) {
+            for (Damageable damageable : PUtils.getObjectsOfType(Damageable.class, getCurrentTile().getEntityList())) {
                 damageable.takeDamage(parent, move.damage);
             }
 

@@ -1,18 +1,15 @@
 package com.mygdx.pmd.scenes;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.StringBuilder;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.viewport.*;
+import com.kotcrab.vis.ui.util.dialog.Dialogs;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
@@ -67,6 +64,7 @@ public class Hud {
         floorLabel.setAlignment(Align.center);
         turnLabel.setAlignment(Align.center);
         textLabel.setAlignment(Align.center);
+        stage.setDebugAll(true);
 
         TextButton attackText = new TextButton("Swiper no Swiping", skin);
         attackText.addListener(new ChangeListener() {
@@ -205,9 +203,12 @@ public class Hud {
         
         stage.addActor(textTable);
         stage.addActor(temp);
+
+        Dialogs.showOKDialog(stage, "HELLO WORLD", "SAVE ME");
     }
 
     public void update(float dt) {
+        stage.act();
         //reason why not appearing is because did not include : in bit map font
         testLabel.setText("HP: " + screen.controller.pokemonPlayer.getHP());
         floorLabel.setText("Floor: " + Controller.floorCount);

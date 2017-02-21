@@ -20,7 +20,7 @@ public class ProjectileCollisionBehavior extends ProjectileBehavior {
      */
     @Override
     public void execute() {
-        if (projectile.getCurrentTile().hasDynamicEntity() && projectile.equals(projectile.getCurrentTile())) {
+        if (projectile.getCurrentTile().hasMovableEntity() && projectile.equals(projectile.getCurrentTile())) {
             projectile.collide();
         }
 

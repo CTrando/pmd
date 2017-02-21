@@ -5,41 +5,42 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.*;
+import com.kotcrab.vis.ui.VisUI;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.scenes.Hud;
-import com.mygdx.pmd.utils.*;
+import com.mygdx.pmd.utils.Constants;
 
 public class DungeonScreen extends PScreen implements GestureDetector.GestureListener, InputProcessor {
     public final PMD game;
     private SpriteBatch batch;
 
-    ParticleEffect pe;
-
     public Array<Renderable> renderList;
 
     private Hud hud;
     private boolean showHub;
+    private Stage stage;
 
     public Controller controller;
     public Tile[][] tileBoard;
 
-    public BitmapFont bFont;
+    private BitmapFont bFont;
     private InputMultiplexer inputMultiplexer;
 
     private OrthographicCamera gameCamera;
     private Viewport gamePort;
 
     public DungeonScreen(final PMD game) {
+        VisUI.load(Gdx.files.internal("ui/test.json"));
         //init rendering stuff first
         this.game = game;
         this.batch = game.batch;
         this.renderList = new Array<Renderable>();
-        this.pe = new ParticleEffect();
 
 
         gameCamera = new OrthographicCamera(Constants.WIDTH, Constants.HEIGHT);
@@ -53,40 +54,33 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         bFont.getData().setScale(.5f);
 
         //init stuff that needs the controller
-        hud = new Hud(this, this.batch);
+        hud = new Hud(this, batch);
+        stage = new Stage(new ScreenViewport(), batch);
+        stage.setDebugAll(true);
     }
 
     @Override
     public void render(float dt) {
-        if(Controller.turns < 0){
-            game.switchScreen(PMD.endScreen);
-        }
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        /*for(ParticleEmitter pm: pe.getEmitters()){
-            pm.getAngle().setLow(PRandomInt.random(0,180));
-            pm.getAngle().setHigh(PRandomInt.random(180,360));
-        }
-        pe.setPosition(controller.pokemonPlayer.x + 12,controller.pokemonPlayer.y + 12);*/
-       // pe.update(dt);
+        stage.act();
         controller.update();
         this.updateCamera();
 
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        batch.setColor(Color.WHITE);
         batch.setProjectionMatrix(gameCamera.combined);
         batch.begin();
-        for (int i = 0; i< renderList.size; i++){
+        for (int i = 0; i < renderList.size; i++) {
             renderList.get(i).render(batch);
         }
-        /*if (pe.isComplete())
-            pe.reset();*/
 
-        //pe.draw(batch, dt);
         batch.end();
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        //for some reason it initalizes batch,begin in stage.draw - how terrible
+        stage.draw();
 
-        hud.update(dt);
-        if(showHub){
+        if (showHub) {
+            hud.update(dt);
             hud.stage.draw();
         }
     }
@@ -104,6 +98,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(new GestureDetector(this));
+        inputMultiplexer.addProcessor(stage);
         inputMultiplexer.addProcessor(this);
 
         setShowHud(true);
@@ -184,17 +179,17 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         return false;
     }
 
-    public void toggleHub(){
-        if(showHub) {
+    public void toggleHub() {
+        if (showHub) {
             setShowHud(false);
         } else {
             setShowHud(true);
         }
     }
 
-    private void setShowHud(boolean show){
+    private void setShowHud(boolean show) {
         showHub = show;
-        if(showHub) {
+        if (showHub) {
             inputMultiplexer.addProcessor(hud.stage);
         } else {
             inputMultiplexer.removeProcessor(hud.stage);
@@ -218,7 +213,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public boolean fling(float velocityX, float velocityY, int button) {
-        if(velocityY < -100){
+        if (velocityY < -100) {
             toggleHub();
             return true;
         }
@@ -248,5 +243,13 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     @Override
     public void pinchStop() {
 
+    }
+
+    public Hud getHud() {
+        return hud;
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

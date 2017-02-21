@@ -7,7 +7,9 @@ import com.mygdx.pmd.enumerations.*;
  */
 public interface Aggressible {
 
-    public Aggression getAggression();
-    public void setAggression(Aggression aggression);
-    public boolean canSeeEnemy();
+    Aggression getAggression();
+    boolean isAggressive();
+
+    void setAggression(Aggression aggression);
+    boolean canSeeEnemy();
 }
