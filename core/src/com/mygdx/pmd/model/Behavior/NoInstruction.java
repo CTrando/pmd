@@ -1,0 +1,17 @@
+package com.mygdx.pmd.model.Behavior;
+
+/**
+ * Created by Cameron on 2/21/2017.
+ */
+public class NoInstruction implements Instruction {
+
+    @Override
+    public void execute() {
+
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
+}

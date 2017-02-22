@@ -44,7 +44,7 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
     }
 
     public boolean canMove() {
-        return isLegalToMoveTo(possibleNextTile);
+        return isLegalToMoveTo(possibleNextTile) && getActionState() == Action.IDLE;
     }
 
     /*

@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Entity;
 
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.*;
@@ -9,13 +10,16 @@ import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.utils.*;
 
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by Cameron on 10/18/2016.
  */
 public class Entity implements Renderable, Updatable, Disposable, Directional, ActionStateable {
     public BaseBehavior[] behaviors;
+    public LinkedList<Instruction> instructions;
+    public Instruction currentInstruction;
+    public static Instruction NO_INSTRUCTION = new NoInstruction();
 
     /******************************************/
     //Inherited variables from interfaces
@@ -42,14 +46,17 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
     public Sprite currentSprite;
     public HashMap<String, PAnimation> animationMap;
     public PAnimation currentAnimation;
+
     /********************************************/
 
-    public Entity(){
+    public Entity() {
+        instructions = new LinkedList<Instruction>();
+        currentInstruction = NO_INSTRUCTION;
         initBehaviors();
     }
 
     /**
-        current tile is defined by the initial x and y
+     * current tile is defined by the initial x and y
      */
     public Entity(Floor floor, int x, int y) {
         this.shouldBeDestroyed = false;
@@ -58,18 +65,20 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
         this.tileBoard = floor.tileBoard;
         this.x = x;
         this.y = y;
-        this.currentTile = tileBoard[y/ Constants.TILE_SIZE][x/Constants.TILE_SIZE];
+        this.currentTile = tileBoard[y / Constants.TILE_SIZE][x / Constants.TILE_SIZE];
 
         setDirection(Direction.down);
         setActionState(Action.IDLE);
 
         animationMap = new HashMap<String, PAnimation>();
+        instructions = new LinkedList<Instruction>();
+        currentInstruction = NO_INSTRUCTION;
 
         //initialize behaviors array
         initBehaviors();
     }
 
-    private void initBehaviors(){
+    private void initBehaviors() {
         noBehavior = new NoBehavior(this);
         behaviors = new BaseBehavior[10];
         for (int i = 0; i < behaviors.length; i++) {
@@ -79,7 +88,16 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
 
     @Override
     public void update() {
-        for(int i = 0; i < behaviors.length; i++) {
+        currentInstruction.execute();
+        if (currentInstruction.isFinished()) {
+            if (instructions.size() > 0) {
+                currentInstruction = instructions.poll();
+            } else {
+                currentInstruction = NO_INSTRUCTION;
+            }
+        }
+
+        for (int i = 0; i < behaviors.length; i++) {
             behaviors[i].execute();
         }
     }
@@ -91,7 +109,7 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
         }
     }
 
-    public boolean isTurnBaseable(){
+    public boolean isTurnBaseable() {
         return turnState != null;
     }
 
@@ -135,12 +153,12 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
     }
 
     @Override
-    public void setActionState(Action actionState){
+    public void setActionState(Action actionState) {
         this.actionState = actionState;
     }
 
     @Override
-    public Action getActionState(){
+    public Action getActionState() {
         return actionState;
     }
 
@@ -156,5 +174,9 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
 
     @Override
     public void dispose() {
+    }
+
+    public boolean finishedInstructionsExecution(){
+        return instructions.isEmpty() && currentInstruction == NO_INSTRUCTION;
     }
 }

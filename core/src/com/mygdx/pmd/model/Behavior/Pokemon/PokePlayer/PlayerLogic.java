@@ -2,6 +2,7 @@ package com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer;
 
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.model.Behavior.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
@@ -20,6 +21,10 @@ public class PlayerLogic extends PokemonBehavior {
 
     @Override
     public void execute() {
+        if(player.finishedInstructionsExecution() && player.getActionState() != Action.IDLE){
+            player.setActionState(Action.IDLE);
+        }
+
         if (player.getHP() <= 0) {
             player.shouldBeDestroyed = true;
         }
@@ -48,11 +53,13 @@ public class PlayerLogic extends PokemonBehavior {
                     }
                 }
 
+                //player.behaviors[2] = player.moveBehavior;
+                player.instructions.add(new MoveInstruction(player, player.getNextTile()));
+                player.instructions.add(new MoveInstruction(player,player.getCurrentTile()));
+
+
                 player.setTurnState(Turn.COMPLETE);
                 player.setActionState(Action.MOVING);
-
-                player.behaviors[2] = player.moveBehavior;
-
                 if (PMD.isKeyPressed(Key.s)) {
                     player.setSpeed(5);
                 } else player.setSpeed(1);
