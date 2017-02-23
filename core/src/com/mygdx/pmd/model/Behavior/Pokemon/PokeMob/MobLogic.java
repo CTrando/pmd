@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.Behavior.Pokemon.PokeMob;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
+import com.mygdx.pmd.model.Behavior.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 
@@ -47,7 +48,7 @@ public class MobLogic extends PokemonBehavior {
             }
 
             if (mob.canAttack()) {
-                mob.attack();
+                mob.instructions.add(new AttackInstruction(mob));
 
                 mob.setTurnState(Turn.PENDING);
                 mob.setActionState(Action.ATTACKING);

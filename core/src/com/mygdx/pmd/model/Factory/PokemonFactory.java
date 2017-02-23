@@ -22,11 +22,11 @@ public class PokemonFactory {
         PokemonName name = Enum.valueOf(PokemonName.class, entity.getString("name"));
         //check for key player
         if (entity.getString("type").contains("player")) {
-            //init players
+            //onInit players
             pokemon = new PokemonPlayer(floor, name);
             //check for key mob
         } else if (entity.getString("type").contains("mob")) {
-            //init mobs
+            //onInit mobs
             pokemon = new PokemonMob(floor, name);
         } else {
             pokemon = new PokemonMob(floor, name);

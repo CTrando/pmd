@@ -87,7 +87,7 @@ public class Path {
 
     private Direction getDirection() {
         Direction retDir = getRandomDirection();
-        if (retDir != connector.direction.getOppositeDirection()) {
+        if (retDir != connector.direction.getOpposite()) {
             return retDir;
         } else {
             retDir = getDirection();

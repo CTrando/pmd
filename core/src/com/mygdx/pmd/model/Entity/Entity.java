@@ -1,7 +1,6 @@
 package com.mygdx.pmd.model.Entity;
 
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.*;
@@ -90,11 +89,13 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
     public void update() {
         currentInstruction.execute();
         if (currentInstruction.isFinished()) {
+            currentInstruction.onFinish();
             if (instructions.size() > 0) {
                 currentInstruction = instructions.poll();
             } else {
                 currentInstruction = NO_INSTRUCTION;
             }
+            currentInstruction.onInit();
         }
 
         for (int i = 0; i < behaviors.length; i++) {

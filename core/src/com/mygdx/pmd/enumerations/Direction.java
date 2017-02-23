@@ -22,7 +22,7 @@ public enum Direction {
         right.opposite = left;
     }
 
-    public Direction getOppositeDirection(){
+    public Direction getOpposite(){
         return opposite;
     }
 }

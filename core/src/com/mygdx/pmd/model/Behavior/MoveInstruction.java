@@ -10,30 +10,42 @@ import com.mygdx.pmd.model.Tile.*;
 public class MoveInstruction implements Instruction {
     private DynamicEntity dEntity;
     private Tile nextTile;
+    private boolean isFinished;
 
     public MoveInstruction(DynamicEntity dEntity, Tile nextTile){
         this.dEntity = dEntity;
-        this.nextTile = nextTile;;
+        this.nextTile = nextTile;
     }
 
     @Override
     public void execute() {
         if(!dEntity.equals(nextTile)){
             dEntity.moveToTile(nextTile, dEntity.speed);
-            dEntity.updateCurrentTile();
         }
 
         if(dEntity.equals(nextTile)) {
-            dEntity.behaviors[2] = dEntity.noBehavior;
+            isFinished = true;
         }
     }
 
     @Override
+    public void onInit() {
+       /* nextTile.addEntity(dEntity);
+        dEntity.getCurrentTile().removeEntity(dEntity);*/
+        dEntity.setActionState(Action.MOVING);
+    }
+
+    @Override
+    public void onFinish() {
+        dEntity.updateCurrentTile();
+        dEntity.setFacingTile(dEntity.getDirection());
+
+        dEntity.setActionState(Action.IDLE);
+        dEntity.getCurrentTile().playEvents(dEntity);
+    }
+
+    @Override
     public boolean isFinished() {
-        if(dEntity.equals(nextTile)){
-            dEntity.getCurrentTile().playEvents(dEntity);
-            return true;
-        }
-        return false;
+        return isFinished;
     }
 }

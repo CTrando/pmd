@@ -11,6 +11,16 @@ public class NoInstruction implements Instruction {
     }
 
     @Override
+    public void onInit() {
+
+    }
+
+    @Override
+    public void onFinish() {
+
+    }
+
+    @Override
     public boolean isFinished() {
         return true;
     }

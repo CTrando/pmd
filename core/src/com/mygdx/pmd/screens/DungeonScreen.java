@@ -37,7 +37,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     public DungeonScreen(final PMD game) {
         VisUI.load(Gdx.files.internal("ui/test.json"));
-        //init rendering stuff first
+        //onInit rendering stuff first
         this.game = game;
         this.batch = game.batch;
         this.renderList = new Array<Renderable>();
@@ -46,14 +46,14 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         gameCamera = new OrthographicCamera(Constants.WIDTH, Constants.HEIGHT);
         gamePort = new ScreenViewport(gameCamera);
 
-        //init stuff for updating
+        //onInit stuff for updating
         controller = new Controller(this);
         tileBoard = controller.floor.tileBoard;
 
         bFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
         bFont.getData().setScale(.5f);
 
-        //init stuff that needs the controller
+        //onInit stuff that needs the controller
         hud = new Hud(this, batch);
         stage = new Stage(new ScreenViewport(), batch);
         stage.setDebugAll(true);

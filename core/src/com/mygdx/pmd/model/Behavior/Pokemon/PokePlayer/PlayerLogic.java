@@ -21,25 +21,23 @@ public class PlayerLogic extends PokemonBehavior {
 
     @Override
     public void execute() {
-        if(player.finishedInstructionsExecution() && player.getActionState() != Action.IDLE){
-            player.setActionState(Action.IDLE);
-        }
 
         if (player.getHP() <= 0) {
             player.shouldBeDestroyed = true;
         }
 
-        if (player.getTurnState() == Turn.WAITING && player.equals(player.getCurrentTile())) {
+        if (canAct()) { //player.equals(player.getCurrentTile())) this could be feasible
             player.handleInput();
 
             if (player.canAttack()) {
-                player.attack(player.currentMove);
+                player.instructions.add(new MoveInstruction(player, player.tileBoard[player.getCurrentTile().row][player.getCurrentTile().col + 1]));
+                player.instructions.add(new AttackInstruction(player, player.currentMove));
                 player.currentMove = null;
 
                 player.setActionState(Action.ATTACKING);
                 player.setTurnState(Turn.PENDING);
 
-                player.behaviors[2] = player.attackBehavior;
+                //player.behaviors[2] = player.attackBehavior;
             } else if (player.canMove()) {
                 player.setNextTile(player.possibleNextTile);
                 player.possibleNextTile = null;
@@ -48,18 +46,17 @@ public class PlayerLogic extends PokemonBehavior {
                     for (DynamicEntity dEntity : PUtils.getObjectsOfType(DynamicEntity.class, player.getNextTile().getEntityList())) {
                         if (dEntity != player) {
                             dEntity.forceMoveToTile(player.getCurrentTile());
-                            dEntity.setDirection(player.getDirection().getOppositeDirection());
+                            dEntity.setDirection(player.getDirection().getOpposite());
                         }
                     }
                 }
 
-                //player.behaviors[2] = player.moveBehavior;
                 player.instructions.add(new MoveInstruction(player, player.getNextTile()));
-                player.instructions.add(new MoveInstruction(player,player.getCurrentTile()));
 
-
-                player.setTurnState(Turn.COMPLETE);
+                //this is to keep movement smooth
                 player.setActionState(Action.MOVING);
+                player.setTurnState(Turn.COMPLETE);
+
                 if (PMD.isKeyPressed(Key.s)) {
                     player.setSpeed(5);
                 } else player.setSpeed(1);
@@ -69,5 +66,9 @@ public class PlayerLogic extends PokemonBehavior {
             System.out.println(player.getTurnState());
             System.out.println(player.getActionState());
         }
+    }
+
+    private boolean canAct(){
+        return player.getTurnState() == Turn.WAITING && player.getActionState() == Action.IDLE && player.instructions.isEmpty() && player.currentInstruction == Entity.NO_INSTRUCTION;
     }
 }

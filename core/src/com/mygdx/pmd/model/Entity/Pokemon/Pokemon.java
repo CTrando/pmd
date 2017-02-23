@@ -94,15 +94,8 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
         }
     }
 
-    public void attack(){
-        this.currentMove = moves.random();
-        Projectile projectile = new Projectile(this, currentMove);
-        this.children.add(projectile);
-    }
-
     public void attack(Move move) {
-        this.currentMove = move;
-        Projectile projectile = new Projectile(this, currentMove);
+        Projectile projectile = new Projectile(this, move);
         this.children.add(projectile);
     }
 
@@ -202,5 +195,9 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
 
     public void dispose() {
         this.getCurrentTile().removeEntity(this);
+    }
+
+    public Move getRandomMove() {
+        return moves.random();
     }
 }

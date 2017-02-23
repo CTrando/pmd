@@ -57,7 +57,7 @@ public class Controller {
         toBeRemoved = new Array<Entity>();
         toBeAdded = new Array<Entity>();
 
-        //init tileboard
+        //onInit tileboard
         floorFactory = new FloorFactory(this);
         floor = floorFactory.createFloor();
         this.directlyAddEntity(floor);
