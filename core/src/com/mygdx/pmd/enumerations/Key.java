@@ -7,15 +7,21 @@ import com.badlogic.gdx.Input;
  */
 public enum Key {
     up(Input.Keys.UP), down(Input.Keys.DOWN), left(Input.Keys.LEFT), right(Input.Keys.RIGHT), space(Input.Keys.SPACE),
-    s(Input.Keys.S), a(Input.Keys.A), b(Input.Keys.B), t(Input.Keys.T), r(Input.Keys.R), p(Input.Keys.P), k(Input.Keys.K),
+    s(Input.Keys.S), a(Input.Keys.A, 100), b(Input.Keys.B), t(Input.Keys.T), r(Input.Keys.R), p(Input.Keys.P), k(Input.Keys.K),
     m(Input.Keys.M), escape(Input.Keys.ESCAPE), shift(Input.Keys.SHIFT_LEFT), F11(Input.Keys.F11), IK(-1);
 
     private final int value;
     private long lastTimeHit;
+    private long timeLimit;
+
+    Key(final int val, final long timeLimit){
+        this.value = val;
+        this.timeLimit = timeLimit;
+        lastTimeHit = 0;
+    }
 
     Key(final int newValue) {
-        value = newValue;
-        lastTimeHit = 0;
+        this(newValue, 500);
     }
 
     public void setLastTimeHit(long lastTimeHit){
@@ -35,4 +41,7 @@ public enum Key {
         return this.name();
     }
 
+    public long getTimeLimit() {
+        return timeLimit;
+    }
 }

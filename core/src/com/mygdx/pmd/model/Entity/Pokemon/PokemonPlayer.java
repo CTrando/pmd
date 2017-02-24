@@ -95,7 +95,8 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
             //actions that do not affect the player's turn or action state
             if (PMD.isKeyPressed(Key.space)) {
                 floor.nextFloor();
-            } else if (PMD.isKeyPressed(Key.a)) {
+            } else if (PMD.isKeyPressedTimeSensitive(Key.a)) {
+                System.out.println("Skip turn!");
                 this.setTurnState(Turn.COMPLETE);
                 possibleNextTile = null;
             } else if (PMD.isKeyPressedTimeSensitive(Key.p)) {
@@ -141,5 +142,10 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
     @Override
     public String toString() {
         return super.toString() + " player";
+    }
+
+    public void reset(){
+        super.reset();
+        this.setTurnState(Turn.WAITING);
     }
 }

@@ -35,9 +35,11 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     private OrthographicCamera gameCamera;
     private Viewport gamePort;
 
+    private Viewport stagePort;
+
     public DungeonScreen(final PMD game) {
         VisUI.load(Gdx.files.internal("ui/test.json"));
-        //onInit rendering stuff first
+        //init rendering stuff first
         this.game = game;
         this.batch = game.batch;
         this.renderList = new Array<Renderable>();
@@ -45,17 +47,18 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
         gameCamera = new OrthographicCamera(Constants.WIDTH, Constants.HEIGHT);
         gamePort = new ScreenViewport(gameCamera);
+        stagePort = new ScreenViewport();
 
-        //onInit stuff for updating
+        //init stuff for updating
         controller = new Controller(this);
         tileBoard = controller.floor.tileBoard;
 
         bFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
         bFont.getData().setScale(.5f);
 
-        //onInit stuff that needs the controller
+        //init stuff that needs the controller
         hud = new Hud(this, batch);
-        stage = new Stage(new ScreenViewport(), batch);
+        stage = new Stage(stagePort, batch);
         stage.setDebugAll(true);
     }
 
@@ -76,7 +79,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
         batch.end();
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        //for some reason it initalizes batch,begin in stage.draw - how terrible
+        //for some reason it initializes batch,begin in stage.draw - how terrible
         stage.draw();
 
         if (showHub) {
@@ -108,6 +111,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public void resize(int width, int height) {
+        stagePort.update(width,height,true);
         hud.viewport.update(width, height, true);
         gamePort.update(width, height, true);
     }
@@ -179,14 +183,6 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         return false;
     }
 
-    public void toggleHub() {
-        if (showHub) {
-            setShowHud(false);
-        } else {
-            setShowHud(true);
-        }
-    }
-
     private void setShowHud(boolean show) {
         showHub = show;
         if (showHub) {
@@ -243,6 +239,14 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     @Override
     public void pinchStop() {
 
+    }
+
+    public void toggleHub() {
+        if (showHub) {
+            setShowHud(false);
+        } else {
+            setShowHud(true);
+        }
     }
 
     public Hud getHud() {

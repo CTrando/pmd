@@ -110,10 +110,6 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
         }
     }
 
-    public boolean isTurnBaseable() {
-        return turnState != null;
-    }
-
     public boolean equals(Tile tile) {
         return tile != null && (tile.x == x && tile.y == y);
     }
@@ -180,4 +176,12 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
     public boolean finishedInstructionsExecution(){
         return instructions.isEmpty() && currentInstruction == NO_INSTRUCTION;
     }
+
+    public void reset(){
+        this.setActionState(Action.IDLE);
+
+        instructions.clear();
+        currentInstruction = NO_INSTRUCTION;
+    }
+
 }

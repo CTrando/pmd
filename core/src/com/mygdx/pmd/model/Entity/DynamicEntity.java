@@ -81,7 +81,6 @@ public abstract class DynamicEntity extends Entity implements Movable {
         super.setCurrentTile(nextTile);
         this.x = nextTile.x;
         this.y = nextTile.y;
-        //this.notifyObservers();
     }
 
     public Tile getNextTile() {

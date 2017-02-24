@@ -30,14 +30,11 @@ public class PlayerLogic extends PokemonBehavior {
             player.handleInput();
 
             if (player.canAttack()) {
-                player.instructions.add(new MoveInstruction(player, player.tileBoard[player.getCurrentTile().row][player.getCurrentTile().col + 1]));
                 player.instructions.add(new AttackInstruction(player, player.currentMove));
                 player.currentMove = null;
 
                 player.setActionState(Action.ATTACKING);
                 player.setTurnState(Turn.PENDING);
-
-                //player.behaviors[2] = player.attackBehavior;
             } else if (player.canMove()) {
                 player.setNextTile(player.possibleNextTile);
                 player.possibleNextTile = null;
@@ -63,8 +60,8 @@ public class PlayerLogic extends PokemonBehavior {
             }
 
         } else if (player.getActionState() == Action.IDLE) {
-            System.out.println(player.getTurnState());
-            System.out.println(player.getActionState());
+            /*System.out.println(player.getTurnState());
+            System.out.println(player.getActionState());*/
         }
     }
 

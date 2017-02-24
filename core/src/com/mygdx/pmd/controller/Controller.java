@@ -89,6 +89,9 @@ public class Controller {
         if (!TileTester.checkCorners(floor.tileBoard)) throw new AssertionError("Uh oh, this floor is invalid!");
 
         this.randomizeAllPokemonLocation();
+        for(Entity entity: entityList){
+            entity.reset();
+        }
     }
 
     public void update() {
@@ -175,7 +178,7 @@ public class Controller {
             screen.renderList.removeValue(entity, true);
             entityList.remove(entity);
 
-            if (entity.isTurnBaseable()) {
+            if (entity instanceof TurnBaseable) {
                 turnBasedEntities.remove(entity);
             }
 

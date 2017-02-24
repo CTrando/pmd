@@ -107,9 +107,6 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
             this.setCurrentTile(random);
             this.possibleNextTile = null;
         } else randomizeLocation();
-
-        this.setActionState(Action.IDLE);
-        this.setTurnState(Turn.COMPLETE);
     }
 
     @Override
@@ -199,5 +196,10 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
 
     public Move getRandomMove() {
         return moves.random();
+    }
+
+    public void reset(){
+        super.reset();
+        this.setTurnState(Turn.COMPLETE);
     }
 }

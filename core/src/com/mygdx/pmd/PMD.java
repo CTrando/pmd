@@ -117,7 +117,7 @@ public class PMD extends Game {
      */
     public static boolean isKeyPressedTimeSensitive(Key key) {
         if (keys.get(key.getValue()).get()) {
-            if (TimeUtils.timeSinceMillis(key.getLastTimeHit()) > 1000) {
+            if (TimeUtils.timeSinceMillis(key.getLastTimeHit()) > key.getTimeLimit()) {
                 key.setLastTimeHit(TimeUtils.millis());
                 return true;
             }

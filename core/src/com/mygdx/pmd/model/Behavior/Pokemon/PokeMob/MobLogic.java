@@ -5,6 +5,7 @@ import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
 import com.mygdx.pmd.model.Behavior.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
+import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 
 /**
@@ -27,13 +28,12 @@ public class MobLogic extends PokemonBehavior {
         if(mob.shouldBeDestroyed) return;
 
         //ensure that when this runs the pokemon's turn is always waiting
-        if (mob.getTurnState() == Turn.WAITING) {
+        if (canAct()) {
             //make sure that if the pokemon is moving, it's turn will be set to complete and the algorithm will no longer run
-            if (!mob.equals(mob.getCurrentTile())) {
+         /*   if (!mob.equals(mob.getCurrentTile())) {
                 mob.setTurnState(Turn.COMPLETE);
                 return;
-            }
-            mob.setTurnState(Turn.COMPLETE);
+            }*/
 
             //will turn to face the player if the mob is aggressive
             if (mob.isAggressive()) {
@@ -53,16 +53,13 @@ public class MobLogic extends PokemonBehavior {
                 mob.setTurnState(Turn.PENDING);
                 mob.setActionState(Action.ATTACKING);
 
-                mob.behaviors[2] = mob.attackBehavior;
                 return;
             }
-
+            else
             if (mob.canMove()) {
                 if (mob.isForcedMove) {
-                    mob.setActionState(Action.MOVING);
 
                     mob.setSpeed(1);
-                    mob.behaviors[2] = mob.moveBehavior;
                     mob.isForcedMove = false;
                 } else {
                     if (mob.isAggressive()) {
@@ -71,13 +68,9 @@ public class MobLogic extends PokemonBehavior {
                     //check to see if it can pathfind
                     if (pathFind()) {
                         if (mob.isWithinRange(floor.getPlayer())) {
-                            mob.setActionState(Action.MOVING);
-                            mob.behaviors[2] = mob.moveBehavior;
                             mob.setSpeed(1);
                         } else {
-                            mob.behaviors[2] = mob.moveBehavior;
                             mob.setSpeed(25);
-                            mob.setActionState(Action.IDLE);
                         }
                     }
                 }
@@ -86,6 +79,7 @@ public class MobLogic extends PokemonBehavior {
                     mob.setSpeed(5);
                 }
 
+                mob.instructions.add(new MoveInstruction(mob, mob.getNextTile()));
                 mob.setDirection(mob.getNextTile());
                 mob.setTurnState(Turn.COMPLETE);
             }
@@ -113,5 +107,9 @@ public class MobLogic extends PokemonBehavior {
             return false;
         }
         return true;
+    }
+
+    private boolean canAct(){
+        return mob.getTurnState() == Turn.WAITING && mob.getActionState() == Action.IDLE && mob.instructions.isEmpty() && mob.currentInstruction == Entity.NO_INSTRUCTION;
     }
 }
