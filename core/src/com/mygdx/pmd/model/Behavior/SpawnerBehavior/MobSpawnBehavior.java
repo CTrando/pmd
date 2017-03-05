@@ -22,7 +22,6 @@ public class MobSpawnBehavior extends SpawnBehavior {
         super(spawner);
     }
 
-    @Override
     public void execute() {
         if(spawner.getTurnState() == Turn.WAITING) {
             spawner.setTurnState(Turn.COMPLETE);

@@ -8,13 +8,12 @@ import com.mygdx.pmd.model.Entity.Projectile.*;
 /**
  * Created by Cameron on 11/8/2016.
  */
-public class AnimationBehavior extends BaseBehavior {
-
+public class AnimationBehavior  {
+    Entity entity;
     public AnimationBehavior(Entity entity) {
-        super(entity);
+        this.entity = entity;
     }
 
-    @Override
     public void execute() {
         switch (entity.getActionState()) {
             case MOVING:

@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.*;
 import com.mygdx.pmd.model.Behavior.*;
+import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.utils.*;
@@ -15,7 +16,6 @@ import java.util.*;
  * Created by Cameron on 10/18/2016.
  */
 public class Entity implements Renderable, Updatable, Disposable, Directional, ActionStateable {
-    public BaseBehavior[] behaviors;
     public LinkedList<Instruction> instructions;
     public Instruction currentInstruction;
     public static Instruction NO_INSTRUCTION = new NoInstruction();
@@ -28,8 +28,6 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
 
     public boolean shouldBeDestroyed;
     /******************************************/
-
-    public BaseBehavior noBehavior;
 
     /*-----------------------------------------*/
     //Position variables
@@ -45,13 +43,12 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
     public Sprite currentSprite;
     public HashMap<String, PAnimation> animationMap;
     public PAnimation currentAnimation;
-
+    public AnimationBehavior animation;
     /********************************************/
 
     public Entity() {
         instructions = new LinkedList<Instruction>();
         currentInstruction = NO_INSTRUCTION;
-        initBehaviors();
     }
 
     /**
@@ -72,17 +69,7 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
         animationMap = new HashMap<String, PAnimation>();
         instructions = new LinkedList<Instruction>();
         currentInstruction = NO_INSTRUCTION;
-
-        //initialize behaviors array
-        initBehaviors();
-    }
-
-    private void initBehaviors() {
-        noBehavior = new NoBehavior(this);
-        behaviors = new BaseBehavior[10];
-        for (int i = 0; i < behaviors.length; i++) {
-            behaviors[i] = this.noBehavior;
-        }
+        animation = new AnimationBehavior(this);
     }
 
     @Override
@@ -98,9 +85,6 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
             currentInstruction.onInit();
         }
 
-        for (int i = 0; i < behaviors.length; i++) {
-            behaviors[i].execute();
-        }
     }
 
     @Override
@@ -173,11 +157,7 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
     public void dispose() {
     }
 
-    public boolean finishedInstructionsExecution(){
-        return instructions.isEmpty() && currentInstruction == NO_INSTRUCTION;
-    }
-
-    public void reset(){
+    public void reset() {
         this.setActionState(Action.IDLE);
 
         instructions.clear();

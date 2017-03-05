@@ -30,9 +30,6 @@ public class Floor extends Entity{
      * Keep track of the items on the floor
      */
     public void addEntity(Entity entity){
-        /*if(entity instanceof StaticEntity){
-            staticEntities.add((StaticEntity) entity);
-        }*/
         controller.toBeAdded(entity);
     }
 

@@ -1,5 +1,6 @@
 package com.mygdx.pmd.model.Behavior.Projectile;
 
+import com.mygdx.pmd.model.Behavior.*;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Tile.Tile;
 
@@ -7,10 +8,23 @@ import com.mygdx.pmd.model.Tile.Tile;
 /**
  * Created by Cameron on 11/17/2016.
  */
-public class ProjectileMovementBehavior extends ProjectileBehavior {
+public class ProjectileMoveInstruction implements Instruction {
 
-    public ProjectileMovementBehavior(Projectile projectile) {
-        super(projectile);
+    Projectile projectile;
+    Tile[][] tileBoard;
+    public ProjectileMoveInstruction(Projectile projectile) {
+        this.projectile = projectile;
+        this.tileBoard = projectile.tileBoard;
+    }
+
+    @Override
+    public void onInit() {
+
+    }
+
+    @Override
+    public void onFinish() {
+
     }
 
     @Override
@@ -35,5 +49,10 @@ public class ProjectileMovementBehavior extends ProjectileBehavior {
         if(projectile.equals(tile)){
             projectile.setCurrentTile(tile);
         }
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 }

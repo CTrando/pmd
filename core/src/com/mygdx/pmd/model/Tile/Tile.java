@@ -74,6 +74,7 @@ public abstract class Tile implements Renderable {
 
     public void playEvents(DynamicEntity receiver) {
         for (Item item : items) {
+            System.out.println("Berry hit by " + receiver.toString());
             item.playEvents(receiver);
             items.removeValue(item, true);
             floor.removeItem(item);
@@ -162,7 +163,7 @@ public abstract class Tile implements Renderable {
     }
 
     public static Tile getTileAt(int x, int y, Tile[][] tileBoard) {
-        Tile retTile = null;
+        Tile retTile;
         try {
             retTile = tileBoard[y / Constants.TILE_SIZE][x / Constants.TILE_SIZE];
         } catch (ArrayIndexOutOfBoundsException e) {

@@ -3,14 +3,13 @@ package com.mygdx.pmd.model.Entity.Projectile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Move;
 import com.mygdx.pmd.interfaces.Damageable;
 import com.mygdx.pmd.model.Behavior.Pokemon.*;
-import com.mygdx.pmd.model.Behavior.Projectile.ProjectileCollisionBehavior;
-import com.mygdx.pmd.model.Behavior.Projectile.ProjectileMovementBehavior;
+import com.mygdx.pmd.model.Behavior.Projectile.ProjectileLogic;
+import com.mygdx.pmd.model.Behavior.Projectile.ProjectileMoveInstruction;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Tile.Tile;
@@ -86,14 +85,14 @@ public class Projectile extends DynamicEntity {
      * set a behavior that will allow for movement
      */
     private void loadMovementLogic() {
-        behaviors[2] = new ProjectileMovementBehavior(this);
+        //behaviors[2] = new ProjectileMoveInstruction(this);
     }
 
     /**
      * set collision logic
      */
     private void loadCollisionLogic() {
-        behaviors[0] = new ProjectileCollisionBehavior(this);
+       // behaviors[0] = new ProjectileLogic(this);
     }
 
     /**
@@ -106,7 +105,7 @@ public class Projectile extends DynamicEntity {
         projectileAnimation = new PAnimation("death", move.projectileCollisionAnimation, null, move.animationLength, false);
         animationMap.put("death", projectileAnimation);
 
-        behaviors[1] = new AnimationBehavior(this);
+       // behaviors[1] = new AnimationBehavior(this);
     }
 
     @Override
@@ -153,8 +152,8 @@ public class Projectile extends DynamicEntity {
         PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
 
         // ensure that the collision class and movement class don't run anymore
-        this.behaviors[0] = this.noBehavior;
-        this.behaviors[2] = this.noBehavior;
+        //this.behaviors[0] = this.noBehavior;
+        //this.behaviors[2] = this.noBehavior;
     }
 
     @Override

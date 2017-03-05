@@ -1,5 +1,8 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
@@ -10,6 +13,7 @@ import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.AI.PathFind;
 import com.mygdx.pmd.utils.AI.ShortestPath;
 import com.mygdx.pmd.utils.AI.Wander;
+import com.mygdx.pmd.utils.Constants;
 
 public class PokemonMob extends Pokemon {
     public PathFind pathFind;
@@ -32,8 +36,19 @@ public class PokemonMob extends Pokemon {
         pathFind = wander;
         path = new Array<Tile>();
         logic = new MobLogic(this);
+    }
 
-        behaviors[0] = logic;
+    @Override
+    public void render(SpriteBatch batch){
+        super.render(batch);
+        ShapeRenderer renderer = new ShapeRenderer();
+        renderer.setProjectionMatrix(floor.getController().screen.getCamera().combined);
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.setColor(Color.RED);
+        for(Tile tile: path){
+            renderer.rect(tile.x, tile.y, Constants.TILE_SIZE, Constants.TILE_SIZE);
+        }
+        renderer.end();
     }
 
     @Override

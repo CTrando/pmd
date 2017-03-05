@@ -3,7 +3,7 @@ package com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Behavior.*;
-import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
+import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.utils.PUtils;
@@ -11,11 +11,10 @@ import com.mygdx.pmd.utils.PUtils;
 /**
  * Created by Cameron on 1/21/2017.
  */
-public class PlayerLogic extends PokemonBehavior {
+public class PlayerLogic implements Logic {
     private PokemonPlayer player;
 
     public PlayerLogic(PokemonPlayer player) {
-        super(player);
         this.player = player;
     }
 
@@ -26,7 +25,7 @@ public class PlayerLogic extends PokemonBehavior {
             player.shouldBeDestroyed = true;
         }
 
-        if (canAct()) { //player.equals(player.getCurrentTile())) this could be feasible
+        if (canAct()) {
             player.handleInput();
 
             if (player.canAttack()) {

@@ -102,8 +102,9 @@ public abstract class DynamicEntity extends Entity implements Movable {
 
     public void updateCurrentTile(){
         Tile tile = Tile.getTileAt(x, y, tileBoard);
-        if(this.equals(tile))
+        if(this.equals(tile)) {
             this.setCurrentTile(tile);
+        }
     }
 
     public void randomizeLocation(){}

@@ -5,20 +5,20 @@ import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 /**
  * Created by Cameron on 11/17/2016.
  */
-public class ProjectileCollisionBehavior extends ProjectileBehavior {
+public class ProjectileLogic {
+    Projectile projectile;
     /**
      * This class has one job, to find when a ranged projectile interacts with an entity or a unwalkable tile
      *
      * @param projectile the projectile to be acted upon
      */
-    public ProjectileCollisionBehavior(Projectile projectile) {
-        super(projectile);
+    public ProjectileLogic(Projectile projectile) {
+        this.projectile = projectile;
     }
 
     /**
      * Set of rules to check if projectile has collided yet
      */
-    @Override
     public void execute() {
         if (projectile.getCurrentTile().hasMovableEntity() && projectile.equals(projectile.getCurrentTile())) {
             projectile.collide();

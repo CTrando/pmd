@@ -71,7 +71,6 @@ public class PMD extends Game {
     }
 
     private void loadManager() {
-
         manager.load("pokemonassets/TREEKO_WALKSHEET.atlas", TextureAtlas.class);
         manager.load("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class);
         manager.load("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class);

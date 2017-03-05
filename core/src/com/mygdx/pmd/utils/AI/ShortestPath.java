@@ -41,7 +41,7 @@ public class ShortestPath extends PathFind {
                 backTrack = backTrack.getParent();
                 solutionNodeList.insert(0, backTrack);
             }
-            solutionNodeList.removeValue(dEntity.getCurrentTile(), false);
+            solutionNodeList.removeValue(dEntity.getCurrentTile(), true);
             return solutionNodeList;
         } catch(NullPointerException e){
             throw new PathFindFailureException("Null somewhere in here");

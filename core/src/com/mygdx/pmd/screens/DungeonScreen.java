@@ -249,6 +249,10 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         }
     }
 
+    public OrthographicCamera getCamera(){
+        return gameCamera;
+    }
+
     public Hud getHud() {
         return hud;
     }

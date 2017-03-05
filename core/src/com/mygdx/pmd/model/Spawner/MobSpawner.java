@@ -10,6 +10,6 @@ import com.mygdx.pmd.model.Floor.*;
 public class MobSpawner extends Spawner {
     public MobSpawner(Floor floor) {
         super(floor);
-        behaviors[0] = new MobSpawnBehavior(this);
+        //behaviors[0] = new MobSpawnBehavior(this);
     }
 }

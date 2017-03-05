@@ -4,18 +4,17 @@ import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
 import com.mygdx.pmd.model.Behavior.*;
-import com.mygdx.pmd.model.Behavior.Pokemon.PokemonBehavior;
+import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 
 /**
  * Created by Cameron on 1/20/2017.
  */
-public class MobLogic extends PokemonBehavior {
+public class MobLogic implements Logic {
     private PokemonMob mob;
 
     public MobLogic(PokemonMob mob) {
-        super(mob);
         this.mob = mob;
     }
 
@@ -41,7 +40,7 @@ public class MobLogic extends PokemonBehavior {
                 mob.setFacingTile(mob.getDirection());
 
                 if (mob.target.shouldBeDestroyed) {
-                    mob.target = floor.getPlayer();
+                    mob.target = mob.floor.getPlayer();
                     mob.aggression = Aggression.passive;
                     mob.pathFind = mob.wander;
                 }
@@ -67,7 +66,7 @@ public class MobLogic extends PokemonBehavior {
                     }
                     //check to see if it can pathfind
                     if (pathFind()) {
-                        if (mob.isWithinRange(floor.getPlayer())) {
+                        if (mob.isWithinRange(mob.floor.getPlayer())) {
                             mob.setSpeed(1);
                         } else {
                             mob.setSpeed(25);

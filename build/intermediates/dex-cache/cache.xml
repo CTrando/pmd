@@ -2,40 +2,13 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\Cameron\.gradle\caches\modules-2\files-2.1\com.kotcrab.vis\vis-ui\1.2.5\1403c222cc1a02dc181ad44c0cb804c87de60ee1\vis-ui-1.2.5.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="447e6e392831450056bacc2c62ddbedfbc4ddb0c">
-        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_b612e29840a609a8c6bb49ecf5ddac85efb62bd4\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="45f7e6505a1b7edc404c66921107c6e57423389a">
-        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_f52eeff59d68673c0f9f004c0b09608fb0839fb1\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Cameron\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx\1.9.5\dc65bb2f51828c58b1b2b3ac585357204d54ee5f\gdx-1.9.5.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="dc65bb2f51828c58b1b2b3ac585357204d54ee5f">
-        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-1.9.5_f44e2878727315b8bc7cb699d8dad66d7aebcddf\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Cameron\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-backend-android\1.9.5\293bbe05bfb5ca812c849e4d1f494f56509d5a6e\gdx-backend-android-1.9.5.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="293bbe05bfb5ca812c849e4d1f494f56509d5a6e">
-        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\transforms\dex\debug\folders\1000\10\gdx-backend-android-1.9.5_17179a185e8cf3ac102ddae581789955e1c2ed62\classes.dex" />
+        sha1="1403c222cc1a02dc181ad44c0cb804c87de60ee1">
+        <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\pre-dexed\debug\vis-ui-1.2.5_e7a1f6abcc8edf47c6e1d3db3cec763892e19eaa.jar" />
     </item>
     <item
         is-multidex="false"
@@ -61,7 +34,7 @@
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="25b4aa2854ac5a4514cad456d6499b04dc8f8d28">
+        sha1="7d77471a79d0a0785be788fe793e85b43361e989">
         <dex dex="C:\Users\Cameron\Desktop\LibGDXGames\pmd\android\build\intermediates\pre-dexed\debug\core-1.0_621f25cd348c95fbc4934869b05f3cf5b798bedc.jar" />
     </item>
 

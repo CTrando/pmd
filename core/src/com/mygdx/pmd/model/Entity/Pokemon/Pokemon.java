@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.*;
-import com.mygdx.pmd.model.Behavior.BaseBehavior;
-import com.mygdx.pmd.model.Behavior.Entity.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
@@ -16,16 +14,13 @@ import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.*;
 
 public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Damageable, Aggressible {
-    public BaseBehavior attackBehavior;
-    public MoveBehavior moveBehavior;
-
     private int hp;
 
     public Array<DynamicEntity> children;
 
     public DynamicEntity target;
 
-    public PokemonBehavior logic;
+    public Logic logic;
     private PokemonName pokemonName;
 
     public Array<Move> moves;
@@ -43,12 +38,6 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
         //initialize moves and add default move
         moves = new Array<Move>(4);
         moves.add(Move.SCRATCH);
-
-
-        this.attackBehavior = new AttackBehavior(this);
-        this.moveBehavior = new MoveBehavior(this);
-
-        behaviors[1] = new AnimationBehavior(this);
     }
 
     /**
@@ -76,11 +65,13 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
     @Override
     public void update() {
         super.update();
+        this.updateLogic();
 
         for(DynamicEntity child: children){
             child.update();
         }
 
+        animation.execute();
         updateCurrentTile();
         setFacingTile(getDirection());
     }
@@ -155,6 +146,10 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
             }
         }
         return false;
+    }
+
+    public void updateLogic(){
+        logic.execute();
     }
 
     @Override

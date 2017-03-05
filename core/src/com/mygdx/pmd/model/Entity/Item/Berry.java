@@ -23,9 +23,9 @@ public class Berry extends Item {
         if(receiver instanceof Damageable) {
             Damageable damageable = (Damageable) receiver;
             damageable.setHP(damageable.getHP() + 20);
-
         }
-        if (receiver instanceof PokemonPlayer)
+        if (receiver instanceof PokemonPlayer) {
             Controller.turns += 10;
+        }
     }
 }

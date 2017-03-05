@@ -22,7 +22,7 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
         this.setTurnState(Turn.WAITING);
         this.aggression = Aggression.passive;
 
-        behaviors[0] = new PlayerLogic(this);
+        logic = new PlayerLogic(this);
     }
 
     @Override

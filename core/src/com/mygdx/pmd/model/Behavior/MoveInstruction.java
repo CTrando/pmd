@@ -30,8 +30,6 @@ public class MoveInstruction implements Instruction {
 
     @Override
     public void onInit() {
-       /* nextTile.addEntity(dEntity);
-        dEntity.getCurrentTile().removeEntity(dEntity);*/
         dEntity.setActionState(Action.MOVING);
     }
 
