@@ -11,7 +11,9 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		PMD game = new PMD();
 		//if(Gdx.app.getType() == Application.ApplicationType.Android){
-		config.foregroundFPS = 45;
+		config.vSyncEnabled = false;
+		config.foregroundFPS = 0;
+		config.backgroundFPS = 0;
 		//}
 		//else config.foregroundFPS = 60;
 
