@@ -20,6 +20,8 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     public final PMD game;
     private SpriteBatch batch;
 
+    public static final float PPM = 16;
+
     public Array<Renderable> renderList;
 
     private Hud hud;
@@ -45,7 +47,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         this.renderList = new Array<Renderable>();
 
 
-        gameCamera = new OrthographicCamera(Constants.WIDTH, Constants.HEIGHT);
+        gameCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gamePort = new ScreenViewport(gameCamera);
         stagePort = new ScreenViewport();
 
@@ -113,7 +115,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     public void resize(int width, int height) {
         stagePort.update(width,height,true);
         hud.viewport.update(width, height, true);
-        gamePort.update(width, height, true);
+        //gamePort.update(width, height, true);
     }
 
     @Override
@@ -132,7 +134,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     }
 
     private void updateCamera() {
-        gameCamera.position.set(controller.pokemonPlayer.x, controller.pokemonPlayer.y, 0);
+        gameCamera.position.set((controller.pokemonPlayer.x + Constants.TILE_SIZE/2), (controller.pokemonPlayer.y + Constants.TILE_SIZE/2), 0);
         gameCamera.update();
     }
 

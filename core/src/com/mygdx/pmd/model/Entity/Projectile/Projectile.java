@@ -7,6 +7,7 @@ import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Move;
 import com.mygdx.pmd.interfaces.Damageable;
+import com.mygdx.pmd.model.Behavior.*;
 import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileLogic;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileMoveInstruction;
@@ -14,6 +15,8 @@ import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.*;
+
+import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 
 /**
  * Created by Cameron on 10/18/2016.
@@ -49,6 +52,7 @@ public class Projectile extends DynamicEntity {
         this.speed = move.speed;
         this.isRanged = move.isRanged();
 
+        this.findFutureTile();
         // load all the things
         this.loadAnimations();
         if (move.isRanged()) {
@@ -58,41 +62,65 @@ public class Projectile extends DynamicEntity {
         } else {
             this.collide();
         }
-        
+
         bs = new ParticleEffect();
         bs.load(Gdx.files.internal("pokemonassets/energyball"), Gdx.files.internal("pokemonassets"));
-        bs.setPosition(x,y);
+        bs.setPosition(x, y);
         bs.setDuration(10000000);
-        switch(getDirection()){
+      /*  switch (getDirection()) {
             case up:
-                for(ParticleEmitter particleEmitter: bs.getEmitters()){
+                for (ParticleEmitter particleEmitter : bs.getEmitters()) {
                     particleEmitter.getAngle().setHigh(90);
                     particleEmitter.getAngle().setLow(90);
                     particleEmitter.getXOffsetValue().setLow(-5);
                 }
                 break;
-        }
+        }*/
 
         bs.start();
-        
+
         pe = new ParticleEffect();
         pe.load(Gdx.files.internal("pokemonassets/particles"), Gdx.files.internal("pokemonassets"));
         pe.setPosition(x, y);
         pe.start();
     }
 
+    private void findFutureTile() {
+        int row = getCurrentTile().row;
+        int col = getCurrentTile().col;
+
+        switch (getDirection()) {
+            case up:
+                setNextTile(tileBoard[row+ move.range][col]);
+                /*for (int j = 0; j< move.range; j++){
+                    Tile tile = tileBoard[row][col+j];
+
+                }*/
+                break;
+            case down:
+                setNextTile(tileBoard[row- move.range][col]);
+                break;
+            case left:
+                setNextTile(tileBoard[row][col - move.range]);
+                break;
+            case right:
+                setNextTile(tileBoard[row][col + move.range]);
+                break;
+        }
+    }
+
     /**
      * set a behavior that will allow for movement
      */
     private void loadMovementLogic() {
-        //behaviors[2] = new ProjectileMoveInstruction(this);
+        instructions.add(new MoveInstruction(this, getNextTile()));
     }
 
     /**
      * set collision logic
      */
     private void loadCollisionLogic() {
-       // behaviors[0] = new ProjectileLogic(this);
+        instructions.add(new CollideInstruction(this));
     }
 
     /**
@@ -101,24 +129,26 @@ public class Projectile extends DynamicEntity {
     private void loadAnimations() {
         projectileAnimation = new PAnimation("attack", move.projectileMovementAnimation, null, 20, true);
         animationMap.put("movement", projectileAnimation);
+        animationMap.put("idle", projectileAnimation);
 
-        projectileAnimation = new PAnimation("death", move.projectileCollisionAnimation, null, move.animationLength, false);
+        projectileAnimation = new PAnimation("death", move.projectileCollisionAnimation, null, move.animationLength,
+                                             false);
         animationMap.put("death", projectileAnimation);
 
-       // behaviors[1] = new AnimationBehavior(this);
+        animation = new AnimationBehavior(this);
     }
 
     @Override
-    public void render(SpriteBatch batch){
+    public void render(SpriteBatch batch) {
         super.render(batch);
-        if(getActionState() == Action.MOVING && parent.currentAnimation.isFinished()) {
-            bs.setPosition(x + Constants.TILE_SIZE/2, y + Constants.TILE_SIZE/2);
+        if (getActionState() == Action.MOVING && parent.currentAnimation.isFinished()) {
+            bs.setPosition(x + Constants.TILE_SIZE / 2, y + Constants.TILE_SIZE / 2);
             bs.update(0.06f);
             bs.draw(batch);
         }
 
-        if(getActionState() == Action.COLLISION) {
-            pe.setPosition(x + Constants.TILE_SIZE/2, y + Constants.TILE_SIZE/2);
+        if (getActionState() == Action.COLLISION) {
+            pe.setPosition(x + Constants.TILE_SIZE / 2, y + Constants.TILE_SIZE / 2);
             pe.update(0.06f);
             pe.draw(batch);
         }
@@ -129,6 +159,7 @@ public class Projectile extends DynamicEntity {
         // only update the projectile when the parent's attack animation has finished
         if (parent.currentAnimation.isFinished()) {
             super.update();
+            animation.execute();
         }
 
         if (projectileAnimation.isFinished() && this.getActionState() == Action.COLLISION) {
@@ -136,7 +167,7 @@ public class Projectile extends DynamicEntity {
                 damageable.takeDamage(parent, move.damage);
             }
 
-            if(move.equals(Move.INSTANT_KILLER)){
+            if (move.equals(Move.INSTANT_KILLER)) {
                 System.out.println("RKO OUT OF NOWHERE");
             }
 

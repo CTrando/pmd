@@ -12,6 +12,8 @@ import com.mygdx.pmd.utils.*;
 
 import java.util.*;
 
+import static com.mygdx.pmd.screens.DungeonScreen.PPM;
+
 /**
  * Created by Cameron on 10/18/2016.
  */

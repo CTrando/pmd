@@ -16,6 +16,8 @@ import com.mygdx.pmd.model.Entity.Entity;
 
 import java.util.ArrayList;
 
+import static com.mygdx.pmd.screens.DungeonScreen.PPM;
+
 /**
  * Created by Cameron on 6/17/2016.
  */
@@ -58,7 +60,7 @@ public abstract class Tile implements Renderable {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(sprite, x, y);
+        batch.draw(sprite, x, y, sprite.getWidth(), sprite.getHeight());
         for (StaticEntity sEntity : items) {
             sEntity.render(batch);
         }

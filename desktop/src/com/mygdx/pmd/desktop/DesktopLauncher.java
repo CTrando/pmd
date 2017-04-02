@@ -11,11 +11,11 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		PMD game = new PMD();
 		//if(Gdx.app.getType() == Application.ApplicationType.Android){
-		config.vSyncEnabled = false;
+		/*config.vSyncEnabled = false;
 		config.foregroundFPS = 0;
-		config.backgroundFPS = 0;
+		config.backgroundFPS = 0;*/
 		//}
-		//else config.foregroundFPS = 60;
+		config.foregroundFPS = 60;
 
         //set these things as these values for now can edit later
 		//Gdx.graphics.getWidth and height return null because lwgwl app has not been made yet

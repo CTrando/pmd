@@ -30,7 +30,11 @@ public class AnimationBehavior  {
                 entity.currentAnimation = entity.animationMap.get("death");
                 break;
             case IDLE:
-                entity.currentAnimation = entity.animationMap.get(entity.getDirection().toString() + "idle");
+                if (entity instanceof Projectile) {
+                    entity.currentAnimation = entity.animationMap.get("idle");
+                } else if (entity instanceof Pokemon) {
+                    entity.currentAnimation = entity.animationMap.get(entity.getDirection().toString() + "idle");
+                }
                 break;
         }
         if (entity.currentAnimation == null) {
