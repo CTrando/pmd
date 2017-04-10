@@ -23,7 +23,10 @@ public abstract class PathFind {
         this.dEntity = dEntity;
         this.tileBoard = dEntity.tileBoard;
         this.currentTile = dEntity.getCurrentTile();
+
         this.solutionNodeList = new Array<Tile>();
+        this.openNodeList = new Array<Tile>();
+        this.closedNodeList = new Array<Tile>();
     }
 
     public Array<Tile> pathFind(Tile tile) throws PathFindFailureException{

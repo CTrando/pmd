@@ -24,16 +24,12 @@ public class MobLogic implements Logic {
             mob.shouldBeDestroyed = true;
         }
 
-        if(mob.shouldBeDestroyed) return;
+        if (mob.shouldBeDestroyed) {
+            return;
+        }
 
         //ensure that when this runs the pokemon's turn is always waiting
         if (canAct()) {
-            //make sure that if the pokemon is moving, it's turn will be set to complete and the algorithm will no longer run
-         /*   if (!mob.equals(mob.getCurrentTile())) {
-                mob.setTurnState(Turn.COMPLETE);
-                return;
-            }*/
-
             //will turn to face the player if the mob is aggressive
             if (mob.isAggressive()) {
                 mob.setDirection(mob.target.getCurrentTile());
@@ -52,25 +48,27 @@ public class MobLogic implements Logic {
                 mob.setTurnState(Turn.PENDING);
                 mob.setActionState(Action.ATTACKING);
 
-                return;
-            }
-            else
-            if (mob.canMove()) {
+            } else if (mob.canMove()) {
+                // set the next tile based on if the mob has been forced to move or not
                 if (mob.isForcedMove) {
-
+                    System.out.println("forced move");
                     mob.setSpeed(1);
                     mob.isForcedMove = false;
                 } else {
                     if (mob.isAggressive()) {
                         mob.pathFind = mob.sPath;
                     }
-                    //check to see if it can pathfind
+                    //see if it can pathfind, meaning there was no error thrown
                     if (pathFind()) {
-                        if (mob.isWithinRange(mob.floor.getPlayer())) {
-                            mob.setSpeed(1);
-                        } else {
-                            mob.setSpeed(25);
+                        this.mob.setFacingTile(mob.possibleNextTile);
+                        this.mob.setDirection(mob.possibleNextTile);
+
+                        if (this.mob.isLegalToMoveTo(this.mob.possibleNextTile)) {
+                            this.mob.setNextTile(this.mob.possibleNextTile);
+                            this.mob.possibleNextTile = null;
                         }
+
+                        this.determineSpeed();
                     }
                 }
 
@@ -78,10 +76,18 @@ public class MobLogic implements Logic {
                     mob.setSpeed(5);
                 }
 
+                //tell the mob to go to to the next tile
                 mob.instructions.add(new MoveInstruction(mob, mob.getNextTile()));
-                mob.setDirection(mob.getNextTile());
                 mob.setTurnState(Turn.COMPLETE);
             }
+        }
+    }
+
+    private void determineSpeed() {
+        if (mob.isWithinRange(mob.floor.getPlayer())) {
+            mob.setSpeed(1);
+        } else {
+            mob.setSpeed(25);
         }
     }
 
@@ -99,16 +105,10 @@ public class MobLogic implements Logic {
         this.mob.possibleNextTile = mob.path.first();
         mob.path.removeValue(this.mob.possibleNextTile, true);
 
-        if (this.mob.isLegalToMoveTo(this.mob.possibleNextTile)) {
-            this.mob.setNextTile(this.mob.possibleNextTile);
-            this.mob.possibleNextTile = null;
-        } else {
-            return false;
-        }
         return true;
     }
 
-    private boolean canAct(){
+    private boolean canAct() {
         return mob.getTurnState() == Turn.WAITING && mob.getActionState() == Action.IDLE && mob.instructions.isEmpty() && mob.currentInstruction == Entity.NO_INSTRUCTION;
     }
 }

@@ -13,7 +13,7 @@ import com.mygdx.pmd.model.Behavior.Projectile.ProjectileLogic;
 import com.mygdx.pmd.model.Behavior.Projectile.ProjectileMoveInstruction;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
-import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.utils.*;
 
 import static com.mygdx.pmd.screens.DungeonScreen.PPM;
@@ -31,9 +31,6 @@ public class Projectile extends DynamicEntity {
 
     //instance fields from currentMove
     public Move move;
-    private boolean isRanged;
-    private int damage;
-    public int speed;
     private PAnimation projectileAnimation;
 
     private ParticleEffect pe;
@@ -48,9 +45,7 @@ public class Projectile extends DynamicEntity {
 
         //store currentMove data
         this.move = move;
-        this.damage = move.damage;
-        this.speed = move.speed;
-        this.isRanged = move.isRanged();
+        this.setSpeed(move.speed);
 
         this.findFutureTile();
         // load all the things
@@ -67,15 +62,6 @@ public class Projectile extends DynamicEntity {
         bs.load(Gdx.files.internal("pokemonassets/energyball"), Gdx.files.internal("pokemonassets"));
         bs.setPosition(x, y);
         bs.setDuration(10000000);
-      /*  switch (getDirection()) {
-            case up:
-                for (ParticleEmitter particleEmitter : bs.getEmitters()) {
-                    particleEmitter.getAngle().setHigh(90);
-                    particleEmitter.getAngle().setLow(90);
-                    particleEmitter.getXOffsetValue().setLow(-5);
-                }
-                break;
-        }*/
 
         bs.start();
 
@@ -91,22 +77,52 @@ public class Projectile extends DynamicEntity {
 
         switch (getDirection()) {
             case up:
-                setNextTile(tileBoard[row+ move.range][col]);
-                /*for (int j = 0; j< move.range; j++){
-                    Tile tile = tileBoard[row][col+j];
-
-                }*/
+                for (int i = 0; i < move.range; i++) {
+                    Tile tile = tileBoard[row + i][col];
+                    if (isValidTarget(tile) || i == move.range-1) {
+                        setNextTile(tile);
+                        break;
+                    }
+                }
                 break;
             case down:
-                setNextTile(tileBoard[row- move.range][col]);
+                for (int i = 0; i < move.range; i++) {
+                    Tile tile = tileBoard[row - i][col];
+                    if (isValidTarget(tile) || i == move.range-1) {
+                        setNextTile(tile);
+                        break;
+                    }
+                }
                 break;
             case left:
-                setNextTile(tileBoard[row][col - move.range]);
+                for (int j = 0; j < move.range; j++) {
+                    Tile tile = tileBoard[row][col - j];
+                    if (isValidTarget(tile) || j == move.range-1) {
+                        setNextTile(tile);
+                        break;
+                    }
+                }
                 break;
             case right:
-                setNextTile(tileBoard[row][col + move.range]);
+                for (int j = 0; j < move.range; j++) {
+                    Tile tile = tileBoard[row][col + j];
+                    if (isValidTarget(tile) || j == move.range-1) {
+                        setNextTile(tile);
+                        break;
+                    }
+                }
+
                 break;
         }
+    }
+
+    private boolean isValidTarget(Tile tile) {
+        if (tile == null ||
+                tile instanceof GenericTile || /* must replace with damageable */
+                tile.hasMovableEntity()) {
+            return true;
+        }
+        return false;
     }
 
     /**

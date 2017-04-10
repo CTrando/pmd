@@ -2,13 +2,14 @@ package com.mygdx.pmd.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.*;
-import com.kotcrab.vis.ui.VisUI;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.interfaces.Renderable;
@@ -18,6 +19,7 @@ import com.mygdx.pmd.utils.Constants;
 
 public class DungeonScreen extends PScreen implements GestureDetector.GestureListener, InputProcessor {
     public final PMD game;
+    public static ShapeRenderer sRenderer;
     private SpriteBatch batch;
 
     public static final float PPM = 16;
@@ -40,10 +42,10 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     private Viewport stagePort;
 
     public DungeonScreen(final PMD game) {
-        VisUI.load(Gdx.files.internal("ui/test.json"));
         //init rendering stuff first
         this.game = game;
         this.batch = game.batch;
+        this.sRenderer = new ShapeRenderer();
         this.renderList = new Array<Renderable>();
 
 
@@ -67,7 +69,6 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     @Override
     public void render(float dt) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         stage.act();
         controller.update();
         this.updateCamera();
@@ -75,11 +76,14 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         batch.setColor(Color.WHITE);
         batch.setProjectionMatrix(gameCamera.combined);
         batch.begin();
+        sRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        sRenderer.setProjectionMatrix(gameCamera.combined);
         for (int i = 0; i < renderList.size; i++) {
             renderList.get(i).render(batch);
         }
 
         batch.end();
+        sRenderer.end();
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         //for some reason it initializes batch,begin in stage.draw - how terrible
         stage.draw();

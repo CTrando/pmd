@@ -20,47 +20,56 @@ public class PlayerLogic implements Logic {
 
     @Override
     public void execute() {
-
         if (player.getHP() <= 0) {
             player.shouldBeDestroyed = true;
         }
 
         if (canAct()) {
             player.handleInput();
-
             if (player.canAttack()) {
-                player.instructions.add(new AttackInstruction(player, player.currentMove));
-                player.currentMove = null;
-
-                player.setActionState(Action.ATTACKING);
-                player.setTurnState(Turn.PENDING);
+                this.attack();
             } else if (player.canMove()) {
-                player.setNextTile(player.possibleNextTile);
-                player.possibleNextTile = null;
-
-                if (player.getNextTile().hasMovableEntity()) {
-                    for (DynamicEntity dEntity : PUtils.getObjectsOfType(DynamicEntity.class, player.getNextTile().getEntityList())) {
-                        if (dEntity != player) {
-                            dEntity.forceMoveToTile(player.getCurrentTile());
-                            dEntity.setDirection(player.getDirection().getOpposite());
-                        }
-                    }
-                }
-
-                player.instructions.add(new MoveInstruction(player, player.getNextTile()));
-
-                //this is to keep movement smooth
-                player.setActionState(Action.MOVING);
-                player.setTurnState(Turn.COMPLETE);
-
-                if (PMD.isKeyPressed(Key.s)) {
-                    player.setSpeed(5);
-                } else player.setSpeed(1);
+                this.move();
             }
+        }
+    }
 
-        } else if (player.getActionState() == Action.IDLE) {
-            /*System.out.println(player.getTurnState());
-            System.out.println(player.getActionState());*/
+    private void move() {
+        player.setNextTile(player.possibleNextTile);
+        player.possibleNextTile = null;
+
+        if (player.getNextTile().hasMovableEntity()) {
+            this.forceMove();
+        }
+
+        player.instructions.add(new MoveInstruction(player, player.getNextTile()));
+
+        //this is to keep movement smooth
+        player.setActionState(Action.MOVING);
+        player.setTurnState(Turn.COMPLETE);
+
+        if (PMD.isKeyPressed(Key.s)) {
+            player.setSpeed(5);
+        } else player.setSpeed(1);
+    }
+
+    private void attack() {
+        if(player.currentMove == null){
+            player.currentMove = player.getRandomMove();
+        }
+
+        player.instructions.add(new AttackInstruction(player, player.currentMove));
+        player.currentMove = null;
+
+        player.setActionState(Action.ATTACKING);
+        player.setTurnState(Turn.PENDING);
+    }
+
+    private void forceMove() {
+        for (DynamicEntity dEntity : PUtils.getObjectsOfType(DynamicEntity.class, player.getNextTile().getEntityList())) {
+            if (dEntity != player) {
+                dEntity.forceMoveToTile(player.getCurrentTile(), player.getDirection().getOpposite());
+            }
         }
     }
 

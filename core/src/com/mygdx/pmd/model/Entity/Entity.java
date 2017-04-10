@@ -27,6 +27,7 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
     private Action actionState;
     private Direction direction;
     protected Turn turnState;
+    protected int hp;
 
     public boolean shouldBeDestroyed;
     /******************************************/
@@ -109,6 +110,14 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
             setDirection(Direction.down);
         if (this.isBelow(tile))
             setDirection(Direction.up);
+    }
+
+    public void removeFromTile() {
+        currentTile.removeEntity(this);
+    }
+
+    public void addToTile(Tile tile){
+        tile.addEntity(this);
     }
 
     private boolean isToRight(Tile tile) {

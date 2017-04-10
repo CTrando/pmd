@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.Behavior;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.*;
+import com.mygdx.pmd.model.Entity.Projectile.*;
 
 /**
  * Created by Cameron on 2/22/2017.
@@ -24,7 +25,9 @@ public class AttackInstruction implements Instruction {
     @Override
     public void onInit() {
         pokemon.setActionState(Action.ATTACKING);
-        pokemon.attack(move);
+
+        Projectile projectile = new Projectile(pokemon, move);
+        pokemon.children.add(projectile);
     }
 
     @Override
@@ -32,10 +35,11 @@ public class AttackInstruction implements Instruction {
         pokemon.setTurnState(Turn.COMPLETE);
         pokemon.setActionState(Action.IDLE);
 
+        pokemon.attacking = false;
+
         pokemon.currentAnimation.clear();
         pokemon.children.clear();
     }
-
 
     @Override
     public void execute() {

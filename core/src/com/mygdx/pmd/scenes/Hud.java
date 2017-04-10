@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.*;
-import com.kotcrab.vis.ui.util.dialog.Dialogs;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
@@ -203,8 +202,6 @@ public class Hud {
         
         stage.addActor(textTable);
         stage.addActor(temp);
-
-        Dialogs.showOKDialog(stage, "HELLO WORLD", "SAVE ME");
     }
 
     public void update(float dt) {

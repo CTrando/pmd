@@ -22,51 +22,38 @@ public class PokemonMob extends Pokemon {
     public ShortestPath sPath;
     public Array<Tile> path;
 
-    public PokemonMob(Floor floor, PokemonName name){
+    PokemonMob(Floor floor, PokemonName name) {
         this(floor, 0, 0, name);
     }
 
-    public PokemonMob(Floor floor, int x, int y, PokemonName pokemonName) {
+    PokemonMob(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y, pokemonName);
         this.aggression = Aggression.passive;
         this.target = floor.getPlayer();
 
+        // Pathfinding objects
         wander = new Wander(this);
         sPath = new ShortestPath(this);
         pathFind = wander;
+
         path = new Array<Tile>();
         logic = new MobLogic(this);
     }
 
     @Override
-    public void render(SpriteBatch batch){
-        super.render(batch);
-        ShapeRenderer renderer = new ShapeRenderer();
-        renderer.setProjectionMatrix(floor.getController().screen.getCamera().combined);
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(Color.RED);
-        for(Tile tile: path){
-            renderer.rect(tile.x, tile.y, Constants.TILE_SIZE, Constants.TILE_SIZE);
-        }
-        renderer.end();
-    }
-
-    @Override
     public boolean isLegalToMoveTo(Tile tile) {
-        if (tile == null) return false;
-
-        if (tile.hasMovableEntity())
-            return false;
-        if (!tile.isWalkable)
-            return false;
-        return true;
+        return (tile != null &&
+                !tile.hasMovableEntity() &&
+                tile.isWalkable);
     }
 
     public boolean isWithinRange(DynamicEntity pokemon) {
         int dR = this.getCurrentTile().row - pokemon.getCurrentTile().row;
         int dC = this.getCurrentTile().col - pokemon.getCurrentTile().col;
 
-        if (dR * dR + dC * dC > 400) return false;
+        if (dR * dR + dC * dC > 400) {
+            return false;
+        }
         return true;
     }
 

@@ -1,7 +1,6 @@
 package com.mygdx.pmd.model.Tile;
 
 
-import com.kotcrab.vis.ui.util.dialog.Dialogs;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
@@ -25,7 +24,6 @@ public class StairTile extends Tile{
     public void playEvents(DynamicEntity dEntity) {
         if (dEntity instanceof PokemonPlayer) {
             floor.nextFloor();
-            Dialogs.showOKDialog(floor.getController().screen.getStage(), "",String.format("You have made it to floor %d", Controller.floorCount));
         }
     }
 }

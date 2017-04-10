@@ -13,11 +13,11 @@ import com.mygdx.pmd.utils.Constants;
 
 public class PokemonPlayer extends Pokemon implements PlayerControlled {
 
-    public PokemonPlayer(Floor floor, PokemonName name){
+    PokemonPlayer(Floor floor, PokemonName name){
         this(floor, 0, 0, name);
     }
 
-    public PokemonPlayer(Floor floor, int x, int y, PokemonName pokemonName) {
+    PokemonPlayer(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y, pokemonName);
         this.setTurnState(Turn.WAITING);
         this.aggression = Aggression.passive;
@@ -127,16 +127,13 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
 
             //these are for the attacks
             if (PMD.isKeyPressed(Key.b) && PMD.isKeyPressed(Key.t)) {
-                currentMove = Move.SWIPERNOSWIPING;
+                attacking = true;
             }
         }
     }
 
-    /**
-     * @return true if the pokemon has a currentMove available, false if not
-     */
     public boolean canAttack() {
-        return currentMove != null;
+        return attacking;
     }
 
     @Override

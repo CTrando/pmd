@@ -21,7 +21,7 @@ public class DesktopLauncher {
 		//Gdx.graphics.getWidth and height return null because lwgwl app has not been made yet
 		config.width = 1080;
 		config.height = 720;
-		config.title = game.TITLE;
+		config.title = PMD.TITLE;
 
 		//UISimpleTest test = new UISimpleTest();
 

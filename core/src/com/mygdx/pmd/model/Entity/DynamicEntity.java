@@ -44,8 +44,10 @@ public abstract class DynamicEntity extends Entity implements Movable {
         y += dy;
     }
 
-    public void forceMoveToTile(Tile nextTile){
+    public void forceMoveToTile(Tile nextTile, Direction direction){
         this.setNextTile(nextTile);
+        this.setDirection(direction);
+
         isForcedMove = true;
     }
 
@@ -93,11 +95,10 @@ public abstract class DynamicEntity extends Entity implements Movable {
     public void setNextTile(Tile tile) {
         if (tile == null) return;
 
-        this.getCurrentTile().removeEntity(this);
-        tile.addEntity(this);
+        /*this.getCurrentTile().removeEntity(this);
+        tile.addEntity(this);*/
 
         this.nextTile = tile;
-        this.setDirection(nextTile);
     }
 
     public void updateCurrentTile(){
@@ -127,6 +128,10 @@ public abstract class DynamicEntity extends Entity implements Movable {
             }
         } catch (ArrayIndexOutOfBoundsException e) {
         }
+    }
+
+    public void setFacingTile(Tile tile) {
+        facingTile = tile;
     }
 
     public boolean isAggressive(){

@@ -189,6 +189,8 @@ public abstract class Tile implements Renderable {
     }
 
     public boolean hasMovableEntity() {
+        System.out.println(this);
+        System.out.println(entityList.size);
         return PUtils.getObjectsOfType(Movable.class, entityList).size > 0;
     }
 }

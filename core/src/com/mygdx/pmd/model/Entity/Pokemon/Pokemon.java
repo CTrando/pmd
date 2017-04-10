@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.enumerations.*;
@@ -11,22 +12,22 @@ import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.*;
 
-public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Damageable, Aggressible {
-    private int hp;
-
+public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Damageable, Aggressible, Logical {
     public Array<DynamicEntity> children;
-
     public DynamicEntity target;
 
-    public Logic logic;
+    Logic logic;
     private PokemonName pokemonName;
 
     public Array<Move> moves;
     public Move currentMove;
 
-    protected Pokemon(Floor floor, int x, int y, PokemonName pokemonName) {
+    public boolean attacking;
+
+    Pokemon(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y);
         setHP(100);
         setTurnState(Turn.COMPLETE);
@@ -37,6 +38,8 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
 
         //initialize moves and add default move
         moves = new Array<Move>(4);
+
+        //default move
         moves.add(Move.SCRATCH);
     }
 
@@ -56,45 +59,49 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
                 }
             }
         }
-
-        if (!tile.isWalkable) return false;
-
-        return true;
+        return tile.isWalkable;
     }
 
     @Override
     public void update() {
-        super.update();
-        this.updateLogic();
+        // have it run its logic first before it executes its instructions
+        // may have negative repercussions
+        this.runLogic();
 
         for(DynamicEntity child: children){
             child.update();
         }
 
         animation.execute();
-        updateCurrentTile();
-        setFacingTile(getDirection());
+        super.update();
     }
 
     @Override
     public void render(SpriteBatch batch){
-        super.render(batch);
+
+        if(getNextTile() != null && getNextTile() != getCurrentTile()){
+            DungeonScreen.sRenderer.setColor(Color.RED);
+            DungeonScreen.sRenderer.rect(getNextTile().x, getNextTile().y, Constants.TILE_SIZE, Constants.TILE_SIZE);
+        }
 
         for(DynamicEntity child: children){
             child.render(batch);
         }
+
+        super.render(batch);
     }
 
-    public void attack(Move move) {
-        Projectile projectile = new Projectile(this, move);
-        this.children.add(projectile);
-    }
+    public abstract boolean canAttack();
+    public abstract boolean canMove();
 
     public void randomizeLocation() {
         Tile random = floor.chooseUnoccupiedTile();
 
         if (random.isWalkable) {
             this.setNextTile(random);
+            this.removeFromTile();
+            this.addToTile(this.getNextTile());
+
             this.setCurrentTile(random);
             this.possibleNextTile = null;
         } else randomizeLocation();
@@ -148,7 +155,7 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
         return false;
     }
 
-    public void updateLogic(){
+    public void runLogic(){
         logic.execute();
     }
 

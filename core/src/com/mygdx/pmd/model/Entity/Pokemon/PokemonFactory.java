@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.Factory;
+package com.mygdx.pmd.model.Entity.Pokemon;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -24,6 +24,7 @@ public class PokemonFactory {
         if (entity.getString("type").contains("player")) {
             //onInit players
             pokemon = new PokemonPlayer(floor, name);
+
             //check for key mob
         } else if (entity.getString("type").contains("mob")) {
             //onInit mobs
@@ -56,7 +57,7 @@ public class PokemonFactory {
         return pokemon;
     }
 
-    public static void loadAnimations(Pokemon pokemon, PokemonName pokemonName){
+    private static void loadAnimations(Pokemon pokemon, PokemonName pokemonName){
         JsonReader jsonReader = new JsonReader();
         JsonValue animations = jsonReader.parse(Gdx.files.internal("utils/AnimationStorage.json"));
 

@@ -1,7 +1,6 @@
 package com.mygdx.pmd.model.Spawner;
 
-import com.mygdx.pmd.controller.Controller;
-import com.mygdx.pmd.model.Behavior.SpawnerBehavior.MobSpawnBehavior;
+import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Floor.*;
 
 /**
@@ -10,6 +9,6 @@ import com.mygdx.pmd.model.Floor.*;
 public class MobSpawner extends Spawner {
     public MobSpawner(Floor floor) {
         super(floor);
-        //behaviors[0] = new MobSpawnBehavior(this);
+        logic = new MobSpawnerLogic(this);
     }
 }

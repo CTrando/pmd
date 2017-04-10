@@ -48,13 +48,13 @@ public class ShortestPath extends PathFind {
         }
     }
 
-    public void resetLists() {
-        openNodeList = new Array<Tile>();
-        closedNodeList = new Array<Tile>();
-        solutionNodeList = new Array<Tile>();
+    private void resetLists() {
+        openNodeList.clear();
+        closedNodeList.clear();
+        solutionNodeList.clear();
     }
 
-    public void evaluateTile(Tile tile, Tile dest) {
+    private void evaluateTile(Tile tile, Tile dest) {
         if (tile == dest) {
             openNodeList = new Array<Tile>();
             closedNodeList.add(tile);

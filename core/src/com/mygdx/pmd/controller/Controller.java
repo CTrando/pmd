@@ -11,6 +11,7 @@ import com.mygdx.pmd.interfaces.TurnBaseable;
 import com.mygdx.pmd.model.Decorators.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.*;
+import com.mygdx.pmd.model.Entity.Pokemon.PokemonFactory;
 import com.mygdx.pmd.model.Factory.*;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Spawner.*;
@@ -74,7 +75,7 @@ public class Controller {
 
         //add in a mob spawner
         MobSpawner mobSpawner = new MobSpawner(floor);
-        //this.directlyAddEntity(mobSpawner);
+        this.directlyAddEntity(mobSpawner);
     }
 
     public void nextFloor() {

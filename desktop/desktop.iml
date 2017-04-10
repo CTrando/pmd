@@ -13,7 +13,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6">
     <output url="file://$MODULE_DIR$/build/classes/main" />
     <output-test url="file://$MODULE_DIR$/build/classes/test" />
     <exclude-output />
@@ -33,7 +33,6 @@
     <orderEntry type="library" exported="" name="gdx-platform-1.9.5-natives-desktop" level="project" />
     <orderEntry type="library" exported="" name="gdx-box2d-platform-1.9.5-natives-desktop" level="project" />
     <orderEntry type="library" exported="" name="gdx-1.9.5" level="project" />
-    <orderEntry type="library" exported="" name="vis-ui-1.2.5" level="project" />
     <orderEntry type="library" exported="" name="gdx-backend-headless-1.9.5" level="project" />
     <orderEntry type="library" exported="" name="gdx-freetype-1.9.5" level="project" />
     <orderEntry type="library" exported="" name="gdx-freetype-platform-1.9.5-natives-desktop" level="project" />
@@ -49,6 +48,5 @@
     <orderEntry type="library" exported="" name="jinput-platform-2.0.5-natives-linux" level="project" />
     <orderEntry type="library" exported="" name="jinput-platform-2.0.5-natives-windows" level="project" />
     <orderEntry type="library" exported="" name="jinput-platform-2.0.5-natives-osx" level="project" />
-    <orderEntry type="library" exported="" name="desktop.desktop-1.0" level="project" />
   </component>
 </module>

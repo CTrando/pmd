@@ -24,12 +24,17 @@ public class Wander extends PathFind {
             nextTile = chooseRandomTile(currentTile);
         }
 
-        if (nextTile != null && dEntity.isLegalToMoveTo(nextTile)) {
+        if (dEntity.isLegalToMoveTo(nextTile)) {
             solutionNodeList.add(nextTile);
         }
         return solutionNodeList;
     }
 
+    /**
+     *
+     * @param curTile
+     * @return A non-null tile bordering curTile
+     */
     public Tile chooseRandomTile(Tile curTile) {
         int rand = (int) (4 * Math.random()) + 1;
 
