@@ -1,7 +1,7 @@
 package com.mygdx.pmd.model.Spawner;
 
-import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Floor.*;
+import com.mygdx.pmd.model.logic.*;
 
 /**
  * Created by Cameron on 12/22/2016.

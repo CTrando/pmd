@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.Factory;
+package com.mygdx.pmd.model.Floor;
 
 
 import com.badlogic.gdx.utils.Array;

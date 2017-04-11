@@ -3,18 +3,17 @@ package com.mygdx.pmd.model.Spawner;
 import com.mygdx.pmd.interfaces.TurnBaseable;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Turn;
-import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
-import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.logic.*;
 
 /**
  * Created by Cameron on 12/21/2016.
  */
-public class Spawner extends Entity implements TurnBaseable {
+public abstract class Spawner extends Entity implements TurnBaseable {
     Logic logic;
 
-    public Spawner(Floor floor) {
+    protected Spawner(Floor floor) {
         super(floor, 0, 0);
         this.setTurnState(Turn.COMPLETE);
         setActionState(Action.IDLE);
@@ -23,6 +22,11 @@ public class Spawner extends Entity implements TurnBaseable {
     @Override
     public void update() {
         super.update();
+        runLogic();
+    }
+
+    @Override
+    public void runLogic() {
         logic.execute();
     }
 

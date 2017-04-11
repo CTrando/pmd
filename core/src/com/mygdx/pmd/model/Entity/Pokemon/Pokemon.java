@@ -6,12 +6,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.*;
-import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Entity.*;
-import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.*;
 
@@ -32,6 +31,7 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
         setHP(100);
         setTurnState(Turn.COMPLETE);
         setAggression(Aggression.passive);
+        setFacingTile(getDirection());
 
         this.pokemonName = pokemonName;
         this.children = new Array<DynamicEntity>();
@@ -72,7 +72,7 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
             child.update();
         }
 
-        animation.execute();
+        animationLogic.execute();
         super.update();
     }
 
@@ -99,8 +99,10 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
 
         if (random.isWalkable) {
             this.setNextTile(random);
+
             this.removeFromTile();
-            this.addToTile(this.getNextTile());
+            this.addToTile(random);
+            this.setFacingTile(getDirection());
 
             this.setCurrentTile(random);
             this.possibleNextTile = null;

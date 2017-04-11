@@ -6,9 +6,9 @@ import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.PlayerControlled;
-import com.mygdx.pmd.model.Behavior.Pokemon.PokePlayer.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
+import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.utils.Constants;
 
 public class PokemonPlayer extends Pokemon implements PlayerControlled {
@@ -54,7 +54,7 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
         /*
             -updates position first - makes action state idle
             -updates input next - so would be idle and would be able to take in input
-            -updates animation last - meaning change from moving to idle would not be recorded
+            -updates animationLogic last - meaning change from moving to idle would not be recorded
          */
         if (this.equals(getCurrentTile()) && getActionState() == Action.IDLE) {
             if (PMD.isKeyPressed(Key.shift)) {

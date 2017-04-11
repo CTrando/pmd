@@ -4,12 +4,9 @@ package com.mygdx.pmd.model.Floor;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.enumerations.ConnectFrom;
 import com.mygdx.pmd.enumerations.Direction;
-import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.model.Tile.RoomTile;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.PRandomInt;
-
-import java.util.ArrayList;
 
 /**
  * Created by Cameron on 6/17/2016.

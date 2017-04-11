@@ -12,7 +12,6 @@ import com.mygdx.pmd.model.Decorators.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonFactory;
-import com.mygdx.pmd.model.Factory.*;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Spawner.*;
 import com.mygdx.pmd.screens.DungeonScreen;

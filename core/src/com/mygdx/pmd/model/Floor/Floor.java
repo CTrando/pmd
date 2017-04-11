@@ -12,7 +12,7 @@ import com.mygdx.pmd.utils.*;
 /**
  * Created by Cameron on 1/24/2017.
  */
-public class Floor extends Entity{
+public class Floor extends Entity {
 
     public Tile[][] tileBoard;
     private Array<Item> items;
@@ -77,6 +77,15 @@ public class Floor extends Entity{
                 //bFont.draw(batch, tile.spriteValue+"", tile.x + 5, tile.y+25/2);
             }
         }
+    }
+
+    @Override
+    public void runLogic() {
+
+    }
+
+    public int getNumEntities() {
+        return getDynamicEntities().size;
     }
 
     public DynamicEntity getPlayer() {

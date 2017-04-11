@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.Factory;
+package com.mygdx.pmd.model.Entity.Item;
 
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.model.Entity.Item.Berry;

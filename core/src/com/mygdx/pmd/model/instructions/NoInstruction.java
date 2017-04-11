@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.Behavior;
+package com.mygdx.pmd.model.instructions;
 
 /**
  * Created by Cameron on 2/21/2017.

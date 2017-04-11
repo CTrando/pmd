@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.Behavior;
+package com.mygdx.pmd.model.instructions;
 
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;

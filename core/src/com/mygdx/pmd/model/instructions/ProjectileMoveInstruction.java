@@ -1,8 +1,8 @@
-package com.mygdx.pmd.model.Behavior.Projectile;
+package com.mygdx.pmd.model.instructions;
 
-import com.mygdx.pmd.model.Behavior.*;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.instructions.*;
 
 
 /**

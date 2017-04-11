@@ -2,7 +2,6 @@ package com.mygdx.pmd.model.Floor;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Factory.*;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.utils.PRandomInt;
 

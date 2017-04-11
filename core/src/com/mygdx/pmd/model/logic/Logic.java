@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.Behavior.Pokemon;
+package com.mygdx.pmd.model.logic;
 
 /**
  * Created by Cameron on 3/4/2017.

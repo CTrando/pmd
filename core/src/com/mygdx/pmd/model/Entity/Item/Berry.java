@@ -5,9 +5,7 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.interfaces.Damageable;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
-import com.mygdx.pmd.model.Factory.FloorFactory;
 import com.mygdx.pmd.model.Tile.Tile;
-import com.mygdx.pmd.screens.DungeonScreen;
 
 /**
  * Created by Cameron on 12/22/2016.

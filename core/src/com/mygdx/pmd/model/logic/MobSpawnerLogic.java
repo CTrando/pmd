@@ -1,10 +1,10 @@
-package com.mygdx.pmd.model.Behavior.Pokemon;
+package com.mygdx.pmd.model.logic;
 
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Behavior.*;
-import com.mygdx.pmd.model.Behavior.SpawnerBehavior.*;
 import com.mygdx.pmd.model.Spawner.*;
-import com.mygdx.pmd.utils.PRandomInt;
+import com.mygdx.pmd.model.instructions.*;
+import com.mygdx.pmd.model.logic.*;
+import com.mygdx.pmd.utils.*;
 
 /**
  * Created by Cameron on 4/8/2017.
@@ -18,12 +18,16 @@ public class MobSpawnerLogic implements Logic {
 
     @Override
     public void execute() {
-        if (spawner.getTurnState() == Turn.WAITING) {
+        if (canSpawn()) {
             int rand = PRandomInt.random(0, 10);
-            if(rand == 9) {
+            if (rand == 9) {
                 spawner.instructions.add(new SpawnPokemonInstruction(spawner));
             }
-            spawner.setTurnState(Turn.COMPLETE);
         }
+        spawner.setTurnState(Turn.COMPLETE);
+    }
+
+    private boolean canSpawn() {
+        return spawner.getTurnState() == Turn.WAITING && spawner.floor.getNumEntities() < Constants.NUM_MAX_ENTITY;
     }
 }

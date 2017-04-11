@@ -1,9 +1,7 @@
 package com.mygdx.pmd.model.Decorators;
 
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.controller.Controller;
-import com.mygdx.pmd.model.Factory.FloorFactory;
-import com.mygdx.pmd.model.Factory.ItemFactory;
+import com.mygdx.pmd.model.Entity.Item.ItemFactory;
 import com.mygdx.pmd.model.Floor.Floor;
 import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.RoomTile;

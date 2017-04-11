@@ -4,20 +4,18 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.*;
-import com.mygdx.pmd.model.Behavior.*;
-import com.mygdx.pmd.model.Behavior.Pokemon.*;
+import com.mygdx.pmd.model.logic.AnimationLogic;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.*;
+import com.mygdx.pmd.model.instructions.*;
 import com.mygdx.pmd.utils.*;
 
 import java.util.*;
 
-import static com.mygdx.pmd.screens.DungeonScreen.PPM;
-
 /**
  * Created by Cameron on 10/18/2016.
  */
-public class Entity implements Renderable, Updatable, Disposable, Directional, ActionStateable {
+public abstract class Entity implements Renderable, Updatable, Disposable, Directional, ActionStateable {
     public LinkedList<Instruction> instructions;
     public Instruction currentInstruction;
     public static Instruction NO_INSTRUCTION = new NoInstruction();
@@ -39,14 +37,13 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
     public Floor floor;
     private Tile currentTile;
     public Tile[][] tileBoard;
-    /*-----------------------------------------*/
-
     /*******************************************/
     //Render variables
     public Sprite currentSprite;
+
     public HashMap<String, PAnimation> animationMap;
     public PAnimation currentAnimation;
-    public AnimationBehavior animation;
+    public AnimationLogic animationLogic;
     /********************************************/
 
     public Entity() {
@@ -72,7 +69,7 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
         animationMap = new HashMap<String, PAnimation>();
         instructions = new LinkedList<Instruction>();
         currentInstruction = NO_INSTRUCTION;
-        animation = new AnimationBehavior(this);
+        animationLogic = new AnimationLogic(this);
     }
 
     @Override
@@ -96,6 +93,9 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
             batch.draw(currentSprite, x, y, currentSprite.getWidth(), currentSprite.getHeight());
         }
     }
+
+    /*-----------------------------------------*/
+    public abstract void runLogic();
 
     public boolean equals(Tile tile) {
         return tile != null && (tile.x == x && tile.y == y);
@@ -163,6 +163,7 @@ public class Entity implements Renderable, Updatable, Disposable, Directional, A
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
+
 
     @Override
     public void dispose() {

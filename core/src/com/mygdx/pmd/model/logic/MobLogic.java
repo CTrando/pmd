@@ -1,12 +1,12 @@
-package com.mygdx.pmd.model.Behavior.Pokemon.PokeMob;
+package com.mygdx.pmd.model.logic;
 
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
-import com.mygdx.pmd.model.Behavior.*;
-import com.mygdx.pmd.model.Behavior.Pokemon.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
+import com.mygdx.pmd.model.instructions.*;
+import com.mygdx.pmd.model.logic.*;
 
 /**
  * Created by Cameron on 1/20/2017.

@@ -6,17 +6,12 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Move;
-import com.mygdx.pmd.interfaces.Damageable;
-import com.mygdx.pmd.model.Behavior.*;
-import com.mygdx.pmd.model.Behavior.Pokemon.*;
-import com.mygdx.pmd.model.Behavior.Projectile.ProjectileLogic;
-import com.mygdx.pmd.model.Behavior.Projectile.ProjectileMoveInstruction;
+import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Tile.*;
+import com.mygdx.pmd.model.instructions.*;
 import com.mygdx.pmd.utils.*;
-
-import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 
 /**
  * Created by Cameron on 10/18/2016.
@@ -24,6 +19,7 @@ import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 public class Projectile extends DynamicEntity {
     private ParticleEffect bs;
     public Pokemon parent;
+    private Logic logic;
 
     //TODO fix up this class man
 
@@ -31,7 +27,7 @@ public class Projectile extends DynamicEntity {
 
     //instance fields from currentMove
     public Move move;
-    private PAnimation projectileAnimation;
+    public PAnimation animation;
 
     private ParticleEffect pe;
 
@@ -40,6 +36,7 @@ public class Projectile extends DynamicEntity {
         // set default values
         // TODO what if facing tile is null
         super(parent.floor, parent.facingTile.x, parent.facingTile.y);
+        this.animationLogic = new AnimationLogic(this);
         this.parent = parent;
         this.setDirection(parent.getDirection());
 
@@ -47,15 +44,15 @@ public class Projectile extends DynamicEntity {
         this.move = move;
         this.setSpeed(move.speed);
 
-        this.findFutureTile();
         // load all the things
         this.loadAnimations();
+        this.findFutureTile();
         if (move.isRanged()) {
             this.setActionState(Action.MOVING);
-            this.loadMovementLogic();
-            this.loadCollisionLogic();
+            instructions.add(new MoveInstruction(this, getNextTile()));
+            instructions.add(new CollideInstruction(this));
         } else {
-            this.collide();
+            instructions.add(new CollideInstruction(this));
         }
 
         bs = new ParticleEffect();
@@ -69,6 +66,7 @@ public class Projectile extends DynamicEntity {
         pe.load(Gdx.files.internal("pokemonassets/particles"), Gdx.files.internal("pokemonassets"));
         pe.setPosition(x, y);
         pe.start();
+        logic = new ProjectileLogic(this);
     }
 
     private void findFutureTile() {
@@ -79,7 +77,7 @@ public class Projectile extends DynamicEntity {
             case up:
                 for (int i = 0; i < move.range; i++) {
                     Tile tile = tileBoard[row + i][col];
-                    if (isValidTarget(tile) || i == move.range-1) {
+                    if (isValidTarget(tile) || i == move.range - 1) {
                         setNextTile(tile);
                         break;
                     }
@@ -88,7 +86,7 @@ public class Projectile extends DynamicEntity {
             case down:
                 for (int i = 0; i < move.range; i++) {
                     Tile tile = tileBoard[row - i][col];
-                    if (isValidTarget(tile) || i == move.range-1) {
+                    if (isValidTarget(tile) || i == move.range - 1) {
                         setNextTile(tile);
                         break;
                     }
@@ -97,7 +95,7 @@ public class Projectile extends DynamicEntity {
             case left:
                 for (int j = 0; j < move.range; j++) {
                     Tile tile = tileBoard[row][col - j];
-                    if (isValidTarget(tile) || j == move.range-1) {
+                    if (isValidTarget(tile) || j == move.range - 1) {
                         setNextTile(tile);
                         break;
                     }
@@ -106,7 +104,7 @@ public class Projectile extends DynamicEntity {
             case right:
                 for (int j = 0; j < move.range; j++) {
                     Tile tile = tileBoard[row][col + j];
-                    if (isValidTarget(tile) || j == move.range-1) {
+                    if (isValidTarget(tile) || j == move.range - 1) {
                         setNextTile(tile);
                         break;
                     }
@@ -126,32 +124,23 @@ public class Projectile extends DynamicEntity {
     }
 
     /**
-     * set a behavior that will allow for movement
-     */
-    private void loadMovementLogic() {
-        instructions.add(new MoveInstruction(this, getNextTile()));
-    }
-
-    /**
-     * set collision logic
-     */
-    private void loadCollisionLogic() {
-        instructions.add(new CollideInstruction(this));
-    }
-
-    /**
-     * initialize animations - include adding animation behavior
+     * initialize animations - include adding animationLogic behavior
      */
     private void loadAnimations() {
-        projectileAnimation = new PAnimation("attack", move.projectileMovementAnimation, null, 20, true);
-        animationMap.put("movement", projectileAnimation);
-        animationMap.put("idle", projectileAnimation);
+        animation = new PAnimation("attack", move.projectileMovementAnimation, null, 20, true);
+        animationMap.put("up", animation);
+        animationMap.put("down", animation);
+        animationMap.put("right", animation);
+        animationMap.put("left", animation);
 
-        projectileAnimation = new PAnimation("death", move.projectileCollisionAnimation, null, move.animationLength,
-                                             false);
-        animationMap.put("death", projectileAnimation);
+        animationMap.put("upidle", animation);
+        animationMap.put("downidle", animation);
+        animationMap.put("leftidle", animation);
+        animationMap.put("rightidle", animation);
 
-        animation = new AnimationBehavior(this);
+        animation = new PAnimation("death", move.projectileCollisionAnimation, null, move.animationLength,
+                                   false);
+        animationMap.put("death", animation);
     }
 
     @Override
@@ -172,24 +161,15 @@ public class Projectile extends DynamicEntity {
 
     @Override
     public void update() {
-        // only update the projectile when the parent's attack animation has finished
         if (parent.currentAnimation.isFinished()) {
             super.update();
-            animation.execute();
+            runLogic();
         }
+    }
 
-        if (projectileAnimation.isFinished() && this.getActionState() == Action.COLLISION) {
-            for (Damageable damageable : PUtils.getObjectsOfType(Damageable.class, getCurrentTile().getEntityList())) {
-                damageable.takeDamage(parent, move.damage);
-            }
-
-            if (move.equals(Move.INSTANT_KILLER)) {
-                System.out.println("RKO OUT OF NOWHERE");
-            }
-
-            //setting this to null so parent will know that the attack has finished
-            this.shouldBeDestroyed = true;
-        }
+    @Override
+    public void runLogic() {
+        logic.execute();
     }
 
     public void collide() {

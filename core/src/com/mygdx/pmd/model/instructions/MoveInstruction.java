@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.Behavior;
+package com.mygdx.pmd.model.instructions;
 
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
@@ -12,35 +12,36 @@ public class MoveInstruction implements Instruction {
     private Tile nextTile;
     private boolean isFinished;
 
-    public MoveInstruction(DynamicEntity dEntity, Tile nextTile){
+    public MoveInstruction(DynamicEntity dEntity, Tile nextTile) {
         this.dEntity = dEntity;
         this.nextTile = nextTile;
     }
 
     @Override
     public void execute() {
-        if(!dEntity.equals(nextTile)){
+        if (!dEntity.equals(nextTile)) {
             dEntity.moveToTile(nextTile, dEntity.speed);
         }
 
-        if(dEntity.equals(nextTile)) {
+        if (dEntity.equals(nextTile)) {
             isFinished = true;
         }
     }
 
     @Override
     public void onInit() {
+        dEntity.setActionState(Action.MOVING);
+
         dEntity.removeFromTile();
         dEntity.addToTile(nextTile);
-        dEntity.setActionState(Action.MOVING);
+        dEntity.setFacingTile(dEntity.getDirection());
     }
 
     @Override
     public void onFinish() {
-        dEntity.setCurrentTile(nextTile);
-        dEntity.setFacingTile(dEntity.getDirection());
-
         dEntity.setActionState(Action.IDLE);
+
+        dEntity.setCurrentTile(nextTile);
         dEntity.getCurrentTile().playEvents(dEntity);
     }
 

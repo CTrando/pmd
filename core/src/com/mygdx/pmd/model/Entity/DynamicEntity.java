@@ -23,6 +23,8 @@ public abstract class DynamicEntity extends Entity implements Movable {
     /**
      * Tile that needs to be legalized before it becomes the next tile, prerequisite of tile movement system
      */
+    public Tile prevTile;
+
     public Tile possibleNextTile;
 
     public Aggression aggression;
@@ -78,9 +80,15 @@ public abstract class DynamicEntity extends Entity implements Movable {
         }
     }
 
+    /**
+     * Sets the current tile to the parameter and sets the x and y to that of the next tile as well
+     * @param nextTile the tile that will become the current tile
+     */
     @Override
     public void setCurrentTile(Tile nextTile) {
+        this.prevTile = getCurrentTile();
         super.setCurrentTile(nextTile);
+
         this.x = nextTile.x;
         this.y = nextTile.y;
     }
@@ -94,18 +102,7 @@ public abstract class DynamicEntity extends Entity implements Movable {
      */
     public void setNextTile(Tile tile) {
         if (tile == null) return;
-
-        /*this.getCurrentTile().removeEntity(this);
-        tile.addEntity(this);*/
-
         this.nextTile = tile;
-    }
-
-    public void updateCurrentTile(){
-        Tile tile = Tile.getTileAt(x, y, tileBoard);
-        if(this.equals(tile)) {
-            this.setCurrentTile(tile);
-        }
     }
 
     public void randomizeLocation(){}
