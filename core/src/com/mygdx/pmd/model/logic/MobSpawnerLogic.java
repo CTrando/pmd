@@ -19,7 +19,7 @@ public class MobSpawnerLogic implements Logic {
     @Override
     public void execute() {
         if (canSpawn()) {
-            int rand = PRandomInt.random(0, 10);
+            int rand = MathLogic.random(0, 10);
             if (rand == 9) {
                 spawner.instructions.add(new SpawnPokemonInstruction(spawner));
             }

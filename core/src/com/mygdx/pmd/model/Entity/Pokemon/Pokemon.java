@@ -14,6 +14,8 @@ import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.*;
 
+import java.util.Set;
+
 public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Damageable, Aggressible, Logical {
     public Array<DynamicEntity> children;
     public DynamicEntity target;
@@ -22,7 +24,7 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
     private PokemonName pokemonName;
 
     public Array<Move> moves;
-    public Move currentMove;
+    private Move move;
 
     public boolean attacking;
 
@@ -52,7 +54,7 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
     public boolean isLegalToMoveTo(Tile tile) {
         if (tile == null) return false;
 
-        if (tile.hasMovableEntity()) {
+        if (tile.hasEntityOfType(Movable.class)) {
             for (Aggressible aggressible : PUtils.getObjectsOfType(Aggressible.class, tile.getEntityList())) {
                 if (aggressible.isAggressive()) {
                     return false;
@@ -90,9 +92,6 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
 
         super.render(batch);
     }
-
-    public abstract boolean canAttack();
-    public abstract boolean canMove();
 
     public void randomizeLocation() {
         Tile random = floor.chooseUnoccupiedTile();
@@ -137,7 +136,7 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
             case left:
                 cOffset = -1;
         }
-        for (int i = 1; i < Constants.VISIBILITY_RANGE; i++) {
+        for (int i = 1; i <= Constants.VISIBILITY_RANGE; i++) {
             //these are the rules for viewing things
             try {
                 Tile tile = tileBoard[getCurrentTile().row + i * rOffset][getCurrentTile().col + i * cOffset];
@@ -200,6 +199,24 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
 
     public Move getRandomMove() {
         return moves.random();
+    }
+
+    public Move getRandomRangedMove() {
+        Array<Move> retMoves = new Array<Move>();
+        for(Move move: moves){
+            if(move.isRanged()){
+                retMoves.add(move);
+            }
+        }
+        return retMoves.random();
+    }
+
+    public Move getMove() {
+        return move;
+    }
+
+    public void setMove(Move move){
+        this.move = move;
     }
 
     public void reset(){

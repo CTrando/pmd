@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.logic;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
+import com.mygdx.pmd.interfaces.Movable;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 import com.mygdx.pmd.model.instructions.*;
@@ -33,7 +34,7 @@ public class MobLogic implements Logic {
             //will turn to face the player if the mob is aggressive
             if (mob.isAggressive()) {
                 mob.setDirection(mob.target.getCurrentTile());
-                mob.setFacingTile(mob.getDirection());
+                mob.setFacingTile(mob.target.getDirection());
 
                 if (mob.target.shouldBeDestroyed) {
                     mob.target = mob.floor.getPlayer();
@@ -42,13 +43,22 @@ public class MobLogic implements Logic {
                 }
             }
 
-            if (mob.canAttack()) {
-                mob.instructions.add(new AttackInstruction(mob));
+            if (canAttack()) {
+                if (isEnemyAdjacent()) {
+                    attack();
+                    //return is used to prevent the mob from moving
+                    return;
+                } else {
+                    Move rangedMove = mob.getRandomRangedMove();
+                    if(rangedMove != null) {
+                        mob.setMove(mob.getRandomRangedMove());
+                        attack(mob.getMove());
+                        return;
+                    }
+                }
+            }
 
-                mob.setTurnState(Turn.PENDING);
-                mob.setActionState(Action.ATTACKING);
-
-            } else if (mob.canMove()) {
+            if (canMove()) {
                 // set the next tile based on if the mob has been forced to move or not
                 if (mob.isForcedMove) {
                     System.out.println("forced move");
@@ -79,8 +89,34 @@ public class MobLogic implements Logic {
                 //tell the mob to go to to the next tile
                 mob.instructions.add(new MoveInstruction(mob, mob.getNextTile()));
                 mob.setTurnState(Turn.COMPLETE);
+                return;
             }
         }
+    }
+
+    private void attack(Move move) {
+        mob.instructions.add(new AttackInstruction(mob, move));
+        mob.setTurnState(Turn.PENDING);
+    }
+
+    private void attack() {
+        if(mob.getMove() == null) {
+            attack(mob.getRandomMove());
+        } else {
+            attack(mob.getMove());
+        }
+    }
+
+    private boolean isEnemyAdjacent() {
+        return mob.facingTile.hasEntityOfType(Movable.class);
+    }
+
+    private boolean canAttack() {
+        return mob.canSeeEnemy() && mob.getAggression() == Aggression.aggressive;
+    }
+
+    private boolean canMove() {
+        return mob.getTurnState() == Turn.WAITING;
     }
 
     private void determineSpeed() {

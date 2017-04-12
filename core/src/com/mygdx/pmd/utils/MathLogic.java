@@ -12,4 +12,8 @@ public class MathLogic {
 
         return Math.sqrt((xOffset*xOffset) + (yOffset*yOffset));
     }
+
+    public static int random(int floor, int ceiling){
+        return (int)(Math.random()*(ceiling+1)) + floor;
+    }
 }

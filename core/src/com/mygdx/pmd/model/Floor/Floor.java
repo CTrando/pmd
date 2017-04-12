@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.Floor;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.interfaces.Movable;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Item.*;
 import com.mygdx.pmd.model.Tile.*;
@@ -57,12 +58,12 @@ public class Floor extends Entity {
      * @return Returns an unoccupied room tile
      */
     public Tile chooseUnoccupiedTile() {
-        int randRow = PRandomInt.random(0, tileBoard.length - 1);
-        int randCol = PRandomInt.random(0, tileBoard[0].length - 1);
+        int randRow = MathLogic.random(0, tileBoard.length - 1);
+        int randCol = MathLogic.random(0, tileBoard[0].length - 1);
 
         Tile chosenTile = tileBoard[randRow][randCol];
 
-        if (chosenTile instanceof RoomTile && !chosenTile.hasMovableEntity()) {
+        if (chosenTile instanceof RoomTile && !chosenTile.hasEntityOfType(Movable.class)) {
             return tileBoard[randRow][randCol];
         } else return chooseUnoccupiedTile();
     }

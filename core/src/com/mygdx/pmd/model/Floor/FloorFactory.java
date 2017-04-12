@@ -19,7 +19,6 @@ import com.mygdx.pmd.utils.*;
 
 /**
  * TODO Potential problem with placing rooms right next to each other
- * TODO Fix item not being cleared
  */
 public class FloorFactory {
     private Array<Room> rooms;
@@ -75,7 +74,7 @@ public class FloorFactory {
             Connector connector = connectors.pop();
 
             if (connector.connectFrom == ConnectFrom.PATH){
-                int rand = PRandomInt.random(0,1);
+                int rand = MathLogic.random(0,1);
                 if(rand == 0){
                     Path path = new Path(this, floor, connector);
                     path.createPath();
@@ -88,8 +87,6 @@ public class FloorFactory {
                 Path path = new Path(this, floor, connector);
                 path.createPath();
             }
-
-            System.out.println(connectors.size + " connectors");
         }
         System.out.println("Done generating");
     }

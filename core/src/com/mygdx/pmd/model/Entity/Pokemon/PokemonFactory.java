@@ -53,6 +53,8 @@ public class PokemonFactory {
         } else if (ident == PokemonPlayer.class) {
             pokemon = new PokemonPlayer(floor, name);
         }
+
+        pokemon.moves.add(Move.SWIPERNOSWIPING);
         loadAnimations(pokemon, name);
         return pokemon;
     }

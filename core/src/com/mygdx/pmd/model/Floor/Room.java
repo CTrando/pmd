@@ -6,7 +6,7 @@ import com.mygdx.pmd.enumerations.ConnectFrom;
 import com.mygdx.pmd.enumerations.Direction;
 import com.mygdx.pmd.model.Tile.RoomTile;
 import com.mygdx.pmd.model.Tile.Tile;
-import com.mygdx.pmd.utils.PRandomInt;
+import com.mygdx.pmd.utils.MathLogic;
 
 /**
  * Created by Cameron on 6/17/2016.
@@ -32,11 +32,11 @@ public class Room {
         this.floor = floor;
         this.placeHolder = floorFactory.getPlaceHolder();
 
-        startingRow = PRandomInt.random(1, placeHolder.length);
-        startingCol = PRandomInt.random(1, placeHolder[0].length);
+        startingRow = MathLogic.random(1, placeHolder.length);
+        startingCol = MathLogic.random(1, placeHolder[0].length);
 
-        height = PRandomInt.random(2,3);
-        width = PRandomInt.random(2, 3);
+        height = MathLogic.random(2,3);
+        width = MathLogic.random(2, 3);
 
         if(startingRow + height > placeHolder.length) startingRow = 1;
         if(startingCol + width > placeHolder[0].length) startingCol = 1;
@@ -55,8 +55,8 @@ public class Room {
         startingRow = connector.tile.row;
         startingCol= connector.tile.col;
 
-        height = PRandomInt.random(2,3);
-        width = PRandomInt.random(2, 3);
+        height = MathLogic.random(2,3);
+        width = MathLogic.random(2, 3);
 
         switch(orientation){
             case down: startingRow -= height; break;
@@ -89,13 +89,13 @@ public class Room {
 
     private void setConnectors(){
         if(borderTiles.size <= 0) return;
-        int numConnectors = PRandomInt.random(1,3);
+        int numConnectors = MathLogic.random(1,3);
 
         for(int i = 0; i< numConnectors; i++){
             if(borderTiles.size == 0) break;
 
             //find random tile and set it to a connector
-            int randIndex = PRandomInt.random(0,borderTiles.size-1);
+            int randIndex = MathLogic.random(0,borderTiles.size-1);
             Tile randTile = borderTiles.get(randIndex);
             placeHolder[randTile.row][randTile.col] = new RoomTile(randTile.row, randTile.col, floor);
             borderTiles.removeValue(randTile,false);

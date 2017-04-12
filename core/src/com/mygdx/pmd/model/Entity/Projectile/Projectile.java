@@ -1,11 +1,10 @@
 package com.mygdx.pmd.model.Entity.Projectile;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Move;
+import com.mygdx.pmd.interfaces.Movable;
 import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
@@ -34,7 +33,6 @@ public class Projectile extends DynamicEntity {
     public Projectile(Pokemon parent, Move move) {
         // put down location as the parent's facing tile's location
         // set default values
-        // TODO what if facing tile is null
         super(parent.floor, parent.facingTile.x, parent.facingTile.y);
         this.animationLogic = new AnimationLogic(this);
         this.parent = parent;
@@ -55,17 +53,19 @@ public class Projectile extends DynamicEntity {
             instructions.add(new CollideInstruction(this));
         }
 
+        //load particle effects
         bs = new ParticleEffect();
         bs.load(Gdx.files.internal("pokemonassets/energyball"), Gdx.files.internal("pokemonassets"));
         bs.setPosition(x, y);
         bs.setDuration(10000000);
-
         bs.start();
 
         pe = new ParticleEffect();
         pe.load(Gdx.files.internal("pokemonassets/particles"), Gdx.files.internal("pokemonassets"));
         pe.setPosition(x, y);
         pe.start();
+
+        // must be last so has all the other data
         logic = new ProjectileLogic(this);
     }
 
@@ -109,15 +109,20 @@ public class Projectile extends DynamicEntity {
                         break;
                     }
                 }
-
                 break;
         }
     }
 
+    /**
+     * Uses the rules pattern
+     * See if an attack should stop at a tile or not
+     * @param tile The working tile - as in working memory
+     * @return if attack should stop
+     */
     private boolean isValidTarget(Tile tile) {
         if (tile == null ||
                 tile instanceof GenericTile || /* must replace with damageable */
-                tile.hasMovableEntity()) {
+                tile.hasEntityOfType(Movable.class)) {
             return true;
         }
         return false;
@@ -170,17 +175,6 @@ public class Projectile extends DynamicEntity {
     @Override
     public void runLogic() {
         logic.execute();
-    }
-
-    public void collide() {
-        this.setActionState(Action.COLLISION);
-
-        // play sound effect
-        PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
-
-        // ensure that the collision class and movement class don't run anymore
-        //this.behaviors[0] = this.noBehavior;
-        //this.behaviors[2] = this.noBehavior;
     }
 
     @Override

@@ -13,7 +13,7 @@ public enum Move {
     //TODO make this class more generic
 
     NOMOVE(false,0,1,1,20, "",""),
-    SCRATCH(false,3,20,1,30, "projectilemotion", "claw"),
+    SCRATCH(false,1,20,1,30, "projectilemotion", "claw"),
     SWIPERNOSWIPING(true, 3, 10, 1, 30, "projectilemotion", "claw"),
     INSTANT_KILLER(true,100, 100000000,5,20, "projectilemotion", "explosion");
 
@@ -39,7 +39,7 @@ public enum Move {
     }
 
     public boolean isRanged(){
-        return isRanged;
+        return isRanged && range > 1;
     }
 
     public Array<Sprite> getSpritesFromJson(FileHandle file, String classifier){

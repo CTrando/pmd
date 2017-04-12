@@ -2,6 +2,7 @@ package com.mygdx.pmd.model.Entity.Pokemon;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.interfaces.Movable;
 import com.mygdx.pmd.model.logic.MobLogic;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
@@ -26,7 +27,7 @@ public class PokemonMob extends Pokemon {
         this.aggression = Aggression.passive;
         this.target = floor.getPlayer();
 
-        // Pathfinding objects
+        //pathfinding objects
         wander = new Wander(this);
         sPath = new ShortestPath(this);
         pathFind = wander;
@@ -38,7 +39,7 @@ public class PokemonMob extends Pokemon {
     @Override
     public boolean isLegalToMoveTo(Tile tile) {
         return (tile != null &&
-                !tile.hasMovableEntity() &&
+                !tile.hasEntityOfType(Movable.class) &&
                 tile.isWalkable);
     }
 
@@ -49,14 +50,6 @@ public class PokemonMob extends Pokemon {
         if (dR * dR + dC * dC > 400) {
             return false;
         }
-        return true;
-    }
-
-    public boolean canAttack() {
-        return canSeeEnemy() && aggression == Aggression.aggressive;
-    }
-
-    public boolean canMove() {
         return true;
     }
 

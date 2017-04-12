@@ -69,7 +69,7 @@ public class Hud {
         attackText.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                screen.controller.pokemonPlayer.currentMove = Move.SWIPERNOSWIPING;
+                screen.controller.pokemonPlayer.setMove(Move.SWIPERNOSWIPING);
             }
         });
 
@@ -77,7 +77,7 @@ public class Hud {
         test.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                screen.controller.pokemonPlayer.currentMove = Move.INSTANT_KILLER;
+                screen.controller.pokemonPlayer.setMove(Move.INSTANT_KILLER);
             }
         });
 
@@ -240,7 +240,7 @@ public class Hud {
             test.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    screen.controller.pokemonPlayer.currentMove = Enum.valueOf(Move.class, move.asString());
+                    screen.controller.pokemonPlayer.setMove(Enum.valueOf(Move.class, move.asString()));
                     screen.toggleHub();
                 }
             });

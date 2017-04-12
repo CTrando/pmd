@@ -2,10 +2,10 @@ package com.mygdx.pmd.model.logic;
 
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.interfaces.Movable;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.instructions.*;
-import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.utils.PUtils;
 
 /**
@@ -28,19 +28,27 @@ public class PlayerLogic implements Logic {
             player.handleInput();
             player.setFacingTile(player.getDirection());
 
-            if (player.canAttack()) {
+            if (canAttack()) {
                 this.attack();
-            } else if (player.canMove()) {
+            } else if (canMove()) {
                 this.move();
             }
         }
+    }
+
+    private boolean canAttack() {
+        return player.attacking;
+    }
+
+    private boolean canMove() {
+        return player.isLegalToMoveTo(player.possibleNextTile) && player.getActionState() == Action.IDLE;
     }
 
     private void move() {
         player.setNextTile(player.possibleNextTile);
         player.possibleNextTile = null;
 
-        if (player.getNextTile().hasMovableEntity()) {
+        if (player.getNextTile().hasEntityOfType(Movable.class)) {
             this.forceMove();
         }
 
@@ -55,16 +63,15 @@ public class PlayerLogic implements Logic {
         } else player.setSpeed(1);
     }
 
-    private void attack() {
-        if(player.currentMove == null){
-            player.currentMove = player.getRandomMove();
-        }
-
-        player.instructions.add(new AttackInstruction(player, player.currentMove));
-        player.currentMove = null;
+    private void attack(Move move) {
+        player.instructions.add(new AttackInstruction(player, move));
 
         player.setActionState(Action.ATTACKING);
         player.setTurnState(Turn.PENDING);
+    }
+
+    private void attack() {
+        attack(player.getMove());
     }
 
     private void forceMove() {

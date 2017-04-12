@@ -43,10 +43,6 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
         //PMD.manager.get("sfx/background.ogg", Music.class).play();
     }
 
-    public boolean canMove() {
-        return isLegalToMoveTo(possibleNextTile) && getActionState() == Action.IDLE;
-    }
-
     /*
         handles all input - including movement, attack and menus
      */
@@ -130,10 +126,6 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
                 attacking = true;
             }
         }
-    }
-
-    public boolean canAttack() {
-        return attacking;
     }
 
     @Override

@@ -16,10 +16,9 @@ public class AttackInstruction implements Instruction {
     public AttackInstruction(Pokemon pokemon, Move move) {
         this.pokemon = pokemon;
         this.move = move;
-    }
-
-    public AttackInstruction(Pokemon pokemon) {
-        this(pokemon, pokemon.getRandomMove());
+        if(this.move == null){
+            this.move = pokemon.getRandomMove();
+        }
     }
 
     @Override

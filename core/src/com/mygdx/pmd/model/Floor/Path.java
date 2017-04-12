@@ -3,7 +3,7 @@ package com.mygdx.pmd.model.Floor;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Tile.*;
-import com.mygdx.pmd.utils.PRandomInt;
+import com.mygdx.pmd.utils.MathLogic;
 
 /**
  * Created by Cameron on 12/15/2016.
@@ -35,7 +35,7 @@ public class Path {
     }
 
     public void createPath() {
-        int pathSize = PRandomInt.random(8, 10);
+        int pathSize = MathLogic.random(8, 10);
 
         switch (connector.direction) {
             case up:
@@ -95,7 +95,7 @@ public class Path {
     }
 
     private Direction getRandomDirection() {
-        int rand = PRandomInt.random(0, 3); //possible error here with PRandomInt
+        int rand = MathLogic.random(0, 3); //possible error here with MathLogic
         switch (rand) {
             case 0:
                 return Direction.up;

@@ -1,5 +1,7 @@
 package com.mygdx.pmd.model.instructions;
 
+import com.badlogic.gdx.audio.Sound;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
 
@@ -7,7 +9,8 @@ import com.mygdx.pmd.model.Entity.*;
  * Created by Cameron on 4/1/2017.
  */
 public class CollideInstruction implements Instruction{
-    DynamicEntity dEntity;
+    private DynamicEntity dEntity;
+    private boolean isFinished;
 
     public CollideInstruction(DynamicEntity dEntity){
         this.dEntity = dEntity;
@@ -15,7 +18,9 @@ public class CollideInstruction implements Instruction{
 
     @Override
     public void onInit() {
-
+        PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
+        dEntity.setActionState(Action.COLLISION);
+        dEntity.removeFromTile();
     }
 
     @Override
@@ -25,11 +30,13 @@ public class CollideInstruction implements Instruction{
 
     @Override
     public void execute() {
-        dEntity.setActionState(Action.COLLISION);
+        if(dEntity.currentAnimation.isFinished()){
+            isFinished = true;
+        }
     }
 
     @Override
     public boolean isFinished() {
-        return true;
+        return isFinished;
     }
 }

@@ -78,8 +78,10 @@ public abstract class Tile implements Renderable {
         for (Item item : items) {
             System.out.println("Berry hit by " + receiver.toString());
             item.playEvents(receiver);
-            items.removeValue(item, true);
-            floor.removeItem(item);
+            if(item.shouldBeDestroyed) {
+                items.removeValue(item, true);
+                floor.removeItem(item);
+            }
         }
     }
 
@@ -188,7 +190,7 @@ public abstract class Tile implements Renderable {
         return this.classifier + " row: " + row + ", col: " + col;
     }
 
-    public boolean hasMovableEntity() {
-        return PUtils.getObjectsOfType(Movable.class, entityList).size > 0;
+    public boolean hasEntityOfType(Class c) {
+        return PUtils.getObjectsOfType(c, entityList).size > 0;
     }
 }

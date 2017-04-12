@@ -22,5 +22,5 @@ task dist(type: Jar) {
 }
 dist.dependsOn classes
 dependencies {
-compile project(path: ':core')
+    compile project(path: ':core')
 }

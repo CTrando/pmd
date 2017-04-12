@@ -11,9 +11,10 @@ import com.mygdx.pmd.utils.*;
  * Created by Cameron on 11/17/2016.
  */
 public class ProjectileLogic implements Logic {
-    Projectile projectile;
-    Pokemon parent;
-    PAnimation animation;
+    private Projectile projectile;
+    private Pokemon parent;
+    private PAnimation animation;
+
     /**
      * This class has one job, to find when a ranged projectile interacts with an entity or a unwalkable tile
      *
@@ -33,8 +34,8 @@ public class ProjectileLogic implements Logic {
 
         if (animation.isFinished() && projectile.getActionState() == Action.COLLISION) {
             for (Damageable damageable : PUtils.getObjectsOfType(Damageable.class, projectile.getCurrentTile()
-                                                                                             .getEntityList()
-            )) {
+                                                                                             .getEntityList()))
+            {
                 damageable.takeDamage(parent, projectile.move.damage);
             }
 
@@ -42,7 +43,7 @@ public class ProjectileLogic implements Logic {
                 System.out.println("RKO OUT OF NOWHERE");
             }
 
-            //setting this to null so parent will know that the attack has finished
+            //let parent know that the attack has finished
             projectile.shouldBeDestroyed = true;
         }
     }
