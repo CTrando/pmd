@@ -16,6 +16,8 @@ import com.mygdx.pmd.utils.*;
 
 import java.util.Set;
 
+import static com.mygdx.pmd.screens.DungeonScreen.PPM;
+
 public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Damageable, Aggressible, Logical {
     public Array<DynamicEntity> children;
     public DynamicEntity target;
@@ -83,7 +85,8 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
 
         if(getNextTile() != null && getNextTile() != getCurrentTile()){
             DungeonScreen.sRenderer.setColor(Color.RED);
-            DungeonScreen.sRenderer.rect(getNextTile().x, getNextTile().y, Constants.TILE_SIZE, Constants.TILE_SIZE);
+            DungeonScreen.sRenderer.rect(getNextTile().x/PPM, getNextTile().y/PPM, Constants.TILE_SIZE/PPM, Constants
+                    .TILE_SIZE/PPM);
         }
 
         for(DynamicEntity child: children){

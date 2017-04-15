@@ -94,23 +94,30 @@ leftrightbarriersprite
   orig: 25, 25
   offset: 0, 0
   index: -1
-rightbarriersprite
+orbsprite
   rotate: false
   xy: 100, 25
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
-roomtilesprite
+rightbarriersprite
   rotate: false
   xy: 125, 25
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
-stairtilesprite
+roomtilesprite
   rotate: false
   xy: 150, 25
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+stairtilesprite
+  rotate: false
+  xy: 175, 25
   size: 25, 25
   orig: 25, 25
   offset: 0, 0

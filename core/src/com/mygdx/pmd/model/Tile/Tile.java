@@ -60,7 +60,7 @@ public abstract class Tile implements Renderable {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(sprite, x, y, sprite.getWidth(), sprite.getHeight());
+        batch.draw(sprite, x/PPM, y/PPM, sprite.getWidth()/PPM, sprite.getHeight()/PPM);
         for (StaticEntity sEntity : items) {
             sEntity.render(batch);
         }

@@ -50,6 +50,8 @@ public class MobLogic implements Logic {
                     return;
                 } else {
                     Move rangedMove = mob.getRandomRangedMove();
+
+                    //TODO check for range of the move before giving the OK on the attack
                     if(rangedMove != null) {
                         mob.setMove(mob.getRandomRangedMove());
                         attack(mob.getMove());

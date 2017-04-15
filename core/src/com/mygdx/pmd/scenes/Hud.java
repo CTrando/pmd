@@ -14,13 +14,17 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 
+import static com.mygdx.pmd.screens.DungeonScreen.PPM;
+
 /**
  * Created by Cameron on 11/26/2016.
  */
 public class Hud {
     public Stage stage;
-    public Viewport viewport;
+    public ScreenViewport viewport;
     private float accumTime = 0;
+
+    public OrthographicCamera hudCam;
 
     StringBuilder inputText;
 
@@ -43,10 +47,11 @@ public class Hud {
         gLayout = new GlyphLayout(customFont, "");
         inputText = new StringBuilder();
 
-        OrthographicCamera hudCam = new OrthographicCamera();
+        hudCam = new OrthographicCamera();
 
         viewport = new ScreenViewport(hudCam);
         stage = new Stage(viewport, batch);
+
 
         Table onScreenController = new Table();
         onScreenController.center();
@@ -199,7 +204,7 @@ public class Hud {
 
         if (Gdx.app.getType() == Application.ApplicationType.Android)
             stage.addActor(onScreenController);
-        
+
         stage.addActor(textTable);
         stage.addActor(temp);
     }

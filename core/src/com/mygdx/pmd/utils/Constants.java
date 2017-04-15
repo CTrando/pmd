@@ -16,7 +16,7 @@ public class Constants {
 
     public static final int tileBoardRows = tileBoardHeight / Constants.TILE_SIZE;
     public static final int tileBoardCols = tileBoardWidth / Constants.TILE_SIZE;
-    public static final int MAX_CONNCETORS = 20;
+    public static final int MAX_CONNECTORS = 20;
 
     public static final int V_WIDTH = 1080;
     public static final int V_HEIGHT = 720;

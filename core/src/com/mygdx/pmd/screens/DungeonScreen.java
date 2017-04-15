@@ -22,13 +22,12 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     public static ShapeRenderer sRenderer;
     private SpriteBatch batch;
 
-    public static final float PPM = 16;
+    public static final float PPM = 25;
 
     public Array<Renderable> renderList;
 
     private Hud hud;
     private boolean showHub;
-    private Stage stage;
 
     public Controller controller;
     public Tile[][] tileBoard;
@@ -37,7 +36,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     private InputMultiplexer inputMultiplexer;
 
     private OrthographicCamera gameCamera;
-    private Viewport gamePort;
+    private ScreenViewport gamePort;
 
     private Viewport stagePort;
 
@@ -51,7 +50,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
         gameCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gamePort = new ScreenViewport(gameCamera);
-        stagePort = new ScreenViewport();
+        gamePort.setUnitsPerPixel(1/PPM);
 
         //init stuff for updating
         controller = new Controller(this);
@@ -62,14 +61,12 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
         //init stuff that needs the controller
         hud = new Hud(this, batch);
-        stage = new Stage(stagePort, batch);
-        stage.setDebugAll(true);
     }
 
     @Override
     public void render(float dt) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act();
+       // stage.act();
         controller.update();
         this.updateCamera();
 
@@ -86,7 +83,6 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         sRenderer.end();
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         //for some reason it initializes batch,begin in stage.draw - how terrible
-        stage.draw();
 
         if (showHub) {
             hud.update(dt);
@@ -107,7 +103,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(new GestureDetector(this));
-        inputMultiplexer.addProcessor(stage);
+        //inputMultiplexer.addProcessor(stage);
         inputMultiplexer.addProcessor(this);
 
         setShowHud(true);
@@ -117,9 +113,8 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public void resize(int width, int height) {
-        stagePort.update(width,height,true);
         hud.viewport.update(width, height, true);
-        //gamePort.update(width, height, true);
+        gamePort.update(width, height, true);
     }
 
     @Override
@@ -138,7 +133,8 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     }
 
     private void updateCamera() {
-        gameCamera.position.set((controller.pokemonPlayer.x + Constants.TILE_SIZE/2), (controller.pokemonPlayer.y + Constants.TILE_SIZE/2), 0);
+        gameCamera.position.set((controller.pokemonPlayer.x + Constants.TILE_SIZE/2)/PPM, (controller.pokemonPlayer.y +
+                Constants.TILE_SIZE/2)/PPM, 0);
         gameCamera.update();
     }
 
@@ -261,9 +257,5 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     public Hud getHud() {
         return hud;
-    }
-
-    public Stage getStage() {
-        return stage;
     }
 }

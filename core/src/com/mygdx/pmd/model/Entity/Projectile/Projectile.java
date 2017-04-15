@@ -12,6 +12,8 @@ import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.instructions.*;
 import com.mygdx.pmd.utils.*;
 
+import static com.mygdx.pmd.screens.DungeonScreen.PPM;
+
 /**
  * Created by Cameron on 10/18/2016.
  */
@@ -36,15 +38,14 @@ public class Projectile extends DynamicEntity {
         super(parent.floor, parent.facingTile.x, parent.facingTile.y);
         this.animationLogic = new AnimationLogic(this);
         this.parent = parent;
-        this.setDirection(parent.getDirection());
-
-        //store currentMove data
         this.move = move;
+
+        this.setDirection(parent.getDirection());
         this.setSpeed(move.speed);
+        this.findFutureTile();
 
         // load all the things
         this.loadAnimations();
-        this.findFutureTile();
         if (move.isRanged()) {
             this.setActionState(Action.MOVING);
             instructions.add(new MoveInstruction(this, getNextTile()));
@@ -56,13 +57,15 @@ public class Projectile extends DynamicEntity {
         //load particle effects
         bs = new ParticleEffect();
         bs.load(Gdx.files.internal("pokemonassets/energyball"), Gdx.files.internal("pokemonassets"));
-        bs.setPosition(x, y);
+        bs.setPosition(x/PPM, y/PPM);
         bs.setDuration(10000000);
+        bs.scaleEffect(1/PPM);
         bs.start();
 
         pe = new ParticleEffect();
         pe.load(Gdx.files.internal("pokemonassets/particles"), Gdx.files.internal("pokemonassets"));
-        pe.setPosition(x, y);
+        pe.setPosition(x/PPM, y/PPM);
+        pe.scaleEffect(1/PPM);
         pe.start();
 
         // must be last so has all the other data
@@ -152,13 +155,13 @@ public class Projectile extends DynamicEntity {
     public void render(SpriteBatch batch) {
         super.render(batch);
         if (getActionState() == Action.MOVING && parent.currentAnimation.isFinished()) {
-            bs.setPosition(x + Constants.TILE_SIZE / 2, y + Constants.TILE_SIZE / 2);
+            bs.setPosition((x + Constants.TILE_SIZE / 2)/PPM, (y + Constants.TILE_SIZE / 2)/PPM);
             bs.update(0.06f);
             bs.draw(batch);
         }
 
         if (getActionState() == Action.COLLISION) {
-            pe.setPosition(x + Constants.TILE_SIZE / 2, y + Constants.TILE_SIZE / 2);
+            pe.setPosition((x + Constants.TILE_SIZE / 2)/PPM, (y + Constants.TILE_SIZE / 2)/PPM);
             pe.update(0.06f);
             pe.draw(batch);
         }
@@ -185,6 +188,11 @@ public class Projectile extends DynamicEntity {
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "Projectile at " + getCurrentTile().toString();
     }
 }
 

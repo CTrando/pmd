@@ -28,4 +28,9 @@ public class Berry extends Item {
             shouldBeDestroyed = true;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Berry at " + getCurrentTile().toString();
+    }
 }

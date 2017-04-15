@@ -4,12 +4,7 @@ package com.mygdx.pmd.model.Floor;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.ConnectFrom;
-import com.mygdx.pmd.model.Floor.Connector;
-import com.mygdx.pmd.model.Floor.Floor;
-import com.mygdx.pmd.model.Floor.Path;
-import com.mygdx.pmd.model.Floor.Room;
 import com.mygdx.pmd.model.Tile.*;
-import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.*;
 
 
@@ -70,7 +65,7 @@ public class FloorFactory {
 
     private void createConnections(Floor floor){
         System.out.println("Beginning path generation...");
-        while(connectors.size > 0 && connectors.size < Constants.MAX_CONNCETORS){
+        while(connectors.size > 0 && connectors.size < Constants.MAX_CONNECTORS){
             Connector connector = connectors.pop();
 
             if (connector.connectFrom == ConnectFrom.PATH){

@@ -12,6 +12,8 @@ import com.mygdx.pmd.utils.*;
 
 import java.util.*;
 
+import static com.mygdx.pmd.screens.DungeonScreen.PPM;
+
 /**
  * Created by Cameron on 10/18/2016.
  */
@@ -90,7 +92,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable, Direc
     @Override
     public void render(SpriteBatch batch) {
         if (currentSprite != null) {
-            batch.draw(currentSprite, x, y, currentSprite.getWidth(), currentSprite.getHeight());
+            batch.draw(currentSprite, x/PPM, y/PPM, currentSprite.getWidth()/PPM, currentSprite.getHeight()/PPM);
         }
     }
 
@@ -175,5 +177,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable, Direc
         instructions.clear();
         currentInstruction = NO_INSTRUCTION;
     }
+
+    public abstract String toString();
 
 }

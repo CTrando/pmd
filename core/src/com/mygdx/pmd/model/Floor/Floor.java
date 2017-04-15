@@ -112,4 +112,9 @@ public class Floor extends Entity {
     public Array<DynamicEntity> getDynamicEntities(){
         return controller.dEntities;
     }
+
+    @Override
+    public String toString() {
+        return "this is the current floor";
+    }
 }

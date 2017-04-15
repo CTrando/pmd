@@ -43,6 +43,7 @@ public class FloorDecorator {
                     floor.tileBoard[i][j].spriteValue += 128;
 
                 if (tile instanceof GenericTile) {
+                    tile.sprite = PMD.sprites.get("blacktilesprite");/*
                     switch (tile.spriteValue) {
                         case 0:
                             tile.sprite = PMD.sprites.get("blacktilesprite");
@@ -89,7 +90,7 @@ public class FloorDecorator {
                         case 248:
                             tile.sprite = PMD.sprites.get("toprightbarriersprite");
                     }
-                }
+*/                }
             }
         }
         return floor;

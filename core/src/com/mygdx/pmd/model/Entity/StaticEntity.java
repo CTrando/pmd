@@ -12,7 +12,7 @@ import com.mygdx.pmd.model.Tile.Tile;
  * They do not currentMove
  * All items must extend this class
  */
-public class StaticEntity extends Entity{
+public abstract class StaticEntity extends Entity{
     public StaticEntity(Floor floor, int x, int y) {
         super(floor, x, y);
     }

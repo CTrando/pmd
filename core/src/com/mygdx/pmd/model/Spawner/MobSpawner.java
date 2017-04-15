@@ -11,4 +11,9 @@ public class MobSpawner extends Spawner {
         super(floor);
         logic = new MobSpawnerLogic(this);
     }
+
+    @Override
+    public String toString() {
+        return "Mob Spawner";
+    }
 }
