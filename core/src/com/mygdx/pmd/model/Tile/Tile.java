@@ -14,8 +14,6 @@ import com.mygdx.pmd.utils.*;
 import com.mygdx.pmd.model.Entity.Entity;
 
 
-import java.util.ArrayList;
-
 import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 
 /**
@@ -85,11 +83,11 @@ public abstract class Tile implements Renderable {
         }
     }
 
-    public double calculateDistanceTo(Tile tile) {
-        return Tile.calculateDistanceTo(this, tile);
+    public int dist(Tile tile) {
+        return (int)(Tile.dist(this, tile)/25);
     }
 
-    public static double calculateDistanceTo(Tile t1, Tile t2) {
+    public static double dist(Tile t1, Tile t2) {
         return MathLogic.calculateDistance(t1.x, t1.y, t2.x, t2.y);
     }
 

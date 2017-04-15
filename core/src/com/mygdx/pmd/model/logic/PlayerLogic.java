@@ -2,19 +2,21 @@ package com.mygdx.pmd.model.logic;
 
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.Movable;
+import com.mygdx.pmd.interfaces.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
+import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.instructions.*;
 import com.mygdx.pmd.utils.PUtils;
 
 /**
  * Created by Cameron on 1/21/2017.
  */
-public class PlayerLogic implements Logic {
+public class PlayerLogic extends PokemonLogic {
     private PokemonPlayer player;
 
     public PlayerLogic(PokemonPlayer player) {
+        super(player);
         this.player = player;
     }
 
@@ -36,15 +38,15 @@ public class PlayerLogic implements Logic {
         }
     }
 
-    private boolean canAttack() {
+    boolean canAttack() {
         return player.attacking;
     }
 
-    private boolean canMove() {
+    boolean canMove() {
         return player.isLegalToMoveTo(player.possibleNextTile) && player.getActionState() == Action.IDLE;
     }
 
-    private void move() {
+    void move() {
         player.setNextTile(player.possibleNextTile);
         player.possibleNextTile = null;
 
@@ -70,8 +72,18 @@ public class PlayerLogic implements Logic {
         player.setTurnState(Turn.PENDING);
     }
 
-    private void attack() {
+    void attack() {
         attack(player.getMove());
+    }
+
+    @Override
+    boolean isEnemyAdjacent() {
+        return player.facingTile.hasEntityOfType(Damageable.class);
+    }
+
+    @Override
+    Tile findEnemyTile() {
+        return null;
     }
 
     private void forceMove() {
@@ -82,7 +94,7 @@ public class PlayerLogic implements Logic {
         }
     }
 
-    private boolean canAct(){
+    boolean canAct(){
         return player.getTurnState() == Turn.WAITING && player.getActionState() == Action.IDLE && player.instructions.isEmpty() && player.currentInstruction == Entity.NO_INSTRUCTION;
     }
 }

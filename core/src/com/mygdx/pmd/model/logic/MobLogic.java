@@ -3,19 +3,19 @@ package com.mygdx.pmd.model.logic;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
-import com.mygdx.pmd.interfaces.Movable;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
+import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.instructions.*;
-import com.mygdx.pmd.model.logic.*;
 
 /**
  * Created by Cameron on 1/20/2017.
  */
-public class MobLogic implements Logic {
+public class MobLogic extends PokemonLogic {
     private PokemonMob mob;
 
     public MobLogic(PokemonMob mob) {
+        super(mob);
         this.mob = mob;
     }
 
@@ -44,52 +44,26 @@ public class MobLogic implements Logic {
             }
 
             if (canAttack()) {
+                mob.resetMove();
                 if (isEnemyAdjacent()) {
                     attack();
                     //return is used to prevent the mob from moving
                     return;
                 } else {
+                    Tile enemyTile = findEnemyTile();
                     Move rangedMove = mob.getRandomRangedMove();
+                    int dist = enemyTile.dist(mob.getCurrentTile());
 
-                    //TODO check for range of the move before giving the OK on the attack
-                    if(rangedMove != null) {
+                    if (rangedMove != null && dist <= rangedMove.range) {
                         mob.setMove(mob.getRandomRangedMove());
-                        attack(mob.getMove());
+                        attack();
                         return;
                     }
                 }
             }
 
             if (canMove()) {
-                // set the next tile based on if the mob has been forced to move or not
-                if (mob.isForcedMove) {
-                    System.out.println("forced move");
-                    mob.setSpeed(1);
-                    mob.isForcedMove = false;
-                } else {
-                    if (mob.isAggressive()) {
-                        mob.pathFind = mob.sPath;
-                    }
-                    //see if it can pathfind, meaning there was no error thrown
-                    if (pathFind()) {
-                        this.mob.setFacingTile(mob.possibleNextTile);
-                        this.mob.setDirection(mob.possibleNextTile);
-
-                        if (this.mob.isLegalToMoveTo(this.mob.possibleNextTile)) {
-                            this.mob.setNextTile(this.mob.possibleNextTile);
-                            this.mob.possibleNextTile = null;
-                        }
-
-                        this.determineSpeed();
-                    }
-                }
-
-                if (PMD.isKeyPressed(Key.s)) {
-                    mob.setSpeed(5);
-                }
-
-                //tell the mob to go to to the next tile
-                mob.instructions.add(new MoveInstruction(mob, mob.getNextTile()));
+                move();
                 mob.setTurnState(Turn.COMPLETE);
                 return;
             }
@@ -101,29 +75,58 @@ public class MobLogic implements Logic {
         mob.setTurnState(Turn.PENDING);
     }
 
-    private void attack() {
-        if(mob.getMove() == null) {
+    @Override
+    void attack() {
+        if (mob.getMove() == null) {
             attack(mob.getRandomMove());
         } else {
             attack(mob.getMove());
         }
     }
 
-    private boolean isEnemyAdjacent() {
-        return mob.facingTile.hasEntityOfType(Movable.class);
-    }
-
-    private boolean canAttack() {
+    boolean canAttack() {
         return mob.canSeeEnemy() && mob.getAggression() == Aggression.aggressive;
     }
 
-    private boolean canMove() {
+    @Override
+    void move() {
+        // set the next tile based on if the mob has been forced to move or not
+        if (mob.isForcedMove) {
+            System.out.println("forced move");
+            mob.setSpeed(1);
+            mob.isForcedMove = false;
+        } else {
+            if (mob.isAggressive()) {
+                mob.pathFind = mob.sPath;
+            }
+            //see if it can pathfind, meaning there was no error thrown
+            if (pathFind()) {
+                this.mob.setFacingTile(mob.possibleNextTile);
+                this.mob.setDirection(mob.possibleNextTile);
+
+                if (this.mob.isLegalToMoveTo(this.mob.possibleNextTile)) {
+                    this.mob.setNextTile(this.mob.possibleNextTile);
+                    this.mob.possibleNextTile = null;
+                }
+
+            }
+        }
+        this.determineSpeed();
+        //tell the mob to go to to the next tile
+        mob.instructions.add(new MoveInstruction(mob, mob.getNextTile()));
+    }
+
+    @Override
+    boolean canMove() {
         return mob.getTurnState() == Turn.WAITING;
     }
 
     private void determineSpeed() {
         if (mob.isWithinRange(mob.floor.getPlayer())) {
             mob.setSpeed(1);
+            if(PMD.isKeyPressed(Key.s)) {
+                mob.setSpeed(5);
+            }
         } else {
             mob.setSpeed(25);
         }
@@ -146,7 +149,8 @@ public class MobLogic implements Logic {
         return true;
     }
 
-    private boolean canAct() {
+    @Override
+    boolean canAct() {
         return mob.getTurnState() == Turn.WAITING && mob.getActionState() == Action.IDLE && mob.instructions.isEmpty() && mob.currentInstruction == Entity.NO_INSTRUCTION;
     }
 }

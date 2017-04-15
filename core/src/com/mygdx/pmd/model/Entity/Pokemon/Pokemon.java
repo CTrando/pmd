@@ -214,6 +214,10 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
         return retMoves.random();
     }
 
+    public void resetMove(){
+        this.move = null;
+    }
+
     public Move getMove() {
         return move;
     }

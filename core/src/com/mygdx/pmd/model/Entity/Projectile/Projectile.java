@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Move;
-import com.mygdx.pmd.interfaces.Movable;
+import com.mygdx.pmd.interfaces.*;
 import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
@@ -125,7 +125,7 @@ public class Projectile extends DynamicEntity {
     private boolean isValidTarget(Tile tile) {
         if (tile == null ||
                 tile instanceof GenericTile || /* must replace with damageable */
-                tile.hasEntityOfType(Movable.class)) {
+                tile.hasEntityOfType(Damageable.class)) {
             return true;
         }
         return false;
