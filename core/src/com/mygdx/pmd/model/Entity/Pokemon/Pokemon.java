@@ -10,6 +10,7 @@ import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.GenericTile;
 import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.*;
@@ -18,7 +19,7 @@ import java.util.Set;
 
 import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 
-public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Damageable, Aggressible, Logical {
+public abstract class Pokemon extends DynamicEntity implements Damageable, Aggressible, Logical {
     public Array<DynamicEntity> children;
     public DynamicEntity target;
 
@@ -32,10 +33,15 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
 
     Pokemon(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y);
+        mc = new MoveComponent(this);
+        ac = new ActionComponent(this);
+        tc = new TurnComponent(this);
+        dc = new DirectionComponent(this);
+
         setHP(100);
-        setTurnState(Turn.COMPLETE);
+        tc.setTurnState(Turn.COMPLETE);
         setAggression(Aggression.passive);
-        setFacingTile(getDirection());
+        mc.setFacingTile(dc.getDirection());
 
         this.pokemonName = pokemonName;
         this.children = new Array<DynamicEntity>();
@@ -45,6 +51,7 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
 
         //default move
         moves.add(Move.SCRATCH);
+        animationLogic = new AnimationLogic(this);
     }
 
     /**
@@ -83,11 +90,10 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
     @Override
     public void render(SpriteBatch batch){
 
-        if(getNextTile() != null && getNextTile() != getCurrentTile()){
+     /*   if(mc.getNextTile() != null && mc.getNextTile() != getCurrentTile()){
             DungeonScreen.sRenderer.setColor(Color.RED);
-            DungeonScreen.sRenderer.rect(getNextTile().x/PPM, getNextTile().y/PPM, Constants.TILE_SIZE/PPM, Constants
-                    .TILE_SIZE/PPM);
-        }
+            DungeonScreen.sRenderer.rect(mc.getNextTile().x/PPM, mc.getNextTile().y/PPM, Constants.TILE_SIZE/PPM, Constants.TILE_SIZE/PPM);
+        }*/
 
         for(DynamicEntity child: children){
             child.render(batch);
@@ -100,14 +106,14 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
         Tile random = floor.chooseUnoccupiedTile();
 
         if (random.isWalkable) {
-            this.setNextTile(random);
+            mc.setNextTile(random);
 
-            this.removeFromTile();
-            this.addToTile(random);
-            this.setFacingTile(getDirection());
+            mc.removeFromCurrentTile();
+            mc.addToTile(random);
+            mc.setFacingTile(dc.getDirection());
 
-            this.setCurrentTile(random);
-            this.possibleNextTile = null;
+            mc.setCurrentTile(random);
+            mc.possibleNextTile = null;
         } else randomizeLocation();
     }
 
@@ -126,7 +132,7 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
         int rOffset = 0;
         int cOffset = 0;
 
-        switch (getDirection()) {
+        switch (dc.getDirection()) {
             case down:
                 rOffset = -1;
                 break;
@@ -184,14 +190,6 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
         }
     }
 
-    public Turn getTurnState() {
-        return turnState;
-    }
-
-    public void setTurnState(Turn turnState) {
-        this.turnState = turnState;
-    }
-
     public String toString(){
         return this.pokemonName.toString();
     }
@@ -228,6 +226,7 @@ public abstract class Pokemon extends DynamicEntity implements TurnBaseable, Dam
 
     public void reset(){
         super.reset();
-        this.setTurnState(Turn.COMPLETE);
+        ac.setActionState(Action.IDLE);
+        tc.setTurnState(Turn.COMPLETE);
     }
 }

@@ -69,7 +69,7 @@ public class PokemonMob extends Pokemon {
     public void dispose() {
         super.dispose();
 
-        this.setTurnState(Turn.COMPLETE);
+        tc.setTurnState(Turn.COMPLETE);
         System.out.println("WOE IS ME I AM DEAD");
     }
 }

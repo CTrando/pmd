@@ -4,6 +4,7 @@ import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.model.Spawner.*;
 import com.mygdx.pmd.model.Tile.*;
+import com.mygdx.pmd.model.components.*;
 
 /**
  * Created by Cameron on 4/8/2017.
@@ -12,9 +13,11 @@ public class SpawnPokemonInstruction implements Instruction {
 
     private boolean isFinished;
     private Spawner spawner;
+    private ActionComponent ac;
 
     public SpawnPokemonInstruction(Spawner spawner) {
         this.spawner = spawner;
+        this.ac = spawner.ac;
     }
 
     @Override
@@ -29,15 +32,15 @@ public class SpawnPokemonInstruction implements Instruction {
 
     @Override
     public void execute() {
-        spawner.setActionState(Action.SPAWNING);
+        ac.setActionState(Action.SPAWNING);
         Tile tile = spawner.floor.chooseUnoccupiedTile();
 
         Pokemon pokemon = PokemonFactory.createPokemon(spawner.floor, PokemonName.getRandomName(), PokemonMob.class);
-        pokemon.setCurrentTile(tile);
-        pokemon.setNextTile(tile);
+        pokemon.mc.setCurrentTile(tile);
+        pokemon.mc.setNextTile(tile);
 
-        pokemon.removeFromTile();
-        pokemon.addToTile(tile);
+        pokemon.mc.removeFromCurrentTile();
+        pokemon.mc.addToTile(tile);
 
         spawner.floor.addEntity(pokemon);
         isFinished = true;

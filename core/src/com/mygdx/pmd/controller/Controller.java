@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.comparators.PokemonDistanceComparator;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.TurnBaseable;
 import com.mygdx.pmd.model.Decorators.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.*;
@@ -25,7 +24,7 @@ public class Controller {
     private ArrayList<Entity> entityList;
     public Array<DynamicEntity> dEntities;
     private LinkedList<Entity> turnBasedEntities;
-    private TurnBaseable updatedTurnEntity;
+    private Entity updatedTurnEntity;
 
     public Pokemon pokemonPlayer;
 
@@ -70,11 +69,11 @@ public class Controller {
         //load pMob from xml
         this.loadPokemonFromJson(Gdx.files.internal("utils/PokemonStorage.json"));
         this.randomizeAllPokemonLocation();
-        updatedTurnEntity = (TurnBaseable) turnBasedEntities.poll();
+        updatedTurnEntity = turnBasedEntities.poll();
 
         //add in a mob spawner
         MobSpawner mobSpawner = new MobSpawner(floor);
-        this.directlyAddEntity(mobSpawner);
+        //this.directlyAddEntity(mobSpawner);
     }
 
     public void nextFloor() {
@@ -104,7 +103,7 @@ public class Controller {
             Entity entity = entityList.get(i);
             entity.update();
 
-            if (updatedTurnEntity.getTurnState() == Turn.COMPLETE) {
+            if (updatedTurnEntity.tc.getTurnState() == Turn.COMPLETE) {
                 //need to sort both entity list and turn based entities in order to update them in order
                 if (updatedTurnEntity instanceof PokemonPlayer) {
                     if (!turnsPaused) {
@@ -118,8 +117,8 @@ public class Controller {
                 //stack system
                 //TODO replace with custom data structure
                 turnBasedEntities.offer((Entity) updatedTurnEntity);
-                updatedTurnEntity = (TurnBaseable) turnBasedEntities.poll();
-                updatedTurnEntity.setTurnState(Turn.WAITING);
+                updatedTurnEntity = turnBasedEntities.poll();
+                updatedTurnEntity.tc.setTurnState(Turn.WAITING);
             }
 
             if(entity.shouldBeDestroyed){
@@ -155,7 +154,7 @@ public class Controller {
             dEntities.add((DynamicEntity) entity);
         }
 
-        if (entity instanceof TurnBaseable) {
+        if (entity.tc != null) {
             turnBasedEntities.addLast(entity);
         }
 
@@ -178,7 +177,7 @@ public class Controller {
             screen.renderList.removeValue(entity, true);
             entityList.remove(entity);
 
-            if (entity instanceof TurnBaseable) {
+            if (entity.tc != null) {
                 turnBasedEntities.remove(entity);
             }
 

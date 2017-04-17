@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.mygdx.pmd.enumerations.Action;
 import com.mygdx.pmd.enumerations.Move;
 import com.mygdx.pmd.interfaces.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
@@ -35,20 +36,25 @@ public class Projectile extends DynamicEntity {
     public Projectile(Pokemon parent, Move move) {
         // put down location as the parent's facing tile's location
         // set default values
-        super(parent.floor, parent.facingTile.x, parent.facingTile.y);
+        super(parent.floor, parent.mc.getFacingTile().x, parent.mc.getFacingTile().y);
         this.animationLogic = new AnimationLogic(this);
+
+        this.mc = new MoveComponent(this);
+        this.ac = new ActionComponent(this);
+        this.dc = new DirectionComponent(this);
+
         this.parent = parent;
         this.move = move;
 
-        this.setDirection(parent.getDirection());
-        this.setSpeed(move.speed);
+        dc.setDirection(parent.dc.getDirection());
+        mc.setSpeed(move.speed);
         this.findFutureTile();
 
         // load all the things
         this.loadAnimations();
         if (move.isRanged()) {
-            this.setActionState(Action.MOVING);
-            instructions.add(new MoveInstruction(this, getNextTile()));
+            ac.setActionState(Action.MOVING);
+            instructions.add(new MoveInstruction(this, mc.getNextTile()));
             instructions.add(new CollideInstruction(this));
         } else {
             instructions.add(new CollideInstruction(this));
@@ -76,12 +82,12 @@ public class Projectile extends DynamicEntity {
         int row = getCurrentTile().row;
         int col = getCurrentTile().col;
 
-        switch (getDirection()) {
+        switch (dc.getDirection()) {
             case up:
                 for (int i = 0; i < move.range; i++) {
                     Tile tile = tileBoard[row + i][col];
                     if (isValidTarget(tile) || i == move.range - 1) {
-                        setNextTile(tile);
+                        mc.setNextTile(tile);
                         break;
                     }
                 }
@@ -90,7 +96,7 @@ public class Projectile extends DynamicEntity {
                 for (int i = 0; i < move.range; i++) {
                     Tile tile = tileBoard[row - i][col];
                     if (isValidTarget(tile) || i == move.range - 1) {
-                        setNextTile(tile);
+                        mc.setNextTile(tile);
                         break;
                     }
                 }
@@ -99,7 +105,7 @@ public class Projectile extends DynamicEntity {
                 for (int j = 0; j < move.range; j++) {
                     Tile tile = tileBoard[row][col - j];
                     if (isValidTarget(tile) || j == move.range - 1) {
-                        setNextTile(tile);
+                        mc.setNextTile(tile);
                         break;
                     }
                 }
@@ -108,7 +114,7 @@ public class Projectile extends DynamicEntity {
                 for (int j = 0; j < move.range; j++) {
                     Tile tile = tileBoard[row][col + j];
                     if (isValidTarget(tile) || j == move.range - 1) {
-                        setNextTile(tile);
+                        mc.setNextTile(tile);
                         break;
                     }
                 }
@@ -154,13 +160,13 @@ public class Projectile extends DynamicEntity {
     @Override
     public void render(SpriteBatch batch) {
         super.render(batch);
-        if (getActionState() == Action.MOVING && parent.currentAnimation.isFinished()) {
+        if (ac.getActionState() == Action.MOVING && parent.currentAnimation.isFinished()) {
             bs.setPosition((x + Constants.TILE_SIZE / 2)/PPM, (y + Constants.TILE_SIZE / 2)/PPM);
             bs.update(0.06f);
             bs.draw(batch);
         }
 
-        if (getActionState() == Action.COLLISION) {
+        if (ac.getActionState() == Action.COLLISION) {
             pe.setPosition((x + Constants.TILE_SIZE / 2)/PPM, (y + Constants.TILE_SIZE / 2)/PPM);
             pe.update(0.06f);
             pe.draw(batch);

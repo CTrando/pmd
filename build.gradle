@@ -16,7 +16,6 @@ allprojects {
     ext {
         appName = "pmd"
         gdxVersion = '1.9.5'
-        visuiVersion = '1.2.5'
     }
 
     repositories {

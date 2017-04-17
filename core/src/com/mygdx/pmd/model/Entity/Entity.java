@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.logic.AnimationLogic;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.*;
@@ -17,16 +18,20 @@ import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 /**
  * Created by Cameron on 10/18/2016.
  */
-public abstract class Entity implements Renderable, Updatable, Disposable, Directional, ActionStateable {
+public abstract class Entity implements Renderable, Updatable, Disposable {
     public LinkedList<Instruction> instructions;
     public Instruction currentInstruction;
     public static Instruction NO_INSTRUCTION = new NoInstruction();
 
     /******************************************/
     //Inherited variables from interfaces
-    private Action actionState;
+    public ActionComponent ac;
+    public TurnComponent tc;
+    public DirectionComponent dc;
+    public MoveComponent mc;
+
+
     private Direction direction;
-    protected Turn turnState;
     protected int hp;
 
     public boolean shouldBeDestroyed;
@@ -65,13 +70,9 @@ public abstract class Entity implements Renderable, Updatable, Disposable, Direc
         this.y = y;
         this.currentTile = tileBoard[y / Constants.TILE_SIZE][x / Constants.TILE_SIZE];
 
-        setDirection(Direction.down);
-        setActionState(Action.IDLE);
-
         animationMap = new HashMap<String, PAnimation>();
         instructions = new LinkedList<Instruction>();
         currentInstruction = NO_INSTRUCTION;
-        animationLogic = new AnimationLogic(this);
     }
 
     @Override
@@ -96,7 +97,6 @@ public abstract class Entity implements Renderable, Updatable, Disposable, Direc
         }
     }
 
-    /*-----------------------------------------*/
     public abstract void runLogic();
 
     public boolean equals(Tile tile) {
@@ -104,22 +104,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable, Direc
     }
 
     public void setDirection(Tile tile) {
-        if (this.isToLeft(tile))
-            setDirection(Direction.right);
-        if (this.isToRight(tile))
-            setDirection(Direction.left);
-        if (this.isAbove(tile))
-            setDirection(Direction.down);
-        if (this.isBelow(tile))
-            setDirection(Direction.up);
-    }
 
-    public void removeFromTile() {
-        currentTile.removeEntity(this);
-    }
-
-    public void addToTile(Tile tile){
-        tile.addEntity(this);
     }
 
     private boolean isToRight(Tile tile) {
@@ -147,33 +132,10 @@ public abstract class Entity implements Renderable, Updatable, Disposable, Direc
     }
 
     @Override
-    public void setActionState(Action actionState) {
-        this.actionState = actionState;
-    }
-
-    @Override
-    public Action getActionState() {
-        return actionState;
-    }
-
-    @Override
-    public Direction getDirection() {
-        return direction;
-    }
-
-    @Override
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
-
-
-    @Override
     public void dispose() {
     }
 
     public void reset() {
-        this.setActionState(Action.IDLE);
-
         instructions.clear();
         currentInstruction = NO_INSTRUCTION;
     }

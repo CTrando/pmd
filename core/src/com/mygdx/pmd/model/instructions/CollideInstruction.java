@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
+import com.mygdx.pmd.model.components.*;
 
 /**
  * Created by Cameron on 4/1/2017.
@@ -11,16 +12,20 @@ import com.mygdx.pmd.model.Entity.*;
 public class CollideInstruction implements Instruction{
     private DynamicEntity dEntity;
     private boolean isFinished;
+    private ActionComponent ac;
+    private MoveComponent mc;
 
     public CollideInstruction(DynamicEntity dEntity){
         this.dEntity = dEntity;
+        this.ac = dEntity.ac;
+        this.mc = dEntity.mc;
     }
 
     @Override
     public void onInit() {
         PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
-        dEntity.setActionState(Action.COLLISION);
-        dEntity.removeFromTile();
+        ac.setActionState(Action.COLLISION);
+        mc.removeFromCurrentTile();
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.logic;
 import com.mygdx.pmd.interfaces.Damageable;
 import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.model.Tile.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.utils.Constants;
 
 /**
@@ -10,8 +11,11 @@ import com.mygdx.pmd.utils.Constants;
  */
 public abstract class PokemonLogic implements Logic {
     Pokemon pokemon;
+    DirectionComponent dc;
+
     protected PokemonLogic(Pokemon pokemon) {
         this.pokemon = pokemon;
+        this.dc = pokemon.dc;
     }
 
     abstract boolean canAct();
@@ -31,7 +35,7 @@ public abstract class PokemonLogic implements Logic {
         int row = pokemon.getCurrentTile().row;
         int col = pokemon.getCurrentTile().col;
 
-        switch (pokemon.getDirection()) {
+        switch (dc.getDirection()) {
             case up:
                 for (int i = 1; i < Constants.VISIBILITY_RANGE; i++) {
                     Tile tile = tileBoard[row + i][col];

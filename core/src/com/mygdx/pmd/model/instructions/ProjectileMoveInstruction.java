@@ -29,9 +29,9 @@ public class ProjectileMoveInstruction implements Instruction {
 
     @Override
     public void execute() {
-        assert projectile.getDirection() != null: "The direction in projectile movement is null";
+        assert projectile.dc.getDirection() != null: "The direction in projectile movement is null";
 
-        switch (projectile.getDirection()) {
+        switch (projectile.dc.getDirection()) {
             case up:
                 projectile.y += projectile.speed;
                 break;

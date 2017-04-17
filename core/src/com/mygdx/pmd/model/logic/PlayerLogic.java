@@ -6,6 +6,7 @@ import com.mygdx.pmd.interfaces.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.Tile.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.instructions.*;
 import com.mygdx.pmd.utils.PUtils;
 
@@ -14,10 +15,16 @@ import com.mygdx.pmd.utils.PUtils;
  */
 public class PlayerLogic extends PokemonLogic {
     private PokemonPlayer player;
+    private MoveComponent mc;
+    private ActionComponent ac;
+    private TurnComponent tc;
 
     public PlayerLogic(PokemonPlayer player) {
         super(player);
         this.player = player;
+        this.mc = player.mc;
+        this.ac = player.ac;
+        this.tc = player.tc;
     }
 
     @Override
@@ -28,7 +35,7 @@ public class PlayerLogic extends PokemonLogic {
 
         if (canAct()) {
             player.handleInput();
-            player.setFacingTile(player.getDirection());
+            mc.setFacingTile(dc.getDirection());
 
             if (canAttack()) {
                 this.attack();
@@ -43,33 +50,33 @@ public class PlayerLogic extends PokemonLogic {
     }
 
     boolean canMove() {
-        return player.isLegalToMoveTo(player.possibleNextTile) && player.getActionState() == Action.IDLE;
+        return player.isLegalToMoveTo(mc.possibleNextTile) && ac.getActionState() == Action.IDLE;
     }
 
     void move() {
-        player.setNextTile(player.possibleNextTile);
-        player.possibleNextTile = null;
+        mc.setNextTile(mc.possibleNextTile);
+        mc.possibleNextTile = null;
 
-        if (player.getNextTile().hasEntityOfType(Movable.class)) {
+        if (mc.getNextTile().hasEntityOfType(Movable.class)) {
             this.forceMove();
         }
 
-        player.instructions.add(new MoveInstruction(player, player.getNextTile()));
+        player.instructions.add(new MoveInstruction(player, mc.getNextTile()));
 
         //this is to keep movement smooth
-        player.setActionState(Action.MOVING);
-        player.setTurnState(Turn.COMPLETE);
+        ac.setActionState(Action.MOVING);
+        tc.setTurnState(Turn.COMPLETE);
 
         if (PMD.isKeyPressed(Key.s)) {
-            player.setSpeed(5);
-        } else player.setSpeed(1);
+            mc.setSpeed(5);
+        } else mc.setSpeed(1);
     }
 
     private void attack(Move move) {
         player.instructions.add(new AttackInstruction(player, move));
 
-        player.setActionState(Action.ATTACKING);
-        player.setTurnState(Turn.PENDING);
+        ac.setActionState(Action.ATTACKING);
+        tc.setTurnState(Turn.PENDING);
     }
 
     void attack() {
@@ -78,7 +85,7 @@ public class PlayerLogic extends PokemonLogic {
 
     @Override
     boolean isEnemyAdjacent() {
-        return player.facingTile.hasEntityOfType(Damageable.class);
+        return mc.getFacingTile().hasEntityOfType(Damageable.class);
     }
 
     @Override
@@ -87,14 +94,15 @@ public class PlayerLogic extends PokemonLogic {
     }
 
     private void forceMove() {
-        for (DynamicEntity dEntity : PUtils.getObjectsOfType(DynamicEntity.class, player.getNextTile().getEntityList())) {
+        for (DynamicEntity dEntity : PUtils.getObjectsOfType(DynamicEntity.class, mc.getNextTile().getEntityList())) {
             if (dEntity != player) {
-                dEntity.forceMoveToTile(player.getCurrentTile(), player.getDirection().getOpposite());
+                dEntity.forceMoveToTile(mc.getCurrentTile(), dc.getDirection().getOpposite());
             }
         }
     }
 
     boolean canAct(){
-        return player.getTurnState() == Turn.WAITING && player.getActionState() == Action.IDLE && player.instructions.isEmpty() && player.currentInstruction == Entity.NO_INSTRUCTION;
+        return tc.getTurnState() == Turn.WAITING && ac.getActionState() == Action.IDLE && player.instructions
+                .isEmpty() && player.currentInstruction == Entity.NO_INSTRUCTION;
     }
 }

@@ -5,6 +5,7 @@ import com.mygdx.pmd.interfaces.Damageable;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.utils.*;
 
 /**
@@ -15,6 +16,8 @@ public class ProjectileLogic implements Logic {
     private Pokemon parent;
     private PAnimation animation;
 
+    private ActionComponent ac;
+
     /**
      * This class has one job, to find when a ranged projectile interacts with an entity or a unwalkable tile
      *
@@ -24,6 +27,7 @@ public class ProjectileLogic implements Logic {
         this.projectile = projectile;
         this.parent = projectile.parent;
         this.animation = projectile.animation;
+        this.ac = projectile.ac;
     }
 
     /**
@@ -32,7 +36,7 @@ public class ProjectileLogic implements Logic {
     public void execute() {
         projectile.animationLogic.execute();
 
-        if (animation.isFinished() && projectile.getActionState() == Action.COLLISION) {
+        if (animation.isFinished() && ac.getActionState() == Action.COLLISION) {
             for (Damageable damageable : PUtils.getObjectsOfType(Damageable.class, projectile.getCurrentTile()
                                                                                              .getEntityList()))
             {

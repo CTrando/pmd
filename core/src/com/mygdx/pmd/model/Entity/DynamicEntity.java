@@ -4,6 +4,7 @@ import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Movable;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.components.*;
 
 
 /**
@@ -11,11 +12,6 @@ import com.mygdx.pmd.model.Tile.Tile;
  */
 public abstract class DynamicEntity extends Entity implements Movable {
     public boolean isForcedMove;
-
-    /**
-     * The next tile the entity will currentMove to
-     */
-    private Tile nextTile;
     /**
      * The tile the entity is facing
      */
@@ -36,7 +32,6 @@ public abstract class DynamicEntity extends Entity implements Movable {
 
     public DynamicEntity(Floor floor, int x, int y) {
         super(floor, x, y);
-        this.setFacingTile(getDirection());
     }
 
     public abstract boolean isLegalToMoveTo(Tile tile);
@@ -47,8 +42,8 @@ public abstract class DynamicEntity extends Entity implements Movable {
     }
 
     public void forceMoveToTile(Tile nextTile, Direction direction){
-        this.setNextTile(nextTile);
-        this.setDirection(direction);
+        mc.setNextTile(nextTile);
+        dc.setDirection(direction);
 
         isForcedMove = true;
     }
@@ -93,23 +88,11 @@ public abstract class DynamicEntity extends Entity implements Movable {
         this.y = nextTile.y;
     }
 
-    public Tile getNextTile() {
-        return nextTile;
-    }
-
-    /**
-     * Sets the tile and adds the entity to the next tile and removes it from the current tile
-     */
-    public void setNextTile(Tile tile) {
-        if (tile == null) return;
-        this.nextTile = tile;
-    }
-
     public void randomizeLocation(){}
 
     public void setFacingTile(Direction d) {
         try {
-            switch (getDirection()) {
+            switch (dc.getDirection()) {
                 case up:
                     facingTile = tileBoard[getCurrentTile().row + 1][getCurrentTile().col];
                     break;

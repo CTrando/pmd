@@ -2,6 +2,7 @@ package com.mygdx.pmd.model.logic;
 
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Spawner.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.instructions.*;
 import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.utils.*;
@@ -11,9 +12,11 @@ import com.mygdx.pmd.utils.*;
  */
 public class MobSpawnerLogic implements Logic {
     private Spawner spawner;
+    private TurnComponent tc;
 
     public MobSpawnerLogic(Spawner spawner) {
         this.spawner = spawner;
+        this.tc = spawner.tc;
     }
 
     @Override
@@ -24,10 +27,10 @@ public class MobSpawnerLogic implements Logic {
                 spawner.instructions.add(new SpawnPokemonInstruction(spawner));
             }
         }
-        spawner.setTurnState(Turn.COMPLETE);
+        tc.setTurnState(Turn.COMPLETE);
     }
 
     private boolean canSpawn() {
-        return spawner.getTurnState() == Turn.WAITING && spawner.floor.getNumEntities() < Constants.NUM_MAX_ENTITY;
+        return tc.getTurnState() == Turn.WAITING && spawner.floor.getNumEntities() < Constants.NUM_MAX_ENTITY;
     }
 }

@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.instructions;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Tile.*;
+import com.mygdx.pmd.model.components.*;
 
 /**
  * Created by Cameron on 2/21/2017.
@@ -12,15 +13,22 @@ public class MoveInstruction implements Instruction {
     private Tile nextTile;
     private boolean isFinished;
 
+    private MoveComponent mc;
+    private ActionComponent ac;
+    private DirectionComponent dc;
+
     public MoveInstruction(DynamicEntity dEntity, Tile nextTile) {
         this.dEntity = dEntity;
         this.nextTile = nextTile;
+        this.mc = dEntity.mc;
+        this.ac = dEntity.ac;
+        this.dc = dEntity.dc;
     }
 
     @Override
     public void execute() {
         if (!dEntity.equals(nextTile)) {
-            dEntity.moveToTile(nextTile, dEntity.speed);
+            mc.moveToTile(nextTile, mc.getSpeed());
         }
 
         if (dEntity.equals(nextTile)) {
@@ -30,19 +38,19 @@ public class MoveInstruction implements Instruction {
 
     @Override
     public void onInit() {
-        dEntity.setActionState(Action.MOVING);
+        ac.setActionState(Action.MOVING);
 
-        dEntity.removeFromTile();
-        dEntity.addToTile(nextTile);
-        dEntity.setFacingTile(dEntity.getDirection());
+        mc.removeFromCurrentTile();
+        mc.addToTile(nextTile);
+        mc.setFacingTile(dc.getDirection());
     }
 
     @Override
     public void onFinish() {
-        dEntity.setActionState(Action.IDLE);
+        ac.setActionState(Action.IDLE);
 
-        dEntity.setCurrentTile(nextTile);
-        dEntity.getCurrentTile().playEvents(dEntity);
+        mc.setCurrentTile(nextTile);
+        mc.getCurrentTile().playEvents(dEntity);
     }
 
     @Override

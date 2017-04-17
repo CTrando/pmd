@@ -8,6 +8,7 @@ import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.PlayerControlled;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.utils.Constants;
 
@@ -19,7 +20,7 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
 
     PokemonPlayer(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y, pokemonName);
-        this.setTurnState(Turn.WAITING);
+        tc.setTurnState(Turn.WAITING);
         this.aggression = Aggression.passive;
 
         logic = new PlayerLogic(this);
@@ -28,14 +29,14 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
     @Override
     public void randomizeLocation() {
         super.randomizeLocation();
-        this.setTurnState(Turn.WAITING);
+        tc.setTurnState(Turn.WAITING);
     }
 
     @Override
     public void dispose() {
         super.dispose();
 
-        this.setTurnState(Turn.COMPLETE);
+        tc.setTurnState(Turn.COMPLETE);
         floor.getScreen().game.switchScreen(PMD.endScreen);
 
         System.out.println("WOE IS ME I AM DEAD");
@@ -52,34 +53,34 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
             -updates input next - so would be idle and would be able to take in input
             -updates animationLogic last - meaning change from moving to idle would not be recorded
          */
-        if (this.equals(getCurrentTile()) && getActionState() == Action.IDLE) {
+        if (this.equals(mc.getCurrentTile()) && ac.getActionState() == Action.IDLE) {
             if (PMD.isKeyPressed(Key.shift)) {
                 if (PMD.isKeyPressed(Key.down)) {
-                    setDirection(Direction.down);
+                    dc.setDirection(Direction.down);
                 } else if (PMD.isKeyPressed(Key.left)) {
-                    setDirection(Direction.left);
+                    dc.setDirection(Direction.left);
                 } else if (PMD.isKeyPressed(Key.right)) {
-                    setDirection(Direction.right);
+                    dc.setDirection(Direction.right);
                 } else if (PMD.isKeyPressed(Key.up)) {
-                    setDirection(Direction.up);
+                    dc.setDirection(Direction.up);
                 }
             } else {
                 //code for setting the user's next tile
                 try {
                     if (PMD.isKeyPressed(Key.down)) {
-                        possibleNextTile = (tileBoard[getCurrentTile().row - 1][getCurrentTile().col]);
-                        setDirection(Direction.down);
+                        mc.possibleNextTile = (tileBoard[mc.getCurrentTile().row - 1][mc.getCurrentTile().col]);
+                        dc.setDirection(Direction.down);
                     } else if (PMD.isKeyPressed(Key.left)) {
-                        possibleNextTile = (tileBoard[getCurrentTile().row][getCurrentTile().col - 1]);
-                        setDirection(Direction.left);
+                        mc.possibleNextTile = (tileBoard[mc.getCurrentTile().row][mc.getCurrentTile().col - 1]);
+                        dc.setDirection(Direction.left);
                     } else if (PMD.isKeyPressed(Key.right)) {
-                        possibleNextTile = (tileBoard[getCurrentTile().row][getCurrentTile().col + 1]);
-                        setDirection(Direction.right);
+                        mc.possibleNextTile = (tileBoard[mc.getCurrentTile().row][mc.getCurrentTile().col + 1]);
+                        dc.setDirection(Direction.right);
                     } else if (PMD.isKeyPressed(Key.up)) {
-                        possibleNextTile = (tileBoard[getCurrentTile().row + 1][getCurrentTile().col]);
-                        setDirection(Direction.up);
+                        mc.possibleNextTile = (tileBoard[mc.getCurrentTile().row + 1][mc.getCurrentTile().col]);
+                        dc.setDirection(Direction.up);
                     } else {
-                        possibleNextTile = (null);
+                        mc.possibleNextTile = (null);
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {
                 }
@@ -93,7 +94,7 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
                 floor.nextFloor();
             } else if (PMD.isKeyPressedTimeSensitive(Key.a)) {
                 System.out.println("Skip turn!");
-                this.setTurnState(Turn.COMPLETE);
+                tc.setTurnState(Turn.COMPLETE);
                 possibleNextTile = null;
             } else if (PMD.isKeyPressedTimeSensitive(Key.p)) {
                 Controller.turnsPaused = !Controller.turnsPaused;
@@ -135,6 +136,6 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
 
     public void reset(){
         super.reset();
-        this.setTurnState(Turn.WAITING);
+        tc.setTurnState(Turn.WAITING);
     }
 }

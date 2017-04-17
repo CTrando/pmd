@@ -2,24 +2,25 @@ package com.mygdx.pmd.model.instructions;
 
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
+import com.mygdx.pmd.model.components.*;
 
 /**
  * Created by Cameron on 2/22/2017.
  */
 public class TurnInstruction implements Instruction {
     private Entity entity;
-    private Direction direction;
+    private DirectionComponent dc;
 
     private boolean isFinished;
 
     public TurnInstruction(Entity entity, Direction direction){
         this.entity = entity;
-        this.direction = direction;
+        this.dc = entity.dc;
     }
 
     @Override
     public void execute() {
-        entity.setDirection(direction);
+        dc.setDirection(dc.getDirection());
         isFinished = true;
     }
 

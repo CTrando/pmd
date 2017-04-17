@@ -5,19 +5,22 @@ import com.mygdx.pmd.exceptions.PathFindFailureException;
 import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.components.*;
 
 
 /**
  * Created by Cameron on 12/10/2016.
  */
 public class Wander extends PathFind {
+    private MoveComponent mc;
     public Wander(DynamicEntity dEntity) {
         super(dEntity);
+        mc = dEntity.mc;
     }
 
     @Override
     public Array<Tile> pathFind(Tile tile) throws PathFindFailureException {
-        Tile currentTile = dEntity.getCurrentTile();
+        Tile currentTile = mc.getCurrentTile();
         Tile nextTile = this.chooseRandomTile(currentTile);
 
         while(!nextTile.isWalkable){
