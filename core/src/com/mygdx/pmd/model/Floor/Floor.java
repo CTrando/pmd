@@ -3,10 +3,10 @@ package com.mygdx.pmd.model.Floor;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
-import com.mygdx.pmd.interfaces.Movable;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Item.*;
 import com.mygdx.pmd.model.Tile.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.*;
 
@@ -25,6 +25,7 @@ public class Floor extends Entity {
         tileBoard = new Tile[Constants.tileBoardRows][Constants.tileBoardCols];
 
         items = new Array<Item>();
+        this.pc = new PositionComponent(this);
     }
 
     /**
@@ -63,7 +64,7 @@ public class Floor extends Entity {
 
         Tile chosenTile = tileBoard[randRow][randCol];
 
-        if (chosenTile instanceof RoomTile && !chosenTile.hasEntityOfType(Movable.class)) {
+        if (chosenTile instanceof RoomTile /*&& !chosenTile.hasEntityOfType(Movable.class*/) {
             return tileBoard[randRow][randCol];
         } else return chooseUnoccupiedTile();
     }

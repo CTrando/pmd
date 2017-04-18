@@ -25,6 +25,6 @@ public class Orb extends Item {
 
     @Override
     public String toString() {
-        return "Orb at " + getCurrentTile().toString();
+        return "Orb at " + pc.getCurrentTile().toString();
     }
 }

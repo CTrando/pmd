@@ -10,12 +10,12 @@ import com.mygdx.pmd.model.Tile.*;
 public class DirectionComponent implements Component {
     private Direction direction;
     private Entity entity;
-    private MoveComponent mc;
+    private PositionComponent pc;
 
     public DirectionComponent(Entity entity) {
         this.entity = entity;
         this.direction = Direction.down;
-        this.mc = entity.mc;
+        this.pc = entity.pc;
     }
 
     public Direction getDirection() {
@@ -27,7 +27,7 @@ public class DirectionComponent implements Component {
     }
 
     public void setDirection(Tile tile) {
-        Tile currentTile = mc.getCurrentTile();
+        Tile currentTile = pc.getCurrentTile();
 
         if (currentTile.col > tile.col) {
             setDirection(Direction.left);

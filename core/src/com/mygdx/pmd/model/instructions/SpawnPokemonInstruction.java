@@ -36,10 +36,10 @@ public class SpawnPokemonInstruction implements Instruction {
         Tile tile = spawner.floor.chooseUnoccupiedTile();
 
         Pokemon pokemon = PokemonFactory.createPokemon(spawner.floor, PokemonName.getRandomName(), PokemonMob.class);
-        pokemon.mc.setCurrentTile(tile);
+        pokemon.pc.setCurrentTile(tile);
         pokemon.mc.setNextTile(tile);
 
-        pokemon.mc.removeFromCurrentTile();
+        pokemon.pc.removeFromCurrentTile();
         pokemon.mc.addToTile(tile);
 
         spawner.floor.addEntity(pokemon);

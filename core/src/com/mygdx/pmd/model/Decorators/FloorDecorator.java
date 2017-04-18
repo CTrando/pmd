@@ -1,7 +1,6 @@
 package com.mygdx.pmd.model.Decorators;
 
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.interfaces.Movable;
 import com.mygdx.pmd.model.Entity.Item.ItemFactory;
 import com.mygdx.pmd.model.Floor.Floor;
 import com.mygdx.pmd.model.Tile.GenericTile;
@@ -105,7 +104,7 @@ public class FloorDecorator {
 
     public static Floor placeEventTiles(Floor floor){
         Tile tile = floor.chooseUnoccupiedTile();
-        while(tile.spriteValue <= 250 || tile.hasEntityOfType(Movable.class)) {
+        while(tile.spriteValue <= 250 /*|| tile.hasEntityOfType(Movable.class)*/) {
             tile = floor.chooseUnoccupiedTile();
         }
         floor.tileBoard[tile.row][tile.col] = new StairTile(tile.row, tile.col, floor);

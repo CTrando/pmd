@@ -22,7 +22,7 @@ public abstract class PathFind {
     public PathFind(DynamicEntity dEntity){
         this.dEntity = dEntity;
         this.tileBoard = dEntity.tileBoard;
-        this.currentTile = dEntity.getCurrentTile();
+        this.currentTile = dEntity.pc.getCurrentTile();
 
         this.solutionNodeList = new Array<Tile>();
         this.openNodeList = new Array<Tile>();

@@ -2,7 +2,6 @@ package com.mygdx.pmd.model.Entity.Pokemon;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.Movable;
 import com.mygdx.pmd.model.logic.MobLogic;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
@@ -39,13 +38,15 @@ public class PokemonMob extends Pokemon {
     @Override
     public boolean isLegalToMoveTo(Tile tile) {
         return (tile != null &&
-                !tile.hasEntityOfType(Movable.class) &&
                 tile.isWalkable);
     }
 
     public boolean isWithinRange(DynamicEntity pokemon) {
-        int dR = this.getCurrentTile().row - pokemon.getCurrentTile().row;
-        int dC = this.getCurrentTile().col - pokemon.getCurrentTile().col;
+        int curRow = pc.getCurrentTile().row;
+        int curCol = pc.getCurrentTile().col;
+
+        int dR = curRow - pokemon.pc.getCurrentTile().row;
+        int dC = curCol - pokemon.pc.getCurrentTile().col;
 
         if (dR * dR + dC * dC > 400) {
             return false;

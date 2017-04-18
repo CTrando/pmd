@@ -73,7 +73,7 @@ public class Controller {
 
         //add in a mob spawner
         MobSpawner mobSpawner = new MobSpawner(floor);
-        //this.directlyAddEntity(mobSpawner);
+        this.directlyAddEntity(mobSpawner);
     }
 
     public void nextFloor() {

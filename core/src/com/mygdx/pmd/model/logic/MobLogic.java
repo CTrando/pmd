@@ -14,16 +14,10 @@ import com.mygdx.pmd.model.instructions.*;
  */
 public class MobLogic extends PokemonLogic {
     private PokemonMob mob;
-    private MoveComponent mc;
-    private ActionComponent ac;
-    private TurnComponent tc;
 
     public MobLogic(PokemonMob mob) {
         super(mob);
         this.mob = mob;
-        this.mc = mob.mc;
-        this.ac = mob.ac;
-        this.tc = mob.tc;
     }
 
     @Override
@@ -40,7 +34,7 @@ public class MobLogic extends PokemonLogic {
         if (canAct()) {
             //will turn to face the player if the mob is aggressive
             if (mob.isAggressive()) {
-                mob.setDirection(mob.target.getCurrentTile());
+                dc.setDirection(mob.target.pc.getCurrentTile());
                 mc.setFacingTile(mob.target.dc.getDirection());
 
                 if (mob.target.shouldBeDestroyed) {
@@ -59,7 +53,7 @@ public class MobLogic extends PokemonLogic {
                 } else {
                     Tile enemyTile = findEnemyTile();
                     Move rangedMove = mob.getRandomRangedMove();
-                    int dist = enemyTile.dist(mob.getCurrentTile());
+                    int dist = enemyTile.dist(mob.pc.getCurrentTile());
 
                     if (rangedMove != null && dist <= rangedMove.range) {
                         mob.setMove(mob.getRandomRangedMove());
@@ -111,7 +105,7 @@ public class MobLogic extends PokemonLogic {
                 mc.setFacingTile(mc.possibleNextTile);
 
                 //this method depends on current tile not move component
-                this.mob.setDirection(mc.possibleNextTile);
+                dc.setDirection(mc.possibleNextTile);
 
                 if (this.mob.isLegalToMoveTo(mc.possibleNextTile)) {
                     mc.setNextTile(mc.possibleNextTile);

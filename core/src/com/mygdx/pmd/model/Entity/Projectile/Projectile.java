@@ -63,14 +63,14 @@ public class Projectile extends DynamicEntity {
         //load particle effects
         bs = new ParticleEffect();
         bs.load(Gdx.files.internal("pokemonassets/energyball"), Gdx.files.internal("pokemonassets"));
-        bs.setPosition(x/PPM, y/PPM);
+        bs.setPosition(pc.x/PPM, pc.y/PPM);
         bs.setDuration(10000000);
         bs.scaleEffect(1/PPM);
         bs.start();
 
         pe = new ParticleEffect();
         pe.load(Gdx.files.internal("pokemonassets/particles"), Gdx.files.internal("pokemonassets"));
-        pe.setPosition(x/PPM, y/PPM);
+        pe.setPosition(pc.x/PPM, pc.y/PPM);
         pe.scaleEffect(1/PPM);
         pe.start();
 
@@ -79,8 +79,8 @@ public class Projectile extends DynamicEntity {
     }
 
     private void findFutureTile() {
-        int row = getCurrentTile().row;
-        int col = getCurrentTile().col;
+        int row = pc.getCurrentTile().row;
+        int col = pc.getCurrentTile().col;
 
         switch (dc.getDirection()) {
             case up:
@@ -161,13 +161,13 @@ public class Projectile extends DynamicEntity {
     public void render(SpriteBatch batch) {
         super.render(batch);
         if (ac.getActionState() == Action.MOVING && parent.currentAnimation.isFinished()) {
-            bs.setPosition((x + Constants.TILE_SIZE / 2)/PPM, (y + Constants.TILE_SIZE / 2)/PPM);
+            bs.setPosition((pc.x + Constants.TILE_SIZE / 2)/PPM, (pc.y + Constants.TILE_SIZE / 2)/PPM);
             bs.update(0.06f);
             bs.draw(batch);
         }
 
         if (ac.getActionState() == Action.COLLISION) {
-            pe.setPosition((x + Constants.TILE_SIZE / 2)/PPM, (y + Constants.TILE_SIZE / 2)/PPM);
+            pe.setPosition((pc.x + Constants.TILE_SIZE / 2)/PPM, (pc.y + Constants.TILE_SIZE / 2)/PPM);
             pe.update(0.06f);
             pe.draw(batch);
         }
@@ -198,7 +198,7 @@ public class Projectile extends DynamicEntity {
 
     @Override
     public String toString() {
-        return "Projectile at " + getCurrentTile().toString();
+        return "Projectile at " + pc.getCurrentTile().toString();
     }
 }
 

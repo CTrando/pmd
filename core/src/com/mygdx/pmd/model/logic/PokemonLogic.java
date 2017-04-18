@@ -1,5 +1,6 @@
 package com.mygdx.pmd.model.logic;
 
+import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Damageable;
 import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.model.Tile.*;
@@ -12,10 +13,19 @@ import com.mygdx.pmd.utils.Constants;
 public abstract class PokemonLogic implements Logic {
     Pokemon pokemon;
     DirectionComponent dc;
+    MoveComponent mc;
+    ActionComponent ac;
+    TurnComponent tc;
+    PositionComponent pc;
 
     protected PokemonLogic(Pokemon pokemon) {
         this.pokemon = pokemon;
+
         this.dc = pokemon.dc;
+        this.mc = pokemon.mc;
+        this.ac = pokemon.ac;
+        this.tc = pokemon.tc;
+        this.pc = pokemon.pc;
     }
 
     abstract boolean canAct();
@@ -32,8 +42,8 @@ public abstract class PokemonLogic implements Logic {
     Tile findEnemyTile() {
         Tile[][] tileBoard = pokemon.tileBoard;
 
-        int row = pokemon.getCurrentTile().row;
-        int col = pokemon.getCurrentTile().col;
+        int row = pc.getCurrentTile().row;
+        int col = pc.getCurrentTile().col;
 
         switch (dc.getDirection()) {
             case up:

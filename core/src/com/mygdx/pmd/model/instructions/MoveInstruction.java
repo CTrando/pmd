@@ -16,6 +16,7 @@ public class MoveInstruction implements Instruction {
     private MoveComponent mc;
     private ActionComponent ac;
     private DirectionComponent dc;
+    private PositionComponent pc;
 
     public MoveInstruction(DynamicEntity dEntity, Tile nextTile) {
         this.dEntity = dEntity;
@@ -23,6 +24,7 @@ public class MoveInstruction implements Instruction {
         this.mc = dEntity.mc;
         this.ac = dEntity.ac;
         this.dc = dEntity.dc;
+        this.pc = dEntity.pc;
     }
 
     @Override
@@ -40,7 +42,7 @@ public class MoveInstruction implements Instruction {
     public void onInit() {
         ac.setActionState(Action.MOVING);
 
-        mc.removeFromCurrentTile();
+        pc.removeFromCurrentTile();
         mc.addToTile(nextTile);
         mc.setFacingTile(dc.getDirection());
     }
@@ -49,8 +51,8 @@ public class MoveInstruction implements Instruction {
     public void onFinish() {
         ac.setActionState(Action.IDLE);
 
-        mc.setCurrentTile(nextTile);
-        mc.getCurrentTile().playEvents(dEntity);
+        pc.setCurrentTile(nextTile);
+        pc.getCurrentTile().playEvents(dEntity);
     }
 
     @Override

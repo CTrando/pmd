@@ -2,6 +2,7 @@ package com.mygdx.pmd.model.instructions;
 
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;
 import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.instructions.*;
 
 
@@ -12,9 +13,12 @@ public class ProjectileMoveInstruction implements Instruction {
 
     Projectile projectile;
     Tile[][] tileBoard;
+
+    private PositionComponent pc;
     public ProjectileMoveInstruction(Projectile projectile) {
         this.projectile = projectile;
         this.tileBoard = projectile.tileBoard;
+        this.pc = projectile.pc;
     }
 
     @Override
@@ -33,21 +37,21 @@ public class ProjectileMoveInstruction implements Instruction {
 
         switch (projectile.dc.getDirection()) {
             case up:
-                projectile.y += projectile.speed;
+                projectile.pc.y += projectile.speed;
                 break;
             case down:
-                projectile.y -= projectile.speed;
+                projectile.pc.y -= projectile.speed;
                 break;
             case right:
-                projectile.x += projectile.speed;
+                projectile.pc.x += projectile.speed;
                 break;
             case left:
-                projectile.x -= projectile.speed;
+                projectile.pc.x -= projectile.speed;
                 break;
         }
-        Tile tile = Tile.getTileAt(projectile.x, projectile.y, tileBoard);
+        Tile tile = Tile.getTileAt(projectile.pc.x, projectile.pc.y, tileBoard);
         if(projectile.equals(tile)){
-            projectile.setCurrentTile(tile);
+            pc.setCurrentTile(tile);
         }
     }
 

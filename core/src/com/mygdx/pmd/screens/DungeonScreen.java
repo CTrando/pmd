@@ -50,7 +50,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
         gameCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gamePort = new ScreenViewport(gameCamera);
-        gamePort.setUnitsPerPixel(1/PPM);
+        gamePort.setUnitsPerPixel(1 / PPM);
 
         //init stuff for updating
         controller = new Controller(this);
@@ -66,7 +66,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     @Override
     public void render(float dt) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-       // stage.act();
+        // stage.act();
         controller.update();
         this.updateCamera();
 
@@ -133,15 +133,18 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     }
 
     private void updateCamera() {
-        gameCamera.position.set((controller.pokemonPlayer.x + Constants.TILE_SIZE/2)/PPM, (controller.pokemonPlayer.y +
-                Constants.TILE_SIZE/2)/PPM, 0);
+        gameCamera.position.set((controller.pokemonPlayer.pc.x + Constants.TILE_SIZE / 2) / PPM,
+                                (controller.pokemonPlayer
+                                        .pc.y +
+                                        Constants.TILE_SIZE / 2) / PPM, 0);
         gameCamera.update();
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (PMD.keys.containsKey(keycode))
+        if (PMD.keys.containsKey(keycode)) {
             PMD.keys.get(keycode).set(true);
+        }
 
         hud.addText(Input.Keys.toString(keycode));
         return false;
@@ -149,8 +152,9 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public boolean keyUp(int keycode) {
-        if (PMD.keys.containsKey(keycode))
+        if (PMD.keys.containsKey(keycode)) {
             PMD.keys.get(keycode).set(false);
+        }
         return false;
 
     }
@@ -251,7 +255,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         }
     }
 
-    public OrthographicCamera getCamera(){
+    public OrthographicCamera getCamera() {
         return gameCamera;
     }
 

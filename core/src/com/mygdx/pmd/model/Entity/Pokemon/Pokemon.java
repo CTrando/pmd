@@ -63,13 +63,13 @@ public abstract class Pokemon extends DynamicEntity implements Damageable, Aggre
     public boolean isLegalToMoveTo(Tile tile) {
         if (tile == null) return false;
 
-        if (tile.hasEntityOfType(Movable.class)) {
+       /* if (tile.hasEntityOfType(Movable.class)) {
             for (Aggressible aggressible : PUtils.getObjectsOfType(Aggressible.class, tile.getEntityList())) {
                 if (aggressible.isAggressive()) {
                     return false;
                 }
             }
-        }
+        }*/
         return tile.isWalkable;
     }
 
@@ -108,11 +108,11 @@ public abstract class Pokemon extends DynamicEntity implements Damageable, Aggre
         if (random.isWalkable) {
             mc.setNextTile(random);
 
-            mc.removeFromCurrentTile();
+            pc.removeFromCurrentTile();
             mc.addToTile(random);
             mc.setFacingTile(dc.getDirection());
 
-            mc.setCurrentTile(random);
+            pc.setCurrentTile(random);
             mc.possibleNextTile = null;
         } else randomizeLocation();
     }
@@ -147,11 +147,12 @@ public abstract class Pokemon extends DynamicEntity implements Damageable, Aggre
         }
         for (int i = 1; i <= Constants.VISIBILITY_RANGE; i++) {
             //these are the rules for viewing things
+
             try {
-                Tile tile = tileBoard[getCurrentTile().row + i * rOffset][getCurrentTile().col + i * cOffset];
+                Tile tile = tileBoard[pc.getCurrentTile().row + i * rOffset][pc.getCurrentTile().col + i * cOffset];
                 if (tile instanceof GenericTile) return false;
 
-                if(tile == getCurrentTile()) return false;
+                if(tile == pc.getCurrentTile()) return false;
 
                 for(Entity entity: tile.getEntityList()){
                     if(entity == target){
@@ -195,7 +196,7 @@ public abstract class Pokemon extends DynamicEntity implements Damageable, Aggre
     }
 
     public void dispose() {
-        this.getCurrentTile().removeEntity(this);
+        pc.getCurrentTile().removeEntity(this);
     }
 
     public Move getRandomMove() {

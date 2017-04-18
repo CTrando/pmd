@@ -13,19 +13,19 @@ public class CollideInstruction implements Instruction{
     private DynamicEntity dEntity;
     private boolean isFinished;
     private ActionComponent ac;
-    private MoveComponent mc;
+    private PositionComponent pc;
 
     public CollideInstruction(DynamicEntity dEntity){
         this.dEntity = dEntity;
         this.ac = dEntity.ac;
-        this.mc = dEntity.mc;
+        this.pc = dEntity.pc;
     }
 
     @Override
     public void onInit() {
         PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
         ac.setActionState(Action.COLLISION);
-        mc.removeFromCurrentTile();
+        pc.removeFromCurrentTile();
     }
 
     @Override

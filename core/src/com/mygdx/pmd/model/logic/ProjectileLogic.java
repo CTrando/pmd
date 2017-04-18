@@ -16,7 +16,10 @@ public class ProjectileLogic implements Logic {
     private Pokemon parent;
     private PAnimation animation;
 
+    //TODO FIX PROJECTILE LOGIC WITH DIRECTION COMPONENTS
+
     private ActionComponent ac;
+    private PositionComponent pc;
 
     /**
      * This class has one job, to find when a ranged projectile interacts with an entity or a unwalkable tile
@@ -28,6 +31,7 @@ public class ProjectileLogic implements Logic {
         this.parent = projectile.parent;
         this.animation = projectile.animation;
         this.ac = projectile.ac;
+        this.pc = projectile.pc;
     }
 
     /**
@@ -37,9 +41,8 @@ public class ProjectileLogic implements Logic {
         projectile.animationLogic.execute();
 
         if (animation.isFinished() && ac.getActionState() == Action.COLLISION) {
-            for (Damageable damageable : PUtils.getObjectsOfType(Damageable.class, projectile.getCurrentTile()
-                                                                                             .getEntityList()))
-            {
+            for (Damageable damageable : PUtils.getObjectsOfType(Damageable.class, pc.getCurrentTile()
+                                                                                     .getEntityList())) {
                 damageable.takeDamage(parent, projectile.move.damage);
             }
 

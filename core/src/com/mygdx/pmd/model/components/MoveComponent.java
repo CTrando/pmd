@@ -13,25 +13,25 @@ public class MoveComponent implements Component {
 
     private boolean isForcedMove;
     private int speed;
+
+    private PositionComponent pc;
     
-    private Tile currentTile;
     private Tile nextTile;
     private Tile facingTile;
     public Tile possibleNextTile;
 
     public MoveComponent(Entity entity) {
         this.entity = entity;
+        this.pc = entity.pc;
         tileBoard = entity.tileBoard;
-
-        this.currentTile = tileBoard[0][0];
     }
 
     public void move(int dx, int dy) {
-        entity.x += dx;
-        entity.y += dy;
+        entity.pc.x += dx;
+        entity.pc.y += dy;
     }
 
-    public void forceMoveToTile(Tile nextTile, Direction direction) {
+    public void forceMoveToTile(Tile nextTile) {
         this.nextTile = nextTile;
         isForcedMove = true;
     }
@@ -41,8 +41,8 @@ public class MoveComponent implements Component {
             return;
         }
         
-        int y = entity.y;
-        int x = entity.x;
+        int y = entity.pc.y;
+        int x = entity.pc.x;
                 
         if (y > nextTile.y && x > nextTile.x) {
             move(-speed, -speed);
@@ -63,13 +63,6 @@ public class MoveComponent implements Component {
         }
     }
 
-    public void setCurrentTile(Tile nextTile) {
-        this.currentTile = nextTile;
-
-        entity.x = currentTile.x;
-        entity.y = currentTile.y;
-    }
-
     public void setNextTile(Tile tile) {
         if (tile == null) return;
         this.nextTile = tile;
@@ -77,18 +70,22 @@ public class MoveComponent implements Component {
 
     public void setFacingTile(Direction d) {
         try {
+            Tile currentTile = pc.getCurrentTile();
+            int curRow = currentTile.row;
+            int curCol = currentTile.col;
+
             switch (d) {
                 case up:
-                    facingTile = tileBoard[currentTile.row + 1][currentTile.col];
+                    facingTile = tileBoard[curRow + 1][curCol];
                     break;
                 case down:
-                    facingTile = tileBoard[currentTile.row - 1][currentTile.col];
+                    facingTile = tileBoard[curRow - 1][curCol];
                     break;
                 case right:
-                    facingTile = tileBoard[currentTile.row][currentTile.col + 1];
+                    facingTile = tileBoard[curRow][curCol + 1];
                     break;
                 case left:
-                    facingTile = tileBoard[currentTile.row][currentTile.col - 1];
+                    facingTile = tileBoard[curRow][curCol - 1];
                     break;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -111,16 +108,8 @@ public class MoveComponent implements Component {
         return facingTile;
     }
 
-    public Tile getCurrentTile() {
-        return currentTile;
-    }
-
     public void addToTile(Tile nextTile) {
         nextTile.addEntity(entity);
-    }
-
-    public void removeFromCurrentTile() {
-        currentTile.removeEntity(entity);
     }
 
     public int getSpeed() {

@@ -53,7 +53,7 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
             -updates input next - so would be idle and would be able to take in input
             -updates animationLogic last - meaning change from moving to idle would not be recorded
          */
-        if (this.equals(mc.getCurrentTile()) && ac.getActionState() == Action.IDLE) {
+        if (this.equals(pc.getCurrentTile()) && ac.getActionState() == Action.IDLE) {
             if (PMD.isKeyPressed(Key.shift)) {
                 if (PMD.isKeyPressed(Key.down)) {
                     dc.setDirection(Direction.down);
@@ -67,17 +67,19 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
             } else {
                 //code for setting the user's next tile
                 try {
+                    int curRow = pc.getCurrentTile().row;
+                    int curCol = pc.getCurrentTile().col;
                     if (PMD.isKeyPressed(Key.down)) {
-                        mc.possibleNextTile = (tileBoard[mc.getCurrentTile().row - 1][mc.getCurrentTile().col]);
+                        mc.possibleNextTile = (tileBoard[curRow - 1][curCol]);
                         dc.setDirection(Direction.down);
                     } else if (PMD.isKeyPressed(Key.left)) {
-                        mc.possibleNextTile = (tileBoard[mc.getCurrentTile().row][mc.getCurrentTile().col - 1]);
+                        mc.possibleNextTile = (tileBoard[curRow][curCol - 1]);
                         dc.setDirection(Direction.left);
                     } else if (PMD.isKeyPressed(Key.right)) {
-                        mc.possibleNextTile = (tileBoard[mc.getCurrentTile().row][mc.getCurrentTile().col + 1]);
+                        mc.possibleNextTile = (tileBoard[curRow][curCol + 1]);
                         dc.setDirection(Direction.right);
                     } else if (PMD.isKeyPressed(Key.up)) {
-                        mc.possibleNextTile = (tileBoard[mc.getCurrentTile().row + 1][mc.getCurrentTile().col]);
+                        mc.possibleNextTile = (tileBoard[curRow + 1][curCol]);
                         dc.setDirection(Direction.up);
                     } else {
                         mc.possibleNextTile = (null);

@@ -31,6 +31,6 @@ public class Berry extends Item {
 
     @Override
     public String toString() {
-        return "Berry at " + getCurrentTile().toString();
+        return "Berry at " + pc.getCurrentTile().toString();
     }
 }

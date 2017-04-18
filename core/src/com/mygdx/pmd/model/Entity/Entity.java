@@ -21,7 +21,7 @@ import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 public abstract class Entity implements Renderable, Updatable, Disposable {
     public LinkedList<Instruction> instructions;
     public Instruction currentInstruction;
-    public static Instruction NO_INSTRUCTION = new NoInstruction();
+    public static final Instruction NO_INSTRUCTION = new NoInstruction();
 
     /******************************************/
     //Inherited variables from interfaces
@@ -29,9 +29,8 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
     public TurnComponent tc;
     public DirectionComponent dc;
     public MoveComponent mc;
+    public PositionComponent pc;
 
-
-    private Direction direction;
     protected int hp;
 
     public boolean shouldBeDestroyed;
@@ -39,10 +38,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
 
     /*-----------------------------------------*/
     //Position variables
-    public int x;
-    public int y;
     public Floor floor;
-    private Tile currentTile;
     public Tile[][] tileBoard;
     /*******************************************/
     //Render variables
@@ -62,17 +58,17 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
      * current tile is defined by the initial x and y
      */
     public Entity(Floor floor, int x, int y) {
+
         this.shouldBeDestroyed = false;
 
         this.floor = floor;
         this.tileBoard = floor.tileBoard;
-        this.x = x;
-        this.y = y;
-        this.currentTile = tileBoard[y / Constants.TILE_SIZE][x / Constants.TILE_SIZE];
 
         animationMap = new HashMap<String, PAnimation>();
         instructions = new LinkedList<Instruction>();
         currentInstruction = NO_INSTRUCTION;
+
+        this.pc = new PositionComponent(this, x,y);
     }
 
     @Override
@@ -93,42 +89,15 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
     @Override
     public void render(SpriteBatch batch) {
         if (currentSprite != null) {
-            batch.draw(currentSprite, x/PPM, y/PPM, currentSprite.getWidth()/PPM, currentSprite.getHeight()/PPM);
+            batch.draw(currentSprite, pc.x/PPM, pc.y/PPM, currentSprite.getWidth()/PPM, currentSprite.getHeight()
+                    /PPM);
         }
     }
 
     public abstract void runLogic();
 
     public boolean equals(Tile tile) {
-        return tile != null && (tile.x == x && tile.y == y);
-    }
-
-    public void setDirection(Tile tile) {
-
-    }
-
-    private boolean isToRight(Tile tile) {
-        return getCurrentTile().x > tile.x;
-    }
-
-    private boolean isToLeft(Tile tile) {
-        return getCurrentTile().x < tile.x;
-    }
-
-    private boolean isAbove(Tile tile) {
-        return getCurrentTile().y > tile.y;
-    }
-
-    private boolean isBelow(Tile tile) {
-        return getCurrentTile().y < tile.y;
-    }
-
-    public void setCurrentTile(Tile nextTile) {
-        this.currentTile = nextTile;
-    }
-
-    public Tile getCurrentTile() {
-        return currentTile;
+        return tile != null && (tile.x == pc.x && tile.y == pc.y);
     }
 
     @Override

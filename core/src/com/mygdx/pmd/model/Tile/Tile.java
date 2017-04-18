@@ -10,6 +10,7 @@ import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Item.Item;
 import com.mygdx.pmd.model.Entity.StaticEntity;
 import com.mygdx.pmd.model.Floor.Floor;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.utils.*;
 import com.mygdx.pmd.model.Entity.Entity;
 
@@ -190,5 +191,14 @@ public abstract class Tile implements Renderable {
 
     public boolean hasEntityOfType(Class c) {
         return PUtils.getObjectsOfType(c, entityList).size > 0;
+    }
+
+    public boolean hasEntityWithComponent(Component component){
+        for(Entity entity: entityList){
+
+        }
+
+        //TODO fix this method and fix components so it uses a hashmap and strings to find components
+        return false;
     }
 }
