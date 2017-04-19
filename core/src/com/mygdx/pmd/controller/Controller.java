@@ -13,6 +13,7 @@ import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonFactory;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Spawner.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.test.TileTester;
 
@@ -22,7 +23,6 @@ public class Controller {
     public DungeonScreen screen;
 
     private ArrayList<Entity> entityList;
-    public Array<DynamicEntity> dEntities;
     private LinkedList<Entity> turnBasedEntities;
     private Entity updatedTurnEntity;
 
@@ -51,7 +51,6 @@ public class Controller {
 
         //list of entities
         turnBasedEntities = new LinkedList<Entity>();
-        dEntities = new Array<DynamicEntity>();
         entityList = new ArrayList<Entity>();
         toBeRemoved = new Array<Entity>();
         toBeAdded = new Array<Entity>();
@@ -97,18 +96,22 @@ public class Controller {
         if(turns < 0){
             screen.game.switchScreen(PMD.endScreen);
         }
+
         //first update entities, then their turns should turn immediately to complete which allows them to continue on with the next one
         //this process allows for super quick movement
         for (int i = 0; i < entityList.size(); i++) {
             Entity entity = entityList.get(i);
             entity.update();
 
-            if (updatedTurnEntity.tc.getTurnState() == Turn.COMPLETE) {
+            TurnComponent upTurnEntityTC = (TurnComponent) updatedTurnEntity.getComponent(Component.TURN);
+
+            if (upTurnEntityTC.getTurnState() == Turn.COMPLETE) {
                 //need to sort both entity list and turn based entities in order to update them in order
                 if (updatedTurnEntity instanceof PokemonPlayer) {
                     if (!turnsPaused) {
                         turns--;
                     }
+
 
                     Collections.sort(turnBasedEntities, new PokemonDistanceComparator(this.pokemonPlayer));
                     Collections.sort(entityList, new PokemonDistanceComparator(this.pokemonPlayer));
@@ -116,9 +119,9 @@ public class Controller {
 
                 //stack system
                 //TODO replace with custom data structure
-                turnBasedEntities.offer((Entity) updatedTurnEntity);
+                turnBasedEntities.offer(updatedTurnEntity);
                 updatedTurnEntity = turnBasedEntities.poll();
-                updatedTurnEntity.tc.setTurnState(Turn.WAITING);
+                upTurnEntityTC.setTurnState(Turn.WAITING);
             }
 
             if(entity.shouldBeDestroyed){
@@ -128,6 +131,7 @@ public class Controller {
         }
         removeEntities();
         addEntities();
+
     }
 
     private void loadPokemonFromJson(FileHandle file) {
@@ -141,20 +145,24 @@ public class Controller {
     }
 
     private void randomizeAllPokemonLocation() {
-        for (DynamicEntity dEntity : dEntities) {
-            dEntity.randomizeLocation();
+        for(Entity entity: entityList){
+            if(entity.hasComponent(Component.MOVE)){
+                MoveComponent mc = (MoveComponent) entity.getComponent(Component.MOVE);
+                mc.randomizeLocation();
+            }
         }
+      /*  for (DynamicEntity entity : dEntities) {
+            entity.randomizeLocation();
+        }*/
+        //TODO add code here to see if it has a position component
+
     }
 
     private void directlyAddEntity(Entity entity) {
         screen.renderList.add(entity);
         entityList.add(entity);
 
-        if (entity instanceof DynamicEntity) {
-            dEntities.add((DynamicEntity) entity);
-        }
-
-        if (entity.tc != null) {
+        if (entity.hasComponent(Component.TURN)) {
             turnBasedEntities.addLast(entity);
         }
 
@@ -177,12 +185,8 @@ public class Controller {
             screen.renderList.removeValue(entity, true);
             entityList.remove(entity);
 
-            if (entity.tc != null) {
+            if (entity.hasComponent(Component.TURN)) {
                 turnBasedEntities.remove(entity);
-            }
-
-            if (entity instanceof DynamicEntity) {
-                dEntities.removeValue((DynamicEntity) entity, true);
             }
         }
         toBeRemoved.clear();
@@ -196,4 +200,7 @@ public class Controller {
         toBeRemoved.add(entity);
     }
 
+    public ArrayList<Entity> getEntityList() {
+        return entityList;
+    }
 }

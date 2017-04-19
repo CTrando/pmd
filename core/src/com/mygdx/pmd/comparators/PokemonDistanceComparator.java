@@ -1,6 +1,7 @@
 package com.mygdx.pmd.comparators;
 
 import com.mygdx.pmd.model.Entity.Entity;
+import com.mygdx.pmd.model.components.*;
 
 import java.util.Comparator;
 
@@ -18,16 +19,24 @@ public class PokemonDistanceComparator implements Comparator<Entity> {
 
 
     @Override
-    public int compare(Entity o1, Entity o2) {
-        if (this.distanceFormula(entity.pc.x, entity.pc.y, o1.pc.x, o1.pc.y) < this.distanceFormula(entity.pc.x,
-                                                                                                    entity.pc.y,
-                                                                                                    o2.pc.x,
-                                                                                                    o2.pc.y)) {
+    public int compare(Entity first, Entity second) {
+        PositionComponent entityPC = (PositionComponent) entity.getComponent(Component.POSITION);
+        PositionComponent firstPC = (PositionComponent) first.getComponent(Component.POSITION);
+        PositionComponent secondPC = (PositionComponent) second.getComponent(Component.POSITION);
+
+        if(secondPC ==null || firstPC == null){
+            return 1;
+        }
+
+        if (this.distanceFormula(entityPC.x, entityPC.y, firstPC.x, firstPC.y) < this.distanceFormula(entityPC.x,
+                                                                                                    entityPC.y,
+                                                                                                    secondPC.x,
+                                                                                                    secondPC.y)) {
             return -1;
-        } else if (this.distanceFormula(entity.pc.x, entity.pc.y, o1.pc.x, o1.pc.y) > this.distanceFormula(entity.pc.x,
-                                                                                                           entity.pc.y,
-                                                                                                           o2.pc.x,
-                                                                                                           o2.pc.y)) {
+        } else if (this.distanceFormula(entityPC.x, entityPC.y, firstPC.x, firstPC.y) > this.distanceFormula(entityPC.x,
+                                                                                                           entityPC.y,
+                                                                                                           secondPC.x,
+                                                                                                           secondPC.y)) {
             return 1;
         } else {
             return 0;

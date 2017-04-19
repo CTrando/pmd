@@ -2,9 +2,8 @@ package com.mygdx.pmd.utils.AI;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
-import com.mygdx.pmd.model.Entity.DynamicEntity;
+import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Tile.Tile;
-import com.mygdx.pmd.model.Entity.Entity;
 
 
 /**
@@ -12,8 +11,8 @@ import com.mygdx.pmd.model.Entity.Entity;
  */
 public class ShortestPath extends PathFind {
 
-    public ShortestPath(DynamicEntity dEntity) {
-        super(dEntity);
+    public ShortestPath(Entity entity) {
+        super(entity);
     }
 
     @Override
@@ -27,21 +26,21 @@ public class ShortestPath extends PathFind {
             Tile.resetTileArrayParents(tileBoard);
 
             this.resetLists();
-            openNodeList.add(dEntity.pc.getCurrentTile());
+            openNodeList.add(pc.getCurrentTile());
 
             while (currentTile != destination) {
                 currentTile = openNodeList.get(0);
                 this.evaluateTile(currentTile, destination);
             }
 
-            dEntity.pc.getCurrentTile().setParent(null);
+            pc.getCurrentTile().setParent(null);
             Tile backTrack = destination;
 
             while (backTrack.getParent() != null) {
                 backTrack = backTrack.getParent();
                 solutionNodeList.insert(0, backTrack);
             }
-            solutionNodeList.removeValue(dEntity.pc.getCurrentTile(), true);
+            solutionNodeList.removeValue(pc.getCurrentTile(), true);
             return solutionNodeList;
         } catch(NullPointerException e){
             throw new PathFindFailureException("Null somewhere in here");

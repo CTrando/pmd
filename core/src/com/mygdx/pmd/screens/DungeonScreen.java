@@ -6,14 +6,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.interfaces.Renderable;
+import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.model.Tile.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.scenes.Hud;
 import com.mygdx.pmd.utils.Constants;
 
@@ -35,7 +37,6 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     private BitmapFont bFont;
     private InputMultiplexer inputMultiplexer;
 
-    private OrthographicCamera gameCamera;
     private ScreenViewport gamePort;
 
     private Viewport stagePort;
@@ -48,8 +49,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         this.renderList = new Array<Renderable>();
 
 
-        gameCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        gamePort = new ScreenViewport(gameCamera);
+        gamePort = new ScreenViewport();
         gamePort.setUnitsPerPixel(1 / PPM);
 
         //init stuff for updating
@@ -68,13 +68,20 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // stage.act();
         controller.update();
-        this.updateCamera();
+        //this.updateCamera();
+        Vector3 pos = new Vector3((controller.pokemonPlayer.pc.x + Constants.TILE_SIZE / 2) / PPM,
+                                  (controller.pokemonPlayer.pc.y + Constants.TILE_SIZE / 2) / PPM,
+                                  0);
+        Vector3 camPos = gamePort.getCamera().position;
+
+        gamePort.getCamera().translate(pos.sub(camPos));
+        gamePort.getCamera().update(true);
 
         batch.setColor(Color.WHITE);
-        batch.setProjectionMatrix(gameCamera.combined);
+        batch.setProjectionMatrix(gamePort.getCamera().combined);
         batch.begin();
         sRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        sRenderer.setProjectionMatrix(gameCamera.combined);
+        sRenderer.setProjectionMatrix(gamePort.getCamera().combined);
         for (int i = 0; i < renderList.size; i++) {
             renderList.get(i).render(batch);
         }
@@ -133,11 +140,11 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     }
 
     private void updateCamera() {
-        gameCamera.position.set((controller.pokemonPlayer.pc.x + Constants.TILE_SIZE / 2) / PPM,
-                                (controller.pokemonPlayer
-                                        .pc.y +
-                                        Constants.TILE_SIZE / 2) / PPM, 0);
-        gameCamera.update();
+       /* Vector3 pos = new Vector3((controller.pokemonPlayer.pc.x + Constants.TILE_SIZE / 2) / PPM,
+                                  (controller.pokemonPlayer.pc.y + Constants.TILE_SIZE / 2) / PPM,
+                                  0);
+        gameCamera.position.lerp(pos, 1f);
+        gameCamera.update();*/
     }
 
     @Override
@@ -255,9 +262,6 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         }
     }
 
-    public OrthographicCamera getCamera() {
-        return gameCamera;
-    }
 
     public Hud getHud() {
         return hud;

@@ -12,14 +12,24 @@ import com.mygdx.pmd.model.logic.*;
  */
 public abstract class Spawner extends Entity  {
     Logic logic;
+    public TurnComponent tc;
+    public ActionComponent ac;
+    public PositionComponent pc;
 
     protected Spawner(Floor floor) {
         super(floor, 0, 0);
-        tc = new TurnComponent(this);
-        ac = new ActionComponent(this);
+        this.tc = new TurnComponent(this);
+        this.ac = new ActionComponent(this);
+        this.pc = (PositionComponent) getComponent(Component.POSITION);
 
-        tc.setTurnState(Turn.COMPLETE);
-        ac.setActionState(Action.IDLE);
+        pc.x = Integer.MAX_VALUE;
+        pc.y = Integer.MAX_VALUE;
+
+        components.put(Component.TURN, tc);
+        components.put(Component.ACTION, ac);
+
+        this.tc.setTurnState(Turn.COMPLETE);
+        this.ac.setActionState(Action.IDLE);
     }
 
     @Override

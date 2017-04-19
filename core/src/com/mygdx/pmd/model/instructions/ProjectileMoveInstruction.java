@@ -37,16 +37,16 @@ public class ProjectileMoveInstruction implements Instruction {
 
         switch (projectile.dc.getDirection()) {
             case up:
-                projectile.pc.y += projectile.speed;
+                projectile.pc.y += projectile.mc.getSpeed();
                 break;
             case down:
-                projectile.pc.y -= projectile.speed;
+                projectile.pc.y -= projectile.mc.getSpeed();
                 break;
             case right:
-                projectile.pc.x += projectile.speed;
+                projectile.pc.x += projectile.mc.getSpeed();
                 break;
             case left:
-                projectile.pc.x -= projectile.speed;
+                projectile.pc.x -= projectile.mc.getSpeed();
                 break;
         }
         Tile tile = Tile.getTileAt(projectile.pc.x, projectile.pc.y, tileBoard);

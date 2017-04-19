@@ -3,12 +3,15 @@ package com.mygdx.pmd.model.Floor;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Item.*;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.*;
+
+import java.util.ArrayList;
 
 /**
  * Created by Cameron on 1/24/2017.
@@ -19,6 +22,9 @@ public class Floor extends Entity {
     private Array<Item> items;
     private Controller controller;
 
+    public PositionComponent pc;
+    public TurnComponent tc;
+
     public Floor(Controller controller){
         super();
         this.controller = controller;
@@ -26,6 +32,10 @@ public class Floor extends Entity {
 
         items = new Array<Item>();
         this.pc = new PositionComponent(this);
+        this.tc = new TurnComponent(this);
+
+        components.put(Component.POSITION, pc);
+        components.put(Component.TURN, tc);
     }
 
     /**
@@ -82,15 +92,22 @@ public class Floor extends Entity {
     }
 
     @Override
-    public void runLogic() {
+    public void update(){
+        runLogic();
+    }
 
+    @Override
+    public void runLogic() {
+        if(tc.isTurnWaiting()) {
+            tc.setTurnState(Turn.COMPLETE);
+        }
     }
 
     public int getNumEntities() {
-        return getDynamicEntities().size;
+        return getEntities().size();
     }
 
-    public DynamicEntity getPlayer() {
+    public Entity getPlayer() {
         return controller.pokemonPlayer;
     }
 
@@ -110,8 +127,8 @@ public class Floor extends Entity {
         return items;
     }
 
-    public Array<DynamicEntity> getDynamicEntities(){
-        return controller.dEntities;
+    public ArrayList<Entity> getEntities(){
+        return controller.getEntityList();
     }
 
     @Override

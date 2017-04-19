@@ -11,10 +11,11 @@ public class MoveComponent implements Component {
     private Entity entity;
     private Tile[][] tileBoard;
 
-    private boolean isForcedMove;
+    private boolean forcedMove;
     private int speed;
 
     private PositionComponent pc;
+    private DirectionComponent dc;
     
     private Tile nextTile;
     private Tile facingTile;
@@ -22,18 +23,21 @@ public class MoveComponent implements Component {
 
     public MoveComponent(Entity entity) {
         this.entity = entity;
-        this.pc = entity.pc;
+        this.pc = (PositionComponent) entity.getComponent(Component.POSITION);
+        this.dc = (DirectionComponent) entity.getComponent(Component.DIRECTION);
+
         tileBoard = entity.tileBoard;
     }
 
     public void move(int dx, int dy) {
-        entity.pc.x += dx;
-        entity.pc.y += dy;
+        pc.x += dx;
+        pc.y += dy;
     }
 
-    public void forceMoveToTile(Tile nextTile) {
+    public void forceMoveToTile(Tile nextTile, Direction direction) {
         this.nextTile = nextTile;
-        isForcedMove = true;
+        dc.setDirection(direction);
+        forcedMove = true;
     }
 
     public void moveToTile(Tile nextTile, int speed) {
@@ -41,8 +45,8 @@ public class MoveComponent implements Component {
             return;
         }
         
-        int y = entity.pc.y;
-        int x = entity.pc.x;
+        int y = pc.y;
+        int x = pc.x;
                 
         if (y > nextTile.y && x > nextTile.x) {
             move(-speed, -speed);
@@ -92,6 +96,21 @@ public class MoveComponent implements Component {
         }
     }
 
+    public void randomizeLocation() {
+        Tile random = entity.floor.chooseUnoccupiedTile();
+
+        if (random.isWalkable) {
+            setNextTile(random);
+
+            pc.removeFromCurrentTile();
+            addToTile(random);
+            setFacingTile(dc.getDirection());
+
+            pc.setCurrentTile(random);
+            possibleNextTile = null;
+        } else randomizeLocation();
+    }
+
     public void setFacingTile(Tile tile) {
         facingTile = tile;
     }
@@ -114,5 +133,17 @@ public class MoveComponent implements Component {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public boolean isLegalToMoveTo(Tile nextTile) {
+        return nextTile.isWalkable;
+    }
+
+    public boolean isForcedMove() {
+        return forcedMove;
+    }
+
+    public void setForcedMove(boolean forcedMove) {
+        this.forcedMove = forcedMove;
     }
 }

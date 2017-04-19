@@ -1,5 +1,6 @@
 package com.mygdx.pmd.model.logic;
 
+import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.components.*;
 
@@ -9,14 +10,16 @@ import com.mygdx.pmd.model.components.*;
 public class AnimationLogic implements Logic {
     private Entity entity;
     private DirectionComponent dc;
+    private ActionComponent ac;
 
     public AnimationLogic(Entity entity) {
         this.entity = entity;
-        this.dc = entity.dc;
+        this.dc = (DirectionComponent) entity.getComponent(Component.DIRECTION);
+        this.ac = (ActionComponent) entity.getComponent(Component.ACTION);
     }
 
     public void execute() {
-        switch (entity.ac.getActionState()) {
+        switch (ac.getActionState()) {
             case MOVING:
                 entity.currentAnimation = entity.animationMap.get(dc.getDirection().toString());
                 break;

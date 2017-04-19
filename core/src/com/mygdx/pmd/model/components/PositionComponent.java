@@ -6,7 +6,7 @@ import com.mygdx.pmd.model.Tile.*;
 /**
  * Created by Cameron on 4/17/2017.
  */
-public class PositionComponent {
+public class PositionComponent implements Component {
 
     public int x;
     public int y;

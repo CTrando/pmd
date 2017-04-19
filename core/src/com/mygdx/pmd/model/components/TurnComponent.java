@@ -12,6 +12,7 @@ public class TurnComponent implements Component {
 
     public TurnComponent(Entity entity){
         this.entity = entity;
+        this.turnState = Turn.COMPLETE;
     }
 
     public boolean isTurnComplete(){

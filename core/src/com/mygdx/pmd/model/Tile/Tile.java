@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.interfaces.*;
-import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Item.Item;
 import com.mygdx.pmd.model.Entity.StaticEntity;
 import com.mygdx.pmd.model.Floor.Floor;
@@ -73,7 +72,7 @@ public abstract class Tile implements Renderable {
 
     }
 
-    public void playEvents(DynamicEntity receiver) {
+    public void playEvents(Entity receiver) {
         for (Item item : items) {
             System.out.println("Berry hit by " + receiver.toString());
             item.playEvents(receiver);
@@ -193,9 +192,11 @@ public abstract class Tile implements Renderable {
         return PUtils.getObjectsOfType(c, entityList).size > 0;
     }
 
-    public boolean hasEntityWithComponent(Component component){
+    public boolean hasEntityWithComponent(String string){
         for(Entity entity: entityList){
-
+            if(entity.hasComponent(string)){
+                return true;
+            }
         }
 
         //TODO fix this method and fix components so it uses a hashmap and strings to find components

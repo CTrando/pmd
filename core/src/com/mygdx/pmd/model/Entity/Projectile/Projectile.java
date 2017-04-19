@@ -2,23 +2,23 @@ package com.mygdx.pmd.model.Entity.Projectile;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.mygdx.pmd.enumerations.Action;
-import com.mygdx.pmd.enumerations.Move;
+import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.*;
+import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.logic.*;
-import com.mygdx.pmd.model.Entity.DynamicEntity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.instructions.*;
 import com.mygdx.pmd.utils.*;
+import javafx.geometry.Pos;
 
 import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 
 /**
  * Created by Cameron on 10/18/2016.
  */
-public class Projectile extends DynamicEntity {
+public class Projectile extends Entity {
     private ParticleEffect bs;
     public Pokemon parent;
     private Logic logic;
@@ -33,15 +33,28 @@ public class Projectile extends DynamicEntity {
 
     private ParticleEffect pe;
 
+    public MoveComponent mc;
+    public ActionComponent ac;
+    public DirectionComponent dc;
+    public PositionComponent pc;
+
     public Projectile(Pokemon parent, Move move) {
         // put down location as the parent's facing tile's location
         // set default values
         super(parent.floor, parent.mc.getFacingTile().x, parent.mc.getFacingTile().y);
         this.animationLogic = new AnimationLogic(this);
 
+        this.pc = new PositionComponent(this);
         this.mc = new MoveComponent(this);
         this.ac = new ActionComponent(this);
         this.dc = new DirectionComponent(this);
+
+        components.put(Component.POSITION, pc);
+        components.put(Component.MOVE, mc);
+        components.put(Component.ACTION, ac);
+        components.put(Component.DIRECTION, dc);
+
+
 
         this.parent = parent;
         this.move = move;
@@ -184,11 +197,6 @@ public class Projectile extends DynamicEntity {
     @Override
     public void runLogic() {
         logic.execute();
-    }
-
-    @Override
-    public boolean isLegalToMoveTo(Tile tile) {
-        return tile.isWalkable;
     }
 
     @Override

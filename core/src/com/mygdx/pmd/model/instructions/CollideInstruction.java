@@ -10,15 +10,15 @@ import com.mygdx.pmd.model.components.*;
  * Created by Cameron on 4/1/2017.
  */
 public class CollideInstruction implements Instruction{
-    private DynamicEntity dEntity;
+    private Entity entity;
     private boolean isFinished;
     private ActionComponent ac;
     private PositionComponent pc;
 
-    public CollideInstruction(DynamicEntity dEntity){
-        this.dEntity = dEntity;
-        this.ac = dEntity.ac;
-        this.pc = dEntity.pc;
+    public CollideInstruction(Entity entity){
+        this.entity = this.entity;
+        this.ac = (ActionComponent) this.entity.getComponent(Component.ACTION);
+        this.pc = (PositionComponent) this.entity.getComponent(Component.POSITION);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class CollideInstruction implements Instruction{
 
     @Override
     public void execute() {
-        if(dEntity.currentAnimation.isFinished()){
+        if(entity.currentAnimation.isFinished()){
             isFinished = true;
         }
     }

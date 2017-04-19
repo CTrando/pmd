@@ -6,6 +6,7 @@ import com.mygdx.pmd.interfaces.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.Tile.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.instructions.*;
 
 /**
@@ -49,9 +50,9 @@ public class PlayerLogic extends PokemonLogic {
         mc.setNextTile(mc.possibleNextTile);
         mc.possibleNextTile = null;
 
-       /* if (mc.getNextTile().hasEntityOfType(Movable.class)) {
+        if (mc.getNextTile().hasEntityWithComponent(Component.MOVE)) {
             this.forceMove();
-        }*/
+        }
 
         player.instructions.add(new MoveInstruction(player, mc.getNextTile()));
 
@@ -86,11 +87,12 @@ public class PlayerLogic extends PokemonLogic {
     }
 
     private void forceMove() {
-      /*  for (DynamicEntity dEntity : PUtils.getObjectsOfType(DynamicEntity.class, mc.getNextTile().getEntityList())) {
-            if (dEntity != player) {
-                dEntity.forceMoveToTile(pc.getCurrentTile(), dc.getDirection().getOpposite());
+        for (Entity entity : player.mc.getNextTile().getEntityList()) {
+            if (entity != player && entity.hasComponent(Component.MOVE)) {
+                MoveComponent entityMC = (MoveComponent) entity.getComponent(Component.MOVE);
+                entityMC.forceMoveToTile(pc.getCurrentTile(), dc.getDirection().getOpposite());
             }
-        }*/
+        }
     }
 
     @Override

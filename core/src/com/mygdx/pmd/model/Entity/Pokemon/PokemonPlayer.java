@@ -21,7 +21,7 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
     PokemonPlayer(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y, pokemonName);
         tc.setTurnState(Turn.WAITING);
-        this.aggression = Aggression.passive;
+        this.cc.setAggressionState(Aggression.passive);
 
         logic = new PlayerLogic(this);
     }
@@ -97,14 +97,14 @@ public class PokemonPlayer extends Pokemon implements PlayerControlled {
             } else if (PMD.isKeyPressedTimeSensitive(Key.a)) {
                 System.out.println("Skip turn!");
                 tc.setTurnState(Turn.COMPLETE);
-                possibleNextTile = null;
+                mc.possibleNextTile = null;
             } else if (PMD.isKeyPressedTimeSensitive(Key.p)) {
                 Controller.turnsPaused = !Controller.turnsPaused;
             } else if (PMD.isKeyPressed(Key.r)) {
                 //PMD.screen.game.setScreen(PMD.endScreen);
-                for (DynamicEntity dEntity : floor.getDynamicEntities()) {
-                    if (dEntity instanceof PokemonMob) {
-                        PokemonMob pMob = (PokemonMob) dEntity;
+                for (Entity entity : floor.getEntities()) {
+                    if (entity instanceof PokemonMob) {
+                        PokemonMob pMob = (PokemonMob) entity;
                         pMob.pathFind = pMob.sPath;
                     }
                 }

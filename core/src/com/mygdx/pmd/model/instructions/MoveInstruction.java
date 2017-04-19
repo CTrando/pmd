@@ -9,7 +9,7 @@ import com.mygdx.pmd.model.components.*;
  * Created by Cameron on 2/21/2017.
  */
 public class MoveInstruction implements Instruction {
-    private DynamicEntity dEntity;
+    private Entity entity;
     private Tile nextTile;
     private boolean isFinished;
 
@@ -18,22 +18,22 @@ public class MoveInstruction implements Instruction {
     private DirectionComponent dc;
     private PositionComponent pc;
 
-    public MoveInstruction(DynamicEntity dEntity, Tile nextTile) {
-        this.dEntity = dEntity;
+    public MoveInstruction(Entity entity, Tile nextTile) {
+        this.entity = entity;
         this.nextTile = nextTile;
-        this.mc = dEntity.mc;
-        this.ac = dEntity.ac;
-        this.dc = dEntity.dc;
-        this.pc = dEntity.pc;
+        this.mc = (MoveComponent) this.entity.getComponent(Component.MOVE);
+        this.ac = (ActionComponent) this.entity.getComponent(Component.ACTION);
+        this.dc = (DirectionComponent) this.entity.getComponent(Component.DIRECTION);
+        this.pc = (PositionComponent) this.entity.getComponent(Component.POSITION);
     }
 
     @Override
     public void execute() {
-        if (!dEntity.equals(nextTile)) {
+        if (!entity.equals(nextTile)) {
             mc.moveToTile(nextTile, mc.getSpeed());
         }
 
-        if (dEntity.equals(nextTile)) {
+        if (entity.equals(nextTile)) {
             isFinished = true;
         }
     }
@@ -52,7 +52,7 @@ public class MoveInstruction implements Instruction {
         ac.setActionState(Action.IDLE);
 
         pc.setCurrentTile(nextTile);
-        pc.getCurrentTile().playEvents(dEntity);
+        pc.getCurrentTile().playEvents(entity);
     }
 
     @Override

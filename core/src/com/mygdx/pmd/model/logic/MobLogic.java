@@ -33,13 +33,16 @@ public class MobLogic extends PokemonLogic {
         //ensure that when this runs the pokemon's turn is always waiting
         if (canAct()) {
             //will turn to face the player if the mob is aggressive
-            if (mob.isAggressive()) {
-                dc.setDirection(mob.target.pc.getCurrentTile());
-                mc.setFacingTile(mob.target.dc.getDirection());
+            if (mob.cc.isAggressive()) {
+                PositionComponent targetPC = (PositionComponent) mob.target.getComponent(Component.POSITION);
+                DirectionComponent targetDC = (DirectionComponent) mob.target.getComponent(Component.DIRECTION);
+
+                dc.setDirection(targetPC.getCurrentTile());
+                mc.setFacingTile(targetDC.getDirection());
 
                 if (mob.target.shouldBeDestroyed) {
                     mob.target = mob.floor.getPlayer();
-                    mob.aggression = Aggression.passive;
+                    mob.cc.setAggressionState(Aggression.passive);
                     mob.pathFind = mob.wander;
                 }
             }
@@ -65,7 +68,6 @@ public class MobLogic extends PokemonLogic {
 
             if (canMove()) {
                 move();
-                tc.setTurnState(Turn.COMPLETE);
                 return;
             }
         }
@@ -86,18 +88,18 @@ public class MobLogic extends PokemonLogic {
     }
 
     boolean canAttack() {
-        return mob.canSeeEnemy() && mob.getAggression() == Aggression.aggressive;
+        return mob.canSeeEnemy() && mob.cc.isAggressive();
     }
 
     @Override
     void move() {
         // set the next tile based on if the mob has been forced to move or not
-        if (mob.isForcedMove) {
+        if (mob.mc.isForcedMove()) {
             System.out.println("forced move");
             mc.setSpeed(1);
-            mob.isForcedMove = false;
+            mc.setForcedMove(false);
         } else {
-            if (mob.isAggressive()) {
+            if (mob.cc.isAggressive()) {
                 mob.pathFind = mob.sPath;
             }
             //see if it can pathfind, meaning there was no error thrown
@@ -114,10 +116,18 @@ public class MobLogic extends PokemonLogic {
 
             }
         }
-        dc.setDirection(mc.getNextTile());
-        this.determineSpeed();
+        if(mc.getNextTile() != null && mc.getNextTile() != pc.getCurrentTile()) {
+            mob.instructions.add(new MoveInstruction(mob, mc.getNextTile()));
+
+            ac.setActionState(Action.MOVING);
+
+            dc.setDirection(mc.getNextTile());
+            this.determineSpeed();
+        } else {
+            ac.setActionState(Action.IDLE);
+        }
+        tc.setTurnState(Turn.COMPLETE);
         //tell the mob to go to to the next tile
-        mob.instructions.add(new MoveInstruction(mob, mc.getNextTile()));
     }
 
     @Override
@@ -138,7 +148,9 @@ public class MobLogic extends PokemonLogic {
 
     private boolean pathFind() {
         try {
-            mob.path = mob.pathFind.pathFind(mob.target.mc.getNextTile());
+            // not one behind change back to movement component later
+            MoveComponent targetMC = (MoveComponent) mob.target.getComponent(Component.MOVE);
+            mob.path = mob.pathFind.pathFind(targetMC.getNextTile());
         } catch (PathFindFailureException e) {
             System.out.println("Failed to pathfind");
         }

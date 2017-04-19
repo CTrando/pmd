@@ -1,27 +1,28 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.Array;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
-import com.mygdx.pmd.model.Tile.GenericTile;
-import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.logic.*;
-import com.mygdx.pmd.screens.DungeonScreen;
-import com.mygdx.pmd.utils.*;
+import com.mygdx.pmd.utils.Constants;
 
-import java.util.Set;
+public abstract class Pokemon extends Entity implements Damageable, Logical {
+    public Array<Entity> children;
+    public Entity target;
 
-import static com.mygdx.pmd.screens.DungeonScreen.PPM;
-
-public abstract class Pokemon extends DynamicEntity implements Damageable, Aggressible, Logical {
-    public Array<DynamicEntity> children;
-    public DynamicEntity target;
+    public TurnComponent tc;
+    public CombatComponent cc;
+    public MoveComponent mc;
+    public DirectionComponent dc;
+    public PositionComponent pc;
+    public ActionComponent ac;
 
     Logic logic;
     private PokemonName pokemonName;
@@ -33,18 +34,27 @@ public abstract class Pokemon extends DynamicEntity implements Damageable, Aggre
 
     Pokemon(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y);
-        mc = new MoveComponent(this);
-        ac = new ActionComponent(this);
-        tc = new TurnComponent(this);
-        dc = new DirectionComponent(this);
+
+        components.put(Component.ACTION, new ActionComponent(this));
+        components.put(Component.TURN, new TurnComponent(this));
+        components.put(Component.DIRECTION, new DirectionComponent(this));
+        components.put(Component.COMBAT, new CombatComponent(this));
+        components.put(Component.MOVE, new MoveComponent(this));
+
+        this.tc = (TurnComponent) getComponent(Component.TURN);
+        this.cc = (CombatComponent) getComponent(Component.COMBAT);
+        this.mc = (MoveComponent) getComponent(Component.MOVE);
+        this.dc = (DirectionComponent) getComponent(Component.DIRECTION);
+        this.pc = (PositionComponent) getComponent(Component.POSITION);
+        this.ac = (ActionComponent) getComponent(Component.ACTION);
 
         setHP(100);
         tc.setTurnState(Turn.COMPLETE);
-        setAggression(Aggression.passive);
+        cc.setAggressionState(Aggression.passive);
         mc.setFacingTile(dc.getDirection());
 
         this.pokemonName = pokemonName;
-        this.children = new Array<DynamicEntity>();
+        this.children = new Array<Entity>();
 
         //initialize moves and add default move
         moves = new Array<Move>(4);
@@ -59,7 +69,7 @@ public abstract class Pokemon extends DynamicEntity implements Damageable, Aggre
      * @param tile
      * @return
      */
-    @Override
+    //@Override
     public boolean isLegalToMoveTo(Tile tile) {
         if (tile == null) return false;
 
@@ -77,14 +87,14 @@ public abstract class Pokemon extends DynamicEntity implements Damageable, Aggre
     public void update() {
         // have it run its logic first before it executes its instructions
         // may have negative repercussions
+        super.update();
         this.runLogic();
 
-        for(DynamicEntity child: children){
+        for(Entity child: children){
             child.update();
         }
 
         animationLogic.execute();
-        super.update();
     }
 
     @Override
@@ -95,7 +105,7 @@ public abstract class Pokemon extends DynamicEntity implements Damageable, Aggre
             DungeonScreen.sRenderer.rect(mc.getNextTile().x/PPM, mc.getNextTile().y/PPM, Constants.TILE_SIZE/PPM, Constants.TILE_SIZE/PPM);
         }*/
 
-        for(DynamicEntity child: children){
+        for(Entity child: children){
             child.render(batch);
         }
 
@@ -117,18 +127,8 @@ public abstract class Pokemon extends DynamicEntity implements Damageable, Aggre
         } else randomizeLocation();
     }
 
-    @Override
-    public Aggression getAggression() {
-        return aggression;
-    }
-
-    @Override
-    public void setAggression(Aggression aggression) {
-        this.aggression = aggression;
-    }
-
     public boolean canSeeEnemy() {
-        if (this.aggression != Aggression.aggressive) return false;
+        if (cc.isAggressive()) return false;
         int rOffset = 0;
         int cOffset = 0;
 

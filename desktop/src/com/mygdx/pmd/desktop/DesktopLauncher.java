@@ -15,7 +15,7 @@ public class DesktopLauncher {
 		config.foregroundFPS = 0;
 		config.backgroundFPS = 0;*/
 		//}
-		config.foregroundFPS = 60;
+		config.vSyncEnabled = true;
 
         //set these things as these values for now can edit later
 		//Gdx.graphics.getWidth and height return null because lwgwl app has not been made yet

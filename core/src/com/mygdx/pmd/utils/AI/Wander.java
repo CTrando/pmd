@@ -2,8 +2,7 @@ package com.mygdx.pmd.utils.AI;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
-import com.mygdx.pmd.model.Entity.DynamicEntity;
-import com.mygdx.pmd.model.Entity.Entity;
+import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.model.components.*;
 
@@ -12,12 +11,9 @@ import com.mygdx.pmd.model.components.*;
  * Created by Cameron on 12/10/2016.
  */
 public class Wander extends PathFind {
-    private MoveComponent mc;
-    private PositionComponent pc;
-    public Wander(DynamicEntity dEntity) {
-        super(dEntity);
-        mc = dEntity.mc;
-        pc = dEntity.pc;
+
+    public Wander(Entity entity) {
+        super(entity);
     }
 
     @Override
@@ -29,7 +25,7 @@ public class Wander extends PathFind {
             nextTile = chooseRandomTile(currentTile);
         }
 
-        if (dEntity.isLegalToMoveTo(nextTile)) {
+        if (mc.isLegalToMoveTo(nextTile)) {
             solutionNodeList.add(nextTile);
         }
         return solutionNodeList;

@@ -10,6 +10,7 @@ import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.instructions.*;
 import com.mygdx.pmd.utils.*;
+import javafx.geometry.Pos;
 
 import java.util.*;
 
@@ -25,11 +26,8 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
 
     /******************************************/
     //Inherited variables from interfaces
-    public ActionComponent ac;
-    public TurnComponent tc;
-    public DirectionComponent dc;
-    public MoveComponent mc;
-    public PositionComponent pc;
+
+    protected HashMap<String, Component> components;
 
     protected int hp;
 
@@ -50,6 +48,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
     /********************************************/
 
     public Entity() {
+        components = new HashMap<String, Component>();
         instructions = new LinkedList<Instruction>();
         currentInstruction = NO_INSTRUCTION;
     }
@@ -58,7 +57,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
      * current tile is defined by the initial x and y
      */
     public Entity(Floor floor, int x, int y) {
-
+        components = new HashMap<String, Component>();
         this.shouldBeDestroyed = false;
 
         this.floor = floor;
@@ -68,7 +67,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
         instructions = new LinkedList<Instruction>();
         currentInstruction = NO_INSTRUCTION;
 
-        this.pc = new PositionComponent(this, x,y);
+        components.put(Component.POSITION, new PositionComponent(this, x,y));
     }
 
     @Override
@@ -88,7 +87,8 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
 
     @Override
     public void render(SpriteBatch batch) {
-        if (currentSprite != null) {
+        if (currentSprite != null && hasComponent(Component.POSITION)) {
+            PositionComponent pc = (PositionComponent) this.getComponent(Component.POSITION);
             batch.draw(currentSprite, pc.x/PPM, pc.y/PPM, currentSprite.getWidth()/PPM, currentSprite.getHeight()
                     /PPM);
         }
@@ -97,7 +97,16 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
     public abstract void runLogic();
 
     public boolean equals(Tile tile) {
+        PositionComponent pc = (PositionComponent) this.getComponent(Component.POSITION);
         return tile != null && (tile.x == pc.x && tile.y == pc.y);
+    }
+
+    public boolean hasComponent(String string){
+        return components.get(string) != null;
+    }
+
+    public Component getComponent(String string){
+        return components.get(string);
     }
 
     @Override

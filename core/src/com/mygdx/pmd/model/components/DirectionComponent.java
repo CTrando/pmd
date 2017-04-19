@@ -15,7 +15,7 @@ public class DirectionComponent implements Component {
     public DirectionComponent(Entity entity) {
         this.entity = entity;
         this.direction = Direction.down;
-        this.pc = entity.pc;
+        this.pc = (PositionComponent) entity.getComponent(Component.POSITION);
     }
 
     public Direction getDirection() {

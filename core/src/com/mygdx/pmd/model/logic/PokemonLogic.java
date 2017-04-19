@@ -36,7 +36,7 @@ public abstract class PokemonLogic implements Logic {
     abstract void attack();
 
     boolean isEnemyAdjacent() {
-        return pokemon.facingTile.hasEntityOfType(Damageable.class);
+        return mc.getFacingTile().hasEntityOfType(Damageable.class);
     }
 
     Tile findEnemyTile() {

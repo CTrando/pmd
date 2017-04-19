@@ -2,6 +2,7 @@ package com.mygdx.pmd.model.Entity.Pokemon;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.logic.MobLogic;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
@@ -9,6 +10,7 @@ import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.AI.PathFind;
 import com.mygdx.pmd.utils.AI.ShortestPath;
 import com.mygdx.pmd.utils.AI.Wander;
+import javafx.geometry.Pos;
 
 public class PokemonMob extends Pokemon {
     public PathFind pathFind;
@@ -23,7 +25,7 @@ public class PokemonMob extends Pokemon {
 
     PokemonMob(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y, pokemonName);
-        this.aggression = Aggression.passive;
+        this.cc.setAggressionState(Aggression.passive);
         this.target = floor.getPlayer();
 
         //pathfinding objects
@@ -38,15 +40,18 @@ public class PokemonMob extends Pokemon {
     @Override
     public boolean isLegalToMoveTo(Tile tile) {
         return (tile != null &&
-                tile.isWalkable);
+                tile.isWalkable &&
+                !tile.hasEntityWithComponent(Component.MOVE));
     }
 
-    public boolean isWithinRange(DynamicEntity pokemon) {
+    public boolean isWithinRange(Entity entity) {
         int curRow = pc.getCurrentTile().row;
         int curCol = pc.getCurrentTile().col;
 
-        int dR = curRow - pokemon.pc.getCurrentTile().row;
-        int dC = curCol - pokemon.pc.getCurrentTile().col;
+        PositionComponent otherPC = (PositionComponent) entity.getComponent(Component.POSITION);
+
+        int dR = curRow - otherPC.getCurrentTile().row;
+        int dC = curCol - otherPC.getCurrentTile().col;
 
         if (dR * dR + dC * dC > 400) {
             return false;
@@ -57,7 +62,7 @@ public class PokemonMob extends Pokemon {
     @Override
     public void takeDamage(Pokemon parent, int damage) {
         super.takeDamage(parent, damage);
-        this.aggression = Aggression.aggressive;
+        this.cc.setAggressionState(Aggression.aggressive);
         this.target = parent;
     }
 
