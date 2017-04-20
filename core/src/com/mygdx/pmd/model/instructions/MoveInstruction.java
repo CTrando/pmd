@@ -21,10 +21,12 @@ public class MoveInstruction implements Instruction {
     public MoveInstruction(Entity entity, Tile nextTile) {
         this.entity = entity;
         this.nextTile = nextTile;
-        this.mc = (MoveComponent) this.entity.getComponent(Component.MOVE);
-        this.ac = (ActionComponent) this.entity.getComponent(Component.ACTION);
-        this.dc = (DirectionComponent) this.entity.getComponent(Component.DIRECTION);
-        this.pc = (PositionComponent) this.entity.getComponent(Component.POSITION);
+        this.mc = (MoveComponent) this.entity.getComponent(MoveComponent.class);
+        this.ac = (ActionComponent) this.entity.getComponent(ActionComponent.class);
+        this.dc = (DirectionComponent) this.entity.getComponent(DirectionComponent.class);
+        this.pc = (PositionComponent) this.entity.getComponent(PositionComponent.class);
+
+        mc.addToTile(nextTile);
     }
 
     @Override
@@ -43,8 +45,11 @@ public class MoveInstruction implements Instruction {
         ac.setActionState(Action.MOVING);
 
         pc.removeFromCurrentTile();
-        mc.addToTile(nextTile);
         mc.setFacingTile(dc.getDirection());
+
+        if(mc.isForcedMove()){
+            mc.setForcedMove(false);
+        }
     }
 
     @Override

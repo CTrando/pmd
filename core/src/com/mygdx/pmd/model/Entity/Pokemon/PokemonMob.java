@@ -41,14 +41,14 @@ public class PokemonMob extends Pokemon {
     public boolean isLegalToMoveTo(Tile tile) {
         return (tile != null &&
                 tile.isWalkable &&
-                !tile.hasEntityWithComponent(Component.MOVE));
+                !tile.hasEntityWithComponent(MoveComponent.class));
     }
 
     public boolean isWithinRange(Entity entity) {
         int curRow = pc.getCurrentTile().row;
         int curCol = pc.getCurrentTile().col;
 
-        PositionComponent otherPC = (PositionComponent) entity.getComponent(Component.POSITION);
+        PositionComponent otherPC = (PositionComponent) entity.getComponent(PositionComponent.class);
 
         int dR = curRow - otherPC.getCurrentTile().row;
         int dC = curCol - otherPC.getCurrentTile().col;

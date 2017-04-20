@@ -35,18 +35,18 @@ public abstract class Pokemon extends Entity implements Damageable, Logical {
     Pokemon(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y);
 
-        components.put(Component.ACTION, new ActionComponent(this));
-        components.put(Component.TURN, new TurnComponent(this));
-        components.put(Component.DIRECTION, new DirectionComponent(this));
-        components.put(Component.COMBAT, new CombatComponent(this));
-        components.put(Component.MOVE, new MoveComponent(this));
+        components.put(ActionComponent.class, new ActionComponent(this));
+        components.put(TurnComponent.class, new TurnComponent(this));
+        components.put(DirectionComponent.class, new DirectionComponent(this));
+        components.put(CombatComponent.class, new CombatComponent(this));
+        components.put(MoveComponent.class, new MoveComponent(this));
 
-        this.tc = (TurnComponent) getComponent(Component.TURN);
-        this.cc = (CombatComponent) getComponent(Component.COMBAT);
-        this.mc = (MoveComponent) getComponent(Component.MOVE);
-        this.dc = (DirectionComponent) getComponent(Component.DIRECTION);
-        this.pc = (PositionComponent) getComponent(Component.POSITION);
-        this.ac = (ActionComponent) getComponent(Component.ACTION);
+        this.tc = (TurnComponent) getComponent(TurnComponent.class);
+        this.cc = (CombatComponent) getComponent(CombatComponent.class);
+        this.mc = (MoveComponent) getComponent(MoveComponent.class);
+        this.dc = (DirectionComponent) getComponent(DirectionComponent.class);
+        this.pc = (PositionComponent) getComponent(PositionComponent.class);
+        this.ac = (ActionComponent) getComponent(ActionComponent.class);
 
         setHP(100);
         tc.setTurnState(Turn.COMPLETE);
@@ -87,7 +87,6 @@ public abstract class Pokemon extends Entity implements Damageable, Logical {
     public void update() {
         // have it run its logic first before it executes its instructions
         // may have negative repercussions
-        super.update();
         this.runLogic();
 
         for(Entity child: children){
@@ -95,6 +94,7 @@ public abstract class Pokemon extends Entity implements Damageable, Logical {
         }
 
         animationLogic.execute();
+        super.update();
     }
 
     @Override

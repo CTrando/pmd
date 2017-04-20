@@ -192,9 +192,9 @@ public abstract class Tile implements Renderable {
         return PUtils.getObjectsOfType(c, entityList).size > 0;
     }
 
-    public boolean hasEntityWithComponent(String string){
+    public boolean hasEntityWithComponent(Class type){
         for(Entity entity: entityList){
-            if(entity.hasComponent(string)){
+            if(entity.hasComponent(type)){
                 return true;
             }
         }

@@ -34,8 +34,7 @@ public class Floor extends Entity {
         this.pc = new PositionComponent(this);
         this.tc = new TurnComponent(this);
 
-        components.put(Component.POSITION, pc);
-        components.put(Component.TURN, tc);
+        components.put(TurnComponent.class, tc);
     }
 
     /**

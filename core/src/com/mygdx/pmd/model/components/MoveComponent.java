@@ -3,6 +3,7 @@ package com.mygdx.pmd.model.components;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Tile.*;
+import com.mygdx.pmd.model.instructions.*;
 
 /**
  * Created by Cameron on 4/16/2017.
@@ -23,8 +24,8 @@ public class MoveComponent implements Component {
 
     public MoveComponent(Entity entity) {
         this.entity = entity;
-        this.pc = (PositionComponent) entity.getComponent(Component.POSITION);
-        this.dc = (DirectionComponent) entity.getComponent(Component.DIRECTION);
+        this.pc = (PositionComponent) entity.getComponent(PositionComponent.class);
+        this.dc = (DirectionComponent) entity.getComponent(DirectionComponent.class);
 
         tileBoard = entity.tileBoard;
     }
@@ -35,7 +36,9 @@ public class MoveComponent implements Component {
     }
 
     public void forceMoveToTile(Tile nextTile, Direction direction) {
-        this.nextTile = nextTile;
+        this.setNextTile(nextTile);
+        entity.instructions.add(new MoveInstruction(entity, nextTile));
+
         dc.setDirection(direction);
         forcedMove = true;
     }
@@ -107,6 +110,7 @@ public class MoveComponent implements Component {
             setFacingTile(dc.getDirection());
 
             pc.setCurrentTile(random);
+
             possibleNextTile = null;
         } else randomizeLocation();
     }

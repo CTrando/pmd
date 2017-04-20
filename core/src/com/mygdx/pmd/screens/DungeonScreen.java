@@ -38,6 +38,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     private InputMultiplexer inputMultiplexer;
 
     private ScreenViewport gamePort;
+    private OrthographicCamera gameCamera;
 
     private Viewport stagePort;
 
@@ -48,8 +49,8 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         this.sRenderer = new ShapeRenderer();
         this.renderList = new Array<Renderable>();
 
-
-        gamePort = new ScreenViewport();
+        gameCamera = new OrthographicCamera(Gdx.graphics.getWidth() / PPM, Gdx.graphics.getHeight() / PPM);
+        gamePort = new ScreenViewport(gameCamera);
         gamePort.setUnitsPerPixel(1 / PPM);
 
         //init stuff for updating
@@ -68,26 +69,19 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // stage.act();
         controller.update();
-        //this.updateCamera();
-        Vector3 pos = new Vector3((controller.pokemonPlayer.pc.x + Constants.TILE_SIZE / 2) / PPM,
-                                  (controller.pokemonPlayer.pc.y + Constants.TILE_SIZE / 2) / PPM,
-                                  0);
-        Vector3 camPos = gamePort.getCamera().position;
-
-        gamePort.getCamera().translate(pos.sub(camPos));
-        gamePort.getCamera().update(true);
+        this.updateCamera();
 
         batch.setColor(Color.WHITE);
         batch.setProjectionMatrix(gamePort.getCamera().combined);
         batch.begin();
-        sRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        sRenderer.setProjectionMatrix(gamePort.getCamera().combined);
+       /* sRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        sRenderer.setProjectionMatrix(gamePort.getCamera().combined);*/
         for (int i = 0; i < renderList.size; i++) {
             renderList.get(i).render(batch);
         }
 
         batch.end();
-        sRenderer.end();
+       //sRenderer.end();
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         //for some reason it initializes batch,begin in stage.draw - how terrible
 
@@ -140,11 +134,15 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     }
 
     private void updateCamera() {
-       /* Vector3 pos = new Vector3((controller.pokemonPlayer.pc.x + Constants.TILE_SIZE / 2) / PPM,
-                                  (controller.pokemonPlayer.pc.y + Constants.TILE_SIZE / 2) / PPM,
+
+        float x = MathUtils.round(((float)(controller.pokemonPlayer.pc.x + Constants.TILE_SIZE / 2)));
+        float y = MathUtils.round(((float)(controller.pokemonPlayer.pc.y + Constants.TILE_SIZE / 2)));
+
+        Vector3 pos = new Vector3(x/PPM,
+                                  y/PPM,
                                   0);
-        gameCamera.position.lerp(pos, 1f);
-        gameCamera.update();*/
+        gameCamera.position.set(pos);
+        gameCamera.update();
     }
 
     @Override

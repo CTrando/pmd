@@ -27,7 +27,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
     /******************************************/
     //Inherited variables from interfaces
 
-    protected HashMap<String, Component> components;
+    protected HashMap<Class, Component> components;
 
     protected int hp;
 
@@ -48,7 +48,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
     /********************************************/
 
     public Entity() {
-        components = new HashMap<String, Component>();
+        components = new HashMap<Class, Component>();
         instructions = new LinkedList<Instruction>();
         currentInstruction = NO_INSTRUCTION;
     }
@@ -57,7 +57,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
      * current tile is defined by the initial x and y
      */
     public Entity(Floor floor, int x, int y) {
-        components = new HashMap<String, Component>();
+        components = new HashMap<Class, Component>();
         this.shouldBeDestroyed = false;
 
         this.floor = floor;
@@ -67,7 +67,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
         instructions = new LinkedList<Instruction>();
         currentInstruction = NO_INSTRUCTION;
 
-        components.put(Component.POSITION, new PositionComponent(this, x,y));
+        components.put(PositionComponent.class, new PositionComponent(this, x,y));
     }
 
     @Override
@@ -87,8 +87,8 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
 
     @Override
     public void render(SpriteBatch batch) {
-        if (currentSprite != null && hasComponent(Component.POSITION)) {
-            PositionComponent pc = (PositionComponent) this.getComponent(Component.POSITION);
+        if (currentSprite != null && hasComponent(PositionComponent.class)) {
+            PositionComponent pc = (PositionComponent) this.getComponent(PositionComponent.class);
             batch.draw(currentSprite, pc.x/PPM, pc.y/PPM, currentSprite.getWidth()/PPM, currentSprite.getHeight()
                     /PPM);
         }
@@ -97,16 +97,16 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
     public abstract void runLogic();
 
     public boolean equals(Tile tile) {
-        PositionComponent pc = (PositionComponent) this.getComponent(Component.POSITION);
+        PositionComponent pc = (PositionComponent) this.getComponent(PositionComponent.class);
         return tile != null && (tile.x == pc.x && tile.y == pc.y);
     }
 
-    public boolean hasComponent(String string){
-        return components.get(string) != null;
+    public boolean hasComponent(Class type){
+        return components.get(type) != null;
     }
 
-    public Component getComponent(String string){
-        return components.get(string);
+    public <T extends Component> T getComponent(Class<T> type){
+        return type.cast(components.get(type));
     }
 
     @Override

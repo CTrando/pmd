@@ -50,7 +50,7 @@ public class PlayerLogic extends PokemonLogic {
         mc.setNextTile(mc.possibleNextTile);
         mc.possibleNextTile = null;
 
-        if (mc.getNextTile().hasEntityWithComponent(Component.MOVE)) {
+        if (mc.getNextTile().hasEntityWithComponent(MoveComponent.class)) {
             this.forceMove();
         }
 
@@ -88,8 +88,8 @@ public class PlayerLogic extends PokemonLogic {
 
     private void forceMove() {
         for (Entity entity : player.mc.getNextTile().getEntityList()) {
-            if (entity != player && entity.hasComponent(Component.MOVE)) {
-                MoveComponent entityMC = (MoveComponent) entity.getComponent(Component.MOVE);
+            if (entity != player && entity.hasComponent(MoveComponent.class)) {
+                MoveComponent entityMC = (MoveComponent) entity.getComponent(MoveComponent.class);
                 entityMC.forceMoveToTile(pc.getCurrentTile(), dc.getDirection().getOpposite());
             }
         }

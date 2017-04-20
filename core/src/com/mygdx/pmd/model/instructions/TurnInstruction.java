@@ -15,7 +15,7 @@ public class TurnInstruction implements Instruction {
 
     public TurnInstruction(Entity entity, Direction direction){
         this.entity = entity;
-        this.dc = (DirectionComponent) entity.getComponent(Component.DIRECTION);
+        this.dc = (DirectionComponent) entity.getComponent(DirectionComponent.class);
     }
 
     @Override

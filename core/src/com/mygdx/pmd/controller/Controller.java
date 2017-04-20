@@ -103,7 +103,7 @@ public class Controller {
             Entity entity = entityList.get(i);
             entity.update();
 
-            TurnComponent upTurnEntityTC = (TurnComponent) updatedTurnEntity.getComponent(Component.TURN);
+            TurnComponent upTurnEntityTC = updatedTurnEntity.getComponent(TurnComponent.class);
 
             if (upTurnEntityTC.getTurnState() == Turn.COMPLETE) {
                 //need to sort both entity list and turn based entities in order to update them in order
@@ -146,23 +146,18 @@ public class Controller {
 
     private void randomizeAllPokemonLocation() {
         for(Entity entity: entityList){
-            if(entity.hasComponent(Component.MOVE)){
-                MoveComponent mc = (MoveComponent) entity.getComponent(Component.MOVE);
+            if(entity.hasComponent(MoveComponent.class)){
+                MoveComponent mc = entity.getComponent(MoveComponent.class);
                 mc.randomizeLocation();
             }
         }
-      /*  for (DynamicEntity entity : dEntities) {
-            entity.randomizeLocation();
-        }*/
-        //TODO add code here to see if it has a position component
-
     }
 
     private void directlyAddEntity(Entity entity) {
         screen.renderList.add(entity);
         entityList.add(entity);
 
-        if (entity.hasComponent(Component.TURN)) {
+        if (entity.hasComponent(TurnComponent.class)) {
             turnBasedEntities.addLast(entity);
         }
 
@@ -185,7 +180,7 @@ public class Controller {
             screen.renderList.removeValue(entity, true);
             entityList.remove(entity);
 
-            if (entity.hasComponent(Component.TURN)) {
+            if (entity.hasComponent(TurnComponent.class)) {
                 turnBasedEntities.remove(entity);
             }
         }

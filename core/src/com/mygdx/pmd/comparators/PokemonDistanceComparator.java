@@ -1,6 +1,7 @@
 package com.mygdx.pmd.comparators;
 
 import com.mygdx.pmd.model.Entity.Entity;
+import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.components.*;
 
 import java.util.Comparator;
@@ -20,11 +21,11 @@ public class PokemonDistanceComparator implements Comparator<Entity> {
 
     @Override
     public int compare(Entity first, Entity second) {
-        PositionComponent entityPC = (PositionComponent) entity.getComponent(Component.POSITION);
-        PositionComponent firstPC = (PositionComponent) first.getComponent(Component.POSITION);
-        PositionComponent secondPC = (PositionComponent) second.getComponent(Component.POSITION);
+        PositionComponent entityPC = (PositionComponent) entity.getComponent(PositionComponent.class);
+        PositionComponent firstPC = (PositionComponent) first.getComponent(PositionComponent.class);
+        PositionComponent secondPC = (PositionComponent) second.getComponent(PositionComponent.class);
 
-        if(secondPC ==null || firstPC == null){
+        if (secondPC == null || firstPC == null) {
             return 1;
         }
 
@@ -37,13 +38,29 @@ public class PokemonDistanceComparator implements Comparator<Entity> {
                                                                                                            entityPC.y,
                                                                                                            secondPC.x,
                                                                                                            secondPC.y)) {
+/*        if (this.tileDistance(entityPC.getCurrentTile(), firstPC.getCurrentTile()) > this.tileDistance(entityPC
+                                                                                                               .getCurrentTile(),
+                                                                                                       secondPC
+                                                                                                               .getCurrentTile())) {
+            return 1;
+        } else if (this.tileDistance(entityPC.getCurrentTile(), firstPC.getCurrentTile()) < this.tileDistance(entityPC
+                                                                                                                      .getCurrentTile(),
+                                                                                                              secondPC.getCurrentTile())) {*/
             return 1;
         } else {
             return 0;
         }
     }
 
+    private int tileDistance(Tile tile1, Tile tile2) {
+        return Math.abs(tile1.row - tile2.row) + Math.abs(tile1.col - tile2.col);
+    }
+
+    public int tileDistance(int x1, int y1, int x2, int y2) {
+        return Math.abs(x2 - x1) + Math.abs(y2 - y1);
+    }
+
     public double distanceFormula(int x1, int y1, int x2, int y2) {
-        return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+        return ((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     }
 }

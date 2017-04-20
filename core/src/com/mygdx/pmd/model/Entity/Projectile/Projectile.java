@@ -42,17 +42,17 @@ public class Projectile extends Entity {
         // put down location as the parent's facing tile's location
         // set default values
         super(parent.floor, parent.mc.getFacingTile().x, parent.mc.getFacingTile().y);
-        this.animationLogic = new AnimationLogic(this);
 
-        this.pc = new PositionComponent(this);
+        this.pc = (PositionComponent) components.get(PositionComponent.class);
         this.mc = new MoveComponent(this);
         this.ac = new ActionComponent(this);
         this.dc = new DirectionComponent(this);
 
-        components.put(Component.POSITION, pc);
-        components.put(Component.MOVE, mc);
-        components.put(Component.ACTION, ac);
-        components.put(Component.DIRECTION, dc);
+        pc.setCurrentTile(parent.mc.getFacingTile());
+
+        components.put(MoveComponent.class, mc);
+        components.put(ActionComponent.class, ac);
+        components.put(DirectionComponent.class, dc);
 
 
 
@@ -88,6 +88,8 @@ public class Projectile extends Entity {
         pe.start();
 
         // must be last so has all the other data
+
+        this.animationLogic = new AnimationLogic(this);
         logic = new ProjectileLogic(this);
     }
 
