@@ -22,7 +22,7 @@ public class PlayerLogic extends PokemonLogic {
 
     @Override
     public void execute() {
-        if (player.getHP() <= 0) {
+        if (player.cc.getHp() <= 0) {
             player.shouldBeDestroyed = true;
         }
 

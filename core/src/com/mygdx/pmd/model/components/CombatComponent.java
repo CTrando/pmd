@@ -15,7 +15,7 @@ public class CombatComponent implements Component {
     public CombatComponent(Entity entity){
         this.entity = entity;
 
-        this.hp = 0;
+        this.hp = 100;
         this.aggressionState = Aggression.passive;
     }
 
@@ -35,11 +35,18 @@ public class CombatComponent implements Component {
         this.aggressionState = aggressionState;
     }
 
+    public void takeDamage(Entity damager, int damage){
+        setHp(hp - damage);
+    }
+
     public int getHp() {
         return hp;
     }
 
     public void setHp(int hp) {
         this.hp = hp;
+        if (this.hp <= 0) {
+            this.hp = 0;
+        }
     }
 }

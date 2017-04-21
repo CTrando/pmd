@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
@@ -13,7 +14,7 @@ import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.utils.Constants;
 
-public abstract class Pokemon extends Entity implements Damageable, Logical {
+public abstract class Pokemon extends Entity implements Logical {
     public Array<Entity> children;
     public Entity target;
 
@@ -41,6 +42,7 @@ public abstract class Pokemon extends Entity implements Damageable, Logical {
         components.put(CombatComponent.class, new CombatComponent(this));
         components.put(MoveComponent.class, new MoveComponent(this));
 
+        //should probably leave this to the entities themselves
         this.tc = (TurnComponent) getComponent(TurnComponent.class);
         this.cc = (CombatComponent) getComponent(CombatComponent.class);
         this.mc = (MoveComponent) getComponent(MoveComponent.class);
@@ -48,7 +50,7 @@ public abstract class Pokemon extends Entity implements Damageable, Logical {
         this.pc = (PositionComponent) getComponent(PositionComponent.class);
         this.ac = (ActionComponent) getComponent(ActionComponent.class);
 
-        setHP(100);
+        cc.setHp(100);
         tc.setTurnState(Turn.COMPLETE);
         cc.setAggressionState(Aggression.passive);
         mc.setFacingTile(dc.getDirection());
@@ -168,27 +170,6 @@ public abstract class Pokemon extends Entity implements Damageable, Logical {
 
     public void runLogic(){
         logic.execute();
-    }
-
-    @Override
-    public void takeDamage(Pokemon parent, int damage) {
-        this.setHP(this.getHP() - damage);
-    }
-
-    public int getHP() {
-        return hp;
-    }
-
-    @Override
-    public void setHP(int HP) {
-        this.hp = HP;
-        if (this.hp <= 0) {
-            this.hp = 0;
-        }
-
-        if(this.hp > 100){
-            this.hp = 100;
-        }
     }
 
     public String toString(){

@@ -20,6 +20,7 @@ public class ProjectileLogic implements Logic {
 
     private ActionComponent ac;
     private PositionComponent pc;
+    private MoveComponent mc;
 
     /**
      * This class has one job, to find when a ranged projectile interacts with an entity or a unwalkable tile
@@ -32,6 +33,7 @@ public class ProjectileLogic implements Logic {
         this.animation = projectile.animation;
         this.ac = projectile.ac;
         this.pc = projectile.pc;
+        this.mc = projectile.mc;
     }
 
     /**
@@ -41,10 +43,12 @@ public class ProjectileLogic implements Logic {
         projectile.animationLogic.execute();
 
         if (animation.isFinished() && ac.getActionState() == Action.COLLISION) {
-            for (Damageable damageable : PUtils.getObjectsOfType(Damageable.class, pc.getCurrentTile()
-                                                                                     .getEntityList())) {
-                damageable.takeDamage(parent, projectile.move.damage);
+            for(Entity entity: mc.getNextTile().getEntityList()){
+                if(entity.hasComponent(CombatComponent.class)){
+                    entity.getComponent(CombatComponent.class).takeDamage(parent, projectile.move.damage);
+                }
             }
+
 
             if (projectile.move.equals(Move.INSTANT_KILLER)) {
                 System.out.println("RKO OUT OF NOWHERE");

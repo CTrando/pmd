@@ -23,7 +23,7 @@ public class MobLogic extends PokemonLogic {
 
     @Override
     public void execute() {
-        if (mob.getHP() <= 0) {
+        if (mob.cc.getHp() <= 0) {
             mob.shouldBeDestroyed = true;
         }
 

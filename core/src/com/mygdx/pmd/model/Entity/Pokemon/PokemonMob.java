@@ -25,6 +25,9 @@ public class PokemonMob extends Pokemon {
 
     PokemonMob(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y, pokemonName);
+        this.cc = new MobCombatComponent(this);
+        components.put(CombatComponent.class, cc);
+
         this.cc.setAggressionState(Aggression.passive);
         this.target = floor.getPlayer();
 
@@ -57,13 +60,6 @@ public class PokemonMob extends Pokemon {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public void takeDamage(Pokemon parent, int damage) {
-        super.takeDamage(parent, damage);
-        this.cc.setAggressionState(Aggression.aggressive);
-        this.target = parent;
     }
 
     @Override

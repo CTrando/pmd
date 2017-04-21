@@ -28,9 +28,6 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
     //Inherited variables from interfaces
 
     protected HashMap<Class, Component> components;
-
-    protected int hp;
-
     public boolean shouldBeDestroyed;
     /******************************************/
 
@@ -97,7 +94,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
     public abstract void runLogic();
 
     public boolean equals(Tile tile) {
-        PositionComponent pc = (PositionComponent) this.getComponent(PositionComponent.class);
+        PositionComponent pc = this.getComponent(PositionComponent.class);
         return tile != null && (tile.x == pc.x && tile.y == pc.y);
     }
 

@@ -4,7 +4,8 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.g3d.Shader;
+import com.badlogic.gdx.graphics.glutils.*;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
+import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.Renderable;
 import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.model.Tile.*;
@@ -39,8 +41,14 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     private ScreenViewport gamePort;
     private OrthographicCamera gameCamera;
+    private CameraMode cameraMode = CameraMode.fixed;
 
     private Viewport stagePort;
+    private ShaderProgram shader;
+
+    private enum CameraMode {
+        freeroam, fixed;
+    }
 
     public DungeonScreen(final PMD game) {
         //init rendering stuff first
@@ -59,6 +67,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
         bFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
         bFont.getData().setScale(.5f);
+
 
         //init stuff that needs the controller
         hud = new Hud(this, batch);
@@ -81,7 +90,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         }
 
         batch.end();
-       //sRenderer.end();
+        //sRenderer.end();
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         //for some reason it initializes batch,begin in stage.draw - how terrible
 
@@ -134,21 +143,60 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     }
 
     private void updateCamera() {
+        switch (cameraMode) {
+            case fixed:
+                float x = MathUtils.round(((float) (controller.pokemonPlayer.pc.x + Constants.TILE_SIZE / 2)));
+                float y = MathUtils.round(((float) (controller.pokemonPlayer.pc.y + Constants.TILE_SIZE / 2)));
 
-        float x = MathUtils.round(((float)(controller.pokemonPlayer.pc.x + Constants.TILE_SIZE / 2)));
-        float y = MathUtils.round(((float)(controller.pokemonPlayer.pc.y + Constants.TILE_SIZE / 2)));
+                Vector3 pos = new Vector3(x / PPM,
+                                          y / PPM,
+                                          0);
+                gameCamera.position.set(pos);
+                gameCamera.update();
+                break;
+            case freeroam:
+                int mouseX = Gdx.input.getX();
+                int mouseY = Gdx.input.getY();
 
-        Vector3 pos = new Vector3(x/PPM,
-                                  y/PPM,
-                                  0);
-        gameCamera.position.set(pos);
-        gameCamera.update();
+                Vector3 mousePos = new Vector3(mouseX, mouseY, 0);
+                mousePos = gameCamera.unproject(mousePos);
+                System.out.println(mousePos.toString());
+                if(mousePos.x > gamePort.getWorldWidth()){
+                    mousePos.x = gamePort.getWorldWidth();
+                }
+
+                if(mousePos.y > gamePort.getWorldHeight()){
+                    mousePos.y = gamePort.getWorldHeight();
+                }
+
+                if(mousePos.x < 0){
+                    mousePos.x = 0;
+                }
+
+                if(mousePos.y < 0){
+                    mousePos.y = 0;
+                }
+                gameCamera.position.lerp(mousePos, .01f);
+                gameCamera.update();
+                break;
+        }
     }
 
     @Override
     public boolean keyDown(int keycode) {
         if (PMD.keys.containsKey(keycode)) {
             PMD.keys.get(keycode).set(true);
+        }
+
+        if (PMD.isKeyPressed(Key.c)) {
+            switch (cameraMode) {
+                case fixed:
+                    cameraMode = CameraMode.freeroam;
+                    break;
+                case freeroam:
+                    cameraMode = CameraMode.fixed;
+                    break;
+            }
         }
 
         hud.addText(Input.Keys.toString(keycode));
