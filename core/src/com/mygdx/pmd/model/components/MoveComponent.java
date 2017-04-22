@@ -17,7 +17,7 @@ public class MoveComponent implements Component {
 
     private PositionComponent pc;
     private DirectionComponent dc;
-    
+
     private Tile nextTile;
     private Tile facingTile;
     public Tile possibleNextTile;
@@ -37,6 +37,8 @@ public class MoveComponent implements Component {
 
     public void forceMoveToTile(Tile nextTile, Direction direction) {
         this.setNextTile(nextTile);
+        this.setFacingTile(nextTile);
+
         entity.instructions.add(new MoveInstruction(entity, nextTile));
 
         dc.setDirection(direction);

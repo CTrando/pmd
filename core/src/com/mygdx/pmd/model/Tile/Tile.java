@@ -77,6 +77,7 @@ public abstract class Tile implements Renderable {
             System.out.println("Berry hit by " + receiver.toString());
             item.playEvents(receiver);
             if(item.shouldBeDestroyed) {
+                entityList.removeValue(item, true);
                 items.removeValue(item, true);
                 floor.removeItem(item);
             }

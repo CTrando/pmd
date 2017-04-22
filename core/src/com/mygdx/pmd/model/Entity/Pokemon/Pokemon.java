@@ -43,12 +43,13 @@ public abstract class Pokemon extends Entity implements Logical {
         components.put(MoveComponent.class, new MoveComponent(this));
 
         //should probably leave this to the entities themselves
-        this.tc = (TurnComponent) getComponent(TurnComponent.class);
-        this.cc = (CombatComponent) getComponent(CombatComponent.class);
-        this.mc = (MoveComponent) getComponent(MoveComponent.class);
-        this.dc = (DirectionComponent) getComponent(DirectionComponent.class);
-        this.pc = (PositionComponent) getComponent(PositionComponent.class);
-        this.ac = (ActionComponent) getComponent(ActionComponent.class);
+
+        this.tc = getComponent(TurnComponent.class);
+        this.cc = getComponent(CombatComponent.class);
+        this.mc = getComponent(MoveComponent.class);
+        this.dc = getComponent(DirectionComponent.class);
+        this.pc = getComponent(PositionComponent.class);
+        this.ac = getComponent(ActionComponent.class);
 
         cc.setHp(100);
         tc.setTurnState(Turn.COMPLETE);
@@ -130,7 +131,9 @@ public abstract class Pokemon extends Entity implements Logical {
     }
 
     public boolean canSeeEnemy() {
-        if (cc.isAggressive()) return false;
+        if (!cc.isAggressive()){
+            return false;
+        }
         int rOffset = 0;
         int cOffset = 0;
 

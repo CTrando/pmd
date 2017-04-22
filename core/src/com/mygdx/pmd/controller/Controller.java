@@ -121,6 +121,7 @@ public class Controller {
                 //TODO replace with custom data structure
                 turnBasedEntities.offer(updatedTurnEntity);
                 updatedTurnEntity = turnBasedEntities.poll();
+                upTurnEntityTC = updatedTurnEntity.getComponent(TurnComponent.class);
                 upTurnEntityTC.setTurnState(Turn.WAITING);
             }
 

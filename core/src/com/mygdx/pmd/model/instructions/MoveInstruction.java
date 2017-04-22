@@ -43,9 +43,8 @@ public class MoveInstruction implements Instruction {
     @Override
     public void onInit() {
         ac.setActionState(Action.MOVING);
-
-        pc.removeFromCurrentTile();
         mc.setFacingTile(dc.getDirection());
+        pc.removeFromCurrentTile();
 
         if(mc.isForcedMove()){
             mc.setForcedMove(false);
@@ -58,6 +57,7 @@ public class MoveInstruction implements Instruction {
 
         pc.setCurrentTile(nextTile);
         pc.getCurrentTile().playEvents(entity);
+        mc.setFacingTile(dc.getDirection());
     }
 
     @Override

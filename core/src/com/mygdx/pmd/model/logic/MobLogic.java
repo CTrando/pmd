@@ -54,7 +54,7 @@ public class MobLogic extends PokemonLogic {
                 DirectionComponent targetDC = (DirectionComponent) mob.target.getComponent(DirectionComponent.class);
 
                 dc.setDirection(targetPC.getCurrentTile());
-                mc.setFacingTile(targetDC.getDirection());
+                mc.setFacingTile(dc.getDirection());
 
                 if (mob.target.shouldBeDestroyed) {
                     mob.target = mob.floor.getPlayer();
@@ -65,6 +65,7 @@ public class MobLogic extends PokemonLogic {
 
             if (canAttack()) {
                 mob.resetMove();
+
                 if (isEnemyAdjacent()) {
                     attack();
                     //return is used to prevent the mob from moving
@@ -77,7 +78,6 @@ public class MobLogic extends PokemonLogic {
                     if (rangedMove != null && dist <= rangedMove.range) {
                         mob.setMove(mob.getRandomRangedMove());
                         attack();
-                        return;
                     }
                 }
             }
@@ -90,8 +90,8 @@ public class MobLogic extends PokemonLogic {
     }
 
     private void attack(Move move) {
-        mob.instructions.add(new AttackInstruction(mob, move));
         tc.setTurnState(Turn.PENDING);
+        mob.instructions.add(new AttackInstruction(mob, move));
     }
 
     @Override
@@ -116,8 +116,6 @@ public class MobLogic extends PokemonLogic {
         }
         //see if it can pathfind, meaning there was no error thrown
         if (pathFind()) {
-            mc.setFacingTile(mc.possibleNextTile);
-
             //this method depends on current tile not move component
             dc.setDirection(mc.possibleNextTile);
 

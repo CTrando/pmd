@@ -6,6 +6,7 @@ import com.mygdx.pmd.interfaces.Damageable;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.components.*;
 
 /**
  * Created by Cameron on 12/22/2016.
@@ -18,13 +19,12 @@ public class Berry extends Item {
 
     @Override
     public void playEvents(Entity receiver){
-        if(receiver instanceof Damageable) {
-            Damageable damageable = (Damageable) receiver;
-            damageable.setHP(damageable.getHP() + 20);
+        if(receiver.hasComponent(CombatComponent.class)) {
+            CombatComponent cc = receiver.getComponent(CombatComponent.class);
+            cc.setHp(cc.getHp() + 20);
             if (receiver instanceof PokemonPlayer) {
                 Controller.turns += 10;
             }
-
             shouldBeDestroyed = true;
         }
     }

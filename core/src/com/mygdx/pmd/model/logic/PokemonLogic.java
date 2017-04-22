@@ -36,7 +36,7 @@ public abstract class PokemonLogic implements Logic {
     abstract void attack();
 
     boolean isEnemyAdjacent() {
-        return mc.getFacingTile().hasEntityOfType(Damageable.class);
+        return mc.getFacingTile().hasEntityWithComponent(CombatComponent.class);
     }
 
     Tile findEnemyTile() {
@@ -91,7 +91,7 @@ public abstract class PokemonLogic implements Logic {
     private boolean isValidTarget(Tile tile) {
         if (tile == null ||
                 tile instanceof GenericTile || /* must replace with damageable */
-                tile.hasEntityOfType(Damageable.class)) {
+                tile.hasEntityWithComponent(CombatComponent.class)) {
             return true;
         }
         return false;
