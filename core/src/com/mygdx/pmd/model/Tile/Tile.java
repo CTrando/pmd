@@ -58,7 +58,9 @@ public abstract class Tile implements Renderable {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(sprite, x/PPM, y/PPM, sprite.getWidth()/PPM, sprite.getHeight()/PPM);
+        if(sprite != null) {
+            batch.draw(sprite, x / PPM, y / PPM, sprite.getWidth() / PPM, sprite.getHeight() / PPM);
+        }
         for (StaticEntity sEntity : items) {
             sEntity.render(batch);
         }
@@ -97,10 +99,7 @@ public abstract class Tile implements Renderable {
             return false;
         }
 
-        if (col >= tileBoard[0].length || col < 0) {
-            return false;
-        }
-        return true;
+        return !(col >= tileBoard[0].length || col < 0);
     }
 
     public static void resetTileArrayParents(Tile[][] tileBoard) {

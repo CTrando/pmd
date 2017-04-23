@@ -78,7 +78,7 @@ public class PlayerLogic extends PokemonLogic {
 
     @Override
     boolean isEnemyAdjacent() {
-        return mc.getFacingTile().hasEntityOfType(Damageable.class);
+        return mc.getFacingTile().hasEntityWithComponent(CombatComponent.class);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class PlayerLogic extends PokemonLogic {
     private void forceMove() {
         for (Entity entity : player.mc.getNextTile().getEntityList()) {
             if (entity != player && entity.hasComponent(MoveComponent.class)) {
-                MoveComponent entityMC = (MoveComponent) entity.getComponent(MoveComponent.class);
+                MoveComponent entityMC = entity.getComponent(MoveComponent.class);
                 entityMC.forceMoveToTile(pc.getCurrentTile(), dc.getDirection().getOpposite());
             }
         }

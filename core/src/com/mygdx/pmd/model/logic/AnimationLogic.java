@@ -14,8 +14,8 @@ public class AnimationLogic implements Logic {
 
     public AnimationLogic(Entity entity) {
         this.entity = entity;
-        this.dc = (DirectionComponent) entity.getComponent(DirectionComponent.class);
-        this.ac = (ActionComponent) entity.getComponent(ActionComponent.class);
+        this.dc = entity.getComponent(DirectionComponent.class);
+        this.ac = entity.getComponent(ActionComponent.class);
     }
 
     public void execute() {

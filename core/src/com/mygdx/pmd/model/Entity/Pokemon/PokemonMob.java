@@ -51,15 +51,12 @@ public class PokemonMob extends Pokemon {
         int curRow = pc.getCurrentTile().row;
         int curCol = pc.getCurrentTile().col;
 
-        PositionComponent otherPC = (PositionComponent) entity.getComponent(PositionComponent.class);
+        PositionComponent otherPC = entity.getComponent(PositionComponent.class);
 
         int dR = curRow - otherPC.getCurrentTile().row;
         int dC = curCol - otherPC.getCurrentTile().col;
 
-        if (dR * dR + dC * dC > 400) {
-            return false;
-        }
-        return true;
+        return dR * dR + dC * dC <= 400;
     }
 
     @Override

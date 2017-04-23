@@ -5,14 +5,12 @@ import com.badlogic.gdx.audio.Sound;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.PlayerControlled;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
-import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.utils.Constants;
 
-public class PokemonPlayer extends Pokemon implements PlayerControlled {
+public class PokemonPlayer extends Pokemon {
 
     PokemonPlayer(Floor floor, PokemonName name){
         this(floor, 0, 0, name);

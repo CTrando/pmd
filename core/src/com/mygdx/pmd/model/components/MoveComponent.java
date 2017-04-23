@@ -24,8 +24,8 @@ public class MoveComponent implements Component {
 
     public MoveComponent(Entity entity) {
         this.entity = entity;
-        this.pc = (PositionComponent) entity.getComponent(PositionComponent.class);
-        this.dc = (DirectionComponent) entity.getComponent(DirectionComponent.class);
+        this.pc = entity.getComponent(PositionComponent.class);
+        this.dc = entity.getComponent(DirectionComponent.class);
 
         tileBoard = entity.tileBoard;
     }

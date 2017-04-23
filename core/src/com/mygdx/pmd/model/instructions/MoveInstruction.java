@@ -21,10 +21,10 @@ public class MoveInstruction implements Instruction {
     public MoveInstruction(Entity entity, Tile nextTile) {
         this.entity = entity;
         this.nextTile = nextTile;
-        this.mc = (MoveComponent) this.entity.getComponent(MoveComponent.class);
-        this.ac = (ActionComponent) this.entity.getComponent(ActionComponent.class);
-        this.dc = (DirectionComponent) this.entity.getComponent(DirectionComponent.class);
-        this.pc = (PositionComponent) this.entity.getComponent(PositionComponent.class);
+        this.mc = this.entity.getComponent(MoveComponent.class);
+        this.ac = this.entity.getComponent(ActionComponent.class);
+        this.dc = this.entity.getComponent(DirectionComponent.class);
+        this.pc = this.entity.getComponent(PositionComponent.class);
 
         mc.addToTile(nextTile);
     }

@@ -1,7 +1,6 @@
 package com.mygdx.pmd.model.logic;
 
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.Damageable;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.model.Entity.Projectile.Projectile;

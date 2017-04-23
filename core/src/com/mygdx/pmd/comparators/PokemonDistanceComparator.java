@@ -21,9 +21,9 @@ public class PokemonDistanceComparator implements Comparator<Entity> {
 
     @Override
     public int compare(Entity first, Entity second) {
-        PositionComponent entityPC = (PositionComponent) entity.getComponent(PositionComponent.class);
-        PositionComponent firstPC = (PositionComponent) first.getComponent(PositionComponent.class);
-        PositionComponent secondPC = (PositionComponent) second.getComponent(PositionComponent.class);
+        PositionComponent entityPC = entity.getComponent(PositionComponent.class);
+        PositionComponent firstPC = first.getComponent(PositionComponent.class);
+        PositionComponent secondPC = second.getComponent(PositionComponent.class);
 
         if (secondPC == null || firstPC == null) {
             return 1;

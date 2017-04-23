@@ -42,7 +42,7 @@ public class FloorDecorator {
                     floor.tileBoard[i][j].spriteValue += 128;
 
                 if (tile instanceof GenericTile) {
-                    tile.sprite = PMD.sprites.get("blacktilesprite");/*
+                    tile.sprite = null;/*
                     switch (tile.spriteValue) {
                         case 0:
                             tile.sprite = PMD.sprites.get("blacktilesprite");
@@ -98,8 +98,7 @@ public class FloorDecorator {
 
     public static boolean isWithinBounds(int row, int col, Tile[][] tileBoard){
         if(row >= tileBoard.length || row < 0) return false;
-        if(col >= tileBoard[0].length || col < 0) return false;
-        return true;
+        return !(col >= tileBoard[0].length || col < 0);
     }
 
     public static Floor placeEventTiles(Floor floor){

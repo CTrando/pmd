@@ -85,7 +85,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
     @Override
     public void render(SpriteBatch batch) {
         if (currentSprite != null && hasComponent(PositionComponent.class)) {
-            PositionComponent pc = (PositionComponent) this.getComponent(PositionComponent.class);
+            PositionComponent pc = this.getComponent(PositionComponent.class);
             batch.draw(currentSprite, pc.x/PPM, pc.y/PPM, currentSprite.getWidth()/PPM, currentSprite.getHeight()
                     /PPM);
         }

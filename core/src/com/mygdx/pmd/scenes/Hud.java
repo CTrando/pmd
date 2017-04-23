@@ -35,6 +35,7 @@ public class Hud {
     Label testLabel;
     Label turnLabel;
     Label textLabel;
+    Label fpsCounter;
 
     BitmapFont customFont;
     GlyphLayout gLayout;
@@ -63,11 +64,13 @@ public class Hud {
         floorLabel = new Label("Floor: " + Controller.floorCount, skin);
         turnLabel = new Label("Turns left: " + Controller.turns, skin);
         textLabel = new Label(inputText.toString(), skin);
+        fpsCounter = new Label("FPS: "+Gdx.graphics.getFramesPerSecond(), skin);
 
         testLabel.setAlignment(Align.center);
         floorLabel.setAlignment(Align.center);
         turnLabel.setAlignment(Align.center);
         textLabel.setAlignment(Align.center);
+        fpsCounter.setAlignment(Align.center);
         stage.setDebugAll(true);
 
         TextButton attackText = new TextButton("Swiper no Swiping", skin);
@@ -187,6 +190,8 @@ public class Hud {
         temp.row();
         temp.add(turnLabel).fill();
         temp.row();
+        temp.add(fpsCounter).fill();
+        temp.row();
         loadAttackTextButtons(temp);
        /* temp.add(attackText).fill();
         temp.row();
@@ -218,6 +223,7 @@ public class Hud {
             customFont.setColor(Color.BLUE);
         }
 
+        fpsCounter.setText("FPS: "+Gdx.graphics.getFramesPerSecond());
         turnLabel.setText("Turns left: " + Controller.turns);
 
         String currentText = inputText.toString();

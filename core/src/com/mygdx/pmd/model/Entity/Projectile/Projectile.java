@@ -144,12 +144,9 @@ public class Projectile extends Entity {
      * @return if attack should stop
      */
     private boolean isValidTarget(Tile tile) {
-        if (tile == null ||
+        return tile == null ||
                 tile instanceof GenericTile || /* must replace with damageable */
-                tile.hasEntityWithComponent(CombatComponent.class)) {
-            return true;
-        }
-        return false;
+                tile.hasEntityWithComponent(CombatComponent.class);
     }
 
     /**

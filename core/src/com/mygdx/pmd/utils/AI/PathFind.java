@@ -25,8 +25,8 @@ public abstract class PathFind {
     public PathFind(Entity entity){
         this.entity = entity;
         this.tileBoard = entity.tileBoard;
-        this.pc = (PositionComponent) entity.getComponent(PositionComponent.class);
-        this.mc = (MoveComponent) entity.getComponent(MoveComponent.class);
+        this.pc = entity.getComponent(PositionComponent.class);
+        this.mc = entity.getComponent(MoveComponent.class);
 
         this.currentTile = pc.getCurrentTile();
 

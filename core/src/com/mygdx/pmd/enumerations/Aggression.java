@@ -6,5 +6,5 @@ package com.mygdx.pmd.enumerations;
 public enum Aggression {
     passive,
     friendly,
-    aggressive;
+    aggressive
 }

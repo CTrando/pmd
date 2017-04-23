@@ -20,7 +20,7 @@ public abstract class Spawner extends Entity  {
         super(floor, 0, 0);
         this.tc = new TurnComponent(this);
         this.ac = new ActionComponent(this);
-        this.pc = (PositionComponent) getComponent(PositionComponent.class);
+        this.pc = getComponent(PositionComponent.class);
 
         components.put(TurnComponent.class, tc);
         components.put(ActionComponent.class, ac);

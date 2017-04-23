@@ -11,12 +11,12 @@ public interface Component {
     public static final byte POSITION = 00000100;
     public static final byte TURN = 00000101;*/
 
-   public static final String MOVE = "move";
-   public static final String ACTION = "action";
-   public static final String COMBAT = "combat";
-   public static final String DIRECTION = "direction";
-   public static final String POSITION = "position";
-   public static final String TURN = "turn";
+   String MOVE = "move";
+   String ACTION = "action";
+   String COMBAT = "combat";
+   String DIRECTION = "direction";
+   String POSITION = "position";
+   String TURN = "turn";
 
     //TODO Make damageable component or fighting component or attack component or something of the sort
 }

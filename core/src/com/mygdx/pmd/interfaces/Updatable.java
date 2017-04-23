@@ -5,6 +5,6 @@ package com.mygdx.pmd.interfaces;
  */
 public interface Updatable {
 
-    public void update();
+    void update();
 
 }

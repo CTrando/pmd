@@ -50,8 +50,8 @@ public class MobLogic extends PokemonLogic {
             }
             //will turn to face the player if the mob is aggressive
             if (mob.cc.isAggressive()) {
-                PositionComponent targetPC = (PositionComponent) mob.target.getComponent(PositionComponent.class);
-                DirectionComponent targetDC = (DirectionComponent) mob.target.getComponent(DirectionComponent.class);
+                PositionComponent targetPC = mob.target.getComponent(PositionComponent.class);
+                DirectionComponent targetDC = mob.target.getComponent(DirectionComponent.class);
 
                 dc.setDirection(targetPC.getCurrentTile());
                 mc.setFacingTile(dc.getDirection());
@@ -159,7 +159,7 @@ public class MobLogic extends PokemonLogic {
     private boolean pathFind() {
         try {
             // not one behind change back to movement component later
-            MoveComponent targetMC = (MoveComponent) mob.target.getComponent(MoveComponent.class);
+            MoveComponent targetMC = mob.target.getComponent(MoveComponent.class);
             mob.path = mob.pathFind.pathFind(targetMC.getNextTile());
         } catch (PathFindFailureException e) {
             System.out.println("Failed to pathfind");

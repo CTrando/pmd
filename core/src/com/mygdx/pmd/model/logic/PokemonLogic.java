@@ -1,7 +1,5 @@
 package com.mygdx.pmd.model.logic;
 
-import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.Damageable;
 import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.components.*;
@@ -89,11 +87,8 @@ public abstract class PokemonLogic implements Logic {
      * @return if attack should stop
      */
     private boolean isValidTarget(Tile tile) {
-        if (tile == null ||
+        return tile == null ||
                 tile instanceof GenericTile || /* must replace with damageable */
-                tile.hasEntityWithComponent(CombatComponent.class)) {
-            return true;
-        }
-        return false;
+                tile.hasEntityWithComponent(CombatComponent.class);
     }
 }

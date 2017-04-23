@@ -17,8 +17,8 @@ public class CollideInstruction implements Instruction{
 
     public CollideInstruction(Entity entity){
         this.entity = entity;
-        this.ac = (ActionComponent) this.entity.getComponent(ActionComponent.class);
-        this.pc = (PositionComponent) this.entity.getComponent(PositionComponent.class);
+        this.ac = this.entity.getComponent(ActionComponent.class);
+        this.pc = this.entity.getComponent(PositionComponent.class);
     }
 
     @Override

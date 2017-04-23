@@ -18,5 +18,5 @@ public enum Animation {
     downleft,
     DEFAULT,
     SCRATCH,
-    HURT;
+    HURT
 }

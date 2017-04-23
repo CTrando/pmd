@@ -44,17 +44,23 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     private CameraMode cameraMode = CameraMode.fixed;
 
     private Viewport stagePort;
-    private ShaderProgram shader;
+    public ShaderProgram shader;
+
+    public float accumTime;
+
+    public FrameBuffer occludersFBO;
+    public TextureRegion occluder;
+    public int lightSize = 256;
 
     private enum CameraMode {
-        freeroam, fixed;
+        freeroam, fixed
     }
 
     public DungeonScreen(final PMD game) {
         //init rendering stuff first
         this.game = game;
         this.batch = game.batch;
-        this.sRenderer = new ShapeRenderer();
+        sRenderer = new ShapeRenderer();
         this.renderList = new Array<Renderable>();
 
         gameCamera = new OrthographicCamera(Gdx.graphics.getWidth() / PPM, Gdx.graphics.getHeight() / PPM);
@@ -68,29 +74,39 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         bFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
         bFont.getData().setScale(.5f);
 
+        occludersFBO = new FrameBuffer(Pixmap.Format.RGBA8888, lightSize, 1, false);
+        occluder = new TextureRegion(occludersFBO.getColorBufferTexture());
+        occluder.flip(false, true);
 
+        shader = new ShaderProgram(Gdx.files.internal("shaders/vertex.glsl"), Gdx.files.internal("shaders/fragment" +
+                                                                                                         ".glsl"));
+        if(!shader.isCompiled()){
+            System.out.println(shader.getLog());
+        }
         //init stuff that needs the controller
         hud = new Hud(this, batch);
     }
 
     @Override
     public void render(float dt) {
+        accumTime+=dt;
+
+       // occludersFBO.begin();
+        Gdx.gl.glClearColor(0,0,0,1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        // stage.act();
         controller.update();
         this.updateCamera();
 
-        batch.setColor(Color.WHITE);
         batch.setProjectionMatrix(gamePort.getCamera().combined);
         batch.begin();
-       /* sRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        sRenderer.setProjectionMatrix(gamePort.getCamera().combined);*/
+        shader.setUniformf("resolution", lightSize, lightSize);
         for (int i = 0; i < renderList.size; i++) {
             renderList.get(i).render(batch);
         }
 
+        //batch.draw(occludersFBO.getColorBufferTexture(), 0, 0, lightSize, 100);
+
         batch.end();
-        //sRenderer.end();
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         //for some reason it initializes batch,begin in stage.draw - how terrible
 
@@ -98,6 +114,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
             hud.update(dt);
             hud.stage.draw();
         }
+        //occludersFBO.end();
     }
 
     @Override

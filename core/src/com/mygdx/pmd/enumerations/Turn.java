@@ -6,8 +6,5 @@ package com.mygdx.pmd.enumerations;
 public enum Turn {
     COMPLETE,
     WAITING,
-    PENDING,
-    FAILED,
-    LOCKED,
-    SKIP;
+    PENDING
 }
