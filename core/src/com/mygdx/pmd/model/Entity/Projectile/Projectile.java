@@ -89,6 +89,7 @@ public class Projectile extends Entity {
 
         // must be last so has all the other data
 
+        components.put(RenderComponent.class, new ProjectileRenderComponent(this));
         this.animationLogic = new AnimationLogic(this);
         logic = new ProjectileLogic(this);
     }

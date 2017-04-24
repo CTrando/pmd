@@ -33,6 +33,9 @@ public class RenderComponent implements Component {
         //should propagate down until it hits an entity with no children
         for (Entity child : entity.children) {
             RenderComponent rc = child.getComponent(RenderComponent.class);
+            if(rc == null){
+                System.out.println("hello");
+            }
             rc.render(batch);
         }
     }
