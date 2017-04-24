@@ -12,8 +12,12 @@ import com.mygdx.pmd.screens.DungeonScreen;
  */
 public abstract class Item extends StaticEntity{
     PositionComponent pc;
+    RenderComponent rc;
+
     protected Item(Tile tile) {
         super(tile.floor, tile.x, tile.y);
+        this.rc = new RenderComponent(this);
+        components.put(RenderComponent.class, rc);
     }
 
     public void playEvents(Entity receiver){

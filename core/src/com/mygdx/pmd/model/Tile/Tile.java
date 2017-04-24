@@ -19,7 +19,7 @@ import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 /**
  * Created by Cameron on 6/17/2016.
  */
-public abstract class Tile implements Renderable {
+public abstract class Tile extends Entity {
     public Floor floor;
 
     public int x;
@@ -37,12 +37,14 @@ public abstract class Tile implements Renderable {
     private String classifier; //for toString purposes
 
     private Array<Entity> entityList;
-    private Array<Item> items;
 
     public Tile[][] tileBoard;
     private Tile parent;
 
+    public RenderComponent rc;
+
     public Tile(int r, int c, Floor floor, String classifier) {
+        super(floor, c*Constants.TILE_SIZE, r*Constants.TILE_SIZE);
         this.tileBoard = floor.tileBoard;
         this.floor = floor;
 
@@ -54,8 +56,10 @@ public abstract class Tile implements Renderable {
         this.classifier = classifier;
 
         entityList = new Array<Entity>();
-        items = new Array<Item>();
+        this.rc = new RenderComponent(this);
+        components.put(RenderComponent.class, rc);
     }
+/*
 
     public void render(SpriteBatch batch) {
         if(sprite != null) {
@@ -65,6 +69,7 @@ public abstract class Tile implements Renderable {
             sEntity.render(batch);
         }
     }
+*/
 
     public void renderDebug(SpriteBatch batch) {
         batch.draw(this.debug, x, y);
@@ -75,19 +80,22 @@ public abstract class Tile implements Renderable {
     }
 
     public void playEvents(Entity receiver) {
-        for (Item item : items) {
-            System.out.println("Berry hit by " + receiver.toString());
-            item.playEvents(receiver);
-            if(item.shouldBeDestroyed) {
-                entityList.removeValue(item, true);
-                items.removeValue(item, true);
-                floor.removeItem(item);
+        for (Entity child : children) {
+            if (child instanceof Item) {
+                Item item = (Item) child;
+                System.out.println("Some item was hit by " + receiver.toString());
+                item.playEvents(receiver);
+                if (item.shouldBeDestroyed) {
+                    entityList.removeValue(item, true);
+                    children.removeValue(item, true);
+                    floor.removeItem(item);
+                }
             }
         }
     }
 
     public int dist(Tile tile) {
-        return (int)(Tile.dist(this, tile)/25);
+        return (int) (Tile.dist(this, tile) / 25);
     }
 
     public static double dist(Tile t1, Tile t2) {
@@ -136,11 +144,13 @@ public abstract class Tile implements Renderable {
     }
 
     public void setParent(Tile parent) {
-        if (this.parent == null)
+        if (this.parent == null) {
             this.parent = parent;
+        }
 
-        if (parent == null)
+        if (parent == null) {
             this.parent = null;
+        }
     }
 
     public Tile getParent() {
@@ -148,11 +158,12 @@ public abstract class Tile implements Renderable {
     }
 
     public void addEntity(Entity entity) {
-        if (!entityList.contains(entity, true))
+        if (!entityList.contains(entity, true)) {
             entityList.add(entity);
+        }
 
         if (entity instanceof Item) {
-            items.add((Item) entity);
+            children.add(entity);
         }
     }
 
@@ -160,7 +171,7 @@ public abstract class Tile implements Renderable {
         entityList.removeValue(entity, true);
 
         if (entity instanceof Item) {
-            items.removeValue((Item) entity, true);
+            children.removeValue(entity, true);
         }
     }
 
@@ -176,7 +187,9 @@ public abstract class Tile implements Renderable {
     }
 
     public boolean equals(Tile o) {
-        if (o == null) return false;
+        if (o == null) {
+            return false;
+        }
         return (this.row == o.row && this.col == o.col);
     }
 
@@ -192,9 +205,9 @@ public abstract class Tile implements Renderable {
         return PUtils.getObjectsOfType(c, entityList).size > 0;
     }
 
-    public boolean hasEntityWithComponent(Class type){
-        for(Entity entity: entityList){
-            if(entity.hasComponent(type)){
+    public boolean hasEntityWithComponent(Class type) {
+        for (Entity entity : entityList) {
+            if (entity.hasComponent(type)) {
                 return true;
             }
         }

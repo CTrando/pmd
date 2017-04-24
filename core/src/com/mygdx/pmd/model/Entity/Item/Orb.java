@@ -12,7 +12,7 @@ public class Orb extends Item {
 
     public Orb(Tile tile) {
         super(tile);
-        this.currentSprite = PMD.sprites.get("orbsprite");
+        rc.setSprite(PMD.sprites.get("orbsprite"));
     }
 
     @Override

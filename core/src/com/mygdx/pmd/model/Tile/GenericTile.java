@@ -13,6 +13,11 @@ public class GenericTile extends Tile {
     public GenericTile(int row, int col, Floor floor) {
         super(row, col, floor, "GENERIC");
         this.isWalkable = false;
-        this.sprite = PMD.sprites.get("generictilesprite");
+        rc.setSprite(null);
+    }
+
+    @Override
+    public void runLogic() {
+
     }
 }

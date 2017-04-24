@@ -34,6 +34,7 @@ public class Floor extends Entity {
         this.pc = new PositionComponent(this);
         this.tc = new TurnComponent(this);
 
+        components.put(RenderComponent.class, new FloorRenderComponent(this));
         components.put(TurnComponent.class, tc);
     }
 
@@ -76,18 +77,6 @@ public class Floor extends Entity {
         if (chosenTile instanceof RoomTile /*&& !chosenTile.hasEntityOfType(Movable.class*/) {
             return tileBoard[randRow][randCol];
         } else return chooseUnoccupiedTile();
-    }
-
-    @Override
-    public void render(SpriteBatch batch){
-        for (int i = 0; i < tileBoard.length; i++) {
-            for (int j = 0; j < tileBoard[0].length; j++) {
-                Tile tile = tileBoard[i][j];
-                tile.render(batch);
-                //drawing strings like this is very costly performance wise and causes stuttering
-                //bFont.draw(batch, tile.spriteValue+"", tile.x + 5, tile.y+25/2);
-            }
-        }
     }
 
     @Override

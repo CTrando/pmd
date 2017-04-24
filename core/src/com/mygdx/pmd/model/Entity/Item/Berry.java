@@ -13,7 +13,7 @@ import com.mygdx.pmd.model.components.*;
 public class Berry extends Item {
     public Berry(Tile tile) {
         super(tile);
-        this.currentSprite = PMD.sprites.get("berrysprite");
+        rc.setSprite(PMD.sprites.get("berrysprite"));
     }
 
     @Override

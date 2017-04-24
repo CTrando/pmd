@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Entity;
 
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.*;
@@ -19,10 +20,12 @@ import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 /**
  * Created by Cameron on 10/18/2016.
  */
-public abstract class Entity implements Renderable, Updatable, Disposable {
+public abstract class Entity implements Updatable, Disposable {
     public LinkedList<Instruction> instructions;
     public Instruction currentInstruction;
     public static final Instruction NO_INSTRUCTION = new NoInstruction();
+
+    public Array<Entity> children;
 
     /******************************************/
     //Inherited variables from interfaces
@@ -59,6 +62,7 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
 
         this.floor = floor;
         this.tileBoard = floor.tileBoard;
+        this.children = new Array<Entity>();
 
         animationMap = new HashMap<String, PAnimation>();
         instructions = new LinkedList<Instruction>();
@@ -80,15 +84,6 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
             currentInstruction.onInit();
         }
 
-    }
-
-    @Override
-    public void render(SpriteBatch batch) {
-        if (currentSprite != null && hasComponent(PositionComponent.class)) {
-            PositionComponent pc = this.getComponent(PositionComponent.class);
-            batch.draw(currentSprite, pc.x/PPM, pc.y/PPM, currentSprite.getWidth()/PPM, currentSprite.getHeight()
-                    /PPM);
-        }
     }
 
     public abstract void runLogic();
@@ -116,5 +111,4 @@ public abstract class Entity implements Renderable, Updatable, Disposable {
     }
 
     public abstract String toString();
-
 }

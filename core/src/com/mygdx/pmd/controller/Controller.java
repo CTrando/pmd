@@ -155,8 +155,11 @@ public class Controller {
     }
 
     private void directlyAddEntity(Entity entity) {
-        screen.renderList.add(entity);
         entityList.add(entity);
+
+        if(entity.hasComponent(RenderComponent.class)) {
+            screen.renderList.add(entity.getComponent(RenderComponent.class));
+        }
 
         if (entity.hasComponent(TurnComponent.class)) {
             turnBasedEntities.addLast(entity);
@@ -178,8 +181,11 @@ public class Controller {
         if (toBeRemoved.size == 0) return;
 
         for (Entity entity : toBeRemoved) {
-            screen.renderList.removeValue(entity, true);
             entityList.remove(entity);
+
+            if(entity.hasComponent(RenderComponent.class)) {
+                screen.renderList.removeValue(entity.getComponent(RenderComponent.class), true);
+            }
 
             if (entity.hasComponent(TurnComponent.class)) {
                 turnBasedEntities.remove(entity);

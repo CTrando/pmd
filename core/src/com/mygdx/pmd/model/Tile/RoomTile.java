@@ -12,11 +12,12 @@ public class RoomTile extends Tile {
     public RoomTile(int r, int c, Floor floor) {
         super(r, c, floor, "ROOM");
         this.isWalkable = true;
-        this.sprite = PMD.sprites.get("testroomsprite");
+        rc.setSprite(PMD.sprites.get("testroomsprite"));
 
     }
 
-    public boolean isLegal(){
-        return false;
+    @Override
+    public void runLogic() {
+
     }
 }

@@ -2,20 +2,15 @@ package com.mygdx.pmd.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.glutils.*;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.Renderable;
-import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.scenes.Hud;
@@ -28,7 +23,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     public static final float PPM = 25;
 
-    public Array<Renderable> renderList;
+    public Array<RenderComponent> renderList;
 
     private Hud hud;
     private boolean showHub;
@@ -46,7 +41,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     private Viewport stagePort;
     public ShaderProgram shader;
 
-    public float accumTime;
+    public float timeStep;
 
     public FrameBuffer occludersFBO;
     public TextureRegion occluder;
@@ -61,7 +56,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         this.game = game;
         this.batch = game.batch;
         sRenderer = new ShapeRenderer();
-        this.renderList = new Array<Renderable>();
+        this.renderList = new Array<RenderComponent>();
 
         gameCamera = new OrthographicCamera(Gdx.graphics.getWidth() / PPM, Gdx.graphics.getHeight() / PPM);
         gamePort = new ScreenViewport(gameCamera);
@@ -89,30 +84,33 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public void render(float dt) {
-        accumTime+=dt;
+        timeStep +=dt;
 
-       // occludersFBO.begin();
-        Gdx.gl.glClearColor(0,0,0,1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        controller.update();
-        this.updateCamera();
+        if(timeStep > 1/60f) {
+            // occludersFBO.begin();
+            Gdx.gl.glClearColor(0, 0, 0, 1f);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            controller.update();
+            this.updateCamera();
 
-        batch.setProjectionMatrix(gamePort.getCamera().combined);
-        batch.begin();
-        shader.setUniformf("resolution", lightSize, lightSize);
-        for (int i = 0; i < renderList.size; i++) {
-            renderList.get(i).render(batch);
-        }
+            batch.setProjectionMatrix(gamePort.getCamera().combined);
+            batch.begin();
+            shader.setUniformf("resolution", lightSize, lightSize);
+            for (int i = 0; i < renderList.size; i++) {
+                renderList.get(i).render(batch);
+            }
 
-        //batch.draw(occludersFBO.getColorBufferTexture(), 0, 0, lightSize, 100);
+            //batch.draw(occludersFBO.getColorBufferTexture(), 0, 0, lightSize, 100);
 
-        batch.end();
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        //for some reason it initializes batch,begin in stage.draw - how terrible
+            batch.end();
+            batch.setProjectionMatrix(hud.stage.getCamera().combined);
+            //for some reason it initializes batch,begin in stage.draw - how terrible
 
-        if (showHub) {
-            hud.update(dt);
-            hud.stage.draw();
+            if (showHub) {
+                hud.update(dt);
+                hud.stage.draw();
+            }
+            timeStep = 0;
         }
         //occludersFBO.end();
     }

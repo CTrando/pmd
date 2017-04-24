@@ -15,7 +15,7 @@ public class StairTile extends Tile{
     public StairTile(int r, int c, Floor floor) {
         super(r, c, floor, "STAIR");
         this.isWalkable = true;
-        this.sprite = PMD.sprites.get("stairtilesprite");
+        rc.setSprite(PMD.sprites.get("stairtilesprite"));
     }
 
     @Override
@@ -23,5 +23,10 @@ public class StairTile extends Tile{
         if (entity instanceof PokemonPlayer) {
             floor.nextFloor();
         }
+    }
+
+    @Override
+    public void runLogic() {
+
     }
 }

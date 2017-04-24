@@ -15,7 +15,6 @@ import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.utils.Constants;
 
 public abstract class Pokemon extends Entity implements Logical {
-    public Array<Entity> children;
     public Entity target;
 
     public TurnComponent tc;
@@ -64,6 +63,7 @@ public abstract class Pokemon extends Entity implements Logical {
 
         //default move
         moves.add(Move.SCRATCH);
+        components.put(RenderComponent.class, new RenderComponent(this));
         animationLogic = new AnimationLogic(this);
     }
 
@@ -98,21 +98,6 @@ public abstract class Pokemon extends Entity implements Logical {
 
         animationLogic.execute();
         super.update();
-    }
-
-    @Override
-    public void render(SpriteBatch batch){
-
-     /*   if(mc.getNextTile() != null && mc.getNextTile() != getCurrentTile()){
-            DungeonScreen.sRenderer.setColor(Color.RED);
-            DungeonScreen.sRenderer.rect(mc.getNextTile().x/PPM, mc.getNextTile().y/PPM, Constants.TILE_SIZE/PPM, Constants.TILE_SIZE/PPM);
-        }*/
-
-        for(Entity child: children){
-            child.render(batch);
-        }
-
-        super.render(batch);
     }
 
     public void randomizeLocation() {

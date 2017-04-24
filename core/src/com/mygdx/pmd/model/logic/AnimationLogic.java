@@ -11,11 +11,13 @@ public class AnimationLogic implements Logic {
     private Entity entity;
     private DirectionComponent dc;
     private ActionComponent ac;
+    private RenderComponent rc;
 
     public AnimationLogic(Entity entity) {
         this.entity = entity;
         this.dc = entity.getComponent(DirectionComponent.class);
         this.ac = entity.getComponent(ActionComponent.class);
+        this.rc = entity.getComponent(RenderComponent.class);
     }
 
     public void execute() {
@@ -37,6 +39,6 @@ public class AnimationLogic implements Logic {
             System.out.println("UH OH");
         }
 
-        entity.currentSprite = entity.currentAnimation.getCurrentSprite();
+        rc.setSprite(entity.currentAnimation.getCurrentSprite());
     }
 }

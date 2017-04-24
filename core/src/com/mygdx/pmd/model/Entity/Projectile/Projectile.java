@@ -19,7 +19,7 @@ import static com.mygdx.pmd.screens.DungeonScreen.PPM;
  * Created by Cameron on 10/18/2016.
  */
 public class Projectile extends Entity {
-    private ParticleEffect bs;
+    public ParticleEffect bs;
     public Pokemon parent;
     private Logic logic;
 
@@ -31,7 +31,7 @@ public class Projectile extends Entity {
     public Move move;
     public PAnimation animation;
 
-    private ParticleEffect pe;
+    public ParticleEffect pe;
 
     public MoveComponent mc;
     public ActionComponent ac;
@@ -167,22 +167,6 @@ public class Projectile extends Entity {
         animation = new PAnimation("death", move.projectileCollisionAnimation, null, move.animationLength,
                                    false);
         animationMap.put("death", animation);
-    }
-
-    @Override
-    public void render(SpriteBatch batch) {
-        super.render(batch);
-        if (ac.getActionState() == Action.MOVING && parent.currentAnimation.isFinished()) {
-            bs.setPosition((pc.x + Constants.TILE_SIZE / 2)/PPM, (pc.y + Constants.TILE_SIZE / 2)/PPM);
-            bs.update(0.06f);
-            bs.draw(batch);
-        }
-
-        if (ac.getActionState() == Action.COLLISION) {
-            pe.setPosition((pc.x + Constants.TILE_SIZE / 2)/PPM, (pc.y + Constants.TILE_SIZE / 2)/PPM);
-            pe.update(0.06f);
-            pe.draw(batch);
-        }
     }
 
     @Override
