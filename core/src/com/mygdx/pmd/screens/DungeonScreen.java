@@ -38,10 +38,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     private OrthographicCamera gameCamera;
     private CameraMode cameraMode = CameraMode.fixed;
 
-    private Viewport stagePort;
     public ShaderProgram shader;
-
-    public float timeStep;
 
     public FrameBuffer occludersFBO;
     public TextureRegion occluder;
@@ -75,7 +72,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
         shader = new ShaderProgram(Gdx.files.internal("shaders/vertex.glsl"), Gdx.files.internal("shaders/fragment" +
                                                                                                          ".glsl"));
-        if(!shader.isCompiled()){
+        if (!shader.isCompiled()) {
             System.out.println(shader.getLog());
         }
         //init stuff that needs the controller
@@ -84,33 +81,29 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public void render(float dt) {
-        timeStep +=dt;
 
-        if(timeStep > 1/60f) {
-            // occludersFBO.begin();
-            Gdx.gl.glClearColor(0, 0, 0, 1f);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            controller.update();
-            this.updateCamera();
+        // occludersFBO.begin();
+        Gdx.gl.glClearColor(0, 0, 0, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        controller.update();
+        this.updateCamera();
 
-            batch.setProjectionMatrix(gamePort.getCamera().combined);
-            batch.begin();
-            shader.setUniformf("resolution", lightSize, lightSize);
-            for (int i = 0; i < renderList.size; i++) {
-                renderList.get(i).render(batch);
-            }
+        batch.setProjectionMatrix(gamePort.getCamera().combined);
+        batch.begin();
+        shader.setUniformf("resolution", lightSize, lightSize);
+        for (int i = 0; i < renderList.size; i++) {
+            renderList.get(i).render(batch);
+        }
 
-            //batch.draw(occludersFBO.getColorBufferTexture(), 0, 0, lightSize, 100);
+        //batch.draw(occludersFBO.getColorBufferTexture(), 0, 0, lightSize, 100);
 
-            batch.end();
-            batch.setProjectionMatrix(hud.stage.getCamera().combined);
-            //for some reason it initializes batch,begin in stage.draw - how terrible
+        batch.end();
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        //for some reason it initializes batch,begin in stage.draw - how terrible
 
-            if (showHub) {
-                hud.update(dt);
-                hud.stage.draw();
-            }
-            timeStep = 0;
+        if (showHub) {
+            hud.update(dt);
+            hud.stage.draw();
         }
         //occludersFBO.end();
     }
@@ -176,19 +169,19 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
                 Vector3 mousePos = new Vector3(mouseX, mouseY, 0);
                 mousePos = gameCamera.unproject(mousePos);
                 System.out.println(mousePos.toString());
-                if(mousePos.x > gamePort.getWorldWidth()){
+                if (mousePos.x > gamePort.getWorldWidth()) {
                     mousePos.x = gamePort.getWorldWidth();
                 }
 
-                if(mousePos.y > gamePort.getWorldHeight()){
+                if (mousePos.y > gamePort.getWorldHeight()) {
                     mousePos.y = gamePort.getWorldHeight();
                 }
 
-                if(mousePos.x < 0){
+                if (mousePos.x < 0) {
                     mousePos.x = 0;
                 }
 
-                if(mousePos.y < 0){
+                if (mousePos.y < 0) {
                     mousePos.y = 0;
                 }
                 gameCamera.position.lerp(mousePos, .01f);

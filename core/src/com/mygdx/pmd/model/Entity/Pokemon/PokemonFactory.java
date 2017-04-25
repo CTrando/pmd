@@ -4,12 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
-import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
-import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.Floor.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.utils.PAnimation;
 
 /**
@@ -43,6 +40,7 @@ public class PokemonFactory {
         }
 
         loadAnimations(pokemon, name);
+        pokemon.init();
         return pokemon;
     }
 
@@ -56,10 +54,13 @@ public class PokemonFactory {
 
         pokemon.moves.add(Move.SWIPERNOSWIPING);
         loadAnimations(pokemon, name);
+        pokemon.init();
         return pokemon;
     }
 
     private static void loadAnimations(Pokemon pokemon, PokemonName pokemonName){
+        AnimationComponent anc = new AnimationComponent(pokemon);
+
         JsonReader jsonReader = new JsonReader();
         JsonValue animations = jsonReader.parse(Gdx.files.internal("utils/AnimationStorage.json"));
 
@@ -72,8 +73,9 @@ public class PokemonFactory {
             PAnimation animation = new PAnimation(animationInfo.name, spriteArray, finalSprite,
                     animationInfo.getInt("length"), animationInfo.getBoolean("loop"));
 
-            pokemon.animationMap.put(animationInfo.name, animation);
+            anc.putAnimation(animationInfo.name, animation);
         }
+        pokemon.components.put(AnimationComponent.class, anc);
     }
 
 

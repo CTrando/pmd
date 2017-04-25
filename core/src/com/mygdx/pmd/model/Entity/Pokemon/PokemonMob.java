@@ -10,7 +10,6 @@ import com.mygdx.pmd.model.Tile.Tile;
 import com.mygdx.pmd.utils.AI.PathFind;
 import com.mygdx.pmd.utils.AI.ShortestPath;
 import com.mygdx.pmd.utils.AI.Wander;
-import javafx.geometry.Pos;
 
 public class PokemonMob extends Pokemon {
     public PathFind pathFind;
@@ -25,10 +24,15 @@ public class PokemonMob extends Pokemon {
 
     PokemonMob(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y, pokemonName);
-        this.cc = new MobCombatComponent(this);
-        components.put(CombatComponent.class, cc);
+    }
 
+    @Override
+    public void init(){
+        super.init();
+        components.put(CombatComponent.class, cc);
+        this.cc = getComponent(CombatComponent.class);
         this.cc.setAggressionState(Aggression.passive);
+
         this.target = floor.getPlayer();
 
         //pathfinding objects

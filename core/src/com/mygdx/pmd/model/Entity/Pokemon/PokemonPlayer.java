@@ -18,7 +18,12 @@ public class PokemonPlayer extends Pokemon {
 
     PokemonPlayer(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y, pokemonName);
-        tc.setTurnState(Turn.WAITING);
+    }
+
+    @Override
+    public void init(){
+        super.init();
+        this.tc.setTurnState(Turn.WAITING);
         this.cc.setAggressionState(Aggression.passive);
 
         logic = new PlayerLogic(this);

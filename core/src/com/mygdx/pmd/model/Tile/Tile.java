@@ -83,7 +83,7 @@ public abstract class Tile extends Entity {
         for (Entity child : children) {
             if (child instanceof Item) {
                 Item item = (Item) child;
-                System.out.println("Some item was hit by " + receiver.toString());
+                System.out.println(item.toString() +" was hit by " + receiver.toString());
                 item.playEvents(receiver);
                 if (item.shouldBeDestroyed) {
                     entityList.removeValue(item, true);

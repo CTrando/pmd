@@ -23,24 +23,42 @@ public abstract class Pokemon extends Entity implements Logical {
     public DirectionComponent dc;
     public PositionComponent pc;
     public ActionComponent ac;
+    public AnimationComponent anc;
 
     Logic logic;
+
     private PokemonName pokemonName;
-
     public Array<Move> moves;
-    private Move move;
 
+    private Move move;
     public boolean attacking;
 
+    /**
+     * Constructor for Pokemon is meant to inject blank information, such as empty arrays and strings, and trivial
+     * identification such as names and identification
+     *
+     * <p>More complex behaviors are left in the init method, which will be called by @PokemonFactory</p>
+     * @param floor
+     * @param x
+     * @param y
+     * @param pokemonName
+     */
     Pokemon(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y);
+        this.pokemonName = pokemonName;
+        this.children = new Array<Entity>();
 
+        //initialize moves and add default move
+        moves = new Array<Move>(4);
+    }
+
+    public void init(){
         components.put(ActionComponent.class, new ActionComponent(this));
         components.put(TurnComponent.class, new TurnComponent(this));
         components.put(DirectionComponent.class, new DirectionComponent(this));
         components.put(CombatComponent.class, new CombatComponent(this));
         components.put(MoveComponent.class, new MoveComponent(this));
-
+        components.put(RenderComponent.class, new RenderComponent(this));
         //should probably leave this to the entities themselves
 
         this.tc = getComponent(TurnComponent.class);
@@ -49,21 +67,15 @@ public abstract class Pokemon extends Entity implements Logical {
         this.dc = getComponent(DirectionComponent.class);
         this.pc = getComponent(PositionComponent.class);
         this.ac = getComponent(ActionComponent.class);
+        this.anc = getComponent(AnimationComponent.class);
 
         cc.setHp(100);
         tc.setTurnState(Turn.COMPLETE);
         cc.setAggressionState(Aggression.passive);
         mc.setFacingTile(dc.getDirection());
 
-        this.pokemonName = pokemonName;
-        this.children = new Array<Entity>();
-
-        //initialize moves and add default move
-        moves = new Array<Move>(4);
-
         //default move
         moves.add(Move.SCRATCH);
-        components.put(RenderComponent.class, new RenderComponent(this));
         animationLogic = new AnimationLogic(this);
     }
 

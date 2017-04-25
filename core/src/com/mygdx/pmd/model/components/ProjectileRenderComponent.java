@@ -28,7 +28,7 @@ public class ProjectileRenderComponent extends RenderComponent {
         ParticleEffect bs = projectile.bs;
         ParticleEffect pe = projectile.pe;
 
-        if (ac.getActionState() == Action.MOVING && projectile.parent.currentAnimation.isFinished()) {
+        if (ac.getActionState() == Action.MOVING && projectile.parent.anc.isAnimationFinished()) {
             bs.setPosition((pc.x + Constants.TILE_SIZE / 2)/PPM, (pc.y + Constants.TILE_SIZE / 2)/PPM);
             bs.update(0.06f);
             bs.draw(batch);

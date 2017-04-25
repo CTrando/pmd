@@ -18,6 +18,7 @@ public class Berry extends Item {
 
     @Override
     public void playEvents(Entity receiver){
+        super.playEvents(receiver);
         if(receiver.hasComponent(CombatComponent.class)) {
             CombatComponent cc = receiver.getComponent(CombatComponent.class);
             cc.setHp(cc.getHp() + 20);

@@ -37,6 +37,7 @@ public class Projectile extends Entity {
     public ActionComponent ac;
     public DirectionComponent dc;
     public PositionComponent pc;
+    //TODO make a projectile factory class
 
     public Projectile(Pokemon parent, Move move) {
         // put down location as the parent's facing tile's location
@@ -154,25 +155,27 @@ public class Projectile extends Entity {
      * initialize animations - include adding animationLogic behavior
      */
     private void loadAnimations() {
+        AnimationComponent anc = new AnimationComponent(this);
         animation = new PAnimation("attack", move.projectileMovementAnimation, null, 20, true);
-        animationMap.put("up", animation);
-        animationMap.put("down", animation);
-        animationMap.put("right", animation);
-        animationMap.put("left", animation);
+        anc.putAnimation("up", animation);
+        anc.putAnimation("down", animation);
+        anc.putAnimation("right", animation);
+        anc.putAnimation("left", animation);
 
-        animationMap.put("upidle", animation);
-        animationMap.put("downidle", animation);
-        animationMap.put("leftidle", animation);
-        animationMap.put("rightidle", animation);
+        anc.putAnimation("upidle", animation);
+        anc.putAnimation("downidle", animation);
+        anc.putAnimation("leftidle", animation);
+        anc.putAnimation("rightidle", animation);
 
         animation = new PAnimation("death", move.projectileCollisionAnimation, null, move.animationLength,
                                    false);
-        animationMap.put("death", animation);
+        anc.putAnimation("death", animation);
+        components.put(AnimationComponent.class, anc);
     }
 
     @Override
     public void update() {
-        if (parent.currentAnimation.isFinished()) {
+        if (parent.anc.isAnimationFinished()) {
             super.update();
             runLogic();
         }

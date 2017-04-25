@@ -16,6 +16,7 @@ public class AttackInstruction implements Instruction {
 
     private ActionComponent ac;
     private TurnComponent tc;
+    private AnimationComponent anc;
 
     public AttackInstruction(Pokemon pokemon, Move move) {
         this.pokemon = pokemon;
@@ -25,6 +26,7 @@ public class AttackInstruction implements Instruction {
         }
         ac = pokemon.ac;
         tc = pokemon.tc;
+        anc = pokemon.anc;
     }
 
     @Override
@@ -39,16 +41,15 @@ public class AttackInstruction implements Instruction {
     public void onFinish() {
         tc.setTurnState(Turn.COMPLETE);
         ac.setActionState(Action.IDLE);
+        anc.getCurrentAnimation().clear();
 
         pokemon.attacking = false;
-
-        pokemon.currentAnimation.clear();
         pokemon.children.clear();
     }
 
     @Override
     public void execute() {
-        if(pokemon.currentAnimation.isFinished()) {
+        if(anc.isAnimationFinished()) {
             for (Entity entity : pokemon.children) {
                 if (entity.shouldBeDestroyed) {
                     isFinished = true;

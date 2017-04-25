@@ -55,6 +55,7 @@ public class PlayerLogic extends PokemonLogic {
         }
 
         player.instructions.add(new MoveInstruction(player, mc.getNextTile()));
+        player.instructions.add(new AnimateInstruction(player, "upattack"));
 
         //this is to keep movement smooth
         ac.setActionState(Action.MOVING);

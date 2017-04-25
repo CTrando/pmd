@@ -30,7 +30,7 @@ public abstract class Entity implements Updatable, Disposable {
     /******************************************/
     //Inherited variables from interfaces
 
-    protected HashMap<Class, Component> components;
+    public HashMap<Class, Component> components;
     public boolean shouldBeDestroyed;
     /******************************************/
 
@@ -40,10 +40,6 @@ public abstract class Entity implements Updatable, Disposable {
     public Tile[][] tileBoard;
     /*******************************************/
     //Render variables
-    public Sprite currentSprite;
-
-    public HashMap<String, PAnimation> animationMap;
-    public PAnimation currentAnimation;
     public AnimationLogic animationLogic;
     /********************************************/
 
@@ -64,7 +60,6 @@ public abstract class Entity implements Updatable, Disposable {
         this.tileBoard = floor.tileBoard;
         this.children = new Array<Entity>();
 
-        animationMap = new HashMap<String, PAnimation>();
         instructions = new LinkedList<Instruction>();
         currentInstruction = NO_INSTRUCTION;
 

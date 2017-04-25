@@ -12,33 +12,37 @@ public class AnimationLogic implements Logic {
     private DirectionComponent dc;
     private ActionComponent ac;
     private RenderComponent rc;
+    private AnimationComponent anc;
 
     public AnimationLogic(Entity entity) {
         this.entity = entity;
         this.dc = entity.getComponent(DirectionComponent.class);
         this.ac = entity.getComponent(ActionComponent.class);
+        this.anc = entity.getComponent(AnimationComponent.class);
         this.rc = entity.getComponent(RenderComponent.class);
     }
 
     public void execute() {
+        //TODO clear if it is different than previous state
+
         switch (ac.getActionState()) {
             case MOVING:
-                entity.currentAnimation = entity.animationMap.get(dc.getDirection().toString());
+                anc.setCurrentAnimation(anc.getAnimation(dc.getDirection().toString()));
                 break;
             case ATTACKING:
-                entity.currentAnimation = entity.animationMap.get(dc.getDirection().toString() + "attack");
+                anc.setCurrentAnimation(anc.getAnimation(dc.getDirection().toString() + "attack"));
                 break;
             case COLLISION:
-                entity.currentAnimation = entity.animationMap.get("death");
+                anc.setCurrentAnimation(anc.getAnimation("death"));
                 break;
             case IDLE:
-                entity.currentAnimation = entity.animationMap.get(dc.getDirection().toString() + "idle");
+                anc.setCurrentAnimation(anc.getAnimation(dc.getDirection().toString() + "idle"));
                 break;
         }
-        if (entity.currentAnimation == null) {
+        /*if (entity.currentAnimation == null) {
             System.out.println("UH OH");
-        }
+        }*/
 
-        rc.setSprite(entity.currentAnimation.getCurrentSprite());
+        rc.setSprite(anc.getCurrentSprite());
     }
 }

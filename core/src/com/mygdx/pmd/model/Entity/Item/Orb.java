@@ -17,6 +17,7 @@ public class Orb extends Item {
 
     @Override
     public void playEvents(Entity receiver) {
+        super.playEvents(receiver);
         if(receiver instanceof Pokemon) {
             ((Pokemon) receiver).randomizeLocation();
             this.shouldBeDestroyed = true;
