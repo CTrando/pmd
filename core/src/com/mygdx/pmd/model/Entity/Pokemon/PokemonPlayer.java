@@ -67,6 +67,7 @@ public class PokemonPlayer extends Pokemon {
                 } else if (PMD.isKeyPressed(Key.up)) {
                     dc.setDirection(Direction.up);
                 }
+                anc.setCurrentAnimation(dc.getDirection()+"idle");
             } else {
                 //code for setting the user's next tile
                 try {

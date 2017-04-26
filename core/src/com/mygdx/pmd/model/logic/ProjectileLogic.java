@@ -39,8 +39,6 @@ public class ProjectileLogic implements Logic {
      * Set of rules to check if projectile has collided yet
      */
     public void execute() {
-        projectile.animationLogic.execute();
-
         if (animation.isFinished() && ac.getActionState() == Action.COLLISION) {
             for(Entity entity: mc.getNextTile().getEntityList()){
                 if(entity.hasComponent(CombatComponent.class)){

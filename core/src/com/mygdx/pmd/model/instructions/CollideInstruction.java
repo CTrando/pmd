@@ -27,6 +27,7 @@ public class CollideInstruction implements Instruction{
     public void onInit() {
         PMD.manager.get("sfx/wallhit.wav", Sound.class).play();
         ac.setActionState(Action.COLLISION);
+        anc.setCurrentAnimation("death");
         pc.removeFromCurrentTile();
     }
 

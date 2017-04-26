@@ -34,6 +34,7 @@ public class MobLogic extends PokemonLogic {
         if (mob.mc.isForcedMove()) {
             System.out.println("forced move");
 
+            anc.setCurrentAnimation(dc.getDirection().toString());
             this.determineSpeed();
             tc.setTurnState(Turn.COMPLETE);
             skipTurn = true;
@@ -132,6 +133,7 @@ public class MobLogic extends PokemonLogic {
             ac.setActionState(Action.MOVING);
 
             dc.setDirection(mc.getNextTile());
+            anc.setCurrentAnimation(dc.getDirection().toString());
             this.determineSpeed();
         } else {
             ac.setActionState(Action.IDLE);

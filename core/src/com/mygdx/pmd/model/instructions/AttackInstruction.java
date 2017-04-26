@@ -16,6 +16,7 @@ public class AttackInstruction implements Instruction {
 
     private ActionComponent ac;
     private TurnComponent tc;
+    private DirectionComponent dc;
     private AnimationComponent anc;
 
     public AttackInstruction(Pokemon pokemon, Move move) {
@@ -24,6 +25,7 @@ public class AttackInstruction implements Instruction {
         if(this.move == null){
             this.move = pokemon.getRandomMove();
         }
+        dc = pokemon.dc;
         ac = pokemon.ac;
         tc = pokemon.tc;
         anc = pokemon.anc;
@@ -42,6 +44,7 @@ public class AttackInstruction implements Instruction {
         tc.setTurnState(Turn.COMPLETE);
         ac.setActionState(Action.IDLE);
         anc.getCurrentAnimation().clear();
+        anc.setCurrentAnimation(dc.getDirection().toString()+"idle");
 
         pokemon.attacking = false;
         pokemon.children.clear();

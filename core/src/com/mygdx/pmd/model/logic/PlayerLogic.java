@@ -55,9 +55,10 @@ public class PlayerLogic extends PokemonLogic {
         }
 
         player.instructions.add(new MoveInstruction(player, mc.getNextTile()));
-        player.instructions.add(new AnimateInstruction(player, "upattack"));
+      //  player.instructions.add(new AnimateInstruction(player, "upattack"));
 
         //this is to keep movement smooth
+        anc.setCurrentAnimation(dc.getDirection().toString());
         ac.setActionState(Action.MOVING);
         tc.setTurnState(Turn.COMPLETE);
 
@@ -69,6 +70,7 @@ public class PlayerLogic extends PokemonLogic {
     private void attack(Move move) {
         player.instructions.add(new AttackInstruction(player, move));
 
+        anc.setCurrentAnimation(dc.getDirection().toString() + "attack");
         ac.setActionState(Action.ATTACKING);
         tc.setTurnState(Turn.PENDING);
     }

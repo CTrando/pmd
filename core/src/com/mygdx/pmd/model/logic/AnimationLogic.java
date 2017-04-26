@@ -1,12 +1,15 @@
+/*
 package com.mygdx.pmd.model.logic;
 
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.components.*;
 
+*/
 /**
  * Created by Cameron on 11/8/2016.
- */
+ *//*
+
 public class AnimationLogic implements Logic {
     private Entity entity;
     private DirectionComponent dc;
@@ -27,10 +30,10 @@ public class AnimationLogic implements Logic {
 
         switch (ac.getActionState()) {
             case MOVING:
-                anc.setCurrentAnimation(anc.getAnimation(dc.getDirection().toString()));
+              //  anc.setCurrentAnimation(anc.getAnimation(dc.getDirection().toString()));
                 break;
             case ATTACKING:
-                anc.setCurrentAnimation(anc.getAnimation(dc.getDirection().toString() + "attack"));
+               // anc.setCurrentAnimation(anc.getAnimation(dc.getDirection().toString() + "attack"));
                 break;
             case COLLISION:
                 anc.setCurrentAnimation(anc.getAnimation("death"));
@@ -39,10 +42,13 @@ public class AnimationLogic implements Logic {
                 anc.setCurrentAnimation(anc.getAnimation(dc.getDirection().toString() + "idle"));
                 break;
         }
-        /*if (entity.currentAnimation == null) {
+        */
+/*if (entity.currentAnimation == null) {
             System.out.println("UH OH");
-        }*/
+        }*//*
+
 
         rc.setSprite(anc.getCurrentSprite());
     }
 }
+*/

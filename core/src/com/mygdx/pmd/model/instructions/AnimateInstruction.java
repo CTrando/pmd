@@ -26,7 +26,6 @@ public class AnimateInstruction implements Instruction {
 
     @Override
     public void onInit() {
-        this.ac.setActionState(Action.ATTACKING);
         this.anc.setCurrentAnimation(anc.getAnimation(animationKey));
     }
 

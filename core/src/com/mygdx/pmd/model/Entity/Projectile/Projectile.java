@@ -22,11 +22,7 @@ public class Projectile extends Entity {
     public ParticleEffect bs;
     public Pokemon parent;
     private Logic logic;
-
-    //TODO fix up this class man
-
-    public static final String MOVE_CLASSIFIER = "movement";
-
+    
     //instance fields from currentMove
     public Move move;
     public PAnimation animation;
@@ -37,35 +33,38 @@ public class Projectile extends Entity {
     public ActionComponent ac;
     public DirectionComponent dc;
     public PositionComponent pc;
-    //TODO make a projectile factory class
+    public RenderComponent rc;
+    public AnimationComponent anc;
+    //TODO make a projectile factory class and fix it up
 
     public Projectile(Pokemon parent, Move move) {
         // put down location as the parent's facing tile's location
         // set default values
         super(parent.floor, parent.mc.getFacingTile().x, parent.mc.getFacingTile().y);
 
-        this.pc = (PositionComponent) components.get(PositionComponent.class);
-        this.mc = new MoveComponent(this);
-        this.ac = new ActionComponent(this);
-        this.dc = new DirectionComponent(this);
-
-        pc.setCurrentTile(parent.mc.getFacingTile());
-
-        components.put(MoveComponent.class, mc);
-        components.put(ActionComponent.class, ac);
-        components.put(DirectionComponent.class, dc);
-
-
 
         this.parent = parent;
         this.move = move;
+        // load all the things
+        this.loadAnimations();
 
+        components.put(MoveComponent.class, new MoveComponent(this));
+        components.put(ActionComponent.class, new ActionComponent(this));
+        components.put(DirectionComponent.class, new DirectionComponent(this));
+        components.put(RenderComponent.class, new RenderComponent(this));
+
+        this.pc = getComponent(PositionComponent.class);
+        this.mc = getComponent(MoveComponent.class);
+        this.ac = getComponent(ActionComponent.class);
+        this.dc = getComponent(DirectionComponent.class);
+        this.rc = getComponent(RenderComponent.class);
+        this.anc = getComponent(AnimationComponent.class);
+
+        pc.setCurrentTile(parent.mc.getFacingTile());
         dc.setDirection(parent.dc.getDirection());
         mc.setSpeed(move.speed);
         this.findFutureTile();
-
-        // load all the things
-        this.loadAnimations();
+        anc.setCurrentAnimation(dc.getDirection().toString());
         if (move.isRanged()) {
             ac.setActionState(Action.MOVING);
             instructions.add(new MoveInstruction(this, mc.getNextTile()));
@@ -91,7 +90,6 @@ public class Projectile extends Entity {
         // must be last so has all the other data
 
         components.put(RenderComponent.class, new ProjectileRenderComponent(this));
-        this.animationLogic = new AnimationLogic(this);
         logic = new ProjectileLogic(this);
     }
 
@@ -178,6 +176,7 @@ public class Projectile extends Entity {
         if (parent.anc.isAnimationFinished()) {
             super.update();
             runLogic();
+            rc.setSprite(anc.getCurrentSprite());
         }
     }
 

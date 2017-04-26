@@ -19,6 +19,7 @@ public class MoveComponent implements Component {
     private DirectionComponent dc;
 
     private Tile nextTile;
+    //perhaps have facingTile calculated dynamically each time to avoid faulty variable storing
     private Tile facingTile;
     public Tile possibleNextTile;
 

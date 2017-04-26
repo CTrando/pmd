@@ -17,6 +17,7 @@ public class MoveInstruction implements Instruction {
     private ActionComponent ac;
     private DirectionComponent dc;
     private PositionComponent pc;
+    private AnimationComponent anc;
 
     public MoveInstruction(Entity entity, Tile nextTile) {
         this.entity = entity;
@@ -25,6 +26,7 @@ public class MoveInstruction implements Instruction {
         this.ac = this.entity.getComponent(ActionComponent.class);
         this.dc = this.entity.getComponent(DirectionComponent.class);
         this.pc = this.entity.getComponent(PositionComponent.class);
+        this.anc = this.entity.getComponent(AnimationComponent.class);
 
         mc.addToTile(nextTile);
     }
@@ -54,6 +56,7 @@ public class MoveInstruction implements Instruction {
     @Override
     public void onFinish() {
         ac.setActionState(Action.IDLE);
+        anc.setCurrentAnimation(dc.getDirection().toString()+"idle");
 
         pc.setCurrentTile(nextTile);
         pc.getCurrentTile().playEvents(entity);

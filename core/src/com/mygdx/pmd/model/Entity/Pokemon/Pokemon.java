@@ -24,6 +24,7 @@ public abstract class Pokemon extends Entity implements Logical {
     public PositionComponent pc;
     public ActionComponent ac;
     public AnimationComponent anc;
+    public RenderComponent rc;
 
     Logic logic;
 
@@ -67,16 +68,17 @@ public abstract class Pokemon extends Entity implements Logical {
         this.dc = getComponent(DirectionComponent.class);
         this.pc = getComponent(PositionComponent.class);
         this.ac = getComponent(ActionComponent.class);
+        this.rc = getComponent(RenderComponent.class);
         this.anc = getComponent(AnimationComponent.class);
 
         cc.setHp(100);
         tc.setTurnState(Turn.COMPLETE);
         cc.setAggressionState(Aggression.passive);
         mc.setFacingTile(dc.getDirection());
+        anc.setCurrentAnimation("downidle");
 
         //default move
         moves.add(Move.SCRATCH);
-        animationLogic = new AnimationLogic(this);
     }
 
     /**
@@ -108,7 +110,7 @@ public abstract class Pokemon extends Entity implements Logical {
             child.update();
         }
 
-        animationLogic.execute();
+        rc.setSprite(anc.getCurrentSprite());
         super.update();
     }
 
@@ -208,6 +210,8 @@ public abstract class Pokemon extends Entity implements Logical {
 
     public void reset(){
         super.reset();
+        dc.setDirection(Direction.down);
+        anc.setCurrentAnimation("downidle");
         ac.setActionState(Action.IDLE);
         tc.setTurnState(Turn.COMPLETE);
     }

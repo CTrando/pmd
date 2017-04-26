@@ -29,6 +29,10 @@ public class AnimationComponent implements Component {
         return currentAnimation;
     }
 
+    public void setCurrentAnimation(String animationKey){
+        this.currentAnimation = getAnimation(animationKey);
+    }
+
     public void setCurrentAnimation(PAnimation currentAnimation) {
         this.currentAnimation = currentAnimation;
     }

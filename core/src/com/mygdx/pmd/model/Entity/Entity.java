@@ -1,21 +1,13 @@
 package com.mygdx.pmd.model.Entity;
 
-import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.*;
-import com.badlogic.gdx.utils.Disposable;
-import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.*;
-import com.mygdx.pmd.model.components.*;
-import com.mygdx.pmd.model.logic.AnimationLogic;
+import com.mygdx.pmd.interfaces.Updatable;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.instructions.*;
-import com.mygdx.pmd.utils.*;
-import javafx.geometry.Pos;
 
 import java.util.*;
-
-import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 
 /**
  * Created by Cameron on 10/18/2016.
@@ -40,7 +32,6 @@ public abstract class Entity implements Updatable, Disposable {
     public Tile[][] tileBoard;
     /*******************************************/
     //Render variables
-    public AnimationLogic animationLogic;
     /********************************************/
 
     public Entity() {

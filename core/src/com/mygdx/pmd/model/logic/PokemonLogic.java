@@ -15,6 +15,7 @@ public abstract class PokemonLogic implements Logic {
     ActionComponent ac;
     TurnComponent tc;
     PositionComponent pc;
+    AnimationComponent anc;
 
     protected PokemonLogic(Pokemon pokemon) {
         this.pokemon = pokemon;
@@ -24,6 +25,7 @@ public abstract class PokemonLogic implements Logic {
         this.ac = pokemon.ac;
         this.tc = pokemon.tc;
         this.pc = pokemon.pc;
+        this.anc = pokemon.anc;
     }
 
     abstract boolean canAct();
