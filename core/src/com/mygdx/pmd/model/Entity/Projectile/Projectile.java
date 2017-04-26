@@ -154,7 +154,7 @@ public class Projectile extends Entity {
      */
     private void loadAnimations() {
         AnimationComponent anc = new AnimationComponent(this);
-        animation = new PAnimation("attack", move.projectileMovementAnimation, null, 20, true);
+        animation = new PAnimation("attack", move.projectileMovementAnimation, 20, true);
         anc.putAnimation("up", animation);
         anc.putAnimation("down", animation);
         anc.putAnimation("right", animation);
@@ -165,7 +165,7 @@ public class Projectile extends Entity {
         anc.putAnimation("leftidle", animation);
         anc.putAnimation("rightidle", animation);
 
-        animation = new PAnimation("death", move.projectileCollisionAnimation, null, move.animationLength,
+        animation = new PAnimation("death", move.projectileCollisionAnimation, move.animationLength,
                                    false);
         anc.putAnimation("death", animation);
         components.put(AnimationComponent.class, anc);

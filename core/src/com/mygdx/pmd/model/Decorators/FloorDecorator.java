@@ -3,10 +3,7 @@ package com.mygdx.pmd.model.Decorators;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.model.Entity.Item.ItemFactory;
 import com.mygdx.pmd.model.Floor.Floor;
-import com.mygdx.pmd.model.Tile.GenericTile;
-import com.mygdx.pmd.model.Tile.RoomTile;
-import com.mygdx.pmd.model.Tile.StairTile;
-import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.Tile.*;
 
 /**
  * Created by Cameron on 12/23/2016.
@@ -107,6 +104,14 @@ public class FloorDecorator {
             tile = floor.chooseUnoccupiedTile();
         }
         floor.tileBoard[tile.row][tile.col] = new StairTile(tile.row, tile.col, floor);
+
+        //trying to place water tiles here
+        tile = floor.chooseRandomTile();
+        floor.tileBoard[tile.row][tile.col] = new OceanTile(tile.row, tile.col, floor);
+        floor.tileBoard[tile.row+1][tile.col] = new OceanTile(tile.row+1, tile.col, floor);
+        floor.tileBoard[tile.row+1][tile.col+1] = new OceanTile(tile.row+1, tile.col+1, floor);
+        floor.tileBoard[tile.row][tile.col+1] = new OceanTile(tile.row, tile.col+1, floor);
+
         return floor;
     }
 

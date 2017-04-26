@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.Floor;
 
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
@@ -81,7 +82,16 @@ public class Floor extends Entity {
 
     @Override
     public void update(){
+        updateTiles();
         runLogic();
+    }
+
+    private void updateTiles(){
+        for(int i = 0; i< tileBoard.length; i++){
+            for(int j = 0; j< tileBoard[0].length; j++){
+                tileBoard[i][j].update();
+            }
+        }
     }
 
     @Override
@@ -89,6 +99,12 @@ public class Floor extends Entity {
         if(tc.isTurnWaiting()) {
             tc.setTurnState(Turn.COMPLETE);
         }
+    }
+
+    public Tile chooseRandomTile() {
+        int row = MathUtils.random(tileBoard.length);
+        int col = MathUtils.random(tileBoard[0].length);
+        return tileBoard[row][col];
     }
 
     public int getNumEntities() {

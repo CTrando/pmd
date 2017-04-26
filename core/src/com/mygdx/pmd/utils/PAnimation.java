@@ -16,11 +16,10 @@ public class PAnimation {
     public int frameCounter = 0;
     public Sprite currentSprite;
     public String classifier;
-    public Sprite finalSprite;
     public Key key;
     boolean isLooping;
 
-    public PAnimation(String classifier, Array<Sprite> animationSprites, Sprite finalSprite, int animationLength, boolean isLooping) {
+    public PAnimation(String classifier, Array<Sprite> animationSprites, int animationLength, boolean isLooping) {
         this.classifier = classifier;
         this.animationLength = animationLength;
         this.animationSprites = animationSprites;
@@ -30,7 +29,6 @@ public class PAnimation {
             this.eachFrameLength = animationLength / animationSprites.size;
             this.currentSprite = animationSprites.get(frameCounter);
         }
-        this.finalSprite = finalSprite;
     }
 
     public void update() {

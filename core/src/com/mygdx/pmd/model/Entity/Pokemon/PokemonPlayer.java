@@ -67,7 +67,6 @@ public class PokemonPlayer extends Pokemon {
                 } else if (PMD.isKeyPressed(Key.up)) {
                     dc.setDirection(Direction.up);
                 }
-                anc.setCurrentAnimation(dc.getDirection()+"idle");
             } else {
                 //code for setting the user's next tile
                 try {
@@ -91,6 +90,7 @@ public class PokemonPlayer extends Pokemon {
                 } catch (ArrayIndexOutOfBoundsException e) {
                 }
             }
+            anc.setCurrentAnimation(dc.getDirection()+"idle");
 
             //TODO switch keys to a refresh system - perhaps use an object instead of an enum
 

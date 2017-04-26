@@ -69,8 +69,7 @@ public class PokemonFactory {
             for(JsonValue spriteNames: animationInfo.get("sprites")){
                 spriteArray.add(PMD.sprites.get(pokemonName + spriteNames.asString()));
             }
-            Sprite finalSprite = PMD.sprites.get(pokemonName + animationInfo.get("finalSprite").asString());
-            PAnimation animation = new PAnimation(animationInfo.name, spriteArray, finalSprite,
+            PAnimation animation = new PAnimation(animationInfo.name, spriteArray,
                     animationInfo.getInt("length"), animationInfo.getBoolean("loop"));
 
             anc.putAnimation(animationInfo.name, animation);

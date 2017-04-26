@@ -41,7 +41,7 @@ public abstract class Tile extends Entity {
     public Tile[][] tileBoard;
     private Tile parent;
 
-    public RenderComponent rc;
+    protected RenderComponent rc;
 
     public Tile(int r, int c, Floor floor, String classifier) {
         super(floor, c*Constants.TILE_SIZE, r*Constants.TILE_SIZE);
@@ -76,6 +76,10 @@ public abstract class Tile extends Entity {
     }
 
     public void update() {
+
+    }
+
+    protected void loadAnimations() {
 
     }
 

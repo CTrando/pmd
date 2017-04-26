@@ -1,193 +1,214 @@
 TILE_SPRITES.png
-size: 234, 291
+size: 250, 291
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 berrysprite
   rotate: false
-  xy: 0, 0
+  xy: 0, 50
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 blacktilesprite
   rotate: false
-  xy: 25, 0
+  xy: 225, 25
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 bottomleftbarriersprite
   rotate: false
-  xy: 50, 0
+  xy: 25, 50
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 bottomlefttilesprite
   rotate: false
-  xy: 75, 0
+  xy: 200, 25
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 bottomrightbarriersprite
   rotate: false
-  xy: 100, 0
+  xy: 150, 25
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 bottomrightcornertilesprite
   rotate: false
-  xy: 125, 0
+  xy: 125, 25
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 debugtilesprite
   rotate: false
-  xy: 150, 0
+  xy: 50, 50
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 doortilesprite
   rotate: false
-  xy: 175, 0
+  xy: 125, 50
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 downbarriersprite
   rotate: false
-  xy: 200, 0
+  xy: 175, 50
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 generictilesprite
   rotate: false
-  xy: 0, 25
+  xy: 150, 50
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 hpathtilesprite
   rotate: false
-  xy: 25, 25
+  xy: 200, 50
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 leftbarriersprite
   rotate: false
-  xy: 50, 25
+  xy: 100, 50
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 leftrightbarriersprite
   rotate: false
-  xy: 75, 25
+  xy: 75, 50
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 orbsprite
   rotate: false
-  xy: 100, 25
+  xy: 175, 25
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 rightbarriersprite
   rotate: false
-  xy: 125, 25
+  xy: 25, 0
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 roomtilesprite
   rotate: false
-  xy: 150, 25
+  xy: 100, 25
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 stairtilesprite
   rotate: false
-  xy: 175, 25
+  xy: 75, 0
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 temp_sprites
   rotate: false
-  xy: 0, 50
+  xy: 0, 75
   size: 234, 216
   orig: 234, 216
   offset: 0, 0
   index: -1
 testroomsprite
   rotate: false
-  xy: 0, 266
+  xy: 125, 0
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 testtilesprite
   rotate: false
-  xy: 25, 266
+  xy: 50, 0
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 topleftbarriersprite
   rotate: false
-  xy: 50, 266
+  xy: 0, 0
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 toplefttilesprite
   rotate: false
-  xy: 75, 266
+  xy: 150, 0
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 toprightbarriersprite
   rotate: false
-  xy: 100, 266
+  xy: 225, 0
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 toprighttilesprite
   rotate: false
-  xy: 125, 266
+  xy: 50, 25
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 upbarriersprite
   rotate: false
-  xy: 150, 266
+  xy: 25, 25
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 updownbarriersprite
   rotate: false
-  xy: 175, 266
+  xy: 75, 25
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 vpathtilesprite
   rotate: false
-  xy: 200, 266
+  xy: 0, 25
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+wave1
+  rotate: false
+  xy: 200, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+wave2
+  rotate: false
+  xy: 175, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+wave3
+  rotate: false
+  xy: 100, 0
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
