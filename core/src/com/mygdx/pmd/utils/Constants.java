@@ -9,7 +9,7 @@ public class Constants {
     public static int WIDTH = Gdx.graphics.getWidth();
     public static int HEIGHT = Gdx.graphics.getHeight();
 
-    public static final int TILE_SIZE = 25;
+    public static final int TILE_SIZE = 32;
 
     private static final int tileBoardWidth = 1000;
     private static final int tileBoardHeight = 1000;

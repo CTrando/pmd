@@ -11,6 +11,7 @@ import com.mygdx.pmd.PMD;
  */
 public enum Move {
     //TODO make this class more generic
+    //TODO make it so that movement is divisble by Tile size or fix so no longer needs Tile size
 
     NOMOVE(false,0,1,1,20, "",""),
     SCRATCH(false,1,20,1,30, "projectilemotion", "claw"),

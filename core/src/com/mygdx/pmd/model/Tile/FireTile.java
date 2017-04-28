@@ -10,10 +10,10 @@ import com.mygdx.pmd.utils.PAnimation;
 /**
  * Created by Cameron on 4/25/2017.
  */
-public class OceanTile extends Tile {
+public class FireTile extends Tile {
     private AnimationComponent anc;
 
-    public OceanTile(int r, int c, Floor floor) {
+    public FireTile(int r, int c, Floor floor) {
         super(r, c, floor, "OCEAN");
         this.loadAnimations();
 
@@ -26,11 +26,17 @@ public class OceanTile extends Tile {
     public void loadAnimations() {
         AnimationComponent anc = new AnimationComponent(this);
         Array<Sprite> sprites = new Array<Sprite>();
-        sprites.add(PMD.sprites.get("wave1"));
-        sprites.add(PMD.sprites.get("wave2"));
-        sprites.add(PMD.sprites.get("wave3"));
+        sprites.add(PMD.sprites.get("fire1"));
+        sprites.add(PMD.sprites.get("fire2"));
+        sprites.add(PMD.sprites.get("fire3"));
+        sprites.add(PMD.sprites.get("fire4"));
+        sprites.add(PMD.sprites.get("fire5"));
+        sprites.add(PMD.sprites.get("fire6"));
+        sprites.add(PMD.sprites.get("fire7"));
+        sprites.add(PMD.sprites.get("fire8"));
 
-        PAnimation animation = new PAnimation("wave", sprites, 60, true);
+
+        PAnimation animation = new PAnimation("wave", sprites, 120, true);
 
         anc.putAnimation("wave", animation);
         components.put(AnimationComponent.class, anc);

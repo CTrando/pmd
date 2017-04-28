@@ -8,6 +8,7 @@ import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.instructions.*;
+import com.mygdx.pmd.utils.Constants;
 
 /**
  * Created by Cameron on 1/20/2017.
@@ -151,10 +152,11 @@ public class MobLogic extends PokemonLogic {
         if (mob.isWithinRange(mob.floor.getPlayer())) {
             mc.setSpeed(1);
             if (PMD.isKeyPressed(Key.s)) {
-                mc.setSpeed(5);
+                //TODO fix this by using a variable or doing some trick math
+                mc.setSpeed(Constants.TILE_SIZE/4);
             }
         } else {
-            mc.setSpeed(25);
+            mc.setSpeed(Constants.TILE_SIZE);
         }
     }
 

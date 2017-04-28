@@ -8,6 +8,7 @@ import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.instructions.*;
+import com.mygdx.pmd.utils.Constants;
 
 /**
  * Created by Cameron on 1/21/2017.
@@ -63,7 +64,7 @@ public class PlayerLogic extends PokemonLogic {
         tc.setTurnState(Turn.COMPLETE);
 
         if (PMD.isKeyPressed(Key.s)) {
-            mc.setSpeed(5);
+            mc.setSpeed(Constants.TILE_SIZE/4);
         } else mc.setSpeed(1);
     }
 

@@ -102,8 +102,8 @@ public class Floor extends Entity {
     }
 
     public Tile chooseRandomTile() {
-        int row = MathUtils.random(tileBoard.length);
-        int col = MathUtils.random(tileBoard[0].length);
+        int row = MathUtils.random(tileBoard.length-1);
+        int col = MathUtils.random(tileBoard[0].length-1);
         return tileBoard[row][col];
     }
 
