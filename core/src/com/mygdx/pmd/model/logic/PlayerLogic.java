@@ -23,11 +23,11 @@ public class PlayerLogic extends PokemonLogic {
 
     @Override
     public void execute() {
-        if (player.cc.getHp() <= 0) {
-            player.shouldBeDestroyed = true;
-        }
 
         if (canAct()) {
+            if (player.cc.getHp() <= 0) {
+                player.shouldBeDestroyed = true;
+            }
             player.handleInput();
             mc.setFacingTile(dc.getDirection());
 

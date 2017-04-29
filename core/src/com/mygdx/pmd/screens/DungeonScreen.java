@@ -117,6 +117,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     public void show() {
         renderList.clear();
         controller.reset();
+        cameraMode = CameraMode.fixed;
         hud.reset();
 
         inputMultiplexer = new InputMultiplexer();

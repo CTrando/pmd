@@ -46,7 +46,11 @@ public class AnimationComponent implements Component {
     }
 
     public Sprite getCurrentSprite(){
+        if(currentAnimation == null) return null;
         return currentAnimation.getCurrentSprite();
     }
 
+    public void clearCurrentAnimation() {
+        currentAnimation.clear();
+    }
 }

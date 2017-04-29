@@ -1,5 +1,7 @@
 package com.mygdx.pmd.model.instructions;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.components.*;
@@ -27,13 +29,14 @@ public class AnimateInstruction implements Instruction {
     @Override
     public void onInit() {
         this.anc.setCurrentAnimation(anc.getAnimation(animationKey));
+        this.anc.getCurrentAnimation().clear();
     }
 
     @Override
     public void onFinish() {
-        this.ac.setActionState(Action.IDLE);
+        //this.ac.setActionState(Action.IDLE);
         this.anc.getCurrentAnimation().clear();
-        this.anc.setCurrentAnimation(anc.getAnimation("upidle"));
+        //this.anc.setCurrentAnimation(anc.getAnimation("upidle"));
     }
 
     @Override

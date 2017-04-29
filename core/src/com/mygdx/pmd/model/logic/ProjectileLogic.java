@@ -46,7 +46,6 @@ public class ProjectileLogic implements Logic {
                 }
             }
 
-
             if (projectile.move.equals(Move.INSTANT_KILLER)) {
                 System.out.println("RKO OUT OF NOWHERE");
             }

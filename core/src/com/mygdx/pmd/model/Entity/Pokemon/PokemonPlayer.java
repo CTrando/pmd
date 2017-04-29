@@ -101,6 +101,7 @@ public class PokemonPlayer extends Pokemon {
             } else if (PMD.isKeyPressedTimeSensitive(Key.a)) {
                 System.out.println("Skip turn!");
                 tc.setTurnState(Turn.COMPLETE);
+                pc.getCurrentTile().playEvents(this);
                 mc.possibleNextTile = null;
             } else if (PMD.isKeyPressedTimeSensitive(Key.p)) {
                 Controller.turnsPaused = !Controller.turnsPaused;

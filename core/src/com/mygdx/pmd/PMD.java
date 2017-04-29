@@ -8,11 +8,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.Key;
 import com.mygdx.pmd.screens.*;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -22,6 +23,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class PMD extends Game {
     public static final String TITLE = "Pokemon Mystery Dungeon";
+    private final String ATLAS_DIRECTORY = "pokemonassets";
+    private final String SFX_DIRECTORY = "sfx";
     public static HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
     public static HashMap<Integer, AtomicBoolean> keys;
 
@@ -44,7 +47,7 @@ public class PMD extends Game {
         sprites = new HashMap<String, Sprite>();
 
         this.loadKeys();
-        this.loadManager();
+        this.loadAssets();
         this.loadSprites();
 
 
@@ -70,26 +73,44 @@ public class PMD extends Game {
         }
     }
 
-    private void loadManager() {
-        manager.load("pokemonassets/TREEKO_WALKSHEET.atlas", TextureAtlas.class);
-        manager.load("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class);
-        manager.load("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class);
-        manager.load("pokemonassets/PROJECTILE_TEXTURE.atlas", TextureAtlas.class);
-        manager.load("pokemonassets/ARROW_SPRITES.atlas", TextureAtlas.class);
-        manager.load("pokemonassets/ATTACK_SPRITES.atlas", TextureAtlas.class);
-
-        manager.load("sfx/background.ogg", Music.class);
-        manager.load("sfx/wallhit.wav", Sound.class);
+    private void loadAssets() {
+        loadAtlases();
+        loadSFX();
+        loadSprites();
         manager.finishLoading();
     }
 
+    private void loadAtlases() {
+        final File atlasFolder = new File(ATLAS_DIRECTORY);
+
+        for(final File atlas: atlasFolder.listFiles()){
+            String atlasName = atlas.getName();
+            if(atlasName.endsWith(".atlas")){
+                manager.load(ATLAS_DIRECTORY +"/"+atlasName, TextureAtlas.class);
+            }
+        }
+    }
+
+    private void loadSFX(){
+        final File sfxFolder = new File(SFX_DIRECTORY);
+
+        for(final File sfx: sfxFolder.listFiles()){
+            String sfxName = sfx.getName();
+            if(sfxName.endsWith(".wav")){
+                manager.load(SFX_DIRECTORY +"/"+sfxName, Sound.class);
+            } else if(sfxName.endsWith(".ogg")){
+                manager.load(SFX_DIRECTORY +"/"+sfxName, Music.class);
+            }
+        }
+    }
+
     private void loadSprites() {
-        this.loadImages(manager.get("pokemonassets/TREEKO_WALKSHEET.atlas", TextureAtlas.class));
-        this.loadImages(manager.get("pokemonassets/TILE_SPRITES.atlas", TextureAtlas.class));
-        this.loadImages(manager.get("pokemonassets/SQUIRTLE_WALKSHEET.atlas", TextureAtlas.class));
-        this.loadImages(manager.get("pokemonassets/PROJECTILE_TEXTURE.atlas", TextureAtlas.class));
-        this.loadImages(manager.get("pokemonassets/ARROW_SPRITES.atlas", TextureAtlas.class));
-        this.loadImages(manager.get("pokemonassets/ATTACK_SPRITES.atlas", TextureAtlas.class));
+        Array<TextureAtlas> spriteAtlases = new Array<TextureAtlas>();
+        manager.getAll(TextureAtlas.class, spriteAtlases);
+
+        for(TextureAtlas atlas: spriteAtlases){
+            loadImages(atlas);
+        }
     }
 
     private void loadImages(TextureAtlas textureAtlas) {

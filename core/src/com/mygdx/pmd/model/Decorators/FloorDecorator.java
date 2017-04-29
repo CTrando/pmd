@@ -126,7 +126,7 @@ public class FloorDecorator {
 
         //trying to place water tiles here
         for(int i = 0; i< 10; i++) {
-            tile = floor.chooseRandomTile();
+            tile = floor.chooseUnoccupiedTile();
             floor.tileBoard[tile.row][tile.col] = new FireTile(tile.row, tile.col, floor);
         }
        /* floor.tileBoard[tile.row][tile.col] = new OceanTile(tile.row, tile.col, floor);

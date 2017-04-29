@@ -75,10 +75,6 @@ public abstract class Tile extends Entity {
         batch.draw(this.debug, x, y);
     }
 
-    public void update() {
-
-    }
-
     protected void loadAnimations() {
 
     }

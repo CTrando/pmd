@@ -11,6 +11,8 @@ import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 public class RenderComponent implements Component {
     private Entity entity;
 
+    //TODO make it so that it takes in multiple sprites and renders in order
+
     protected PositionComponent pc;
     private Sprite sprite;
 

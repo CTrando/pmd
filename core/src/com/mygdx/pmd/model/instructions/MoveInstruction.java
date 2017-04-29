@@ -46,6 +46,7 @@ public class MoveInstruction implements Instruction {
     public void onInit() {
         ac.setActionState(Action.MOVING);
         mc.setFacingTile(dc.getDirection());
+        anc.setCurrentAnimation(dc.getDirection().toString());
         pc.removeFromCurrentTile();
 
         if(mc.isForcedMove()){

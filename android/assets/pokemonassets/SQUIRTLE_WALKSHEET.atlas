@@ -5,91 +5,91 @@ filter: Linear,Linear
 repeat: none
 squirtledefaultdown
   rotate: false
-  xy: 75, 168
+  xy: 25, 193
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtledefaultleft
   rotate: false
-  xy: 25, 143
+  xy: 50, 143
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtledefaultright
   rotate: false
-  xy: 75, 143
+  xy: 100, 143
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtledefaultup
   rotate: false
-  xy: 0, 168
+  xy: 25, 168
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtledown1
   rotate: false
-  xy: 100, 143
+  xy: 0, 168
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtledown2
   rotate: false
-  xy: 50, 143
+  xy: 75, 143
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtledown3
   rotate: false
-  xy: 0, 143
+  xy: 25, 143
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtledownattack1
   rotate: false
-  xy: 50, 118
+  xy: 75, 118
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtledownattack2
   rotate: false
-  xy: 100, 118
+  xy: 0, 143
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtledownattack3
   rotate: false
-  xy: 75, 118
+  xy: 100, 118
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtledownidle1
   rotate: false
-  xy: 25, 168
+  xy: 50, 168
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtledownidle2
   rotate: false
-  xy: 50, 168
+  xy: 75, 168
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtledownidle3
   rotate: false
-  xy: 50, 193
+  xy: 75, 193
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
@@ -138,112 +138,119 @@ squirtledownright3
   index: -1
 squirtleleft1
   rotate: false
-  xy: 100, 193
+  xy: 0, 218
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleleft2
   rotate: false
-  xy: 25, 218
+  xy: 50, 218
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleleft3
   rotate: false
-  xy: 0, 218
+  xy: 25, 218
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleleftattack1
   rotate: false
-  xy: 75, 193
+  xy: 100, 193
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleleftattack2
   rotate: false
-  xy: 25, 193
+  xy: 50, 193
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleleftidle1
   rotate: false
-  xy: 0, 118
+  xy: 100, 168
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleleftidle2
   rotate: false
-  xy: 0, 193
+  xy: 25, 118
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleleftidle3
   rotate: false
-  xy: 100, 168
+  xy: 0, 193
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+squirtlepain
+  rotate: false
+  xy: 50, 118
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleright1
   rotate: false
-  xy: 25, 118
+  xy: 50, 93
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleright2
   rotate: false
-  xy: 25, 93
+  xy: 0, 43
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleright3
   rotate: false
-  xy: 0, 43
+  xy: 0, 68
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtlerightattack1
   rotate: false
-  xy: 0, 68
+  xy: 100, 43
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtlerightattack2
   rotate: false
-  xy: 100, 43
+  xy: 25, 68
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtlerightidle1
   rotate: false
-  xy: 25, 68
+  xy: 75, 43
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtlerightidle2
   rotate: false
-  xy: 75, 43
+  xy: 25, 43
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtlerightidle3
   rotate: false
-  xy: 25, 43
+  xy: 50, 43
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
@@ -271,35 +278,35 @@ squirtleup3
   index: -1
 squirtleupattack1
   rotate: false
-  xy: 50, 43
+  xy: 0, 93
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleupattack2
   rotate: false
-  xy: 100, 93
+  xy: 25, 93
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleupidle1
   rotate: false
-  xy: 50, 93
+  xy: 100, 93
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleupidle2
   rotate: false
-  xy: 75, 93
+  xy: 0, 118
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 squirtleupidle3
   rotate: false
-  xy: 0, 93
+  xy: 75, 93
   size: 25, 25
   orig: 25, 25
   offset: 0, 0

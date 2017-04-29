@@ -1,67 +1,67 @@
 TREEKO_WALKSHEET.png
-size: 125, 249
+size: 254, 128
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 treekodefaultdown
   rotate: false
-  xy: 0, 169
+  xy: 125, 73
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekodefaultleft
   rotate: false
-  xy: 50, 169
+  xy: 175, 73
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekodefaultright
   rotate: false
-  xy: 25, 169
+  xy: 150, 73
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekodefaultup
   rotate: false
-  xy: 100, 144
+  xy: 100, 73
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekodown1
   rotate: false
-  xy: 75, 144
+  xy: 75, 73
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekodown2
   rotate: false
-  xy: 0, 144
+  xy: 0, 73
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekodown3
   rotate: false
-  xy: 50, 144
+  xy: 50, 73
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekodownattack1
   rotate: false
-  xy: 43, 21
+  xy: 162, 0
   size: 22, 22
   orig: 22, 22
   offset: 0, 0
   index: -1
 treekodownattack2
   rotate: false
-  xy: 23, 21
+  xy: 142, 0
   size: 20, 22
   orig: 20, 22
   offset: 0, 0
@@ -75,21 +75,21 @@ treekodownattack3
   index: -1
 treekodownidle1
   rotate: false
-  xy: 25, 144
+  xy: 25, 73
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekodownidle2
   rotate: false
-  xy: 75, 169
+  xy: 200, 73
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekodownidle3
   rotate: false
-  xy: 0, 194
+  xy: 0, 98
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
@@ -131,224 +131,231 @@ treekodownright2
   index: -1
 treekodownright3
   rotate: false
-  xy: 0, 21
+  xy: 119, 0
   size: 23, 21
   orig: 23, 21
   offset: 0, 0
   index: -1
 treekoleft1
   rotate: false
-  xy: 0, 219
+  xy: 124, 98
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoleft2
   rotate: false
-  xy: 50, 219
+  xy: 174, 98
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoleft3
   rotate: false
-  xy: 75, 219
+  xy: 199, 98
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoleftattack1
   rotate: false
-  xy: 25, 219
+  xy: 149, 98
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoleftattack2
   rotate: false
-  xy: 99, 194
+  xy: 99, 98
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoleftidle1
   rotate: false
-  xy: 100, 169
+  xy: 225, 73
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoleftidle2
   rotate: false
-  xy: 74, 119
+  xy: 199, 48
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoleftidle3
   rotate: false
-  xy: 74, 194
+  xy: 74, 98
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+treekopain
+  rotate: false
+  xy: 49, 98
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoright1
   rotate: false
-  xy: 49, 194
+  xy: 224, 48
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoright2
   rotate: false
-  xy: 99, 119
+  xy: 75, 48
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoright3
   rotate: false
-  xy: 100, 94
+  xy: 154, 23
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekorightattack1
   rotate: false
-  xy: 50, 69
+  xy: 204, 23
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekorightattack2
   rotate: false
-  xy: 100, 69
+  xy: 179, 23
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekorightidle1
   rotate: false
-  xy: 75, 69
+  xy: 129, 23
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekorightidle2
   rotate: false
-  xy: 25, 69
+  xy: 104, 23
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekorightidle3
   rotate: false
-  xy: 0, 69
+  xy: 54, 23
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoup1
   rotate: false
-  xy: 54, 44
+  xy: 79, 23
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoup2
   rotate: false
-  xy: 0, 94
+  xy: 229, 23
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoup3
   rotate: false
-  xy: 75, 94
+  xy: 125, 48
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoupattack1
   rotate: false
-  xy: 25, 94
+  xy: 0, 48
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoupattack2
   rotate: false
-  xy: 79, 44
+  xy: 50, 48
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoupattack3
   rotate: false
-  xy: 100, 219
+  xy: 224, 98
   size: 25, 30
   orig: 25, 30
   offset: 0, 0
   index: -1
 treekoupidle1
   rotate: false
-  xy: 50, 94
+  xy: 25, 48
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoupidle2
   rotate: false
-  xy: 49, 119
+  xy: 100, 48
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoupidle3
   rotate: false
-  xy: 0, 119
+  xy: 150, 48
   size: 25, 25
   orig: 25, 25
   offset: 0, 0
   index: -1
 treekoupleft1
   rotate: false
-  xy: 89, 21
+  xy: 208, 0
   size: 24, 23
   orig: 24, 23
   offset: 0, 0
   index: -1
 treekoupleft2
   rotate: false
-  xy: 27, 44
+  xy: 27, 23
   size: 27, 24
   orig: 27, 24
   offset: 0, 0
   index: -1
 treekoupleft3
   rotate: false
-  xy: 25, 119
+  xy: 175, 48
   size: 24, 25
   orig: 24, 25
   offset: 0, 0
   index: -1
 treekoupright1
   rotate: false
-  xy: 65, 21
+  xy: 184, 0
   size: 24, 23
   orig: 24, 23
   offset: 0, 0
   index: -1
 treekoupright2
   rotate: false
-  xy: 0, 44
+  xy: 0, 23
   size: 27, 24
   orig: 27, 24
   offset: 0, 0
   index: -1
 treekoupright3
   rotate: false
-  xy: 25, 194
+  xy: 25, 98
   size: 24, 25
   orig: 24, 25
   offset: 0, 0

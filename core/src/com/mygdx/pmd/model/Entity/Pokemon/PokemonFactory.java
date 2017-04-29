@@ -62,6 +62,7 @@ public class PokemonFactory {
         AnimationComponent anc = new AnimationComponent(pokemon);
 
         JsonReader jsonReader = new JsonReader();
+        //if you want to add animations alter the animation storage json
         JsonValue animations = jsonReader.parse(Gdx.files.internal("utils/AnimationStorage.json"));
 
         for(JsonValue animationInfo: animations.iterator()){

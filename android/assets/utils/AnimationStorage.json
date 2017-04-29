@@ -119,6 +119,13 @@
         "loop": false,
         "length": 30
     },
+    "pain": {
+        "sprites": [
+            "pain"
+        ],
+        "loop": false,
+        "length": 45
+    },
     "noanimation": {
         "sprites": [
             "nothing"

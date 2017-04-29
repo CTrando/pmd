@@ -2,6 +2,7 @@ package com.mygdx.pmd.model.components;
 
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
+import com.mygdx.pmd.model.instructions.*;
 
 /**
  * Created by Cameron on 4/18/2017.
@@ -37,6 +38,7 @@ public class CombatComponent implements Component {
 
     public void takeDamage(Entity damager, int damage){
         setHp(hp - damage);
+        entity.instructions.add(new AnimateInstruction(entity, "pain"));
     }
 
     public int getHp() {
