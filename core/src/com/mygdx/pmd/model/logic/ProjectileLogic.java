@@ -13,7 +13,7 @@ import com.mygdx.pmd.utils.*;
 public class ProjectileLogic implements Logic {
     private Projectile projectile;
     private Pokemon parent;
-    private PAnimation animation;
+    private AnimationComponent anc;
 
     //TODO FIX PROJECTILE LOGIC WITH DIRECTION COMPONENTS
 
@@ -29,7 +29,7 @@ public class ProjectileLogic implements Logic {
     public ProjectileLogic(Projectile projectile) {
         this.projectile = projectile;
         this.parent = projectile.parent;
-        this.animation = projectile.animation;
+        this.anc = projectile.getComponent(AnimationComponent.class);
         this.ac = projectile.ac;
         this.pc = projectile.pc;
         this.mc = projectile.mc;
@@ -39,7 +39,7 @@ public class ProjectileLogic implements Logic {
      * Set of rules to check if projectile has collided yet
      */
     public void execute() {
-        if (animation.isFinished() && ac.getActionState() == Action.COLLISION) {
+        if (anc.isAnimationFinished() && ac.getActionState() == Action.COLLISION) {
             for(Entity entity: mc.getNextTile().getEntityList()){
                 if(entity.hasComponent(CombatComponent.class)){
                     entity.getComponent(CombatComponent.class).takeDamage(parent, projectile.move.damage);

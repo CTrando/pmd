@@ -25,6 +25,9 @@ public class PlayerLogic extends PokemonLogic {
     public void execute() {
 
         if (canAct()) {
+            if(!player.children.contains(player.pc.getCurrentTile(), true)) {
+                player.children.add(player.pc.getCurrentTile());
+            }
             if (player.cc.getHp() <= 0) {
                 player.shouldBeDestroyed = true;
             }

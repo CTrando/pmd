@@ -16,7 +16,7 @@ public enum Move {
     NOMOVE(false,0,1,1,20, "",""),
     SCRATCH(false,1,20,1,30, "projectilemotion", "claw"),
     SWIPERNOSWIPING(true, 3, 10, 1, 30, "projectilemotion", "claw"),
-    INSTANT_KILLER(true,100, 100000000,5,20, "projectilemotion", "explosion");
+    INSTANT_KILLER(true,100, 100000000,8,20, "projectilemotion", "explosion");
 
     private final boolean isRanged;
     public final int damage;

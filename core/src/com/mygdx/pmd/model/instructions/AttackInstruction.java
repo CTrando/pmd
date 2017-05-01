@@ -35,7 +35,7 @@ public class AttackInstruction implements Instruction {
     public void onInit() {
         ac.setActionState(Action.ATTACKING);
 
-        Projectile projectile = new Projectile(pokemon, move);
+        Projectile projectile = ProjectileFactory.createProjectile(pokemon, move);
         pokemon.children.add(projectile);
     }
 

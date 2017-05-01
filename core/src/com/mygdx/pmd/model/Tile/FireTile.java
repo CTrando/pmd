@@ -22,6 +22,7 @@ public class FireTile extends TrapTile {
         this.isWalkable = true;
         this.anc = getComponent(AnimationComponent.class);
         this.backgroundSprite = PMD.sprites.get("bricktile");
+        rc.setSprite(backgroundSprite, RenderComponent.BACKGROUND);
     }
 
     @Override

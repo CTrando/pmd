@@ -1,5 +1,6 @@
 package com.mygdx.pmd.model.logic;
 
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
@@ -9,6 +10,9 @@ import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.instructions.*;
 import com.mygdx.pmd.utils.Constants;
+import javafx.geometry.Pos;
+
+import java.util.Arrays;
 
 /**
  * Created by Cameron on 1/20/2017.
@@ -31,6 +35,7 @@ public class MobLogic extends PokemonLogic {
         if (mob.shouldBeDestroyed) {
             return;
         }
+        //too long
 
         if (mob.mc.isForcedMove()) {
             System.out.println("forced move");
@@ -48,6 +53,10 @@ public class MobLogic extends PokemonLogic {
             if(skipTurn){
                 skipTurn = false;
                 tc.setTurnState(Turn.COMPLETE);
+                return;
+            }
+            if(tc.isTurnWaiting()) {
+                bfs(mob.floor.getPlayer().getComponent(PositionComponent.class).getCurrentTile());
                 return;
             }
             //will turn to face the player if the mob is aggressive
@@ -89,6 +98,42 @@ public class MobLogic extends PokemonLogic {
                 return;
             }
         }
+    }
+
+    private void bfs(Tile tile){
+        tc.setTurnState(Turn.COMPLETE);
+        mob.children.add(mob.pc.getCurrentTile());
+        Array<Tile> newTiles = new Array<Tile>();
+        //not while because I want it to run once
+        for(Entity entity: mob.children){
+            if(entity instanceof Tile){
+                Tile wTile = (Tile) entity;
+                Tile[][] tileBoard = wTile.tileBoard;
+                int row = wTile.row;
+                int col = wTile.col;
+
+                if(!wTile.visited){
+                    wTile.visited = true;
+                    newTiles.add(tileBoard[row+1][col]);
+                    newTiles.add(tileBoard[row-1][col]);
+                    newTiles.add(tileBoard[row][col+1]);
+                    newTiles.add(tileBoard[row][col-1]);
+                }
+            }
+        }
+        tween(newTiles);
+        mob.children.addAll(newTiles);
+    }
+
+    private void tween(Array<Tile> tiles){
+        Array<Tile> rm = new Array<Tile>();
+        for(int i = 0; i< tiles.size; i++) {
+            Tile tile = tiles.get(i);
+            if(!tile.isWalkable || mob.children.contains(tile, true)){
+                rm.add(tile);
+            }
+        }
+        tiles.removeAll(rm, true);
     }
 
     private void attack(Move move) {

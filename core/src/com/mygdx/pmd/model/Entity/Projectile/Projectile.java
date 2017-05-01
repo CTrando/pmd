@@ -25,8 +25,6 @@ public class Projectile extends Entity {
     
     //instance fields from currentMove
     public Move move;
-    public PAnimation animation;
-
     public ParticleEffect pe;
 
     public MoveComponent mc;
@@ -37,43 +35,23 @@ public class Projectile extends Entity {
     public AnimationComponent anc;
     //TODO make a projectile factory class and fix it up
 
-    public Projectile(Pokemon parent, Move move) {
-        // put down location as the parent's facing tile's location
-        // set default values
+    Projectile(Pokemon parent, Move move) {
         super(parent.floor, parent.mc.getFacingTile().x, parent.mc.getFacingTile().y);
-
 
         this.parent = parent;
         this.move = move;
-        // load all the things
-        this.loadAnimations();
+    }
 
-        components.put(MoveComponent.class, new MoveComponent(this));
-        components.put(ActionComponent.class, new ActionComponent(this));
-        components.put(DirectionComponent.class, new DirectionComponent(this));
-        components.put(RenderComponent.class, new RenderComponent(this));
-
+    void init(){
         this.pc = getComponent(PositionComponent.class);
         this.mc = getComponent(MoveComponent.class);
         this.ac = getComponent(ActionComponent.class);
         this.dc = getComponent(DirectionComponent.class);
         this.rc = getComponent(RenderComponent.class);
         this.anc = getComponent(AnimationComponent.class);
-
-        pc.setCurrentTile(parent.mc.getFacingTile());
-        dc.setDirection(parent.dc.getDirection());
-        mc.setSpeed(move.speed);
-        this.findFutureTile();
         anc.setCurrentAnimation(dc.getDirection().toString());
-        if (move.isRanged()) {
-            ac.setActionState(Action.MOVING);
-            instructions.add(new MoveInstruction(this, mc.getNextTile()));
-            instructions.add(new CollideInstruction(this));
-        } else {
-            instructions.add(new CollideInstruction(this));
-        }
 
-        //load particle effects
+
         bs = new ParticleEffect();
         bs.load(Gdx.files.internal("pokemonassets/energyball"), Gdx.files.internal("pokemonassets"));
         bs.setPosition(pc.x/PPM, pc.y/PPM);
@@ -89,52 +67,8 @@ public class Projectile extends Entity {
 
         // must be last so has all the other data
 
-        components.put(RenderComponent.class, new ProjectileRenderComponent(this));
+        //components.put(RenderComponent.class, new ProjectileRenderComponent(this));
         logic = new ProjectileLogic(this);
-    }
-
-    private void findFutureTile() {
-        int row = pc.getCurrentTile().row;
-        int col = pc.getCurrentTile().col;
-
-        switch (dc.getDirection()) {
-            case up:
-                for (int i = 0; i < move.range; i++) {
-                    Tile tile = tileBoard[row + i][col];
-                    if (isValidTarget(tile) || i == move.range - 1) {
-                        mc.setNextTile(tile);
-                        break;
-                    }
-                }
-                break;
-            case down:
-                for (int i = 0; i < move.range; i++) {
-                    Tile tile = tileBoard[row - i][col];
-                    if (isValidTarget(tile) || i == move.range - 1) {
-                        mc.setNextTile(tile);
-                        break;
-                    }
-                }
-                break;
-            case left:
-                for (int j = 0; j < move.range; j++) {
-                    Tile tile = tileBoard[row][col - j];
-                    if (isValidTarget(tile) || j == move.range - 1) {
-                        mc.setNextTile(tile);
-                        break;
-                    }
-                }
-                break;
-            case right:
-                for (int j = 0; j < move.range; j++) {
-                    Tile tile = tileBoard[row][col + j];
-                    if (isValidTarget(tile) || j == move.range - 1) {
-                        mc.setNextTile(tile);
-                        break;
-                    }
-                }
-                break;
-        }
     }
 
     /**
@@ -143,32 +77,10 @@ public class Projectile extends Entity {
      * @param tile The working tile - as in working memory
      * @return if attack should stop
      */
-    private boolean isValidTarget(Tile tile) {
+    boolean isValidTarget(Tile tile) {
         return tile == null ||
                 tile instanceof GenericTile || /* must replace with damageable */
                 tile.hasEntityWithComponent(CombatComponent.class);
-    }
-
-    /**
-     * initialize animations - include adding animationLogic behavior
-     */
-    private void loadAnimations() {
-        AnimationComponent anc = new AnimationComponent(this);
-        animation = new PAnimation("attack", move.projectileMovementAnimation, 20, true);
-        anc.putAnimation("up", animation);
-        anc.putAnimation("down", animation);
-        anc.putAnimation("right", animation);
-        anc.putAnimation("left", animation);
-
-        anc.putAnimation("upidle", animation);
-        anc.putAnimation("downidle", animation);
-        anc.putAnimation("leftidle", animation);
-        anc.putAnimation("rightidle", animation);
-
-        animation = new PAnimation("death", move.projectileCollisionAnimation, move.animationLength,
-                                   false);
-        anc.putAnimation("death", animation);
-        components.put(AnimationComponent.class, anc);
     }
 
     @Override

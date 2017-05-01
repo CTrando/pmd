@@ -85,19 +85,24 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         // occludersFBO.begin();
         Gdx.gl.glClearColor(0, 0, 0, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        Gdx.gl.glDisable(GL20.GL_BLEND);
+
         controller.update();
         this.updateCamera();
-
         batch.setProjectionMatrix(gamePort.getCamera().combined);
+        sRenderer.setProjectionMatrix(gamePort.getCamera().combined);
+        sRenderer.begin(ShapeRenderer.ShapeType.Line);
         batch.begin();
-        shader.setUniformf("resolution", lightSize, lightSize);
+        //shader.setUniformf("resolution", lightSize, lightSize);
         for (int i = 0; i < renderList.size; i++) {
             renderList.get(i).render(batch);
         }
-
         //batch.draw(occludersFBO.getColorBufferTexture(), 0, 0, lightSize, 100);
 
         batch.end();
+        sRenderer.end();
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         //for some reason it initializes batch,begin in stage.draw - how terrible
 

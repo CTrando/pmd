@@ -1,10 +1,7 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.interfaces.*;
 import com.mygdx.pmd.model.Entity.*;
@@ -59,7 +56,7 @@ public abstract class Pokemon extends Entity implements Logical {
         components.put(DirectionComponent.class, new DirectionComponent(this));
         components.put(CombatComponent.class, new CombatComponent(this));
         components.put(MoveComponent.class, new MoveComponent(this));
-        components.put(RenderComponent.class, new RenderComponent(this));
+        components.put(RenderComponent.class, new DebugRenderComponent(this));
         //should probably leave this to the entities themselves
 
         this.tc = getComponent(TurnComponent.class);
@@ -210,6 +207,7 @@ public abstract class Pokemon extends Entity implements Logical {
 
     public void reset(){
         super.reset();
+        children.clear();
         dc.setDirection(Direction.down);
         anc.setCurrentAnimation("downidle");
         ac.setActionState(Action.IDLE);

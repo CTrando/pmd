@@ -42,6 +42,7 @@ public abstract class Tile extends Entity {
     private Tile parent;
 
     protected RenderComponent rc;
+    public boolean visited;
 
     public Tile(int r, int c, Floor floor, String classifier) {
         super(floor, c*Constants.TILE_SIZE, r*Constants.TILE_SIZE);
