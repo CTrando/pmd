@@ -175,12 +175,12 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
                 Vector3 mousePos = new Vector3(mouseX, mouseY, 0);
                 mousePos = gameCamera.unproject(mousePos);
                 System.out.println(mousePos.toString());
-                if (mousePos.x > gamePort.getWorldWidth()) {
-                    mousePos.x = gamePort.getWorldWidth();
+                if (mousePos.x > Constants.tileBoardWidth) {
+                    mousePos.x = Constants.tileBoardWidth;
                 }
 
-                if (mousePos.y > gamePort.getWorldHeight()) {
-                    mousePos.y = gamePort.getWorldHeight();
+                if (mousePos.y > Constants.tileBoardHeight) {
+                    mousePos.y = Constants.tileBoardHeight;
                 }
 
                 if (mousePos.x < 0) {
@@ -190,7 +190,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
                 if (mousePos.y < 0) {
                     mousePos.y = 0;
                 }
-                gameCamera.position.lerp(mousePos, .01f);
+                gameCamera.position.lerp(mousePos, .05f);
                 gameCamera.update();
                 break;
         }

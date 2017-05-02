@@ -60,6 +60,11 @@ public abstract class Tile extends Entity {
         this.rc = new RenderComponent(this);
         components.put(RenderComponent.class, rc);
     }
+
+    //this can be overridden for different tiles - super smart!
+    public boolean isLegalToMoveTo(Entity entity){
+        return isWalkable;
+    }
 /*
 
     public void render(SpriteBatch batch) {

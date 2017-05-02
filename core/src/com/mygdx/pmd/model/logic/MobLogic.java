@@ -9,6 +9,7 @@ import com.mygdx.pmd.model.Entity.Pokemon.PokemonMob;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.instructions.*;
+import com.mygdx.pmd.utils.AI.BFS;
 import com.mygdx.pmd.utils.Constants;
 import javafx.geometry.Pos;
 
@@ -20,10 +21,12 @@ import java.util.Arrays;
 public class MobLogic extends PokemonLogic {
     private PokemonMob mob;
     private boolean skipTurn;
+    private BFS bfs;
 
     public MobLogic(PokemonMob mob) {
         super(mob);
         this.mob = mob;
+        this.bfs = new BFS(mob);
     }
 
     @Override
@@ -55,10 +58,10 @@ public class MobLogic extends PokemonLogic {
                 tc.setTurnState(Turn.COMPLETE);
                 return;
             }
-            if(tc.isTurnWaiting()) {
-                bfs(mob.floor.getPlayer().getComponent(PositionComponent.class).getCurrentTile());
+            /*if(tc.isTurnWaiting()) {
+                bfs(mob.target.getComponent(PositionComponent.class).getCurrentTile());
                 return;
-            }
+            }*/
             //will turn to face the player if the mob is aggressive
             if (mob.cc.isAggressive()) {
                 PositionComponent targetPC = mob.target.getComponent(PositionComponent.class);
@@ -102,7 +105,8 @@ public class MobLogic extends PokemonLogic {
 
     private void bfs(Tile tile){
         tc.setTurnState(Turn.COMPLETE);
-        mob.children.add(mob.pc.getCurrentTile());
+        bfs.bfs(mob.target.getComponent(PositionComponent.class).getCurrentTile());
+       /* mob.children.add(mob.pc.getCurrentTile());
         Array<Tile> newTiles = new Array<Tile>();
         //not while because I want it to run once
         for(Entity entity: mob.children){
@@ -122,7 +126,7 @@ public class MobLogic extends PokemonLogic {
             }
         }
         tween(newTiles);
-        mob.children.addAll(newTiles);
+        mob.children.addAll(newTiles);*/
     }
 
     private void tween(Array<Tile> tiles){
@@ -206,13 +210,14 @@ public class MobLogic extends PokemonLogic {
     }
 
     private boolean pathFind() {
-        try {
+        //try {
             // not one behind change back to movement component later
             MoveComponent targetMC = mob.target.getComponent(MoveComponent.class);
-            mob.path = mob.pathFind.pathFind(targetMC.getNextTile());
-        } catch (PathFindFailureException e) {
-            System.out.println("Failed to pathfind");
-        }
+            //mob.path = mob.pathFind.pathFind(targetMC.getNextTile());
+            mob.path = bfs.bfs(targetMC.getNextTile());
+        //} catch (PathFindFailureException e) {
+        //    System.out.println("Failed to pathfind");
+        //}
 
         if (mob.path.size <= 0) {
             return false;
