@@ -53,57 +53,6 @@ public class FloorDecorator {
                                                   floor.tileBoard) && floor.tileBoard[i + 1][j - 1] instanceof RoomTile) {
                     floor.tileBoard[i][j].spriteValue += 128;
                 }
-
-                if (tile instanceof GenericTile) {
-                    tile.sprite = null;/*
-                    switch (tile.spriteValue) {
-                        case 0:
-                            tile.sprite = PMD.sprites.get("blacktilesprite");
-                            break;
-                        case 112:
-                            tile.sprite = PMD.sprites.get("toprighttilesprite");
-                            break;
-                        case 193:
-                            tile.sprite = PMD.sprites.get("bottomrightcornertilesprite");
-                            break;
-                        case 28:
-                            tile.sprite = PMD.sprites.get("toplefttilesprite");
-                            break;
-                        case 7:
-                            tile.sprite = PMD.sprites.get("bottomlefttilesprite");
-                            break;
-                        case 224:
-                            tile.sprite = PMD.sprites.get("rightbarriersprite");
-                            break;
-                        case 14:
-                            tile.sprite = PMD.sprites.get("leftbarriersprite");
-                            break;
-                        case 56:
-                            tile.sprite = PMD.sprites.get("upbarriersprite");
-                            break;
-                        case 131:
-                            tile.sprite = PMD.sprites.get("downbarriersprite");
-                            break;
-                        case 238:
-                            tile.sprite = PMD.sprites.get("leftrightbarriersprite");
-                            break;
-                        case 187:
-                            tile.sprite = PMD.sprites.get("updownbarriersprite");
-                            break;
-                        case 62:
-                            tile.sprite = PMD.sprites.get("topleftbarriersprite");
-                            break;
-                        case 143:
-                            tile.sprite = PMD.sprites.get("bottomleftbarriersprite");
-                            break;
-                        case 227:
-                            tile.sprite = PMD.sprites.get("bottomrightbarriersprite");
-                            break;
-                        case 248:
-                            tile.sprite = PMD.sprites.get("toprightbarriersprite");
-                    }
-*/
-                }
             }
         }
         return floor;
@@ -124,15 +73,17 @@ public class FloorDecorator {
         }
         floor.tileBoard[tile.row][tile.col] = new StairTile(tile.row, tile.col, floor);
 
-        //trying to place water tiles here
-        for(int i = 0; i< 10; i++) {
+        for (int i = 0; i < 4*Math.random(); i++) {
             tile = floor.chooseUnoccupiedTile();
             floor.tileBoard[tile.row][tile.col] = new FireTile(tile.row, tile.col, floor);
         }
-       /* floor.tileBoard[tile.row][tile.col] = new OceanTile(tile.row, tile.col, floor);
-        floor.tileBoard[tile.row + 1][tile.col] = new OceanTile(tile.row + 1, tile.col, floor);
-        floor.tileBoard[tile.row + 1][tile.col + 1] = new OceanTile(tile.row + 1, tile.col + 1, floor);
-        floor.tileBoard[tile.row][tile.col + 1] = new OceanTile(tile.row, tile.col + 1, floor);*/
+
+        //trying to place water tiles here
+      /*  Tile waterCenter = floor.chooseRandomTile();
+        floor.tileBoard[waterCenter.row][waterCenter.col] = new WaterTile(waterCenter.row, waterCenter.col, floor);
+        floor.tileBoard[waterCenter.row + 1][waterCenter.col] = new WaterTile(waterCenter.row + 1, waterCenter.col, floor);
+        floor.tileBoard[waterCenter.row + 1][waterCenter.col + 1] = new WaterTile(waterCenter.row + 1, waterCenter.col + 1, floor);
+        floor.tileBoard[waterCenter.row][waterCenter.col + 1] = new WaterTile(waterCenter.row, waterCenter.col + 1, floor);*/
 
         return floor;
     }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.*;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
@@ -89,12 +90,25 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
+
         controller.update();
         this.updateCamera();
         batch.setProjectionMatrix(gamePort.getCamera().combined);
         sRenderer.setProjectionMatrix(gamePort.getCamera().combined);
         sRenderer.begin(ShapeRenderer.ShapeType.Line);
         batch.begin();
+        float row = controller.pokemonPlayer.pc.y/PPM;
+        float col = controller.pokemonPlayer.pc.x/PPM;
+
+        if (cameraMode == CameraMode.fixed) {
+            Rectangle bounds = new Rectangle(col - (gamePort.getWorldWidth() / 2),
+                                             row - (gamePort.getWorldHeight() / 2),
+                                             gamePort.getWorldWidth() + 1,
+                                             gamePort.getWorldHeight() + 1);
+            Rectangle scissors = new Rectangle();
+            ScissorStack.calculateScissors(gameCamera, batch.getTransformMatrix(), bounds, scissors);
+            ScissorStack.pushScissors(scissors);
+        }
         //shader.setUniformf("resolution", lightSize, lightSize);
         for (int i = 0; i < renderList.size; i++) {
             renderList.get(i).render(batch);
@@ -104,6 +118,10 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         batch.end();
         sRenderer.end();
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        batch.flush();
+        if (cameraMode == CameraMode.fixed) {
+            ScissorStack.popScissors();
+        }
         //for some reason it initializes batch,begin in stage.draw - how terrible
 
         if (showHub) {

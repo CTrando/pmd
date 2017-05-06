@@ -18,9 +18,13 @@ public class ItemFactory {
     public static int maxOrbs = 5;
     public static int minOrbs = 1;
 
+    public static int maxApples = 4;
+    public static int minApples = 1;
+
     public static void placeItems(Floor floor){
         int numBerries = MathUtils.random(minBerries, maxBerries);
         int numOrbs = MathUtils.random(minOrbs, maxOrbs);
+        int numApples = MathUtils.random(minApples, maxApples);
 
         for(int i = 0; i< numBerries; i++) {
             Tile rand = floor.chooseUnoccupiedTile();
@@ -33,6 +37,14 @@ public class ItemFactory {
         for(int j = 0; j< numOrbs; j++) {
             Tile rand = floor.chooseUnoccupiedTile();
             Item item = new Orb(rand);
+
+            rand.addEntity(item);
+            rand.floor.addItem(item);
+        }
+
+        for(int k = 0; k< numApples; k++) {
+            Tile rand = floor.chooseUnoccupiedTile();
+            Item item = new Apple(rand);
 
             rand.addEntity(item);
             rand.floor.addItem(item);

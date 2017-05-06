@@ -133,5 +133,15 @@
         "finalsprite": "nothing",
         "loop": true,
         "length": 30
+    },
+    "teleport": {
+        "sprites": [
+            "leftidle1",
+            "upidle1",
+            "rightidle1",
+            "downidle1"
+        ],
+        "loop": false,
+        "length": 45
     }
 }

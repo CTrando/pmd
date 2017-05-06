@@ -46,8 +46,11 @@ public class FireTile extends TrapTile {
     @Override
     public void update() {
         super.update();
-        rc.setSprite(anc.getCurrentSprite());
-
+        if(currentInstruction != NO_INSTRUCTION) {
+            rc.setSprite(anc.getCurrentSprite());
+        } else {
+            rc.setSprite(null);
+        }
         if(receiver != null) {
             //hasTriggered becomes redundant now but whatever
             if ((currentInstruction == NO_INSTRUCTION || receiver.currentInstruction == NO_INSTRUCTION) &&
