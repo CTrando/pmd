@@ -52,7 +52,6 @@ public class FireTile extends TrapTile {
             //hasTriggered becomes redundant now but whatever
             if ((currentInstruction == NO_INSTRUCTION || receiver.currentInstruction == NO_INSTRUCTION) &&
                     hasTriggered) {
-                tileBoard[row][col] = new RoomTile(row, col, floor);
             }
         }
     }
@@ -64,7 +63,7 @@ public class FireTile extends TrapTile {
 
     @Override
     public void playEvents(Entity receiver){
-        if(receiver instanceof PokemonPlayer) {
+        if(receiver instanceof PokemonPlayer && !hasTriggered) {
             this.receiver = receiver;
             hasTriggered = true;
             instructions.add(new AnimateInstruction(this, "fire"));

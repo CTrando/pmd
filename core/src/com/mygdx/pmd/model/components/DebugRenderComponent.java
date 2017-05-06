@@ -22,7 +22,6 @@ public class DebugRenderComponent extends RenderComponent {
 
     @Override
     public void render(SpriteBatch batch) {
-        super.renderSelf(batch);
 
         if(pokemon instanceof PokemonMob){
             PokemonMob mob = (PokemonMob) pokemon;
@@ -38,5 +37,6 @@ public class DebugRenderComponent extends RenderComponent {
             DungeonScreen.sRenderer.setColor(Color.RED);
             DungeonScreen.sRenderer.rect(pc.x/PPM, pc.y/PPM, Constants.TILE_SIZE/PPM, Constants.TILE_SIZE/PPM);
         }
+        super.renderSelf(batch);
     }
 }

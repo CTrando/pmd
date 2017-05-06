@@ -56,7 +56,7 @@ public abstract class Pokemon extends Entity implements Logical {
         components.put(DirectionComponent.class, new DirectionComponent(this));
         components.put(CombatComponent.class, new CombatComponent(this));
         components.put(MoveComponent.class, new MoveComponent(this));
-        components.put(RenderComponent.class, new DebugRenderComponent(this));
+        components.put(RenderComponent.class, new RenderComponent(this));
         //should probably leave this to the entities themselves
 
         this.tc = getComponent(TurnComponent.class);

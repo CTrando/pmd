@@ -72,7 +72,7 @@ public class Controller {
 
         //add in a mob spawner
         MobSpawner mobSpawner = new MobSpawner(floor);
-        //this.directlyAddEntity(mobSpawner);
+        this.directlyAddEntity(mobSpawner);
     }
 
     public void nextFloor() {
@@ -189,6 +189,10 @@ public class Controller {
 
             if (entity.hasComponent(TurnComponent.class)) {
                 turnBasedEntities.remove(entity);
+            }
+
+            if(entity == updatedTurnEntity){
+                updatedTurnEntity = pokemonPlayer;
             }
         }
         toBeRemoved.clear();

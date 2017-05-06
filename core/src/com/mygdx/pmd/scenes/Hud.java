@@ -14,28 +14,23 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 
-import static com.mygdx.pmd.screens.DungeonScreen.PPM;
-
 /**
  * Created by Cameron on 11/26/2016.
  */
 public class Hud {
     public Stage stage;
     public ScreenViewport viewport;
-    private float accumTime = 0;
 
     public OrthographicCamera hudCam;
+    private StringBuilder inputText;
 
-    StringBuilder inputText;
+    private Skin skin;
 
-    Skin skin;
-
-    Label timeLabel;
-    Label floorLabel;
-    Label testLabel;
-    Label turnLabel;
-    Label textLabel;
-    Label fpsCounter;
+    private Label floorLabel;
+    private Label healthLabel;
+    private Label turnLabel;
+    private Label textLabel;
+    private Label fpsCounter;
 
     BitmapFont customFont;
     GlyphLayout gLayout;
@@ -53,25 +48,24 @@ public class Hud {
         viewport = new ScreenViewport(hudCam);
         stage = new Stage(viewport, batch);
 
-
         Table onScreenController = new Table();
         onScreenController.center();
         onScreenController.top();
         onScreenController.setFillParent(true);
-        skin = new Skin(Gdx.files.internal("ui/test.json"));
+        this.skin = new Skin(Gdx.files.internal("ui/skin/flat-earth-ui.json"));
 
-        testLabel = new Label("HP: " + screen.controller.pokemonPlayer.cc.getHp(), skin);
+        healthLabel = new Label("HP: " + screen.controller.pokemonPlayer.cc.getHp(), skin);
         floorLabel = new Label("Floor: " + Controller.floorCount, skin);
         turnLabel = new Label("Turns left: " + Controller.turns, skin);
         textLabel = new Label(inputText.toString(), skin);
-        fpsCounter = new Label("FPS: "+Gdx.graphics.getFramesPerSecond(), skin);
+        fpsCounter = new Label("FPS: " + Gdx.graphics.getFramesPerSecond(), skin);
 
-        testLabel.setAlignment(Align.center);
+        healthLabel.setAlignment(Align.center);
         floorLabel.setAlignment(Align.center);
         turnLabel.setAlignment(Align.center);
         textLabel.setAlignment(Align.center);
         fpsCounter.setAlignment(Align.center);
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
 
         TextButton attackText = new TextButton("Swiper no Swiping", skin);
         attackText.addListener(new ChangeListener() {
@@ -90,7 +84,6 @@ public class Hud {
         });
 
         Image upImg = new Image(PMD.sprites.get("uparrow"));
-        //upImg.setScale(.5f);
         upImg.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -105,7 +98,6 @@ public class Hud {
         });
 
         Image downImg = new Image(PMD.sprites.get("downarrow"));
-        //downImg.setScale(.5f);
         downImg.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -120,7 +112,6 @@ public class Hud {
         });
 
         Image leftImg = new Image(PMD.sprites.get("leftarrow"));
-        //leftImg.setScale(.5f);
         leftImg.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -135,8 +126,7 @@ public class Hud {
         });
 
         Image rightImg = new Image(PMD.sprites.get("rightarrow"));
-        //rightImg.setScale(.5f);
-        rightImg.setWidth(rightImg.getWidth()/2);
+        rightImg.setWidth(rightImg.getWidth() / 2);
         rightImg.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -151,8 +141,7 @@ public class Hud {
         });
 
         Image attackImg = new Image(PMD.sprites.get("attackimage"));
-        //attackImg.setScale(.5f);
-        attackImg.setWidth(attackImg.getWidth()/2);
+        attackImg.setWidth(attackImg.getWidth() / 2);
         attackImg.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -181,72 +170,75 @@ public class Hud {
         onScreenController.add();
         onScreenController.add(downImg).pad(15, 15, 15, 15);
 
-        Table temp = new Table();
-        temp.left().bottom();
-        temp.debug();
-        temp.add(testLabel).fill();
-        temp.row();
-        temp.add(floorLabel).fill();
-        temp.row();
-        temp.add(turnLabel).fill();
-        temp.row();
-        temp.add(fpsCounter).fill();
-        temp.row();
-        loadAttackTextButtons(temp);
-       /* temp.add(attackText).fill();
-        temp.row();
-        temp.add(test).fill();*/
-        temp.pack();
-        temp.setBackground(skin.getDrawable("background.9"));
+        Table rootTable = new Table();
+        rootTable.setFillParent(true);
+
+        Table hudTable = new Table();
+        hudTable.left().bottom();
+        hudTable.add(healthLabel).fill();
+        hudTable.row();
+        hudTable.add(floorLabel).fill();
+        hudTable.row();
+        hudTable.add(turnLabel).fill();
+        hudTable.row();
+        hudTable.add(fpsCounter).fill();
+        hudTable.row();
+        loadAttackTextButtons(hudTable);
+        hudTable.pack();
+
         Table textTable = new Table();
-        textTable.setFillParent(true);
-        textTable.right().top();
-        textTable.debug();
         textTable.add(textLabel);
         textTable.row();
+        textTable.pack();
+
+        rootTable.add(textTable).expand().align(Align.topRight)
+                 .row();
+        rootTable.add(hudTable).expand().align(Align.bottomLeft);
 
         onScreenController.right().padRight(10).bottom();
 
-        if (Gdx.app.getType() == Application.ApplicationType.Android)
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
             stage.addActor(onScreenController);
+        }
 
-        stage.addActor(textTable);
-        stage.addActor(temp);
+        stage.addActor(rootTable);
     }
 
     public void update(float dt) {
         stage.act();
         //reason why not appearing is because did not include : in bit map font
-        testLabel.setText("HP: " + screen.controller.pokemonPlayer.cc.getHp());
+        healthLabel.setText("HP: " + screen.controller.pokemonPlayer.cc.getHp());
         floorLabel.setText("Floor: " + Controller.floorCount);
-        if(Controller.turnsPaused){
+        if (Controller.turnsPaused) {
             customFont.setColor(Color.BLUE);
         }
 
-        fpsCounter.setText("FPS: "+Gdx.graphics.getFramesPerSecond());
+        fpsCounter.setText("FPS: " + Gdx.graphics.getFramesPerSecond());
         turnLabel.setText("Turns left: " + Controller.turns);
 
         String currentText = inputText.toString();
         gLayout.setText(customFont, inputText);
-        if(gLayout.width < Gdx.graphics.getWidth())
+        if (gLayout.width < Gdx.graphics.getWidth()) {
             textLabel.setText(currentText);
-        else inputText.setLength(0);
+        } else {
+            inputText.setLength(0);
+        }
     }
 
-    public void addText(String str){
+    public void addText(String str) {
         inputText.append(str);
     }
 
-    public void reset(){
+    public void reset() {
         inputText.setLength(0);
     }
 
-    public void loadAttackTextButtons(Table table){
+    public void loadAttackTextButtons(Table table) {
         JsonReader reader = new JsonReader();
         JsonValue value = reader.parse(Gdx.files.internal("ui/menu.json"));
         JsonValue moves = value.get("moves");
 
-        for(final JsonValue move: moves.iterator()){
+        for (final JsonValue move : moves.iterator()) {
             TextButton test = new TextButton(move.asString().toLowerCase(), skin);
             test.addListener(new ChangeListener() {
                 @Override

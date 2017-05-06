@@ -15,34 +15,31 @@ import com.mygdx.pmd.utils.Constants;
 /**
  * Created by Cameron on 2/10/2017.
  */
-public class IntroScreen extends PScreen implements InputProcessor{
-    PMD game;
-    OrthographicCamera gameCamera;
-    Viewport view;
-    Stage stage;
-    Skin skin;
+public class IntroScreen extends PScreen implements InputProcessor {
+    private PMD game;
+    private OrthographicCamera gameCamera;
+    private Stage stage;
+    private Skin skin;
     private InputMultiplexer inputMultiplexer;
 
     public IntroScreen(final PMD game) {
         this.game = game;
+        this.gameCamera = new OrthographicCamera(Constants.WIDTH, Constants.HEIGHT);
+        this.stage = new Stage();
+        this.skin = new Skin(Gdx.files.internal("ui/skin/flat-earth-ui.json"));
 
-        Table mainTable = new Table();
+        Table rootTable = new Table(skin);
+        rootTable.debug();
+        rootTable.setFillParent(true);
 
-        gameCamera = new OrthographicCamera(Constants.WIDTH, Constants.HEIGHT);
-        view = new FitViewport(Constants.WIDTH, Constants.HEIGHT, gameCamera);
-        stage = new Stage(view);
-        skin = new Skin(Gdx.files.internal("ui/test.json"));
+        Label titleLabel = new Label("Pokemon Mystery Dungeon Clone", skin);
+        titleLabel.setAlignment(Align.center);
 
-        Label label = new Label("Welcome to this poorly made UI", skin);
-        label.setWidth(Constants.WIDTH);
-        label.setPosition(0, Constants.HEIGHT*.9f);
-        label.setAlignment(Align.center);
-
-        TextButton playButton = new TextButton("Click to play", skin);
-        playButton.setPosition(Constants.WIDTH*.1f, Constants.HEIGHT*.3f);
-        playButton.addAction(Actions.repeat(RepeatAction.FOREVER,Actions.sequence(Actions.moveTo(Constants.WIDTH*.1f,Constants.HEIGHT*.3f,1),
-                Actions.moveTo(Constants.WIDTH*.1f,Gdx.graphics.getHeight()*.28f,1))));
-
+        TextButton playButton = new TextButton("Play", skin);
+       /* playButton.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(
+                Actions.moveTo(Constants.WIDTH * .1f, Constants.HEIGHT * .3f, 1),
+                Actions.moveTo(Constants.WIDTH * .1f, Gdx.graphics.getHeight() * .28f, 1))));
+*/
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -50,20 +47,41 @@ public class IntroScreen extends PScreen implements InputProcessor{
             }
         });
 
-        TextButton optionsButton = new TextButton("Click me to go to the options", skin);
-        optionsButton.setPosition(Constants.WIDTH*.7f, Constants.HEIGHT*.3f);
-        optionsButton.addAction(Actions.repeat(RepeatAction.FOREVER,Actions.sequence(Actions.moveTo(Constants.WIDTH*.7f,Constants.HEIGHT*.3f,1),
-                Actions.moveTo(Constants.WIDTH*.7f,Gdx.graphics.getHeight()*.28f,1))));
+        TextButton optionsButton = new TextButton("Options", skin);/*
+        *//*optionsButton.setPosition(Constants.WIDTH * .5f, Constants.HEIGHT * .3f);
+        optionsButton.addAction(Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(Constants
+                                                                                                             .WIDTH * .5f,
+                    *//*                                                                                 Constants.HEIGHT * .3f,
+                                                                                                     1),
+                                                                                      Actions.moveTo(
+                                                                                              Constants.WIDTH * .5f,
+                                                                                              Gdx.graphics.getHeight() * .28f,
+                                                                                              1))));*/
+        //TODO cells can only be added to one table surprisingly
+        Table optionsTable = new Table(skin);
+        optionsTable.defaults().width(.3f * Constants.WIDTH).fill();
+        optionsTable.add(playButton)
+                    .align(Align.bottomLeft)
+                    .row();
+        optionsTable.add(optionsButton)
+                    .align(Align.bottomLeft)
+                    .row();
+        optionsTable.add(new TextField("Enter your name please.", skin));
 
 
-        mainTable.debug();
-        mainTable.addActor(label);
-        mainTable.addActor(playButton);
-        mainTable.addActor(optionsButton);
+        rootTable.add(titleLabel)
+                 .expand()
+                 .center();
+        rootTable.row();
 
-        mainTable.setFillParent(true);
-        mainTable.setBackground(skin.getDrawable("background.9"));
-        stage.addActor(mainTable);
+
+        rootTable.add(optionsTable)
+                 .expandX()
+                 .bottom()
+                 .left();
+
+        stage.addActor(rootTable);
+        //stage.setDebugAll(true);
 
 
         inputMultiplexer = new InputMultiplexer();
@@ -88,8 +106,7 @@ public class IntroScreen extends PScreen implements InputProcessor{
         Constants.WIDTH = Gdx.graphics.getWidth();
         Constants.HEIGHT = Gdx.graphics.getHeight();
 
-        stage.getViewport().update(width,height,true);
-        view.update(width, height, true);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override

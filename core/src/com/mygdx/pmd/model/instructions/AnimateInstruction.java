@@ -5,6 +5,7 @@ import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.components.*;
+import com.mygdx.pmd.utils.PAnimation;
 
 /**
  * Created by Cameron on 4/24/2017.
@@ -34,9 +35,8 @@ public class AnimateInstruction implements Instruction {
 
     @Override
     public void onFinish() {
-        //this.ac.setActionState(Action.IDLE);
         this.anc.getCurrentAnimation().clear();
-        //this.anc.setCurrentAnimation(anc.getAnimation("upidle"));
+        this.anc.setCurrentAnimation((PAnimation) null);
     }
 
     @Override

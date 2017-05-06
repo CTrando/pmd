@@ -103,43 +103,6 @@ public class MobLogic extends PokemonLogic {
         }
     }
 
-    private void bfs(Tile tile){
-        tc.setTurnState(Turn.COMPLETE);
-        bfs.bfs(mob.target.getComponent(PositionComponent.class).getCurrentTile());
-       /* mob.children.add(mob.pc.getCurrentTile());
-        Array<Tile> newTiles = new Array<Tile>();
-        //not while because I want it to run once
-        for(Entity entity: mob.children){
-            if(entity instanceof Tile){
-                Tile wTile = (Tile) entity;
-                Tile[][] tileBoard = wTile.tileBoard;
-                int row = wTile.row;
-                int col = wTile.col;
-
-                if(!wTile.visited){
-                    wTile.visited = true;
-                    newTiles.add(tileBoard[row+1][col]);
-                    newTiles.add(tileBoard[row-1][col]);
-                    newTiles.add(tileBoard[row][col+1]);
-                    newTiles.add(tileBoard[row][col-1]);
-                }
-            }
-        }
-        tween(newTiles);
-        mob.children.addAll(newTiles);*/
-    }
-
-    private void tween(Array<Tile> tiles){
-        Array<Tile> rm = new Array<Tile>();
-        for(int i = 0; i< tiles.size; i++) {
-            Tile tile = tiles.get(i);
-            if(!tile.isWalkable || mob.children.contains(tile, true)){
-                rm.add(tile);
-            }
-        }
-        tiles.removeAll(rm, true);
-    }
-
     private void attack(Move move) {
         tc.setTurnState(Turn.PENDING);
         mob.instructions.add(new AttackInstruction(mob, move));

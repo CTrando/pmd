@@ -11,12 +11,12 @@ public class Constants {
 
     public static final int TILE_SIZE = 32;
 
-    public static final int tileBoardWidth = 10000;
-    public static final int tileBoardHeight = 10000;
+    public static final int tileBoardWidth = 1000;
+    public static final int tileBoardHeight = 1000;
 
     public static final int tileBoardRows = tileBoardHeight / Constants.TILE_SIZE;
     public static final int tileBoardCols = tileBoardWidth / Constants.TILE_SIZE;
-    public static final int MAX_CONNECTORS = 100;
+    public static final int MAX_CONNECTORS = 20;
 
     public static final int V_WIDTH = 1080;
     public static final int V_HEIGHT = 720;

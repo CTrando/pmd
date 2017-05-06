@@ -29,6 +29,7 @@ public class PokemonMob extends Pokemon {
     @Override
     public void init(){
         super.init();
+        //components.put(RenderComponent.class, new DebugRenderComponent(this));
         components.put(CombatComponent.class, cc);
         this.cc = getComponent(CombatComponent.class);
         this.cc.setAggressionState(Aggression.passive);
