@@ -58,6 +58,8 @@ public class PokemonFactory {
         return pokemon;
     }
 
+    //TODO add a config constructor as well
+
     private static void loadAnimations(Pokemon pokemon, PokemonName pokemonName){
         AnimationComponent anc = new AnimationComponent(pokemon);
 

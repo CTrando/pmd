@@ -66,6 +66,7 @@ public class FireTile extends TrapTile {
 
     @Override
     public void playEvents(Entity receiver){
+        super.playEvents(receiver);
         if(receiver instanceof PokemonPlayer && !hasTriggered) {
             this.receiver = receiver;
             hasTriggered = true;

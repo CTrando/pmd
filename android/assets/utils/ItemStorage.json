@@ -1,0 +1,17 @@
+{
+    "berry": {
+        "minNum": 10,
+        "maxNum": 20,
+        "unOccupied": true
+    },
+    "orb": {
+        "minNum": 1,
+        "maxNum": 5,
+        "unOccupied": true
+    },
+    "apple": {
+        "minNum": 1,
+        "maxNum": 4,
+        "unOccupied": true
+    }
+}

@@ -25,6 +25,7 @@ public class Orb extends Item {
             pokemon.dc.setDirection(Direction.down);
             pokemon.instructions.add(new AnimateInstruction(pokemon, "teleport"));
             pokemon.instructions.add(new RandomizeLocationInstruction(pokemon));
+            pokemon.tc.setTurnState(Turn.COMPLETE);
 
             this.shouldBeDestroyed = true;
         }

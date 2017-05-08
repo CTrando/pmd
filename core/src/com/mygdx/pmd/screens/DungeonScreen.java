@@ -14,7 +14,7 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.components.*;
-import com.mygdx.pmd.scenes.Hud;
+import com.mygdx.pmd.ui.Hud;
 import com.mygdx.pmd.utils.Constants;
 
 public class DungeonScreen extends PScreen implements GestureDetector.GestureListener, InputProcessor {
@@ -72,17 +72,20 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         occluder.flip(false, true);
 
         shader = new ShaderProgram(Gdx.files.internal("shaders/vertex.glsl"), Gdx.files.internal("shaders/fragment" +
+
+
                                                                                                          ".glsl"));
         if (!shader.isCompiled()) {
             System.out.println(shader.getLog());
         }
+
+
         //init stuff that needs the controller
         hud = new Hud(this, batch);
     }
 
     @Override
     public void render(float dt) {
-
         // occludersFBO.begin();
         Gdx.gl.glClearColor(0, 0, 0, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -90,25 +93,14 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
-
         controller.update();
         this.updateCamera();
+        this.updateBounds();
         batch.setProjectionMatrix(gamePort.getCamera().combined);
         sRenderer.setProjectionMatrix(gamePort.getCamera().combined);
         sRenderer.begin(ShapeRenderer.ShapeType.Line);
         batch.begin();
-        float row = controller.pokemonPlayer.pc.y/PPM;
-        float col = controller.pokemonPlayer.pc.x/PPM;
 
-        if (cameraMode == CameraMode.fixed) {
-            Rectangle bounds = new Rectangle(col - (gamePort.getWorldWidth() / 2),
-                                             row - (gamePort.getWorldHeight() / 2),
-                                             gamePort.getWorldWidth() + 1,
-                                             gamePort.getWorldHeight() + 1);
-            Rectangle scissors = new Rectangle();
-            ScissorStack.calculateScissors(gameCamera, batch.getTransformMatrix(), bounds, scissors);
-            ScissorStack.pushScissors(scissors);
-        }
         //shader.setUniformf("resolution", lightSize, lightSize);
         for (int i = 0; i < renderList.size; i++) {
             renderList.get(i).render(batch);
@@ -119,12 +111,13 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         sRenderer.end();
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         batch.flush();
+
         if (cameraMode == CameraMode.fixed) {
             ScissorStack.popScissors();
         }
-        //for some reason it initializes batch,begin in stage.draw - how terrible
 
-        if (showHub) {
+        //for some reason it initializes batch,begin in stage.draw - how terrible
+        if (hud.isVisible()) {
             hud.update(dt);
             hud.stage.draw();
         }
@@ -145,11 +138,10 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(new GestureDetector(this));
-        //inputMultiplexer.addProcessor(stage);
+        inputMultiplexer.addProcessor(hud.stage);
         inputMultiplexer.addProcessor(this);
 
-        setShowHud(true);
-
+        hud.setVisible(true);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
@@ -172,6 +164,21 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     @Override
     public void hide() {
 
+    }
+
+    private void updateBounds() {
+        float row = controller.pokemonPlayer.pc.y / PPM;
+        float col = controller.pokemonPlayer.pc.x / PPM;
+
+        if (cameraMode == CameraMode.fixed) {
+            Rectangle bounds = new Rectangle(col - (gamePort.getWorldWidth() / 2),
+                                             row - (gamePort.getWorldHeight() / 2),
+                                             gamePort.getWorldWidth() + 1,
+                                             gamePort.getWorldHeight() + 1);
+            Rectangle scissors = new Rectangle();
+            ScissorStack.calculateScissors(gameCamera, batch.getTransformMatrix(), bounds, scissors);
+            ScissorStack.pushScissors(scissors);
+        }
     }
 
     private void updateCamera() {
@@ -241,7 +248,6 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
             PMD.keys.get(keycode).set(false);
         }
         return false;
-
     }
 
     @Override
@@ -251,6 +257,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        hud.stage.setKeyboardFocus(null);
         return false;
     }
 
@@ -272,15 +279,6 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     @Override
     public boolean scrolled(int amount) {
         return false;
-    }
-
-    private void setShowHud(boolean show) {
-        showHub = show;
-        if (showHub) {
-            inputMultiplexer.addProcessor(hud.stage);
-        } else {
-            inputMultiplexer.removeProcessor(hud.stage);
-        }
     }
 
     @Override
@@ -333,10 +331,10 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     }
 
     public void toggleHub() {
-        if (showHub) {
-            setShowHud(false);
+        if (hud.isVisible()) {
+            hud.setVisible(false);
         } else {
-            setShowHud(true);
+            hud.setVisible(true);
         }
     }
 

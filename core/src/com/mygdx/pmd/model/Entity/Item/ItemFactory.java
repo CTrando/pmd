@@ -1,6 +1,8 @@
 package com.mygdx.pmd.model.Entity.Item;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.model.Entity.Item.Berry;
 import com.mygdx.pmd.model.Entity.Item.Item;
@@ -12,42 +14,34 @@ import com.mygdx.pmd.model.Tile.Tile;
  */
 public class ItemFactory {
 
-    public static int maxBerries = 20;
-    public static int minBerries = 10;
-
-    public static int maxOrbs = 5;
-    public static int minOrbs = 1;
-
-    public static int maxApples = 4;
-    public static int minApples = 1;
-
     public static void placeItems(Floor floor){
-        int numBerries = MathUtils.random(minBerries, maxBerries);
-        int numOrbs = MathUtils.random(minOrbs, maxOrbs);
-        int numApples = MathUtils.random(minApples, maxApples);
+        JsonReader reader = new JsonReader();
+        JsonValue items =reader.parse(Gdx.files.internal("utils/ItemStorage.json"));
 
-        for(int i = 0; i< numBerries; i++) {
-            Tile rand = floor.chooseUnoccupiedTile();
-            Item item = new Berry(rand);
+        for(JsonValue wItem: items){
+            int minNum = wItem.getInt("minNum");
+            int maxNum = wItem.getInt("maxNum");
+            int numItems = MathUtils.random(minNum, maxNum);
 
-            rand.addEntity(item);
-            rand.floor.addItem(item);
-        }
+            for(int i = 0; i< numItems; i++){
+                Tile rand;
+                if(wItem.getBoolean("unOccupied")){
+                    rand = floor.chooseUnoccupiedTile();
+                } else rand = floor.chooseRandomTile();
 
-        for(int j = 0; j< numOrbs; j++) {
-            Tile rand = floor.chooseUnoccupiedTile();
-            Item item = new Orb(rand);
+                String classifier = wItem.name();
 
-            rand.addEntity(item);
-            rand.floor.addItem(item);
-        }
+                Item item;
 
-        for(int k = 0; k< numApples; k++) {
-            Tile rand = floor.chooseUnoccupiedTile();
-            Item item = new Apple(rand);
+                if(classifier.equals("berry")){
+                    item = new Berry(rand);
+                } else if(classifier.equals("orb")){
+                    item = new Orb(rand);
+                } else item = new Apple(rand);
 
-            rand.addEntity(item);
-            rand.floor.addItem(item);
+                rand.addEntity(item);
+                rand.floor.addItem(item);
+            }
         }
     }
 }
