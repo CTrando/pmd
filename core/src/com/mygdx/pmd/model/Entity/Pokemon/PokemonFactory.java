@@ -44,11 +44,11 @@ public class PokemonFactory {
         return pokemon;
     }
 
-    public static Pokemon createPokemon(Floor floor, PokemonName name, Class ident) {
+    public static Pokemon createPokemon(Floor floor, PokemonName name, Class type) {
         Pokemon pokemon = null;
-        if (ident == PokemonMob.class) {
+        if (type == PokemonMob.class) {
             pokemon = new PokemonMob(floor, name);
-        } else if (ident == PokemonPlayer.class) {
+        } else if (type == PokemonPlayer.class) {
             pokemon = new PokemonPlayer(floor, name);
         }
 
@@ -58,7 +58,13 @@ public class PokemonFactory {
         return pokemon;
     }
 
-    //TODO add a config constructor as well
+    public static Pokemon createPokemon(PokemonConfig config){
+        Pokemon pokemon = createPokemon(config.floor, config.name, config.type);
+        if(config.currentTile != null){
+            pokemon.pc.setCurrentTile(config.currentTile);
+        } else throw new RuntimeException("Current tile must be appropriate for a pokemon");
+        return pokemon;
+    }
 
     private static void loadAnimations(Pokemon pokemon, PokemonName pokemonName){
         AnimationComponent anc = new AnimationComponent(pokemon);

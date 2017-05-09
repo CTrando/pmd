@@ -17,17 +17,16 @@ import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.ui.Hud;
 import com.mygdx.pmd.utils.Constants;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class DungeonScreen extends PScreen implements GestureDetector.GestureListener, InputProcessor {
     public final PMD game;
     public static ShapeRenderer sRenderer;
     private SpriteBatch batch;
-
     public static final float PPM = 25;
 
     public Array<RenderComponent> renderList;
-
     private Hud hud;
-    private boolean showHub;
 
     public Controller controller;
     public Tile[][] tileBoard;
@@ -225,7 +224,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     public boolean keyDown(int keycode) {
         if (PMD.keys.containsKey(keycode)) {
             PMD.keys.get(keycode).set(true);
-        }
+        } else PMD.keys.put(keycode, new AtomicBoolean(true));
 
         if (PMD.isKeyPressed(Key.c)) {
             switch (cameraMode) {
@@ -244,6 +243,10 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public boolean keyUp(int keycode) {
+        if (PMD.isKeyPressed(Input.Keys.SLASH)){
+            hud.getConsole().requestFocus();
+        }
+
         if (PMD.keys.containsKey(keycode)) {
             PMD.keys.get(keycode).set(false);
         }
@@ -257,7 +260,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        hud.stage.setKeyboardFocus(null);
+        hud.getConsole().cancelFocus();
         return false;
     }
 
@@ -337,7 +340,6 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
             hud.setVisible(true);
         }
     }
-
 
     public Hud getHud() {
         return hud;

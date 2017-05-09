@@ -129,6 +129,13 @@ public class PMD extends Game {
         return keys.get(key.getValue()).get();
     }
 
+    //I didn't use the keycode because of time sensitivity
+    public static boolean isKeyPressed(int keyCode) { //TODO perhaps add a buffer system for more control later
+        if(keys.containsKey(keyCode)) {
+            return keys.get(keyCode).get();
+        } else return false;
+    }
+
     /**
      * Time sensitive key hits - hits are not consecutive
      *

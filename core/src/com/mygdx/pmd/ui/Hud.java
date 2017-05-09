@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
+import com.mygdx.pmd.model.Entity.Pokemon.*;
 import com.mygdx.pmd.screens.DungeonScreen;
 
 /**
@@ -33,14 +34,18 @@ public class Hud {
     private Label turnLabel;
     private Label textLabel;
     private Label fpsCounter;
+    private Label tilePos;
 
     BitmapFont customFont;
     GlyphLayout gLayout;
     DungeonScreen screen;
 
+    private PokemonPlayer player;
+
     public Hud(final DungeonScreen screen, SpriteBatch batch) {
         //TODO organize this badly
         this.screen = screen;
+        this.player = (PokemonPlayer) screen.controller.pokemonPlayer;
         customFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
         gLayout = new GlyphLayout(customFont, "");
         inputText = new StringBuilder();
@@ -59,17 +64,20 @@ public class Hud {
         console = new Console(this);
 
 
-        healthLabel = new Label("HP: " + screen.controller.pokemonPlayer.cc.getHp(), skin);
+        healthLabel = new Label("HP: " + player.cc.getHp(), skin);
         floorLabel = new Label("Floor: " + Controller.floorCount, skin);
         turnLabel = new Label("Turns left: " + Controller.turns, skin);
         textLabel = new Label(inputText.toString(), skin);
         fpsCounter = new Label("FPS: " + Gdx.graphics.getFramesPerSecond(), skin);
+        tilePos = new Label("row: " + player.pc.getCurrentTile().row + ", col: " +
+                                    player.pc.getCurrentTile().col, skin);
 
         healthLabel.setAlignment(Align.center);
         floorLabel.setAlignment(Align.center);
         turnLabel.setAlignment(Align.center);
         textLabel.setAlignment(Align.center);
         fpsCounter.setAlignment(Align.center);
+        tilePos.setAlignment(Align.center);
         stage.setDebugAll(true);
 
         TextButton attackText = new TextButton("Swiper no Swiping", skin);
@@ -181,6 +189,7 @@ public class Hud {
         Table testTable = new Table();
 
         Table hudTable = new Table();
+        hudTable.add(tilePos).fill().row();
         hudTable.add(healthLabel).fill();
         hudTable.row();
         hudTable.add(floorLabel).fill();
@@ -230,6 +239,7 @@ public class Hud {
     }
 
     public void update(float dt) {
+        player = (PokemonPlayer) screen.controller.pokemonPlayer;
         stage.act();
         console.update(dt);
         //reason why not appearing is because did not include : in bit map font
@@ -241,6 +251,8 @@ public class Hud {
 
         fpsCounter.setText("FPS: " + Gdx.graphics.getFramesPerSecond());
         turnLabel.setText("Turns left: " + Controller.turns);
+        tilePos.setText("row: " + player.pc.getCurrentTile().row + ", col: " +
+                                    player.pc.getCurrentTile().col);
 
         String currentText = inputText.toString();
         gLayout.setText(customFont, inputText);
@@ -278,7 +290,7 @@ public class Hud {
         }
     }
 
-    public void requestFocus(Actor actor){
+    public void requestFocus(Actor actor) {
         stage.setKeyboardFocus(actor);
     }
 
@@ -286,15 +298,19 @@ public class Hud {
         return skin;
     }
 
-    public void setVisible(boolean visible){
+    public void setVisible(boolean visible) {
         rootTable.setVisible(visible);
     }
 
-    public boolean isVisible(){
+    public boolean isVisible() {
         return rootTable.isVisible();
     }
 
-    public Controller getController(){
+    public Console getConsole() {
+        return console;
+    }
+
+    public Controller getController() {
         return screen.controller;
     }
 }
