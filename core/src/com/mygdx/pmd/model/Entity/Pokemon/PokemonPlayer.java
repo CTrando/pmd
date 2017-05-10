@@ -123,7 +123,8 @@ public class PokemonPlayer extends Pokemon {
                 if (Gdx.graphics.isFullscreen()) {
                     Gdx.graphics.setWindowedMode(Constants.V_WIDTH, Constants.V_HEIGHT);
                 } else {
-                    Gdx.graphics.setFullscreenMode(mode);
+                    Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics
+                            .getDisplayMode().height);
                 }
                 //have to do this because of bug with stuck keys with full screen
                 PMD.keys.get(Input.Keys.F11).set(false);

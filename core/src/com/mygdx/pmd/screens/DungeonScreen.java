@@ -83,44 +83,53 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         hud = new Hud(this, batch);
     }
 
+    float timeStep = 0;
+
     @Override
     public void render(float dt) {
-        // occludersFBO.begin();
-        Gdx.gl.glClearColor(0, 0, 0, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        Gdx.gl.glDisable(GL20.GL_BLEND);
+        timeStep+=dt;
+        if(timeStep >= 1/60f) {
+            timeStep = 0;
+            controller.update();
+            updateCamera();
+            updateBounds();
 
-        controller.update();
-        this.updateCamera();
-        this.updateBounds();
-        batch.setProjectionMatrix(gamePort.getCamera().combined);
-        sRenderer.setProjectionMatrix(gamePort.getCamera().combined);
-        sRenderer.begin(ShapeRenderer.ShapeType.Line);
-        batch.begin();
-
-        //shader.setUniformf("resolution", lightSize, lightSize);
-        for (int i = 0; i < renderList.size; i++) {
-            renderList.get(i).render(batch);
-        }
-        //batch.draw(occludersFBO.getColorBufferTexture(), 0, 0, lightSize, 100);
-
-        batch.end();
-        sRenderer.end();
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        batch.flush();
-
-        if (cameraMode == CameraMode.fixed) {
-            ScissorStack.popScissors();
+            if (cameraMode == CameraMode.fixed) {
+                ScissorStack.popScissors();
+            }
         }
 
-        //for some reason it initializes batch,begin in stage.draw - how terrible
-        if (hud.isVisible()) {
-            hud.update(dt);
-            hud.stage.draw();
-        }
-        //occludersFBO.end();
+            // occludersFBO.begin();
+            Gdx.gl.glClearColor(0, 0, 0, 1f);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            Gdx.gl.glDisable(GL20.GL_BLEND);
+
+            batch.setProjectionMatrix(gamePort.getCamera().combined);
+            sRenderer.setProjectionMatrix(gamePort.getCamera().combined);
+            sRenderer.begin(ShapeRenderer.ShapeType.Line);
+            batch.begin();
+
+            //shader.setUniformf("resolution", lightSize, lightSize);
+            for (int i = 0; i < renderList.size; i++) {
+                renderList.get(i).render(batch);
+            }
+            //batch.draw(occludersFBO.getColorBufferTexture(), 0, 0, lightSize, 100);
+
+            batch.end();
+            sRenderer.end();
+            batch.setProjectionMatrix(hud.stage.getCamera().combined);
+            batch.flush();
+
+
+
+            //for some reason it initializes batch,begin in stage.draw - how terrible
+            if (hud.isVisible()) {
+                hud.update(dt);
+                hud.stage.draw();
+            }
+            //occludersFBO.end();
     }
 
     @Override
