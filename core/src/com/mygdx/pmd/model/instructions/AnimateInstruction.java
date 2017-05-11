@@ -17,13 +17,19 @@ public class AnimateInstruction implements Instruction {
     private ActionComponent ac;
 
     private String animationKey;
+    private String nextAnimation;
 
-    //TODO add a second parameter for the animation after finished, optional paramter
     public AnimateInstruction(Entity entity, String animationKey){
         this.entity = entity;
         this.anc = entity.getComponent(AnimationComponent.class);
         this.ac = entity.getComponent(ActionComponent.class);
         this.animationKey = animationKey;
+        this.nextAnimation = "";
+    }
+
+    public AnimateInstruction(Entity entity, String animationKey, String nextAnimation){
+        this(entity, animationKey);
+        this.nextAnimation = nextAnimation;
     }
 
     @Override
@@ -34,7 +40,12 @@ public class AnimateInstruction implements Instruction {
 
     @Override
     public void onFinish() {
-        this.anc.getCurrentAnimation().clear();
+        if(anc.getCurrentAnimation().isLooping()) {
+            this.anc.getCurrentAnimation().clear();
+        }
+        if(nextAnimation.length() != 0) {
+            this.anc.setCurrentAnimation(anc.getAnimation(nextAnimation));
+        }
     }
 
     @Override

@@ -217,8 +217,6 @@ public abstract class Tile extends Entity {
                 return true;
             }
         }
-
-        //TODO fix this method and fix components so it uses a hashmap and strings to find components
         return false;
     }
 }

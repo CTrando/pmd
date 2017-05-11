@@ -26,6 +26,7 @@ public class MobLogic extends PokemonLogic {
     public MobLogic(PokemonMob mob) {
         super(mob);
         this.mob = mob;
+        mob.pathFind = mob.wander;
         this.bfs = new BFS(mob);
     }
 
@@ -50,7 +51,11 @@ public class MobLogic extends PokemonLogic {
             return;
         }
 
-        //ensure that when this runs the pokemon's turn is always waiting
+        /*
+        TODO if it is close to player then start caring whether it can act, otherwise just set its turn state to
+        complete anyways
+        ensure that when this runs the pokemon's turn is always waiting
+        */
         if (canAct()) {
             //variable to skip turn //TODO make it a function instead
             if(skipTurn){
@@ -58,20 +63,20 @@ public class MobLogic extends PokemonLogic {
                 tc.setTurnState(Turn.COMPLETE);
                 return;
             }
-            /*if(tc.isTurnWaiting()) {
-                bfs(mob.target.getComponent(PositionComponent.class).getCurrentTile());
-                return;
-            }*/
-            //will turn to face the player if the mob is aggressive
+
+            anc.setCurrentAnimation(dc.getDirection()+"idle");
+
             if (mob.cc.isAggressive()) {
-                PositionComponent targetPC = mob.target.getComponent(PositionComponent.class);
-                DirectionComponent targetDC = mob.target.getComponent(DirectionComponent.class);
+                Entity target = mob.cc.getTarget();
+                PositionComponent targetPC = target.getComponent(PositionComponent.class);
+                DirectionComponent targetDC = target.getComponent(DirectionComponent.class);
+                mob.pathFind = bfs;
 
                 dc.setDirection(targetPC.getCurrentTile());
                 mc.setFacingTile(dc.getDirection());
 
-                if (mob.target.shouldBeDestroyed) {
-                    mob.target = mob.floor.getPlayer();
+                if (target.shouldBeDestroyed) {
+                    mob.cc.setTarget(null);
                     mob.cc.setAggressionState(Aggression.passive);
                     mob.pathFind = mob.wander;
                 }
@@ -105,6 +110,7 @@ public class MobLogic extends PokemonLogic {
 
     private void attack(Move move) {
         tc.setTurnState(Turn.PENDING);
+        mob.instructions.add(new AnimateInstruction(mob, dc.getDirection()+"attack"));
         mob.instructions.add(new AttackInstruction(mob, move));
     }
 
@@ -173,14 +179,13 @@ public class MobLogic extends PokemonLogic {
     }
 
     private boolean pathFind() {
-        //try {
+        try {
             // not one behind change back to movement component later
             MoveComponent targetMC = mob.target.getComponent(MoveComponent.class);
-            //mob.path = mob.pathFind.pathFind(targetMC.getNextTile());
-            mob.path = bfs.bfs(targetMC.getNextTile());
-        //} catch (PathFindFailureException e) {
-        //    System.out.println("Failed to pathfind");
-        //}
+            mob.path = mob.pathFind.pathFind(targetMC.getNextTile());
+        } catch (PathFindFailureException e) {
+           System.out.println("Failed to pathfind");
+        }
 
         if (mob.path.size <= 0) {
             return false;

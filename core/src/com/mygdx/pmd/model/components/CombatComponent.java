@@ -8,7 +8,9 @@ import com.mygdx.pmd.model.instructions.*;
  * Created by Cameron on 4/18/2017.
  */
 public class CombatComponent implements Component {
+    private Entity target;
     private Aggression aggressionState;
+    private DirectionComponent dc;
     private int hp;
 
     private Entity entity;
@@ -16,6 +18,7 @@ public class CombatComponent implements Component {
     public CombatComponent(Entity entity){
         this.entity = entity;
 
+        this.dc = entity.getComponent(DirectionComponent.class);
         this.hp = 100;
         this.aggressionState = Aggression.passive;
     }
@@ -38,7 +41,19 @@ public class CombatComponent implements Component {
 
     public void takeDamage(Entity damager, int damage){
         setHp(hp - damage);
-        entity.instructions.add(new AnimateInstruction(entity, "pain"));
+        setTarget(damager);
+        setAggressionState(Aggression.aggressive);
+        PositionComponent ePc = damager.getComponent(PositionComponent.class);
+        dc.setDirection(ePc.getCurrentTile());
+        entity.instructions.add(new AnimateInstruction(entity, "pain", dc.getDirection().toString()+"idle"));
+    }
+
+    public Entity getTarget() {
+        return target;
+    }
+
+    public void setTarget(Entity target) {
+        this.target = target;
     }
 
     public int getHp() {

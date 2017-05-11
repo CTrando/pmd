@@ -17,7 +17,7 @@ public class PAnimation {
     public Sprite currentSprite;
     public String classifier;
     public Key key;
-    boolean isLooping;
+    private boolean isLooping;
 
     public PAnimation(String classifier, Array<Sprite> animationSprites, int animationLength, boolean isLooping) {
         this.classifier = classifier;
@@ -59,5 +59,9 @@ public class PAnimation {
 
     public String toString() {
         return classifier;
+    }
+
+    public boolean isLooping() {
+        return isLooping;
     }
 }

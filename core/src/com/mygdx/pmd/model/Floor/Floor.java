@@ -75,7 +75,7 @@ public class Floor extends Entity {
 
         Tile chosenTile = tileBoard[randRow][randCol];
 
-        if (chosenTile instanceof RoomTile && !chosenTile.hasEntityWithComponent(MoveComponent.class)) {
+        if (chosenTile instanceof RoomTile && (chosenTile.getEntityList().size == 0)) {
             return tileBoard[randRow][randCol];
         } else return chooseUnoccupiedTile();
     }

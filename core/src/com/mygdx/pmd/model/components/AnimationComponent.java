@@ -14,6 +14,7 @@ public class AnimationComponent implements Component {
 
     private Entity entity;
     private HashMap<String, PAnimation> animationMap;
+    private PAnimation prevAnimation;
     private PAnimation currentAnimation;
 
     public AnimationComponent(Entity entity){
@@ -29,11 +30,17 @@ public class AnimationComponent implements Component {
         return currentAnimation;
     }
 
+    public PAnimation getPrevAnimation() {
+        return prevAnimation;
+    }
+
     public void setCurrentAnimation(String animationKey){
+        this.prevAnimation = this.currentAnimation;
         this.currentAnimation = getAnimation(animationKey);
     }
 
     public void setCurrentAnimation(PAnimation currentAnimation) {
+        this.prevAnimation = this.currentAnimation;
         this.currentAnimation = currentAnimation;
     }
 

@@ -12,9 +12,6 @@ import com.mygdx.pmd.utils.*;
  * Created by Cameron on 12/11/2016.
  */
 
-/**
- * TODO Potential problem with placing rooms right next to each other
- */
 public class FloorFactory {
     private Array<Room> rooms;
     private Array<Connector> connectors;

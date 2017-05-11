@@ -22,7 +22,7 @@ public class AttackInstruction implements Instruction {
     public AttackInstruction(Pokemon pokemon, Move move) {
         this.pokemon = pokemon;
         this.move = move;
-        if(this.move == null){
+        if (this.move == null) {
             this.move = pokemon.getRandomMove();
         }
         dc = pokemon.dc;
@@ -44,7 +44,7 @@ public class AttackInstruction implements Instruction {
         tc.setTurnState(Turn.COMPLETE);
         ac.setActionState(Action.IDLE);
         anc.getCurrentAnimation().clear();
-        anc.setCurrentAnimation(dc.getDirection().toString()+"idle");
+        anc.setCurrentAnimation(dc.getDirection().toString() + "idle");
 
         pokemon.attacking = false;
         pokemon.children.clear();
@@ -52,11 +52,9 @@ public class AttackInstruction implements Instruction {
 
     @Override
     public void execute() {
-        if(anc.isAnimationFinished()) {
-            for (Entity entity : pokemon.children) {
-                if (entity.shouldBeDestroyed) {
-                    isFinished = true;
-                }
+        for (Entity entity : pokemon.children) {
+            if (entity.shouldBeDestroyed) {
+                isFinished = true;
             }
         }
     }

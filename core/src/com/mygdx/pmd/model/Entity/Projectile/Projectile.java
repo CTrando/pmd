@@ -33,7 +33,6 @@ public class Projectile extends Entity {
     public PositionComponent pc;
     public RenderComponent rc;
     public AnimationComponent anc;
-    //TODO make a projectile factory class and fix it up
 
     Projectile(Pokemon parent, Move move) {
         super(parent.floor, parent.mc.getFacingTile().x, parent.mc.getFacingTile().y);

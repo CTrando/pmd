@@ -1,6 +1,7 @@
 package com.mygdx.pmd.model.components;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pmd.model.Floor.*;
 import com.mygdx.pmd.model.Tile.*;
 
@@ -31,4 +32,5 @@ public class FloorRenderComponent extends RenderComponent {
             }
         }
     }
+
 }

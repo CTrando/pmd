@@ -1,8 +1,10 @@
 package com.mygdx.pmd.model.components;
 
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.model.Entity.*;
+import com.mygdx.pmd.utils.Constants;
 
 import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 
@@ -16,13 +18,16 @@ public class RenderComponent implements Component {
     public static final int BACKGROUND = 0;
 
     protected PositionComponent pc;
+    protected Vector2 renderBounds;
     private Array<Sprite> sprites;
 
     public RenderComponent(Entity entity) {
         this.entity = entity;
         this.pc = entity.getComponent(PositionComponent.class);
+        if(pc == null) return;
         this.sprites = new Array<Sprite>();
         this.sprites.setSize(10);
+        this.renderBounds = new Vector2(pc.x, pc.y);
     }
 
     public void render(SpriteBatch batch) {
@@ -64,5 +69,10 @@ public class RenderComponent implements Component {
 
     public void setSprite(Sprite sprite, int ZINDEX) {
         this.sprites.set(ZINDEX, sprite);
+    }
+
+    public Vector2 getRenderBounds() {
+        if(renderBounds == null) return null;
+        return renderBounds.set(pc.x/PPM, pc.y/PPM);
     }
 }

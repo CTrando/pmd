@@ -23,9 +23,10 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     public final PMD game;
     public static ShapeRenderer sRenderer;
     private SpriteBatch batch;
-    public static final float PPM = 25;
+    public static final float PPM = 32;
 
     public Array<RenderComponent> renderList;
+    private Rectangle cameraBounds;
     private Hud hud;
 
     public Controller controller;
@@ -66,6 +67,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         bFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
         bFont.getData().setScale(.5f);
 
+
         occludersFBO = new FrameBuffer(Pixmap.Format.RGBA8888, lightSize, 1, false);
         occluder = new TextureRegion(occludersFBO.getColorBufferTexture());
         occluder.flip(false, true);
@@ -87,8 +89,8 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public void render(float dt) {
-        timeStep+=dt;
-        if(timeStep >= 1/60f) {
+        timeStep += dt;
+        if (timeStep >= 1 / 60f) {
             timeStep = 0;
             controller.update();
             updateCamera();
@@ -99,37 +101,54 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
             }
         }
 
-            // occludersFBO.begin();
-            Gdx.gl.glClearColor(0, 0, 0, 1f);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            Gdx.gl.glEnable(GL20.GL_BLEND);
-            Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-            Gdx.gl.glDisable(GL20.GL_BLEND);
+        // occludersFBO.begin();
+        Gdx.gl.glClearColor(0, 0, 0, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        Gdx.gl.glDisable(GL20.GL_BLEND);
 
-            batch.setProjectionMatrix(gamePort.getCamera().combined);
-            sRenderer.setProjectionMatrix(gamePort.getCamera().combined);
-            sRenderer.begin(ShapeRenderer.ShapeType.Line);
-            batch.begin();
+        batch.setProjectionMatrix(gamePort.getCamera().combined);
+        sRenderer.setProjectionMatrix(gamePort.getCamera().combined);
+        sRenderer.begin(ShapeRenderer.ShapeType.Line);
+        batch.begin();
 
-            //shader.setUniformf("resolution", lightSize, lightSize);
-            for (int i = 0; i < renderList.size; i++) {
-                renderList.get(i).render(batch);
+        //shader.setUniformf("resolution", lightSize, lightSize);
+       /* for(int j = 0; j< controller.floor.tileBoard.length; j++){
+            for(int k = 0; k<controller.floor.tileBoard[0].length; k++){
+                Tile tile = controller.floor.tileBoard[j][k];
+                RenderComponent rc = tile.getComponent(RenderComponent.class);
+                Vector2 renderBounds = rc.getRenderBounds();
+                if(cameraBounds != null && cameraBounds.contains(renderBounds)){
+                    rc.render(batch);
+                }
             }
-            //batch.draw(occludersFBO.getColorBufferTexture(), 0, 0, lightSize, 100);
+        }*/
 
-            batch.end();
-            sRenderer.end();
-            batch.setProjectionMatrix(hud.stage.getCamera().combined);
-            batch.flush();
+       //TODO fix up this rendering and make it beautiful
+
+        for (int i = 0; i < renderList.size; i++) {
+            RenderComponent rc = renderList.get(i);
+            Vector2 renderBounds = rc.getRenderBounds();
+
+           // if (cameraBounds != null && renderBounds != null && cameraBounds.contains(renderBounds)) {
+                rc.render(batch);
+           // }
+        }
+        //batch.draw(occludersFBO.getColorBufferTexture(), 0, 0, lightSize, 100);
+
+        batch.end();
+        sRenderer.end();
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        batch.flush();
 
 
-
-            //for some reason it initializes batch,begin in stage.draw - how terrible
-            if (hud.isVisible()) {
-                hud.update(dt);
-                hud.stage.draw();
-            }
-            //occludersFBO.end();
+        //for some reason it initializes batch,begin in stage.draw - how terrible
+        if (hud.isVisible()) {
+            hud.update(dt);
+            hud.stage.draw();
+        }
+        //occludersFBO.end();
     }
 
     @Override
@@ -179,12 +198,12 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         float col = controller.pokemonPlayer.pc.x / PPM;
 
         if (cameraMode == CameraMode.fixed) {
-            Rectangle bounds = new Rectangle(col - (gamePort.getWorldWidth() / 2),
-                                             row - (gamePort.getWorldHeight() / 2),
-                                             gamePort.getWorldWidth() + 1,
-                                             gamePort.getWorldHeight() + 1);
+            cameraBounds = new Rectangle(col - (gamePort.getWorldWidth() / 2),
+                                         row - (gamePort.getWorldHeight() / 2),
+                                         gamePort.getWorldWidth() + 1,
+                                         gamePort.getWorldHeight() + 1);
             Rectangle scissors = new Rectangle();
-            ScissorStack.calculateScissors(gameCamera, batch.getTransformMatrix(), bounds, scissors);
+            ScissorStack.calculateScissors(gameCamera, batch.getTransformMatrix(), cameraBounds, scissors);
             ScissorStack.pushScissors(scissors);
         }
     }
@@ -233,7 +252,9 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
     public boolean keyDown(int keycode) {
         if (PMD.keys.containsKey(keycode)) {
             PMD.keys.get(keycode).set(true);
-        } else PMD.keys.put(keycode, new AtomicBoolean(true));
+        } else {
+            PMD.keys.put(keycode, new AtomicBoolean(true));
+        }
 
         if (PMD.isKeyPressed(Key.c)) {
             switch (cameraMode) {
@@ -252,7 +273,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public boolean keyUp(int keycode) {
-        if (PMD.isKeyPressed(Input.Keys.SLASH)){
+        if (PMD.isKeyPressed(Input.Keys.SLASH)) {
             hud.getConsole().requestFocus();
         }
 

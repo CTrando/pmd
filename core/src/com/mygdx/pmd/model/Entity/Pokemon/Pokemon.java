@@ -156,7 +156,7 @@ public abstract class Pokemon extends Entity implements Logical {
                 if(tile == pc.getCurrentTile()) return false;
 
                 for(Entity entity: tile.getEntityList()){
-                    if(entity == target){
+                    if(entity == cc.getTarget()){
                         return true;
                     }
                 }

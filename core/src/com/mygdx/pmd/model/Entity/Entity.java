@@ -97,4 +97,8 @@ public abstract class Entity implements Updatable, Disposable {
     }
 
     public abstract String toString();
+
+    public boolean hasChildren() {
+        return children.size > 0;
+    }
 }
