@@ -89,7 +89,8 @@ public class Floor extends Entity {
     private void updateTiles(){
         for(int i = 0; i< tileBoard.length; i++){
             for(int j = 0; j< tileBoard[0].length; j++){
-                tileBoard[i][j].update();
+                Tile tile = tileBoard[i][j];
+                tile.update();
             }
         }
     }

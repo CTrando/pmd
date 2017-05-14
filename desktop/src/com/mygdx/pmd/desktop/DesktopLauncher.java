@@ -16,8 +16,8 @@ public class DesktopLauncher {
 		config.height = 720;
 
 		config.vSyncEnabled = false;
-		config.foregroundFPS = 0;
-		config.backgroundFPS = 0;
+		config.foregroundFPS = 60;
+		config.backgroundFPS = 60;
 
 		config.title = PMD.TITLE;
 

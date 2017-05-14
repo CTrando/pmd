@@ -12,6 +12,7 @@ public class CombatComponent implements Component {
     private Aggression aggressionState;
     private DirectionComponent dc;
     private int hp;
+    private boolean invincible;
 
     private Entity entity;
 
@@ -61,9 +62,23 @@ public class CombatComponent implements Component {
     }
 
     public void setHp(int hp) {
-        this.hp = hp;
-        if (this.hp <= 0) {
-            this.hp = 0;
+        if(!invincible) {
+            this.hp = hp;
+            if (this.hp <= 0) {
+                this.hp = 0;
+            }
         }
+    }
+
+    public void addHP(int addHealth) {
+        setHp(getHp()+addHealth);
+    }
+
+    public boolean isInvincible() {
+        return invincible;
+    }
+
+    public void setInvincible(boolean invincible) {
+        this.invincible = invincible;
     }
 }

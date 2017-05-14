@@ -43,12 +43,13 @@ public class Console extends Table {
         commandEnter.addListener(new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                switch(event.getKeyCode()) {
+                switch (event.getKeyCode()) {
                     case Input.Keys.ENTER:
                         handleInput(commandEnter.getText());
                         commandEnter.setText("");
                         break;
                     case Input.Keys.ESCAPE:
+                        //TODO the escapes are conflicting with each other fix it
                         cancelFocus();
                         break;
                 }
@@ -61,13 +62,38 @@ public class Console extends Table {
     }
 
     public void update(float dt) {
-
     }
 
     private void handleInput(String command) {
-        writeLine(command);
         String[] components = command.split(" ");
+        if (command.equals("")) {
+            return;
+        }
+        writeLine(command);
 
+        if (components[0].equals("/invincible")) {
+            controller.pokemonPlayer.cc.setInvincible(true);
+            writeLine("You are now invincible. This is not undoable");
+        }
+
+        if (components[0].equals("/add")) {
+            try {
+                String operation = components[1];
+                if (operation.equals("turn")) {
+                    int addTurns = Integer.parseInt(components[2]);
+                    Controller.turns += addTurns;
+                    writeLine("Added " + addTurns + " turn(s) successfully!");
+                } else if (operation.equals("health")){
+                    int addHealth = Integer.parseInt(components[2]);
+                    controller.pokemonPlayer.cc.addHP(addHealth);
+                    writeLine("Added " + addHealth + " HP successfully!");
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                writeLine("Invalid parameters, try adding a correct operation.");
+            } catch (NumberFormatException e) {
+                writeLine("Invalid parameter, must have number after operation.");
+            }
+        }
 
         if (components[0].equals("/spawn")) {
             try {
@@ -85,25 +111,24 @@ public class Console extends Table {
                 controller.toBeAdded(pokemon);
                 writeLine("Spawn was successful!");
 
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 writeLine("Incorrect parameter types, try again.");
-            } catch (ArrayIndexOutOfBoundsException e){
+            } catch (ArrayIndexOutOfBoundsException e) {
                 writeLine("Incorrect number of parameters, try again.");
             }
         }
-
-        label.setText(log.toString());
     }
 
-    private void writeLine(String command){
+    public void writeLine(String command) {
         if (log.length() != 0) {
             log.append("\n").append(command);
         } else {
             log.append(command);
         }
+        label.setText(log.toString());
     }
 
-    public void requestFocus(){
+    public void requestFocus() {
         commandEnter.setText("");
         hud.requestFocus(commandEnter);
     }

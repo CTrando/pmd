@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.model.Entity.*;
+import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.Constants;
 
 import static com.mygdx.pmd.screens.DungeonScreen.PPM;
@@ -31,8 +32,10 @@ public class RenderComponent implements Component {
     }
 
     public void render(SpriteBatch batch) {
-        renderSelf(batch);
-        renderChildren(batch);
+        if(DungeonScreen.cameraBounds.contains(pc.x/PPM, pc.y/PPM)) {
+            renderSelf(batch);
+            renderChildren(batch);
+        }
     }
 
     protected void renderSelf(SpriteBatch batch) {

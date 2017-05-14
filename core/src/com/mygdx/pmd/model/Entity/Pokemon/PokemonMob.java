@@ -74,6 +74,6 @@ public class PokemonMob extends Pokemon {
         super.dispose();
 
         tc.setTurnState(Turn.COMPLETE);
-        System.out.println("WOE IS ME I AM DEAD");
+        floor.getController().screen.getHud().getConsole().writeLine(toString() + " died at " + pc.getCurrentTile());
     }
 }

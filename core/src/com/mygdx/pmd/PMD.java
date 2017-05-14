@@ -4,6 +4,7 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,6 +17,7 @@ import com.mygdx.pmd.screens.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.FileHandler;
 
 
 /**
@@ -81,10 +83,11 @@ public class PMD extends Game {
     }
 
     private void loadAtlases() {
-        final File atlasFolder = new File(ATLAS_DIRECTORY);
+        // must use Gdx.files.internal if want to use android as well should work on desktop though
+        final FileHandle atlasFolder = Gdx.files.internal(ATLAS_DIRECTORY);
 
-        for(final File atlas: atlasFolder.listFiles()){
-            String atlasName = atlas.getName();
+        for(final FileHandle atlas: atlasFolder.list()){
+            String atlasName = atlas.name();
             if(atlasName.endsWith(".atlas")){
                 manager.load(ATLAS_DIRECTORY +"/"+atlasName, TextureAtlas.class);
             }
@@ -92,10 +95,10 @@ public class PMD extends Game {
     }
 
     private void loadSFX(){
-        final File sfxFolder = new File(SFX_DIRECTORY);
+        final FileHandle sfxFolder = Gdx.files.internal(SFX_DIRECTORY);
 
-        for(final File sfx: sfxFolder.listFiles()){
-            String sfxName = sfx.getName();
+        for(final FileHandle sfx: sfxFolder.list()){
+            String sfxName = sfx.name();
             if(sfxName.endsWith(".wav")){
                 manager.load(SFX_DIRECTORY +"/"+sfxName, Sound.class);
             } else if(sfxName.endsWith(".ogg")){

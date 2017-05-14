@@ -25,6 +25,7 @@ public class Hud {
     public OrthographicCamera hudCam;
     private StringBuilder inputText;
 
+    private Controller controller;
     private Skin skin;
     private Console console;
     private Table rootTable;
@@ -35,17 +36,18 @@ public class Hud {
     private Label textLabel;
     private Label fpsCounter;
     private Label tilePos;
+    private Label moveLabel;
 
     BitmapFont customFont;
     GlyphLayout gLayout;
-    DungeonScreen screen;
 
     private PokemonPlayer player;
 
-    public Hud(final DungeonScreen screen, SpriteBatch batch) {
+    public Hud(final Controller controller, Skin skin, SpriteBatch batch) {
         //TODO organize this badly
-        this.screen = screen;
-        this.player = (PokemonPlayer) screen.controller.pokemonPlayer;
+        this.controller = controller;
+        this.player = (PokemonPlayer) controller.pokemonPlayer;
+        this.skin = skin;
         customFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
         gLayout = new GlyphLayout(customFont, "");
         inputText = new StringBuilder();
@@ -59,7 +61,6 @@ public class Hud {
         onScreenController.center();
         onScreenController.top();
         onScreenController.setFillParent(true);
-        this.skin = new Skin(Gdx.files.internal("ui/skin/flat-earth-ui.json"));
 
         console = new Console(this);
 
@@ -71,7 +72,9 @@ public class Hud {
         fpsCounter = new Label("FPS: " + Gdx.graphics.getFramesPerSecond(), skin);
         tilePos = new Label("row: " + player.pc.getCurrentTile().row + ", col: " +
                                     player.pc.getCurrentTile().col, skin);
+        moveLabel = new Label("Current move is : " + player.getMove(), skin);
 
+        moveLabel.setAlignment(Align.center);
         healthLabel.setAlignment(Align.center);
         floorLabel.setAlignment(Align.center);
         turnLabel.setAlignment(Align.center);
@@ -84,7 +87,7 @@ public class Hud {
         attackText.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                screen.controller.pokemonPlayer.setMove(Move.SWIPERNOSWIPING);
+                controller.pokemonPlayer.setMove(Move.SWIPERNOSWIPING);
             }
         });
 
@@ -92,7 +95,7 @@ public class Hud {
         test.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                screen.controller.pokemonPlayer.setMove(Move.INSTANT_KILLER);
+                controller.pokemonPlayer.setMove(Move.INSTANT_KILLER);
             }
         });
 
@@ -190,6 +193,7 @@ public class Hud {
 
         Table hudTable = new Table();
         hudTable.add(tilePos).fill().row();
+        hudTable.add(moveLabel).fill().row();
         hudTable.add(healthLabel).fill();
         hudTable.row();
         hudTable.add(floorLabel).fill();
@@ -239,20 +243,21 @@ public class Hud {
     }
 
     public void update(float dt) {
-        player = (PokemonPlayer) screen.controller.pokemonPlayer;
+        player = (PokemonPlayer) controller.pokemonPlayer;
         stage.act();
         console.update(dt);
         //reason why not appearing is because did not include : in bit map font
-        healthLabel.setText("HP: " + screen.controller.pokemonPlayer.cc.getHp());
+        healthLabel.setText("HP: " + controller.pokemonPlayer.cc.getHp());
         floorLabel.setText("Floor: " + Controller.floorCount);
         if (Controller.turnsPaused) {
             customFont.setColor(Color.BLUE);
         }
 
+        moveLabel.setText("Current move is : " + player.getMove());
         fpsCounter.setText("FPS: " + Gdx.graphics.getFramesPerSecond());
         turnLabel.setText("Turns left: " + Controller.turns);
         tilePos.setText("row: " + player.pc.getCurrentTile().row + ", col: " +
-                                    player.pc.getCurrentTile().col);
+                                player.pc.getCurrentTile().col);
 
         String currentText = inputText.toString();
         gLayout.setText(customFont, inputText);
@@ -271,7 +276,7 @@ public class Hud {
         inputText.setLength(0);
     }
 
-    public void loadAttackTextButtons(Table table) {
+    private void loadAttackTextButtons(Table table) {
         JsonReader reader = new JsonReader();
         JsonValue value = reader.parse(Gdx.files.internal("ui/menu.json"));
         JsonValue moves = value.get("moves");
@@ -281,8 +286,7 @@ public class Hud {
             test.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    screen.controller.pokemonPlayer.setMove(Enum.valueOf(Move.class, move.asString()));
-                    screen.toggleHub();
+                    controller.pokemonPlayer.setMove(Enum.valueOf(Move.class, move.asString()));
                 }
             });
             table.add(test).fill();
@@ -311,6 +315,6 @@ public class Hud {
     }
 
     public Controller getController() {
-        return screen.controller;
+        return controller;
     }
 }
