@@ -2,7 +2,6 @@ package com.mygdx.pmd.model.logic;
 
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.Tile.*;
@@ -51,20 +50,16 @@ public class PlayerLogic extends PokemonLogic {
         mc.possibleNextTile = null;
 
         if (mc.getNextTile().hasEntityWithComponent(MoveComponent.class)) {
-            this.forceMove();
+            this.forceMoveWith(mc.getNextTile());
         }
 
         player.instructions.add(new MoveInstruction(player, mc.getNextTile()));
-      //  player.instructions.add(new AnimateInstruction(player, "upattack"));
 
         //this is to keep movement smooth
         anc.setCurrentAnimation(dc.getDirection().toString());
         ac.setActionState(Action.MOVING);
         tc.setTurnState(Turn.COMPLETE);
 
-        if (PMD.isKeyPressed(Key.s)) {
-            mc.setSpeed(Constants.TILE_SIZE/4);
-        } else mc.setSpeed(1);
     }
 
     private void attack(Move move) {
@@ -89,8 +84,8 @@ public class PlayerLogic extends PokemonLogic {
         return null;
     }
 
-    private void forceMove() {
-        for (Entity entity : player.mc.getNextTile().getEntityList()) {
+    private void forceMoveWith(Tile tile) {
+        for (Entity entity : tile.getEntityList()) {
             if (entity != player && entity.hasComponent(MoveComponent.class)) {
                 MoveComponent entityMC = entity.getComponent(MoveComponent.class);
                 entityMC.forceMoveToTile(pc.getCurrentTile(), dc.getDirection().getOpposite());

@@ -1,6 +1,5 @@
 package com.mygdx.pmd.model.logic;
 
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.exceptions.PathFindFailureException;
@@ -11,9 +10,6 @@ import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.instructions.*;
 import com.mygdx.pmd.utils.AI.BFS;
 import com.mygdx.pmd.utils.Constants;
-import javafx.geometry.Pos;
-
-import java.util.Arrays;
 
 /**
  * Created by Cameron on 1/20/2017.
@@ -32,21 +28,15 @@ public class MobLogic extends PokemonLogic {
 
     @Override
     public void execute() {
-        if (mob.cc.getHp() <= 0) {
-            mob.shouldBeDestroyed = true;
-        }
+        if(checkDestroyed()) return;
 
-        if (mob.shouldBeDestroyed) {
-            return;
-        }
-        //too long
-
+        //TODO this method is too long
         if (mob.mc.isForcedMove()) {
             System.out.println("forced move");
 
             anc.setCurrentAnimation(dc.getDirection().toString());
-            this.determineSpeed();
             tc.setTurnState(Turn.COMPLETE);
+            determineSpeed();
             skipTurn = true;
             return;
         }
@@ -65,29 +55,17 @@ public class MobLogic extends PokemonLogic {
             }
 
             anc.setCurrentAnimation(dc.getDirection()+"idle");
+            updateAggression();
 
             if (mob.cc.isAggressive()) {
                 Entity target = mob.cc.getTarget();
-                PositionComponent targetPC = target.getComponent(PositionComponent.class);
-                DirectionComponent targetDC = target.getComponent(DirectionComponent.class);
-                mob.pathFind = bfs;
-
-                dc.setDirection(targetPC.getCurrentTile());
-                mc.setFacingTile(dc.getDirection());
-
-                if (target.shouldBeDestroyed) {
-                    mob.cc.setTarget(null);
-                    mob.cc.setAggressionState(Aggression.passive);
-                    mob.pathFind = mob.wander;
-                }
+                lookAt(target);
             }
 
             if (canAttack()) {
                 mob.resetMove();
-
                 if (isEnemyAdjacent()) {
                     attack();
-                    //return is used to prevent the mob from moving
                     return;
                 } else {
                     Tile enemyTile = findEnemyTile();
@@ -98,13 +76,50 @@ public class MobLogic extends PokemonLogic {
                         mob.setMove(mob.getRandomRangedMove());
                         attack();
                     }
+                    //if cannot attack then move instead so no return statement here
                 }
             }
 
             if (canMove()) {
+                setPathFindType();
+                //see if no errors thrown
+                if(pathFind()){
+                    dc.setDirection(mc.possibleNextTile);
+                    if (this.mob.isLegalToMoveTo(mc.possibleNextTile)) {
+                        mc.setNextTile(mc.possibleNextTile);
+                        mc.possibleNextTile = null;
+                    }
+                }
                 move();
                 return;
             }
+        }
+    }
+
+    private boolean checkDestroyed(){
+        if (mob.shouldBeDestroyed) {
+            return true;
+        }
+
+        if (mob.cc.getHp() <= 0) {
+            mob.shouldBeDestroyed = true;
+            return true;
+        }
+        return false;
+    }
+
+    private void lookAt(Entity target){
+        PositionComponent targetPC = target.getComponent(PositionComponent.class);
+
+        dc.setDirection(targetPC.getCurrentTile());
+        mc.setFacingTile(dc.getDirection());
+    }
+
+    private void updateAggression(){
+        if (mob.cc.getTarget() != null && mob.cc.getTarget().shouldBeDestroyed) {
+            mob.cc.setTarget(null);
+            mob.cc.setAggressionState(Aggression.passive);
+            mob.pathFind = mob.wander;
         }
     }
 
@@ -127,28 +142,16 @@ public class MobLogic extends PokemonLogic {
         return mob.canSeeEnemy() && mob.cc.isAggressive();
     }
 
+    private void setPathFindType(){
+        if (mob.cc.isAggressive()) {
+            mob.pathFind = bfs;
+        }
+    }
+
     @Override
     void move() {
-        // set the next tile based on if the mob has been forced to move or not
-
-        if (mob.cc.isAggressive()) {
-            mob.pathFind = mob.sPath;
-        }
-        //see if it can pathfind, meaning there was no error thrown
-        if (pathFind()) {
-            //this method depends on current tile not move component
-            dc.setDirection(mc.possibleNextTile);
-
-            if (this.mob.isLegalToMoveTo(mc.possibleNextTile)) {
-                mc.setNextTile(mc.possibleNextTile);
-                mc.possibleNextTile = null;
-            }
-        }
-
         if (mc.getNextTile() != null && mc.getNextTile() != pc.getCurrentTile()) {
             mob.instructions.add(new MoveInstruction(mob, mc.getNextTile()));
-
-            //actually need this
             ac.setActionState(Action.MOVING);
 
             dc.setDirection(mc.getNextTile());
@@ -158,7 +161,6 @@ public class MobLogic extends PokemonLogic {
             ac.setActionState(Action.IDLE);
         }
         tc.setTurnState(Turn.COMPLETE);
-        //tell the mob to go to to the next tile
     }
 
     @Override
@@ -180,7 +182,6 @@ public class MobLogic extends PokemonLogic {
 
     private boolean pathFind() {
         try {
-            // not one behind change back to movement component later
             MoveComponent targetMC = mob.target.getComponent(MoveComponent.class);
             mob.path = mob.pathFind.pathFind(targetMC.getNextTile());
         } catch (PathFindFailureException e) {

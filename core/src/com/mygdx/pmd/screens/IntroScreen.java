@@ -29,7 +29,7 @@ public class IntroScreen extends PScreen implements InputProcessor {
         this.skin = new Skin(Gdx.files.internal("ui/skin/flat-earth-ui.json"));
 
         Table rootTable = new Table(skin);
-        rootTable.debug();
+        //rootTable.debug();
         rootTable.setFillParent(true);
 
         Label titleLabel = new Label("Pokemon Mystery Dungeon Clone", skin);

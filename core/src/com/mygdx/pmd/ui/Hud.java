@@ -81,7 +81,7 @@ public class Hud {
         textLabel.setAlignment(Align.center);
         fpsCounter.setAlignment(Align.center);
         tilePos.setAlignment(Align.center);
-        stage.setDebugAll(true);
+       // stage.setDebugAll(true);
 
         TextButton attackText = new TextButton("Swiper no Swiping", skin);
         attackText.addListener(new ChangeListener() {
@@ -185,7 +185,6 @@ public class Hud {
         onScreenController.row();
         onScreenController.add();
         onScreenController.add(downImg).pad(15, 15, 15, 15);
-
         rootTable = new Table();
         rootTable.setFillParent(true);
 

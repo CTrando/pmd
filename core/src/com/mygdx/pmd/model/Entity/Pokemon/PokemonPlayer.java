@@ -94,6 +94,9 @@ public class PokemonPlayer extends Pokemon {
 
             //TODO switch keys to a refresh system - perhaps use an object instead of an enum
 
+            if (PMD.isKeyPressed(Key.s)) {
+                mc.setSpeed(Constants.TILE_SIZE/4);
+            } else mc.setSpeed(1);
 
             //actions that do not affect the player's turn or action state
             if (PMD.isKeyPressed(Key.space)) {

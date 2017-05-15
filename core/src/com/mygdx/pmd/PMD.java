@@ -26,7 +26,9 @@ import java.util.logging.FileHandler;
 public class PMD extends Game {
     public static final String TITLE = "Pokemon Mystery Dungeon";
     private final String ATLAS_DIRECTORY = "pokemonassets";
+    private final String ATLAS_LIST = "atlas.txt";
     private final String SFX_DIRECTORY = "sfx";
+    private final String SFX_LIST = "sfx.txt";
     public static HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
     public static HashMap<Integer, AtomicBoolean> keys;
 
@@ -50,8 +52,6 @@ public class PMD extends Game {
 
         this.loadKeys();
         this.loadAssets();
-        this.loadSprites();
-
 
         introScreen = new IntroScreen(this);
         dungeonScreen = new DungeonScreen(this);
@@ -78,40 +78,42 @@ public class PMD extends Game {
     private void loadAssets() {
         loadAtlases();
         loadSFX();
-        loadSprites();
+
         manager.finishLoading();
+        loadSprites();
     }
 
     private void loadAtlases() {
         // must use Gdx.files.internal if want to use android as well should work on desktop though
-        final FileHandle atlasFolder = Gdx.files.internal(ATLAS_DIRECTORY);
+        final FileHandle atlasFolder = Gdx.files.internal(ATLAS_LIST);
 
-        for(final FileHandle atlas: atlasFolder.list()){
-            String atlasName = atlas.name();
-            if(atlasName.endsWith(".atlas")){
-                manager.load(ATLAS_DIRECTORY +"/"+atlasName, TextureAtlas.class);
-            }
+        System.out.println("load atlas");
+        System.out.println(atlasFolder.name());
+        for (final String atlasName : atlasFolder.readString().split("\\r?\\n")) {
+            System.out.println(atlasName);
+            manager.load(ATLAS_DIRECTORY + "/" + atlasName, TextureAtlas.class);
         }
     }
 
-    private void loadSFX(){
-        final FileHandle sfxFolder = Gdx.files.internal(SFX_DIRECTORY);
+    private void loadSFX() {
+        final FileHandle sfxFolder = Gdx.files.internal(SFX_LIST);
 
-        for(final FileHandle sfx: sfxFolder.list()){
-            String sfxName = sfx.name();
-            if(sfxName.endsWith(".wav")){
-                manager.load(SFX_DIRECTORY +"/"+sfxName, Sound.class);
-            } else if(sfxName.endsWith(".ogg")){
-                manager.load(SFX_DIRECTORY +"/"+sfxName, Music.class);
+        for (final String sfxName : sfxFolder.readString().split("\\r?\\n")) {
+            if (sfxName.endsWith(".wav")) {
+                manager.load(SFX_DIRECTORY + "/" + sfxName, Sound.class);
+            } else if (sfxName.endsWith(".ogg")) {
+                manager.load(SFX_DIRECTORY + "/" + sfxName, Music.class);
             }
         }
     }
 
     private void loadSprites() {
+        System.out.println("loading sprites");
         Array<TextureAtlas> spriteAtlases = new Array<TextureAtlas>();
         manager.getAll(TextureAtlas.class, spriteAtlases);
 
-        for(TextureAtlas atlas: spriteAtlases){
+        for (TextureAtlas atlas : spriteAtlases) {
+            System.out.println("load");
             loadImages(atlas);
         }
     }
@@ -134,9 +136,11 @@ public class PMD extends Game {
 
     //I didn't use the keycode because of time sensitivity
     public static boolean isKeyPressed(int keyCode) { //TODO perhaps add a buffer system for more control later
-        if(keys.containsKey(keyCode)) {
+        if (keys.containsKey(keyCode)) {
             return keys.get(keyCode).get();
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     /**

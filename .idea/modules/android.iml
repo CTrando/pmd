@@ -92,7 +92,6 @@
       <excludeFolder url="file://$MODULE_DIR$/../../android/build/intermediates/jniLibs" />
       <excludeFolder url="file://$MODULE_DIR$/../../android/build/intermediates/manifests" />
       <excludeFolder url="file://$MODULE_DIR$/../../android/build/intermediates/pre-dexed" />
-      <excludeFolder url="file://$MODULE_DIR$/../../android/build/intermediates/proguard-rules" />
       <excludeFolder url="file://$MODULE_DIR$/../../android/build/intermediates/reload-dex" />
       <excludeFolder url="file://$MODULE_DIR$/../../android/build/intermediates/res" />
       <excludeFolder url="file://$MODULE_DIR$/../../android/build/intermediates/restart-dex" />

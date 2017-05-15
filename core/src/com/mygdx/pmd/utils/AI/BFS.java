@@ -18,7 +18,8 @@ public class BFS extends PathFind {
         this.paths = new Array<Array<Tile>>();
     }
 
-    public Array<Tile> bfs(Tile destTile) {
+    @Override
+    public Array<Tile> pathFind(Tile destTile) {
         Array<Tile> retPath = null;
         paths.clear();
         Array<Tile> initPath = new Array<Tile>();
