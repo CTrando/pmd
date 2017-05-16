@@ -38,7 +38,7 @@ public class PlayerLogic extends PokemonLogic {
     }
 
     boolean canAttack() {
-        return player.attacking;
+        return player.cc.isAttacking();
     }
 
     boolean canMove() {

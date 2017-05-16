@@ -29,7 +29,6 @@ public abstract class Pokemon extends Entity implements Logical {
     public Array<Move> moves;
 
     private Move move;
-    public boolean attacking;
 
     /**
      * Constructor for Pokemon is meant to inject blank information, such as empty arrays and strings, and trivial
@@ -86,14 +85,6 @@ public abstract class Pokemon extends Entity implements Logical {
     //@Override
     public boolean isLegalToMoveTo(Tile tile) {
         if (tile == null) return false;
-
-       /* if (tile.hasEntityOfType(Movable.class)) {
-            for (Aggressible aggressible : PUtils.getObjectsOfType(Aggressible.class, tile.getEntityList())) {
-                if (aggressible.isAggressive()) {
-                    return false;
-                }
-            }
-        }*/
         return tile.isWalkable;
     }
 
@@ -148,7 +139,6 @@ public abstract class Pokemon extends Entity implements Logical {
         }
         for (int i = 1; i <= Constants.VISIBILITY_RANGE; i++) {
             //these are the rules for viewing things
-
             try {
                 Tile tile = tileBoard[pc.getCurrentTile().row + i * rOffset][pc.getCurrentTile().col + i * cOffset];
                 if (tile instanceof GenericTile) return false;

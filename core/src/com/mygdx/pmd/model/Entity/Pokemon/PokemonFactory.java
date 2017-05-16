@@ -62,6 +62,7 @@ public class PokemonFactory {
         Pokemon pokemon = createPokemon(config.floor, config.name, config.type);
         if(config.currentTile != null){
             pokemon.pc.setCurrentTile(config.currentTile);
+            pokemon.mc.addToTile(config.currentTile);
         } else throw new RuntimeException("Current tile must be appropriate for a pokemon");
         return pokemon;
     }

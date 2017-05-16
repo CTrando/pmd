@@ -135,7 +135,7 @@ public class PokemonPlayer extends Pokemon {
 
             //these are for the attacks
             if (PMD.isKeyPressed(Key.b) && PMD.isKeyPressed(Key.t)) {
-                attacking = true;
+                cc.setAttacking(true);
             }
         }
     }

@@ -162,10 +162,10 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         if (cameraMode == CameraMode.fixed) {
             float row = controller.pokemonPlayer.pc.y / PPM;
             float col = controller.pokemonPlayer.pc.x / PPM;
-            cameraBounds = new Rectangle(col - (gamePort.getWorldWidth() / 2),
-                                         row - (gamePort.getWorldHeight() / 2),
-                                         gamePort.getWorldWidth() + 1,
-                                         gamePort.getWorldHeight() + 1);
+            cameraBounds = new Rectangle(col - Constants.CAMERA_BOUND_OFFSET - (gamePort.getWorldWidth() / 2),
+                                         row - Constants.CAMERA_BOUND_OFFSET - (gamePort.getWorldHeight() / 2),
+                                         gamePort.getWorldWidth() + 2*Constants.CAMERA_BOUND_OFFSET,
+                                         gamePort.getWorldHeight() + 2*Constants.CAMERA_BOUND_OFFSET);
         } else {
             float col = gameCamera.position.x;
             float row = gameCamera.position.y;
@@ -234,8 +234,6 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
                     break;
             }
         }
-
-        hud.addText(Input.Keys.toString(keycode));
         return false;
     }
 

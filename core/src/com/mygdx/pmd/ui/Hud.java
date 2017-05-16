@@ -22,10 +22,9 @@ public class Hud {
     public Stage stage;
     public ScreenViewport viewport;
 
-    public OrthographicCamera hudCam;
-    private StringBuilder inputText;
+    private OrthographicCamera hudCam;
 
-    private Controller controller;
+    private final Controller controller;
     private Skin skin;
     private Console console;
     private Table rootTable;
@@ -33,13 +32,9 @@ public class Hud {
     private Label floorLabel;
     private Label healthLabel;
     private Label turnLabel;
-    private Label textLabel;
     private Label fpsCounter;
     private Label tilePos;
     private Label moveLabel;
-
-    BitmapFont customFont;
-    GlyphLayout gLayout;
 
     private PokemonPlayer player;
 
@@ -48,27 +43,17 @@ public class Hud {
         this.controller = controller;
         this.player = (PokemonPlayer) controller.pokemonPlayer;
         this.skin = skin;
-        customFont = new BitmapFont(Gdx.files.internal("ui/myCustomFont.fnt"));
-        gLayout = new GlyphLayout(customFont, "");
-        inputText = new StringBuilder();
 
         hudCam = new OrthographicCamera();
 
         viewport = new ScreenViewport(hudCam);
         stage = new Stage(viewport, batch);
 
-        Table onScreenController = new Table();
-        onScreenController.center();
-        onScreenController.top();
-        onScreenController.setFillParent(true);
-
         console = new Console(this);
-
 
         healthLabel = new Label("HP: " + player.cc.getHp(), skin);
         floorLabel = new Label("Floor: " + Controller.floorCount, skin);
         turnLabel = new Label("Turns left: " + Controller.turns, skin);
-        textLabel = new Label(inputText.toString(), skin);
         fpsCounter = new Label("FPS: " + Gdx.graphics.getFramesPerSecond(), skin);
         tilePos = new Label("row: " + player.pc.getCurrentTile().row + ", col: " +
                                     player.pc.getCurrentTile().col, skin);
@@ -78,10 +63,9 @@ public class Hud {
         healthLabel.setAlignment(Align.center);
         floorLabel.setAlignment(Align.center);
         turnLabel.setAlignment(Align.center);
-        textLabel.setAlignment(Align.center);
         fpsCounter.setAlignment(Align.center);
         tilePos.setAlignment(Align.center);
-       // stage.setDebugAll(true);
+        // stage.setDebugAll(true);
 
         TextButton attackText = new TextButton("Swiper no Swiping", skin);
         attackText.addListener(new ChangeListener() {
@@ -98,6 +82,57 @@ public class Hud {
                 controller.pokemonPlayer.setMove(Move.INSTANT_KILLER);
             }
         });
+
+
+        rootTable = new Table();
+        rootTable.setFillParent(true);
+
+        Table hudHolder = new Table();
+
+        Table hudTable = new Table();
+        hudTable.add(tilePos).fill().row();
+        hudTable.add(moveLabel).fill().row();
+        hudTable.add(healthLabel).fill();
+        hudTable.row();
+        hudTable.add(floorLabel).fill();
+        hudTable.row();
+        hudTable.add(turnLabel).fill();
+        hudTable.row();
+        hudTable.add(fpsCounter).fill();
+        hudTable.row();
+        loadAttackTextButtons(hudTable);
+        hudTable.pack();
+
+        hudHolder.add(hudTable)
+                 .expand()
+                 .align(Align.bottomLeft);
+
+        hudHolder.add(console)
+                 .expand()
+                 .align(Align.bottomRight)
+                 .pad(5f);
+
+
+        hudHolder.pack();
+        rootTable.add(hudHolder)
+                 .expand()
+                 .fill();
+
+        rootTable.pack();
+
+        BitmapFont font = skin.getFont("font");
+        font.getData().markupEnabled = true;
+
+
+        stage.addActor(rootTable);
+        if (Gdx.app.getType() == Application.ApplicationType.Android) {
+            initOnScreenController();
+        }
+    }
+
+    private void initOnScreenController() {
+        Table onScreenController = new Table();
+        onScreenController.setFillParent(true);
 
         Image upImg = new Image(PMD.sprites.get("uparrow"));
         upImg.addListener(new InputListener() {
@@ -173,7 +208,7 @@ public class Hud {
             }
         });
 
-        //TODO fix the controller so it is its own thing also fix for being able to press when off screen
+        //TODO fix the controller so it is its own thing
         onScreenController.debug();
 
         onScreenController.add();
@@ -185,71 +220,31 @@ public class Hud {
         onScreenController.row();
         onScreenController.add();
         onScreenController.add(downImg).pad(15, 15, 15, 15);
-        rootTable = new Table();
-        rootTable.setFillParent(true);
-
-        Table testTable = new Table();
-
-        Table hudTable = new Table();
-        hudTable.add(tilePos).fill().row();
-        hudTable.add(moveLabel).fill().row();
-        hudTable.add(healthLabel).fill();
-        hudTable.row();
-        hudTable.add(floorLabel).fill();
-        hudTable.row();
-        hudTable.add(turnLabel).fill();
-        hudTable.row();
-        hudTable.add(fpsCounter).fill();
-        hudTable.row();
-        loadAttackTextButtons(hudTable);
-        hudTable.pack();
-
-        testTable.add(hudTable)
-                 .expand()
-                 .align(Align.bottomLeft);
-
-        testTable.add(console)
-                 .expand()
-                 .align(Align.bottomRight)
-                 .pad(5f);
-
-
-        testTable.pack();
-
-        Table textTable = new Table();
-        textTable.add(textLabel);
-        textTable.row();
-        textTable.pack();
-
-        rootTable.add(textTable)
-                 .expand()
-                 .align(Align.topRight)
-                 .row();
-
-        rootTable.add(testTable)
-                 .expand()
-                 .fill();
-
-        rootTable.pack();
 
         onScreenController.right().padRight(10).bottom();
 
-        if (Gdx.app.getType() == Application.ApplicationType.Android) {
-            stage.addActor(onScreenController);
-        }
-
-        stage.addActor(rootTable);
+        stage.addActor(onScreenController);
     }
 
     public void update(float dt) {
         player = (PokemonPlayer) controller.pokemonPlayer;
         stage.act();
         console.update(dt);
-        //reason why not appearing is because did not include : in bit map font
+
         healthLabel.setText("HP: " + controller.pokemonPlayer.cc.getHp());
         floorLabel.setText("Floor: " + Controller.floorCount);
         if (Controller.turnsPaused) {
-            customFont.setColor(Color.BLUE);
+            turnLabel.setColor(Color.PINK);
+        } else {
+            turnLabel.setColor(Color.WHITE);
+        }
+
+        if (Controller.turns > 10) {
+            turnLabel.setColor(Color.GREEN);
+        } else if (Controller.turns > 5) {
+            turnLabel.setColor(Color.ORANGE);
+        } else {
+            turnLabel.setColor(Color.RED);
         }
 
         moveLabel.setText("Current move is : " + player.getMove());
@@ -257,22 +252,9 @@ public class Hud {
         turnLabel.setText("Turns left: " + Controller.turns);
         tilePos.setText("row: " + player.pc.getCurrentTile().row + ", col: " +
                                 player.pc.getCurrentTile().col);
-
-        String currentText = inputText.toString();
-        gLayout.setText(customFont, inputText);
-        if (gLayout.width < Gdx.graphics.getWidth()) {
-            textLabel.setText(currentText);
-        } else {
-            inputText.setLength(0);
-        }
-    }
-
-    public void addText(String str) {
-        inputText.append(str);
     }
 
     public void reset() {
-        inputText.setLength(0);
     }
 
     private void loadAttackTextButtons(Table table) {

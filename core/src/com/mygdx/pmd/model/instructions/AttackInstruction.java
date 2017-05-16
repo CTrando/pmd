@@ -46,7 +46,7 @@ public class AttackInstruction implements Instruction {
         anc.getCurrentAnimation().clear();
         anc.setCurrentAnimation(dc.getDirection().toString() + "idle");
 
-        pokemon.attacking = false;
+        pokemon.cc.setAttacking(false);
         pokemon.children.clear();
     }
 
