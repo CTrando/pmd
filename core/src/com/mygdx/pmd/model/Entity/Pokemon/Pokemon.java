@@ -102,21 +102,6 @@ public abstract class Pokemon extends Entity implements Logical {
         super.update();
     }
 
-    public void randomizeLocation() {
-        Tile random = floor.chooseUnoccupiedTile();
-
-        if (random.isWalkable) {
-            mc.setNextTile(random);
-
-            pc.removeFromCurrentTile();
-            mc.addToTile(random);
-            mc.setFacingTile(dc.getDirection());
-
-            pc.setCurrentTile(random);
-            mc.possibleNextTile = null;
-        } else randomizeLocation();
-    }
-
     public boolean canSeeEnemy() {
         if (!cc.isAggressive()){
             return false;

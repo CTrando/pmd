@@ -105,17 +105,21 @@ public class MoveComponent implements Component {
     public void randomizeLocation() {
         Tile random = entity.floor.chooseUnoccupiedTile();
 
-        if (random.isWalkable) {
-            setNextTile(random);
-
-            pc.removeFromCurrentTile();
-            addToTile(random);
-            setFacingTile(dc.getDirection());
-
-            pc.setCurrentTile(random);
-
-            possibleNextTile = null;
+        if (random.isLegalToMoveTo(entity)) {
+            placeAt(random);
         } else randomizeLocation();
+    }
+
+    public void placeAt(Tile tile){
+        setNextTile(tile);
+
+        pc.removeFromCurrentTile();
+        addToTile(tile);
+        setFacingTile(dc.getDirection());
+
+        pc.setCurrentTile(tile);
+
+        possibleNextTile = null;
     }
 
     public void setFacingTile(Tile tile) {

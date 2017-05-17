@@ -7,6 +7,7 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.utils.Constants;
 
@@ -23,16 +24,14 @@ public class PokemonPlayer extends Pokemon {
     @Override
     public void init(){
         super.init();
+        components.put(MoveComponent.class, new PlayerMoveComponent(this));
+        this.mc = getComponent(MoveComponent.class);
+        mc.setFacingTile(dc.getDirection());
+
         this.tc.setTurnState(Turn.WAITING);
         this.cc.setAggressionState(Aggression.passive);
 
         logic = new PlayerLogic(this);
-    }
-
-    @Override
-    public void randomizeLocation() {
-        super.randomizeLocation();
-        tc.setTurnState(Turn.WAITING);
     }
 
     @Override

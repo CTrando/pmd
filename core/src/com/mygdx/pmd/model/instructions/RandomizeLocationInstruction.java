@@ -31,7 +31,7 @@ public class RandomizeLocationInstruction implements Instruction {
 
     @Override
     public void execute() {
-        pokemon.randomizeLocation();
+        pokemon.mc.randomizeLocation();
         isFinished = true;
     }
 

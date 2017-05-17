@@ -41,7 +41,7 @@ public class Projectile extends Entity {
         this.move = move;
     }
 
-    void init(){
+    public void init(){
         this.pc = getComponent(PositionComponent.class);
         this.mc = getComponent(MoveComponent.class);
         this.ac = getComponent(ActionComponent.class);

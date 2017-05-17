@@ -184,7 +184,7 @@ public class MobLogic extends PokemonLogic {
         try {
             MoveComponent targetMC = mob.target.getComponent(MoveComponent.class);
             mob.path = mob.pathFind.pathFind(targetMC.getNextTile());
-        } catch (PathFindFailureException e) {
+        } catch (Exception e) {
            System.out.println("Failed to pathfind");
         }
 

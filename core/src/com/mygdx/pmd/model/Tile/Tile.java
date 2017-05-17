@@ -63,19 +63,9 @@ public abstract class Tile extends Entity {
 
     //this can be overridden for different tiles - super smart!
     public boolean isLegalToMoveTo(Entity entity){
-        return isWalkable;
+        if(entityList.contains(entity, true)) return true;
+        return isWalkable && entityList.size == 0;
     }
-/*
-
-    public void render(SpriteBatch batch) {
-        if(sprite != null) {
-            batch.draw(sprite, x / PPM, y / PPM, sprite.getWidth() / PPM, sprite.getHeight() / PPM);
-        }
-        for (StaticEntity sEntity : items) {
-            sEntity.render(batch);
-        }
-    }
-*/
 
     public void renderDebug(SpriteBatch batch) {
         batch.draw(this.debug, x, y);

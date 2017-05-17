@@ -1,6 +1,7 @@
 package com.mygdx.pmd.utils.AI;
 
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.pmd.exceptions.PathFindFailureException;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.components.*;
@@ -19,7 +20,7 @@ public class BFS extends PathFind {
     }
 
     @Override
-    public Array<Tile> pathFind(Tile destTile) {
+    public Array<Tile> pathFind(Tile destTile) throws PathFindFailureException {
         Array<Tile> retPath = null;
         paths.clear();
         Array<Tile> initPath = new Array<Tile>();
@@ -82,8 +83,12 @@ public class BFS extends PathFind {
                     rmPaths.add(path);
                 }
             }
+
             paths.removeAll(rmPaths, true);
             paths.addAll(newPaths);
+            if(paths.size  == 0){
+                throw new PathFindFailureException("BFS FAILED");
+            }
         }
         return retPath;
     }

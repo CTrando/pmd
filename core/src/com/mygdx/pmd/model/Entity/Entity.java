@@ -57,6 +57,10 @@ public abstract class Entity implements Updatable, Disposable {
         components.put(PositionComponent.class, new PositionComponent(this, x,y));
     }
 
+    public void init(){
+
+    }
+
     @Override
     public void update() {
         currentInstruction.execute();
