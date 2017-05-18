@@ -7,6 +7,7 @@ import com.mygdx.pmd.controller.Controller;
 import com.mygdx.pmd.enumerations.*;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.model.Floor.*;
+import com.mygdx.pmd.model.Tile.*;
 import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.logic.*;
 import com.mygdx.pmd.utils.Constants;
@@ -40,10 +41,6 @@ public class PokemonPlayer extends Pokemon {
 
         tc.setTurnState(Turn.COMPLETE);
         floor.getScreen().game.switchScreen(PMD.endScreen);
-
-        System.out.println("WOE IS ME I AM DEAD");
-
-        //PMD.manager.get("sfx/background.ogg", Music.class).play();
     }
 
     /*
@@ -135,6 +132,16 @@ public class PokemonPlayer extends Pokemon {
             //these are for the attacks
             if (PMD.isKeyPressed(Key.b) && PMD.isKeyPressed(Key.t)) {
                 cc.setAttacking(true);
+            } else if (PMD.isKeyPressed(Key.t)){
+                Tile tile = mc.getFacingTile();
+                if(tile != null && tile.hasEntityWithComponent(MoveComponent.class)) {
+                    Team team = new Team();
+                    System.out.println("MADE A TEAM");
+                    team.init();
+                    team.addMember(this);
+                    team.addMember(tile.getEntityList());
+                    floor.addEntity(team);
+                }
             }
         }
     }

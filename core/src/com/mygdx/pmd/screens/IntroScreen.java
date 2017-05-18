@@ -12,19 +12,19 @@ import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.utils.Constants;
 
+import javax.sound.midi.Sequence;
+
 /**
  * Created by Cameron on 2/10/2017.
  */
 public class IntroScreen extends PScreen implements InputProcessor {
     private PMD game;
-    private OrthographicCamera gameCamera;
     private Stage stage;
     private Skin skin;
     private InputMultiplexer inputMultiplexer;
 
     public IntroScreen(final PMD game) {
         this.game = game;
-        this.gameCamera = new OrthographicCamera(Constants.WIDTH, Constants.HEIGHT);
         this.stage = new Stage();
         this.skin = new Skin(Gdx.files.internal("ui/skin/flat-earth-ui.json"));
 
@@ -43,7 +43,16 @@ public class IntroScreen extends PScreen implements InputProcessor {
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.switchScreen(PMD.dungeonScreen);
+                SequenceAction sq = new SequenceAction(
+                        Actions.fadeOut(.5f),
+                        Actions.addAction(Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                game.setScreen(PMD.dungeonScreen);
+                            }
+                        }))
+                );
+                stage.addAction(sq);
             }
         });
 
@@ -91,6 +100,11 @@ public class IntroScreen extends PScreen implements InputProcessor {
 
     @Override
     public void show() {
+        SequenceAction sq = new SequenceAction(
+                Actions.fadeOut(.01f),
+                Actions.fadeIn(.5f)
+        );
+        stage.addAction(sq);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 

@@ -55,11 +55,6 @@ public class CombatComponent implements Component {
     }
 
     public void setTarget(Entity target) {
-        Team team = new Team();
-        team.init();
-        team.addMember(target);
-        team.addMember(entity);
-        entity.floor.addEntity(team);
         this.target = target;
     }
 

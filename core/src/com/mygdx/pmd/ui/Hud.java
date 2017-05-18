@@ -123,7 +123,6 @@ public class Hud {
         BitmapFont font = skin.getFont("font");
         font.getData().markupEnabled = true;
 
-
         stage.addActor(rootTable);
         if (Gdx.app.getType() == Application.ApplicationType.Android) {
             initOnScreenController();

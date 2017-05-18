@@ -3,6 +3,7 @@ package com.mygdx.pmd.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.utils.*;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.comparators.PokemonDistanceComparator;
@@ -76,20 +77,30 @@ public class Controller {
     }
 
     public void nextFloor() {
-        floorCount++;
+        SequenceAction sq = new SequenceAction(
+                Actions.fadeOut(1f),
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        floorCount++;
 
-        //does not actually create a new floor object, resets the floor
-        floor = floorFactory.createFloor();
-        FloorDecorator.placeItems(floor);
-        FloorDecorator.skinTiles(floor);
-        FloorDecorator.placeEventTiles(floor);
+                        //does not actually create a new floor object, resets the floor
+                        floor = floorFactory.createFloor();
+                        FloorDecorator.placeItems(floor);
+                        FloorDecorator.skinTiles(floor);
+                        FloorDecorator.placeEventTiles(floor);
 
-        if (!TileTester.checkCorners(floor.tileBoard)) throw new AssertionError("Uh oh, this floor is invalid!");
+                        if (!TileTester.checkCorners(floor.tileBoard)) throw new AssertionError("Uh oh, this floor is invalid!");
 
-        this.randomizeAllPokemonLocation();
-        for(Entity entity: entityList){
-            entity.reset();
-        }
+                        randomizeAllPokemonLocation();
+                        for(Entity entity: entityList){
+                            entity.reset();
+                        }
+                    }
+                }),
+                Actions.fadeIn(1f)
+        );
+        screen.addAction(sq);
     }
 
     public void update() {

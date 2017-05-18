@@ -29,6 +29,7 @@ public class MobLogic extends PokemonLogic {
     @Override
     public void execute() {
         if(checkDestroyed()) return;
+        //TODO make a turnQueue so I can stack turn instructions on each other and it will execute
 
         //TODO this method is too long
         if (mob.mc.isForcedMove()) {

@@ -28,6 +28,10 @@ public class Team extends Entity {
         entities.add(entity);
     }
 
+    public void addMember(Array<Entity> entities){
+        this.entities.addAll(entities);
+    }
+
     public Array<Entity> getEntities() {
         return entities;
     }

@@ -3,9 +3,11 @@ package com.mygdx.pmd.screens;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.glutils.*;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -86,29 +88,26 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         Gdx.gl.glClearColor(0, 0, 0, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        Gdx.gl.glDisable(GL20.GL_BLEND);
 
         batch.setProjectionMatrix(gamePort.getCamera().combined);
         sRenderer.setProjectionMatrix(gamePort.getCamera().combined);
         sRenderer.begin(ShapeRenderer.ShapeType.Line);
-        batch.begin();
 
+        batch.begin();
         for (int i = 0; i < renderList.size; i++) {
             RenderComponent rc = renderList.get(i);
             rc.render(batch);
         }
-
         batch.end();
         sRenderer.end();
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         batch.flush();
 
-
         //for some reason it initializes batch,begin in stage.draw - how terrible
         if (hud.isVisible()) {
             hud.update(dt);
             hud.stage.draw();
+            hud.stage.act();
         }
         if (pauseMenu.isVisible()) {
             pauseMenu.update(dt);
@@ -123,10 +122,15 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public void show() {
+        SequenceAction sq = new SequenceAction(
+                Actions.alpha(0),
+                Actions.fadeIn(.5f)
+        );
+        addAction(sq);
+
         renderList.clear();
         controller.reset();
         cameraMode = CameraMode.fixed;
-        hud.reset();
 
         inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(new GestureDetector(this));
@@ -335,6 +339,18 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         } else {
             hud.setVisible(true);
         }
+    }
+
+    public void fadeIn(float duration){
+        hud.stage.addAction(Actions.fadeIn(duration));
+    }
+
+    public void fadeOut(float duration){
+        hud.stage.addAction(Actions.fadeOut(duration));
+    }
+
+    public void addAction(com.badlogic.gdx.scenes.scene2d.Action action){
+        hud.stage.addAction(action);
     }
 
     public Hud getHud() {
