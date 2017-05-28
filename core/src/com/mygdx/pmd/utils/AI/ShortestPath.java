@@ -61,7 +61,8 @@ public class ShortestPath extends PathFind {
         }
 
         try {
-            if (tileBoard[tile.row + 1][tile.col].isWalkable && !openNodeList.contains(tileBoard[tile.row + 1][tile.col], false)) {
+            if (tileBoard[tile.row + 1][tile.col].isWalkable && !openNodeList.contains(tileBoard[tile.row + 1][tile
+                    .col], true)) {
                 tileBoard[tile.row + 1][tile.col].setParent(tile);
                 openNodeList.add(tileBoard[tile.row + 1][tile.col]);
             }
@@ -69,7 +70,7 @@ public class ShortestPath extends PathFind {
         }
 
         try {
-            if (tileBoard[tile.row - 1][tile.col].isWalkable && !openNodeList.contains(tileBoard[tile.row - 1][tile.col], false)) {
+            if (tileBoard[tile.row - 1][tile.col].isWalkable && !openNodeList.contains(tileBoard[tile.row - 1][tile.col], true)) {
                 openNodeList.add(tileBoard[tile.row - 1][tile.col]);
                 tileBoard[tile.row - 1][tile.col].setParent(tile);
             }
@@ -77,7 +78,8 @@ public class ShortestPath extends PathFind {
         }
 
         try {
-            if (tileBoard[tile.row][tile.col + 1].isWalkable && !openNodeList.contains(tileBoard[tile.row][tile.col + 1], false)) {
+            if (tileBoard[tile.row][tile.col + 1].isWalkable && !openNodeList.contains(tileBoard[tile.row][tile.col +
+                    1], true)) {
                 openNodeList.add(tileBoard[tile.row][tile.col + 1]);
                 tileBoard[tile.row][tile.col + 1].setParent(tile);
             }
@@ -85,7 +87,7 @@ public class ShortestPath extends PathFind {
         }
 
         try {
-            if (tileBoard[tile.row][tile.col - 1].isWalkable && !openNodeList.contains(tileBoard[tile.row][tile.col - 1], false)) {
+            if (tileBoard[tile.row][tile.col - 1].isWalkable && !openNodeList.contains(tileBoard[tile.row][tile.col - 1], true)) {
                 openNodeList.add(tileBoard[tile.row][tile.col - 1]);
                 tileBoard[tile.row][tile.col - 1].setParent(tile);
             }
@@ -93,7 +95,8 @@ public class ShortestPath extends PathFind {
         }
 
         openNodeList.removeValue(tile, false);
-        if (!closedNodeList.contains(tile, false))
+        if (!closedNodeList.contains(tile, false)) {
             closedNodeList.add(tile);
+        }
     }
 }

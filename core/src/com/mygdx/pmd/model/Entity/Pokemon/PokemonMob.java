@@ -76,4 +76,10 @@ public class PokemonMob extends Pokemon {
         tc.setTurnState(Turn.COMPLETE);
         floor.getController().screen.getHud().getConsole().writeLine(toString() + " died at " + pc.getCurrentTile());
     }
+
+    @Override
+    public void reset(){
+        super.reset();
+        cc.setAggressionState(Aggression.passive);
+    }
 }

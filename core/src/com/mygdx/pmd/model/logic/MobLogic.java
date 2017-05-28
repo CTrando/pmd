@@ -117,10 +117,17 @@ public class MobLogic extends PokemonLogic {
     }
 
     private void updateAggression(){
-        if (mob.cc.getTarget() != null && mob.cc.getTarget().shouldBeDestroyed) {
+        Entity target = mob.cc.getTarget();
+        if(target == null) return;
+        PositionComponent tPc = target.getComponent(PositionComponent.class);
+
+        if (target.shouldBeDestroyed) {
             mob.cc.setTarget(null);
             mob.cc.setAggressionState(Aggression.passive);
             mob.pathFind = mob.wander;
+        } else if (mob.pc.getCurrentTile().dist(tPc.getCurrentTile()) < Constants.AGGRO_RANGE) {
+            mob.cc.setAggressionState(Aggression.aggressive);
+            mob.pathFind = mob.sPath;
         }
     }
 
@@ -145,7 +152,11 @@ public class MobLogic extends PokemonLogic {
 
     private void setPathFindType(){
         if (mob.cc.isAggressive()) {
-            mob.pathFind = bfs;
+            mob.pathFind = mob.sPath;
+        }
+
+        if (mob.cc.isPassive()){
+            mob.pathFind = mob.wander;
         }
     }
 

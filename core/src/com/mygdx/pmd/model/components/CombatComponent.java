@@ -23,6 +23,7 @@ public class CombatComponent implements Component {
         this.dc = entity.getComponent(DirectionComponent.class);
         this.hp = 100;
         this.aggressionState = Aggression.passive;
+        this.target = entity.floor.getPlayer();
     }
 
     public boolean isAggressive() {
@@ -89,5 +90,9 @@ public class CombatComponent implements Component {
 
     public boolean isAttacking() {
         return isAttacking;
+    }
+
+    public boolean isPassive() {
+        return (aggressionState == Aggression.passive);
     }
 }

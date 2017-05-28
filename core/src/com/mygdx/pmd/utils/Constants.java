@@ -23,6 +23,7 @@ public class Constants {
 
     public static final int NUM_MAX_ENTITY = 15;
     public static final int VISIBILITY_RANGE = 5;
+    public static final int AGGRO_RANGE = 10;
 
     public static final int CAMERA_BOUND_OFFSET = 1;
 }
