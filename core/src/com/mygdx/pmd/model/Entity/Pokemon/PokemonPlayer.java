@@ -40,7 +40,7 @@ public class PokemonPlayer extends Pokemon {
         super.dispose();
 
         tc.setTurnState(Turn.COMPLETE);
-        floor.getScreen().game.switchScreen(PMD.endScreen);
+        floor.getScreen().getGame().switchScreen(PMD.endScreen);
     }
 
     /*

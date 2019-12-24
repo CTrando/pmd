@@ -1,0 +1,26 @@
+{
+    "explosion":
+    [
+        "projectiledeath1",
+        "projectiledeath2",
+        "projectiledeath3"
+    ],
+
+    "claw":
+    [
+        "claw1",
+        "claw2",
+        "claw3",
+        "claw4",
+        "claw5",
+        "claw6",
+        "claw7"
+    ],
+
+    "projectilemotion":
+    [
+        "projectile1",
+        "projectile2",
+        "projectile3"
+    ]
+}

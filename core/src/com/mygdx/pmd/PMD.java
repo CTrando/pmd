@@ -53,11 +53,11 @@ public class PMD extends Game {
         this.loadKeys();
         this.loadAssets();
 
-        introScreen = new IntroScreen(this);
+        //introScreen = new IntroScreen(this);
         dungeonScreen = new DungeonScreen(this);
         endScreen = new EndScreen(this);
 
-        this.switchScreen(introScreen);
+        this.switchScreen(dungeonScreen);
     }
 
     public void render() {

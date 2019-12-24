@@ -1,0 +1,147 @@
+{
+    "up": {
+        "sprites": [
+            "up1",
+            "up2",
+            "up3"
+        ],
+        "finalsprite": "defaultup",
+        "loop": true,
+        "length": 30
+    },
+    "upidle": {
+        "sprites": [
+            "upidle1",
+            "upidle2",
+            "upidle3"
+        ],
+        "finalsprite": "nothing",
+        "loop": true,
+        "length": 30
+    },
+    "down": {
+        "sprites": [
+            "down1",
+            "down2",
+            "down3"
+        ],
+        "finalsprite": "defaultdown",
+        "loop": true,
+        "length": 30
+    },
+    "downidle": {
+        "sprites": [
+            "downidle1",
+            "downidle2",
+            "downidle3"
+        ],
+        "finalsprite": "nothing",
+        "loop": true,
+        "length": 30
+    },
+    "right": {
+        "sprites": [
+            "right1",
+            "right2",
+            "right3"
+        ],
+        "finalsprite": "defaultright",
+        "loop": true,
+        "length": 30
+    },
+    "rightidle": {
+        "sprites": [
+            "rightidle1",
+            "rightidle2",
+            "rightidle3"
+        ],
+        "finalsprite": "nothing",
+        "loop": true,
+        "length": 30
+    },
+    "left": {
+        "sprites": [
+            "left1",
+            "left2",
+            "left3"
+        ],
+        "finalsprite": "defaultleft",
+        "loop": true,
+        "length": 30
+    },
+    "leftidle": {
+        "sprites": [
+            "leftidle1",
+            "leftidle2",
+            "leftidle3"
+        ],
+        "finalsprite": "nothing",
+        "loop": true,
+        "length": 30
+    },
+    "upattack": {
+        "sprites": [
+            "upattack1",
+            "upattack2",
+            "upattack3"
+        ],
+        "finalsprite": "defaultup",
+        "loop": false,
+        "length": 30
+    },
+    "downattack": {
+        "sprites": [
+            "downattack1",
+            "downattack2",
+            "downattack3"
+        ],
+        "finalsprite": "defaultdown",
+        "loop": false,
+        "length": 30
+    },
+    "rightattack": {
+        "sprites": [
+            "rightattack1",
+            "rightattack2",
+            "rightattack3"
+        ],
+        "finalsprite": "defaultright",
+        "loop": false,
+        "length": 30
+    },
+    "leftattack": {
+        "sprites": [
+            "leftattack1",
+            "leftattack2",
+            "leftattack3"
+        ],
+        "finalsprite": "defaultleft",
+        "loop": false,
+        "length": 30
+    },
+    "pain": {
+        "sprites": [
+            "pain"
+        ],
+        "loop": false,
+        "length": 45
+    },
+    "noanimation": {
+        "sprites": [
+            "nothing"
+        ],
+        "finalsprite": "nothing",
+        "loop": true,
+        "length": 30
+    },
+    "teleport": {
+        "sprites": [
+            "leftidle1",
+            "upidle1",
+            "rightidle1",
+            "downidle1"
+        ],
+        "loop": false,
+        "length": 45
+    }
+}

@@ -1,17 +1,15 @@
 package com.mygdx.pmd.model.Entity.Projectile;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.*;
-import com.mygdx.pmd.model.Entity.*;
-import com.mygdx.pmd.model.components.*;
-import com.mygdx.pmd.model.logic.*;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.mygdx.pmd.enumerations.Move;
+import com.mygdx.pmd.model.Entity.Entity;
 import com.mygdx.pmd.model.Entity.Pokemon.Pokemon;
-import com.mygdx.pmd.model.Tile.*;
-import com.mygdx.pmd.model.instructions.*;
-import com.mygdx.pmd.utils.*;
-import javafx.geometry.Pos;
+import com.mygdx.pmd.model.Tile.GenericTile;
+import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.components.*;
+import com.mygdx.pmd.model.logic.Logic;
+import com.mygdx.pmd.model.logic.ProjectileLogic;
 
 import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 

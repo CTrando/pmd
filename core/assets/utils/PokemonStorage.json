@@ -1,0 +1,18 @@
+{
+    "entities":[
+        {
+            "type": "player",
+            "name": "treeko",
+            "moves": [
+                "SCRATCH", "SWIPERNOSWIPING", "INSTANT_KILLER"
+            ]
+        },
+        {
+            "type": "mob",
+            "name": "squirtle",
+            "moves": [
+                "SCRATCH", "SWIPERNOSWIPING", "INSTANT_KILLER"
+            ]
+        }
+    ]
+}

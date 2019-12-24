@@ -1,0 +1,299 @@
+TILE_SPRITES.png
+size: 128, 285
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+applesprite
+  rotate: false
+  xy: 96, 189
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+berrysprite
+  rotate: false
+  xy: 25, 125
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+blacktilesprite
+  rotate: false
+  xy: 50, 125
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+bottomleftbarriersprite
+  rotate: false
+  xy: 100, 100
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+bottomlefttilesprite
+  rotate: false
+  xy: 75, 75
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+bottomrightbarriersprite
+  rotate: false
+  xy: 0, 100
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+bottomrightcornertilesprite
+  rotate: false
+  xy: 100, 75
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+bricktile
+  rotate: false
+  xy: 64, 157
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+debugtilesprite
+  rotate: false
+  xy: 50, 100
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+doortilesprite
+  rotate: false
+  xy: 25, 100
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+downbarriersprite
+  rotate: false
+  xy: 75, 100
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+fire1
+  rotate: false
+  xy: 64, 221
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+fire2
+  rotate: false
+  xy: 0, 253
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+fire3
+  rotate: false
+  xy: 96, 221
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+fire4
+  rotate: false
+  xy: 32, 221
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+fire5
+  rotate: false
+  xy: 0, 189
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+fire6
+  rotate: false
+  xy: 64, 189
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+fire7
+  rotate: false
+  xy: 96, 157
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+fire8
+  rotate: false
+  xy: 32, 189
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+generictilesprite
+  rotate: false
+  xy: 50, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+hpathtilesprite
+  rotate: false
+  xy: 0, 25
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+leftbarriersprite
+  rotate: false
+  xy: 50, 75
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+leftrightbarriersprite
+  rotate: false
+  xy: 50, 25
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+orbsprite
+  rotate: false
+  xy: 25, 25
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+rightbarriersprite
+  rotate: false
+  xy: 100, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+roomtilesprite
+  rotate: false
+  xy: 75, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+stairtilesprite
+  rotate: false
+  xy: 0, 221
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+testroomsprite
+  rotate: false
+  xy: 25, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+testtilesprite
+  rotate: false
+  xy: 0, 0
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+topleftbarriersprite
+  rotate: false
+  xy: 75, 25
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+toplefttilesprite
+  rotate: false
+  xy: 25, 50
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+toprightbarriersprite
+  rotate: false
+  xy: 100, 50
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+toprighttilesprite
+  rotate: false
+  xy: 25, 75
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+upbarriersprite
+  rotate: false
+  xy: 0, 75
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+updownbarriersprite
+  rotate: false
+  xy: 75, 50
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+vpathtilesprite
+  rotate: false
+  xy: 50, 50
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+water1
+  rotate: false
+  xy: 32, 157
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+water2
+  rotate: false
+  xy: 75, 125
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+water3
+  rotate: false
+  xy: 0, 157
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+wave1
+  rotate: false
+  xy: 0, 50
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+wave2
+  rotate: false
+  xy: 100, 25
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+wave3
+  rotate: false
+  xy: 0, 125
+  size: 25, 25
+  orig: 25, 25
+  offset: 0, 0
+  index: -1

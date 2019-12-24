@@ -1,29 +1,38 @@
 package com.mygdx.pmd.screens;
 
-import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.scenes.scene2d.actions.*;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.controller.Controller;
-import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Tile.*;
-import com.mygdx.pmd.model.components.*;
-import com.mygdx.pmd.ui.*;
+import com.mygdx.pmd.enumerations.Key;
+import com.mygdx.pmd.model.Tile.Tile;
+import com.mygdx.pmd.model.components.RenderComponent;
+import com.mygdx.pmd.render.Renderer;
+import com.mygdx.pmd.ui.Hud;
+import com.mygdx.pmd.ui.PauseMenu;
 import com.mygdx.pmd.utils.Constants;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DungeonScreen extends PScreen implements GestureDetector.GestureListener, InputProcessor {
-    public final PMD game;
-    public static ShapeRenderer sRenderer;
+    private final PMD game;
     private SpriteBatch batch;
     public static final float PPM = 32;
 
@@ -56,7 +65,6 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         this.batch = game.batch;
         this.skin = new Skin(Gdx.files.internal("ui/skin/flat-earth-ui.json"));
 
-        sRenderer = new ShapeRenderer();
         this.renderList = new Array<RenderComponent>();
         cameraBounds = new Rectangle();
 
@@ -77,21 +85,15 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
 
     @Override
     public void render(float dt) {
-        timeStep += dt;
-        if (timeStep >= 1 / 60f) {
-            timeStep = 0;
-            controller.update();
-            updateCamera();
-            updateBounds();
-        }
+        handleTimestep(dt);
 
         Gdx.gl.glClearColor(0, 0, 0, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glEnable(GL20.GL_BLEND);
 
         batch.setProjectionMatrix(gamePort.getCamera().combined);
-        sRenderer.setProjectionMatrix(gamePort.getCamera().combined);
-        sRenderer.begin(ShapeRenderer.ShapeType.Line);
+        Renderer.getInstance().setProjectionMatrix(gamePort.getCamera().combined);
+        Renderer.getInstance().begin(ShapeRenderer.ShapeType.Line);
 
         batch.begin();
         for (int i = 0; i < renderList.size; i++) {
@@ -99,7 +101,7 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
             rc.render(batch);
         }
         batch.end();
-        sRenderer.end();
+        Renderer.getInstance().end();
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         batch.flush();
 
@@ -112,6 +114,16 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         if (pauseMenu.isVisible()) {
             pauseMenu.update(dt);
             pauseMenu.getStage().draw();
+        }
+    }
+
+    private void handleTimestep(float dt) {
+        timeStep += dt;
+        if (timeStep >= 1 / 60f) {
+            timeStep = 0;
+            controller.update();
+            updateCamera();
+            updateBounds();
         }
     }
 
@@ -167,16 +179,16 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
             float row = controller.pokemonPlayer.pc.y / PPM;
             float col = controller.pokemonPlayer.pc.x / PPM;
             cameraBounds = new Rectangle(col - Constants.CAMERA_BOUND_OFFSET - (gamePort.getWorldWidth() / 2),
-                                         row - Constants.CAMERA_BOUND_OFFSET - (gamePort.getWorldHeight() / 2),
-                                         gamePort.getWorldWidth() + 2*Constants.CAMERA_BOUND_OFFSET,
-                                         gamePort.getWorldHeight() + 2*Constants.CAMERA_BOUND_OFFSET);
+                    row - Constants.CAMERA_BOUND_OFFSET - (gamePort.getWorldHeight() / 2),
+                    gamePort.getWorldWidth() + 2 * Constants.CAMERA_BOUND_OFFSET,
+                    gamePort.getWorldHeight() + 2 * Constants.CAMERA_BOUND_OFFSET);
         } else {
             float col = gameCamera.position.x;
             float row = gameCamera.position.y;
             cameraBounds = new Rectangle(col - (gamePort.getWorldWidth() / 2),
-                                         row - (gamePort.getWorldHeight() / 2),
-                                         gamePort.getWorldWidth() + 1,
-                                         gamePort.getWorldHeight() + 1);
+                    row - (gamePort.getWorldHeight() / 2),
+                    gamePort.getWorldWidth() + 1,
+                    gamePort.getWorldHeight() + 1);
         }
     }
 
@@ -187,8 +199,8 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
                 float y = MathUtils.round(((float) (controller.pokemonPlayer.pc.y + Constants.TILE_SIZE / 2)));
 
                 Vector3 pos = new Vector3(x / PPM,
-                                          y / PPM,
-                                          0);
+                        y / PPM,
+                        0);
                 gameCamera.position.set(pos);
                 gameCamera.update();
                 break;
@@ -341,19 +353,23 @@ public class DungeonScreen extends PScreen implements GestureDetector.GestureLis
         }
     }
 
-    public void fadeIn(float duration){
+    public void fadeIn(float duration) {
         hud.stage.addAction(Actions.fadeIn(duration));
     }
 
-    public void fadeOut(float duration){
+    public void fadeOut(float duration) {
         hud.stage.addAction(Actions.fadeOut(duration));
     }
 
-    public void addAction(com.badlogic.gdx.scenes.scene2d.Action action){
+    public void addAction(com.badlogic.gdx.scenes.scene2d.Action action) {
         hud.stage.addAction(action);
     }
 
     public Hud getHud() {
         return hud;
+    }
+
+    public PMD getGame() {
+        return game;
     }
 }

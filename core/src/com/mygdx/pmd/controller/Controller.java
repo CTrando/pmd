@@ -105,7 +105,7 @@ public class Controller {
 
     public void update() {
         if(turns < 0){
-            screen.game.switchScreen(PMD.endScreen);
+            screen.getGame().switchScreen(PMD.endScreen);
         }
 
         //first update entities, then their turns should turn immediately to complete which allows them to continue on with the next one
