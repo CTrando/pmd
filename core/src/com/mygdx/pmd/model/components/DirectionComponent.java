@@ -1,7 +1,7 @@
 package com.mygdx.pmd.model.components;
 
 import com.badlogic.ashley.core.Component;
-import com.mygdx.pmd.enumerations.Direction;
+import com.mygdx.pmd.enums.Direction;
 
 /**
  * Created by Cameron on 4/16/2017.

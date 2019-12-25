@@ -9,10 +9,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pmd.model.components.PositionComponent;
 import com.mygdx.pmd.model.components.RenderComponent;
 import com.mygdx.pmd.render.Renderer;
+import com.mygdx.pmd.utils.Mappers;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -24,13 +26,13 @@ public class RenderSystem extends EntitySystem {
 
     private SpriteBatch fBatch;
     private ScreenViewport fViewport;
-    private ComponentMapper<RenderComponent> fRm = ComponentMapper.getFor(RenderComponent.class);
-    private ComponentMapper<PositionComponent> fPm = ComponentMapper.getFor(PositionComponent.class);
     private ImmutableArray<Entity> fEntities;
 
     public RenderSystem(SpriteBatch batch) {
         fBatch = batch;
-        Camera gameCamera = new OrthographicCamera(Gdx.graphics.getWidth() / PPM, Gdx.graphics.getHeight() / PPM);
+        OrthographicCamera gameCamera = new OrthographicCamera(Gdx.graphics.getWidth() / PPM, Gdx.graphics.getHeight() / PPM);
+        gameCamera.zoom -= .5f;
+        gameCamera.update();
         fViewport = new ScreenViewport(gameCamera);
         fViewport.setUnitsPerPixel(1 / PPM);
     }
@@ -52,21 +54,23 @@ public class RenderSystem extends EntitySystem {
 
         fBatch.begin();
         for (Entity entity : orderEntities()) {
-            RenderComponent rc = fRm.get(entity);
-            PositionComponent pc = fPm.get(entity);
+            RenderComponent rc = Mappers.Render.get(entity);
+            PositionComponent pc = Mappers.Position.get(entity);
 
             Sprite sprite = rc.getSprite();
-            fBatch.draw(sprite, pc.getX() / PPM, pc.getY() / PPM, sprite.getWidth() / PPM, sprite.getHeight() / PPM);
+            Vector2 pos = pc.getPos();
+            float centerX = (pos.x - (sprite.getWidth() / 2)) / PPM;
+            float centerY = (pos.y - (sprite.getHeight() / 2)) / PPM;
+            fBatch.draw(sprite, centerX, centerY, sprite.getWidth() / PPM, sprite.getHeight() / PPM);
         }
         fBatch.end();
         Renderer.getInstance().end();
-        // fBatch.setProjectionMatrix(hud.stage.getCamera().combined);
         fBatch.flush();
     }
 
     private List<Entity> orderEntities() {
         return Arrays.stream(fEntities.toArray())
-                .sorted(Comparator.comparingInt(e -> fRm.get(e).getZIndex()))
+                .sorted(Comparator.comparingInt(e -> Mappers.Render.get(e).getZIndex()))
                 .collect(Collectors.toList());
     }
 }

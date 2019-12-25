@@ -2,34 +2,25 @@ package com.mygdx.pmd.model.components;
 
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by Cameron on 4/17/2017.
  */
 
 public class PositionComponent implements Component {
-    private int fX;
-    private int fY;
+    private Vector2 fPos;
+
+    public PositionComponent(Vector2 pos) {
+        fPos = pos;
+    }
 
     public PositionComponent(int x, int y) {
-        fX = x;
-        fY = y;
+        fPos = new Vector2(x, y);
     }
 
-    public void setX(int x) {
-        fX = x;
-    }
-
-    public void setY(int y) {
-        fY = y;
-    }
-
-    public int getX() {
-        return fX;
-    }
-
-    public int getY() {
-        return fY;
+    public Vector2 getPos() {
+        return fPos;
     }
 }
 

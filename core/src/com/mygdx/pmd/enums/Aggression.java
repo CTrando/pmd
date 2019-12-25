@@ -1,4 +1,4 @@
-package com.mygdx.pmd.enumerations;
+package com.mygdx.pmd.enums;
 
 /**
  * Created by Cameron on 9/15/2016.

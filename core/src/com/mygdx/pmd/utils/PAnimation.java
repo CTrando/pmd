@@ -2,7 +2,7 @@ package com.mygdx.pmd.utils;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.enumerations.Key;
+import com.mygdx.pmd.enums.Key;
 
 /**
  * Created by Cameron on 9/21/2016.

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.pmd.PMD;
 import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.Floor;
+import com.mygdx.pmd.system.MovementSystem;
 import com.mygdx.pmd.system.PlayerInputSystem;
 import com.mygdx.pmd.system.RenderSystem;
 
@@ -23,6 +24,7 @@ public class DungeonScreen implements Screen {
         fEngine = new Engine();
 
         fEngine.addSystem(new RenderSystem(fBatch));
+        fEngine.addSystem(new MovementSystem());
         fEngine.addSystem(new PlayerInputSystem());
         fEngine.addEntity(new PokemonPlayer());
         fFloor.addToEngine(fEngine);

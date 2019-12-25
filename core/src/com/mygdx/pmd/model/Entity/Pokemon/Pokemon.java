@@ -16,8 +16,13 @@ public abstract class Pokemon extends Entity {
 
     public Pokemon(PokemonType type) {
         fType = type;
-        add(new RenderComponent(AssetManager.getInstance().getSprite("squirtleup1"), 1));
+        add(new RenderComponent(AssetManager.getInstance().getSprite("treekoup1"), 1));
         add(new PositionComponent(0, 0));
+    }
+
+    @Override
+    public String toString() {
+        return fType.toString();
     }
 
     /*

@@ -1,4 +1,4 @@
-package com.mygdx.pmd.enumerations;
+package com.mygdx.pmd.enums;
 
 import com.mygdx.pmd.utils.MathLogic;
 

@@ -1,6 +1,8 @@
 package com.mygdx.pmd;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
@@ -8,9 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.*;
-import com.mygdx.pmd.enumerations.Key;
-import com.mygdx.pmd.screens.*;
+import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.AssetManager;
 
 import java.util.HashMap;
@@ -38,10 +38,6 @@ public class PMD extends Game {
     public void create() {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-        keys = new HashMap<Integer, AtomicBoolean>();
-        sprites = new HashMap<String, Sprite>();
-
-        this.loadKeys();
         this.loadAssets();
 
         //introScreen = new IntroScreen(this);
@@ -56,12 +52,6 @@ public class PMD extends Game {
 
     public void dispose() {
         batch.dispose();
-    }
-
-    private void loadKeys() {
-        for (Key key : Key.values()) {
-            keys.put(key.getValue(), new AtomicBoolean(false));
-        }
     }
 
     private void loadAssets() {

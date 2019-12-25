@@ -1,8 +1,7 @@
 package com.mygdx.pmd.model.components;
 
 import com.badlogic.ashley.core.Component;
-import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Entity.*;
+import com.mygdx.pmd.enums.*;
 
 /**
  * Created by Cameron on 4/16/2017.
