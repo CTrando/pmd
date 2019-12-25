@@ -1,4 +1,6 @@
+/*
 package com.mygdx.pmd.model.Entity.Pokemon;
+
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pmd.enumerations.*;
@@ -17,6 +19,10 @@ public class PokemonMob extends Pokemon {
     public Wander wander;
     public ShortestPath sPath;
     public Array<Tile> path;
+
+    PokemonMob() {
+        super();
+    }
 
     PokemonMob(Floor floor, PokemonName name) {
         this(floor, 0, 0, name);
@@ -52,7 +58,7 @@ public class PokemonMob extends Pokemon {
                 !tile.hasEntityWithComponent(MoveComponent.class));
     }
 
-    public boolean isWithinRange(Entity entity) {
+    public boolean isWithinRange(TestEntity entity) {
         int curRow = pc.getCurrentTile().row;
         int curCol = pc.getCurrentTile().col;
 
@@ -83,3 +89,4 @@ public class PokemonMob extends Pokemon {
         cc.setAggressionState(Aggression.passive);
     }
 }
+*/

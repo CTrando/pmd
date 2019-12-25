@@ -1,17 +1,9 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.utils.*;
-import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Floor.*;
-import com.mygdx.pmd.model.components.*;
-import com.mygdx.pmd.utils.PAnimation;
-
 /**
  * Created by Cameron on 11/6/2016.
  */
+/*
 public class PokemonFactory {
 
     public static Pokemon createPokemonFromJson(Floor floor, JsonValue entity) {
@@ -86,7 +78,5 @@ public class PokemonFactory {
         }
         pokemon.components.put(AnimationComponent.class, anc);
     }
-
-
-
 }
+*/

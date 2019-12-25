@@ -1,15 +1,11 @@
 package com.mygdx.pmd.model.components;
 
-import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Entity.*;
-import com.mygdx.pmd.model.Tile.*;
-import com.mygdx.pmd.model.instructions.*;
-
 /**
  * Created by Cameron on 4/16/2017.
  */
-public class MoveComponent implements Component {
-    private Entity entity;
+/*
+public class MoveComponent {
+    private TestEntity entity;
     private Tile[][] tileBoard;
 
     private boolean forcedMove;
@@ -23,7 +19,7 @@ public class MoveComponent implements Component {
     private Tile facingTile;
     public Tile possibleNextTile;
 
-    public MoveComponent(Entity entity) {
+    public MoveComponent(TestEntity entity) {
         this.entity = entity;
         this.pc = entity.getComponent(PositionComponent.class);
         this.dc = entity.getComponent(DirectionComponent.class);
@@ -158,3 +154,4 @@ public class MoveComponent implements Component {
         this.forcedMove = forcedMove;
     }
 }
+*/

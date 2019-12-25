@@ -6,11 +6,12 @@ import com.mygdx.pmd.model.Entity.*;
 /**
  * Created by Cameron on 4/16/2017.
  */
-public class TurnComponent implements Component {
+/*
+public class TurnComponent {
     private Turn turnState;
-    private Entity entity;
+    private TestEntity entity;
 
-    public TurnComponent(Entity entity){
+    public TurnComponent(TestEntity entity){
         this.entity = entity;
         this.turnState = Turn.COMPLETE;
     }
@@ -31,3 +32,4 @@ public class TurnComponent implements Component {
         this.turnState = turnState;
     }
 }
+*/

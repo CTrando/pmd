@@ -1,25 +1,50 @@
 package com.mygdx.pmd.model.components;
 
-import com.mygdx.pmd.model.Entity.*;
-import com.mygdx.pmd.model.Tile.*;
-import com.mygdx.pmd.utils.Constants;
+
+import com.badlogic.ashley.core.Component;
 
 /**
  * Created by Cameron on 4/17/2017.
  */
+
 public class PositionComponent implements Component {
+    private int fX;
+    private int fY;
+
+    public PositionComponent(int x, int y) {
+        fX = x;
+        fY = y;
+    }
+
+    public void setX(int x) {
+        fX = x;
+    }
+
+    public void setY(int y) {
+        fY = y;
+    }
+
+    public int getX() {
+        return fX;
+    }
+
+    public int getY() {
+        return fY;
+    }
+}
+
+/*
+public class PositionComponent {
 
     public int x;
     public int y;
     private Tile currentTile;
 
-    private Entity entity;
-
-    public PositionComponent(Entity entity){
+    public PositionComponent(TestEntity entity){
         this.entity = entity;
     }
 
-    public PositionComponent(Entity entity, int x, int y){
+    public PositionComponent(TestEntity entity, int x, int y){
         this.entity = entity;
         this.currentTile = entity.tileBoard[y/ Constants.TILE_SIZE][x/ Constants.TILE_SIZE];
         this.x = x;
@@ -41,3 +66,4 @@ public class PositionComponent implements Component {
         currentTile.removeEntity(entity);
     }
 }
+*/

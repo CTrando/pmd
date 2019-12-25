@@ -1,5 +1,6 @@
 package com.mygdx.pmd.model.components;
 
+import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.pmd.model.Entity.*;
 import com.mygdx.pmd.utils.PAnimation;
@@ -12,13 +13,11 @@ import java.util.HashMap;
  */
 public class AnimationComponent implements Component {
 
-    private Entity entity;
     private HashMap<String, PAnimation> animationMap;
     private PAnimation prevAnimation;
     private PAnimation currentAnimation;
 
-    public AnimationComponent(Entity entity){
-        this.entity = entity;
+    public AnimationComponent(){
         this.animationMap = new HashMap<String, PAnimation>();
     }
 

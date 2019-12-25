@@ -1,49 +1,30 @@
 package com.mygdx.pmd.model.Entity.Pokemon;
 
 
-import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.interfaces.*;
-import com.mygdx.pmd.model.Entity.*;
-import com.mygdx.pmd.model.Floor.*;
-import com.mygdx.pmd.model.Tile.*;
-import com.mygdx.pmd.model.components.*;
-import com.mygdx.pmd.model.logic.*;
-import com.mygdx.pmd.utils.Constants;
+import com.badlogic.ashley.core.Entity;
+import com.mygdx.pmd.model.components.PositionComponent;
+import com.mygdx.pmd.model.components.RenderComponent;
+import com.mygdx.pmd.utils.AssetManager;
 
-public abstract class Pokemon extends Entity implements Logical {
-    public Entity target;
+enum PokemonType {
+    TREECKO
+}
 
-    public TurnComponent tc;
-    public CombatComponent cc;
-    public MoveComponent mc;
-    public DirectionComponent dc;
-    public PositionComponent pc;
-    public ActionComponent ac;
-    public AnimationComponent anc;
-    public RenderComponent rc;
+public abstract class Pokemon extends Entity {
 
-    Logic logic;
+    private PokemonType fType;
 
-    private PokemonName pokemonName;
-    public Array<Move> moves;
+    public Pokemon(PokemonType type) {
+        fType = type;
+        add(new RenderComponent(AssetManager.getInstance().getSprite("squirtleup1"), 1));
+        add(new PositionComponent(0, 0));
+    }
 
-    private Move move;
-
-    /**
-     * Constructor for Pokemon is meant to inject blank information, such as empty arrays and strings, and trivial
-     * identification such as names and identification
-     *
-     * <p>More complex behaviors are left in the init method, which will be called by @PokemonFactory</p>
-     * @param floor
-     * @param x
-     * @param y
-     * @param pokemonName
-     */
+    /*
     Pokemon(Floor floor, int x, int y, PokemonName pokemonName) {
         super(floor, x, y);
         this.pokemonName = pokemonName;
-        this.children = new Array<Entity>();
+        this.children = new Array<TestEntity>();
 
         //initialize moves and add default move
         moves = new Array<Move>(4);
@@ -77,24 +58,14 @@ public abstract class Pokemon extends Entity implements Logical {
         moves.add(Move.SCRATCH);
     }
 
-    /**
-     * Possible error with this because of casting - will try to avoid later
-     * @param tile
-     * @return
-     */
-    //@Override
-    public boolean isLegalToMoveTo(Tile tile) {
-        if (tile == null) return false;
-        return tile.isWalkable;
-    }
-
+    /*
     @Override
     public void update() {
         // have it run its logic first before it executes its instructions
         // may have negative repercussions
         this.runLogic();
 
-        for(Entity child: children){
+        for(TestEntity child: children){
             child.update();
         }
 
@@ -130,7 +101,7 @@ public abstract class Pokemon extends Entity implements Logical {
 
                 if(tile == pc.getCurrentTile()) return false;
 
-                for(Entity entity: tile.getEntityList()){
+                for(TestEntity entity: tile.getEntityList()){
                     if(entity == cc.getTarget()){
                         return true;
                     }
@@ -188,4 +159,5 @@ public abstract class Pokemon extends Entity implements Logical {
         ac.setActionState(Action.IDLE);
         tc.setTurnState(Turn.COMPLETE);
     }
+    */
 }
