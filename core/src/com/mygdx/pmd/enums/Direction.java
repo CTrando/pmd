@@ -25,4 +25,23 @@ public enum Direction {
     public Direction getOpposite(){
         return opposite;
     }
+
+    public String toString() {
+        switch(this) {
+            case up:
+                return "Up";
+            case down:
+                return "Down";
+            case left:
+                return "Left";
+            case right:
+                return "Right";
+            default:
+                return "None";
+        }
+    }
+
+    public String format(String input) {
+        return String.format("%s%s", input, toString());
+    }
 }

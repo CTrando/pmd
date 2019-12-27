@@ -2,13 +2,10 @@ package com.mygdx.pmd.model.Entity.Pokemon;
 
 
 import com.badlogic.ashley.core.Entity;
-import com.mygdx.pmd.model.components.PositionComponent;
-import com.mygdx.pmd.model.components.RenderComponent;
+import com.mygdx.pmd.enums.PokemonType;
+import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.utils.AssetManager;
 
-enum PokemonType {
-    TREECKO
-}
 
 public abstract class Pokemon extends Entity {
 
@@ -16,8 +13,10 @@ public abstract class Pokemon extends Entity {
 
     public Pokemon(PokemonType type) {
         fType = type;
-        add(new RenderComponent(AssetManager.getInstance().getSprite("treekoup1"), 1));
+        add(new NameComponent(type.toString()));
         add(new PositionComponent(0, 0));
+        add(new DirectionComponent());
+        add(new AnimationComponent(AssetManager.getInstance().getAnimation(fType.toString(), "idleDown")));
     }
 
     @Override

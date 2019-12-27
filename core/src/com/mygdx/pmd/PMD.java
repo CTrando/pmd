@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -31,27 +32,12 @@ public class PMD extends Game {
 
     public static Screen dungeonScreen;
 
-    public SpriteBatch batch;
-    public ShapeRenderer shapeRenderer;
-
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
         this.loadAssets();
-
         //introScreen = new IntroScreen(this);
         dungeonScreen = new DungeonScreen(this);
-
         this.switchScreen(dungeonScreen);
-    }
-
-    public void render() {
-        super.render();
-    }
-
-    public void dispose() {
-        batch.dispose();
     }
 
     private void loadAssets() {
@@ -60,14 +46,14 @@ public class PMD extends Game {
 
         AssetManager.getInstance().finishLoading();
         AssetManager.getInstance().loadSprites();
+        AssetManager.getInstance().loadAnimations();
     }
 
     private void loadAtlases() {
         // must use Gdx.files.internal if want to use android as well should work on desktop though
         final FileHandle atlasFolder = Gdx.files.internal(ATLAS_LIST);
 
-        System.out.println("load atlas");
-        System.out.println(atlasFolder.name());
+        System.out.println(String.format("Loading atlas %s", atlasFolder.name()));
         for (final String atlasName : atlasFolder.readString().split("\\r?\\n")) {
             System.out.println(atlasName);
             AssetManager.getInstance().load(ATLAS_DIRECTORY + "/" + atlasName, TextureAtlas.class);

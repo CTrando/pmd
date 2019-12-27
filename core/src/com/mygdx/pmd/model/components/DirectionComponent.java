@@ -8,7 +8,6 @@ import com.mygdx.pmd.enums.Direction;
  */
 public class DirectionComponent implements Component {
     private Direction direction;
-    private PositionComponent pc;
 
     public DirectionComponent() {
         this.direction = Direction.down;

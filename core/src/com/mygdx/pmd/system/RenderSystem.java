@@ -46,8 +46,8 @@ public class RenderSystem extends EntitySystem {
     public void update(float dt) {
         Gdx.gl.glClearColor(0, 0, 0, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glEnable(GL20.GL_BLEND);
 
+        fViewport.getCamera().update();
         fBatch.setProjectionMatrix(fViewport.getCamera().combined);
         Renderer.getInstance().setProjectionMatrix(fViewport.getCamera().combined);
         Renderer.getInstance().begin(ShapeRenderer.ShapeType.Line);
