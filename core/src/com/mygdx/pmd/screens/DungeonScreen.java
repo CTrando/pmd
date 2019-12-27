@@ -25,10 +25,10 @@ public class DungeonScreen implements Screen {
         fFloor = new Floor();
         fEngine = new Engine();
 
-        fEngine.addSystem(new RenderSystem(fBatch));
+        fEngine.addSystem(new AnimationSystem());
         fEngine.addSystem(new MovementSystem());
         fEngine.addSystem(new PlayerInputSystem());
-        fEngine.addSystem(new AnimationSystem());
+        fEngine.addSystem(new RenderSystem(fBatch));
         fEngine.addEntity(new PokemonPlayer());
         fFloor.addToEngine(fEngine);
     }

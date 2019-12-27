@@ -26,7 +26,6 @@ public class MovementSystem extends EntitySystem {
 
             if (pc.getPos().equals(mc.getDest())) {
                 entity.remove(MoveComponent.class);
-                entity.remove(AnimationComponent.class);
                 return;
             }
 

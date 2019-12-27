@@ -1,20 +1,27 @@
 package com.mygdx.pmd.model.components;
 
-import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pmd.enums.Direction;
 import com.mygdx.pmd.utils.Constants;
+
+import java.util.function.Consumer;
 
 
 /**
  * Created by Cameron on 4/16/2017.
  */
-public class MoveComponent implements Component {
+public class MoveComponent extends Component {
 
     private Vector2 fDest;
     private Direction fDirection;
 
     public MoveComponent(Direction direction, Vector2 curPos) {
+        this(direction, curPos, c -> {});
+    }
+
+    public MoveComponent(Direction direction, Vector2 curPos, Consumer<Component> onRemove) {
+        super(onRemove);
+
         fDirection = direction;
         fDest = new Vector2(curPos);
 
