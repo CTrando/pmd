@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RenderSystem extends EntitySystem {
-    private static final float PPM = 32;
+    public static final float PPM = 32;
 
     private SpriteBatch fBatch;
     private ScreenViewport fViewport;

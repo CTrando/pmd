@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.mygdx.pmd.model.components.AnimationComponent;
 import com.mygdx.pmd.model.components.MoveComponent;
 import com.mygdx.pmd.model.components.PositionComponent;
 import com.mygdx.pmd.utils.Mappers;

@@ -16,7 +16,7 @@ public class PositionComponent implements Component {
     }
 
     public PositionComponent(int x, int y) {
-        fPos = new Vector2(x, y);
+        this(new Vector2(x, y));
     }
 
     public Vector2 getPos() {
