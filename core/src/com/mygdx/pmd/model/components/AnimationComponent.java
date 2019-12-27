@@ -1,6 +1,5 @@
 package com.mygdx.pmd.model.components;
 
-import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -8,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  * Created by Cameron on 4/24/2017.
  * This will store the animations of each entity
  */
-public class AnimationComponent implements Component {
+public class AnimationComponent extends Component {
     private float fStateTime;
     private Animation<Sprite> fAnimation;
 

@@ -13,7 +13,6 @@ import com.mygdx.pmd.utils.AssetManager;
 import com.mygdx.pmd.utils.KeyInput;
 import com.mygdx.pmd.utils.Mappers;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -50,12 +49,20 @@ public class PlayerInputSystem extends EntitySystem {
             List<Integer> pressed = Stream.of(Input.Keys.DOWN, Input.Keys.UP, Input.Keys.RIGHT, Input.Keys.LEFT)
                     .filter(KeyInput::pressed).collect(Collectors.toList());
 
-            if(KeyInput.pressed(Input.Keys.SHIFT_LEFT)) {
-                for(int key: pressed) {
+            if (KeyInput.pressed(Input.Keys.A)) {
+                entity.add(new SequenceComponent(new MoveComponent(Direction.down, pos),
+                        new MoveComponent(Direction.up, pos),
+                        new AnimationComponent(assets.getAnimation(nc.getName(), Direction.right.format("idle")))
+                ));
+                continue;
+            }
+
+            if (KeyInput.pressed(Input.Keys.SHIFT_LEFT)) {
+                for (int key : pressed) {
                     Direction dir = Direction.get(key);
                     entity.add(new AnimationComponent(assets.getAnimation(nc.getName(), dir.format("idle"))));
                 }
-                return;
+                continue;
             }
 
             for (int key : pressed) {
