@@ -1,7 +1,6 @@
 package com.mygdx.pmd.screens;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.pmd.PMD;
@@ -23,8 +22,9 @@ public class DungeonScreen implements Screen {
         fEngine = new Engine();
 
         fEngine.addSystem(new AnimationSystem());
+        fEngine.addSystem(new InputSystem(fFloor));
+        fEngine.addSystem(new PlayerInputSystem());
         fEngine.addSystem(new MovementSystem());
-        fEngine.addSystem(new PlayerInputSystem(fFloor));
         fEngine.addSystem(new RenderSystem(fBatch));
         fEngine.addSystem(new SequenceSystem());
         fEngine.addEntity(new PokemonPlayer());

@@ -10,6 +10,7 @@ public enum Direction {
     down,
     right,
     left,
+    none,
     upleft,
     upright,
     downleft,

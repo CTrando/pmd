@@ -43,6 +43,10 @@ public class MoveComponent extends Component {
         }
     }
 
+    public MoveComponent(Vector2 dest) {
+        this(Direction.none, dest, c -> {});
+    }
+
     public Direction getDirection() {
         return fDirection;
     }

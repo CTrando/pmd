@@ -28,19 +28,14 @@ public class MovementSystem extends EntitySystem {
                 return;
             }
 
-            switch (mc.getDirection()) {
-                case up:
-                    pc.getPos().add(0, 1);
-                    break;
-                case down:
-                    pc.getPos().add(0, -1);
-                    break;
-                case left:
-                    pc.getPos().add(-1, 0);
-                    break;
-                case right:
-                    pc.getPos().add(1, 0);
-                    break;
+            if (pc.getPos().x < mc.getDest().x) {
+                pc.getPos().add(1, 0);
+            } else if (pc.getPos().x > mc.getDest().x) {
+                pc.getPos().add(-1, 0);
+            } else if (pc.getPos().y < mc.getDest().y) {
+                pc.getPos().add(0, 1);
+            } else if (pc.getPos().y > mc.getDest().y) {
+                pc.getPos().add(0, -1);
             }
         }
     }
