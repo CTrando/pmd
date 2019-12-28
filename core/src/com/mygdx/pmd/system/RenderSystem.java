@@ -29,6 +29,7 @@ public class RenderSystem extends EntitySystem {
     private ImmutableArray<Entity> fEntities;
 
     public RenderSystem(SpriteBatch batch) {
+        super(3);
         fBatch = batch;
         OrthographicCamera gameCamera = new OrthographicCamera(Gdx.graphics.getWidth() / PPM, Gdx.graphics.getHeight() / PPM);
         gameCamera.zoom -= .5f;

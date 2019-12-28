@@ -16,7 +16,7 @@ public abstract class Pokemon extends Entity {
         add(new NameComponent(type.toString()));
         add(new PositionComponent(0, 0));
         add(new DirectionComponent());
-        add(new AnimationComponent(AssetManager.getInstance().getAnimation(fType.toString(), "idleDown")));
+        add(new AnimationComponent(fType.toString(), "idleDown"));
     }
 
     @Override

@@ -73,7 +73,7 @@ public class AssetManager extends com.badlogic.gdx.assets.AssetManager {
     }
 
     public Animation<Sprite> getAnimation(String name, String animationName) {
-        return fAnimations.get(name).get(animationName);
+        return fAnimations.getOrDefault(name, new HashMap<>()).getOrDefault(animationName, null);
     }
 
     public Sprite getSprite(String name) {

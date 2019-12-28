@@ -4,11 +4,11 @@ import com.badlogic.gdx.Gdx;
 
 public class KeyInput {
 
-    public static boolean pressed(int key) {
+    public boolean pressed(int key) {
         return Gdx.input.isKeyPressed(key);
     }
 
-    public static boolean justPressed(int key) {
+    public boolean justPressed(int key) {
         return Gdx.input.isKeyJustPressed(key);
     }
 }

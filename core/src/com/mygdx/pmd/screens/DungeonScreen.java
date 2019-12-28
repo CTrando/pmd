@@ -22,8 +22,8 @@ public class DungeonScreen implements Screen {
         fEngine = new Engine();
 
         fEngine.addSystem(new AnimationSystem());
-        fEngine.addSystem(new InputSystem(fFloor));
-        fEngine.addSystem(new PlayerInputSystem());
+        fEngine.addSystem(new PlayerInputSystem(fFloor));
+        fEngine.addSystem(new InputSystem());
         fEngine.addSystem(new MovementSystem());
         fEngine.addSystem(new RenderSystem(fBatch));
         fEngine.addSystem(new SequenceSystem());

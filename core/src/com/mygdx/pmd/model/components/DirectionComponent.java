@@ -10,7 +10,11 @@ public class DirectionComponent implements Component {
     private Direction direction;
 
     public DirectionComponent() {
-        this.direction = Direction.down;
+        this(Direction.down);
+    }
+
+    public DirectionComponent(Direction d) {
+        this.direction = d;
     }
 
     public Direction getDirection() {

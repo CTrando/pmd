@@ -12,6 +12,10 @@ import com.mygdx.pmd.utils.Mappers;
 public class MovementSystem extends EntitySystem {
     private ImmutableArray<Entity> fEntities;
 
+    public MovementSystem() {
+        super(5);
+    }
+
     @Override
     public void addedToEngine(Engine engine) {
         fEntities = engine.getEntitiesFor(Family.all(PositionComponent.class, MoveComponent.class).get());
