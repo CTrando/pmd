@@ -1,9 +1,8 @@
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pmd.enums.Direction;
-import com.mygdx.pmd.model.Entity.Entity;
+import com.mygdx.pmd.model.entity.Entity;
 import com.mygdx.pmd.model.Floor;
 import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.system.InputSystem;

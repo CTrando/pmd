@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.Entity.Pokemon;
+package com.mygdx.pmd.model.entity.pokemon;
 
 /**
  * Created by Cameron on 11/6/2016.

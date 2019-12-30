@@ -3,7 +3,7 @@ package com.mygdx.pmd.model;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pmd.enums.Direction;
-import com.mygdx.pmd.model.Entity.tile.Tile;
+import com.mygdx.pmd.model.entity.tile.Tile;
 import com.mygdx.pmd.system.RenderSystem;
 import com.mygdx.pmd.utils.Constants;
 

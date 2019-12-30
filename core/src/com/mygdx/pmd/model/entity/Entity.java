@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.Entity;
+package com.mygdx.pmd.model.entity;
 
 import com.badlogic.ashley.core.Component;
 

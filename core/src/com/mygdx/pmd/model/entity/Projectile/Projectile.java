@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.Entity.Projectile;
+package com.mygdx.pmd.model.entity.Projectile;
 
 import com.badlogic.ashley.core.Entity;
 

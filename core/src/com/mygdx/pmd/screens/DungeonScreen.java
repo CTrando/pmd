@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.pmd.PMD;
-import com.mygdx.pmd.model.Entity.Pokemon.PokemonPlayer;
+import com.mygdx.pmd.model.entity.pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.Floor;
 import com.mygdx.pmd.system.*;
 

@@ -1,4 +1,4 @@
-package com.mygdx.pmd.model.Entity.tile;
+package com.mygdx.pmd.model.entity.tile;
 
 import com.badlogic.ashley.core.Entity;
 import com.mygdx.pmd.model.components.PositionComponent;
@@ -6,9 +6,7 @@ import com.mygdx.pmd.model.components.RenderComponent;
 import com.mygdx.pmd.utils.AssetManager;
 import com.mygdx.pmd.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Tile extends Entity {

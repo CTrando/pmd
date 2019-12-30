@@ -1,10 +1,9 @@
-package com.mygdx.pmd.model.Entity.Pokemon;
+package com.mygdx.pmd.model.entity.pokemon;
 
 
 import com.mygdx.pmd.enums.PokemonType;
-import com.mygdx.pmd.model.Entity.Entity;
+import com.mygdx.pmd.model.entity.Entity;
 import com.mygdx.pmd.model.components.*;
-import com.mygdx.pmd.utils.AssetManager;
 
 
 public abstract class Pokemon extends Entity {

@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pmd.enums.Direction;
-import com.mygdx.pmd.model.Entity.tile.Tile;
+import com.mygdx.pmd.model.entity.tile.Tile;
 import com.mygdx.pmd.model.Floor;
 import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.utils.Mappers;

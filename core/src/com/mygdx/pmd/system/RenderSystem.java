@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.pmd.model.components.CameraComponent;
 import com.mygdx.pmd.model.components.PositionComponent;
 import com.mygdx.pmd.model.components.RenderComponent;
 import com.mygdx.pmd.render.Renderer;
@@ -27,6 +29,7 @@ public class RenderSystem extends EntitySystem {
     private SpriteBatch fBatch;
     private ScreenViewport fViewport;
     private ImmutableArray<Entity> fEntities;
+    private ImmutableArray<Entity> fCameraEntities;
 
     public RenderSystem(SpriteBatch batch) {
         super(3);
@@ -40,6 +43,8 @@ public class RenderSystem extends EntitySystem {
 
     @Override
     public void addedToEngine(Engine engine) {
+        fCameraEntities = engine.getEntitiesFor(
+                Family.all(CameraComponent.class, PositionComponent.class).get());
         fEntities = engine.getEntitiesFor(Family.all(RenderComponent.class, PositionComponent.class).get());
     }
 
@@ -48,7 +53,7 @@ public class RenderSystem extends EntitySystem {
         Gdx.gl.glClearColor(0, 0, 0, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        fViewport.getCamera().update();
+        updateCamera();
         fBatch.setProjectionMatrix(fViewport.getCamera().combined);
         Renderer.getInstance().setProjectionMatrix(fViewport.getCamera().combined);
         Renderer.getInstance().begin(ShapeRenderer.ShapeType.Line);
@@ -67,6 +72,17 @@ public class RenderSystem extends EntitySystem {
         fBatch.end();
         Renderer.getInstance().end();
         fBatch.flush();
+    }
+
+    private void updateCamera() {
+        if (fCameraEntities.size() == 0) {
+            return;
+        }
+        Entity cameraEntity = fCameraEntities.first();
+        PositionComponent cameraPc = Mappers.Position.get(cameraEntity);
+        Vector3 nextPos = (new Vector3(cameraPc.getPos(), 0)).scl(1 / PPM);
+        fViewport.getCamera().position.set(nextPos);
+        fViewport.getCamera().update();
     }
 
     private List<Entity> orderEntities() {
