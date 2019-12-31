@@ -14,6 +14,6 @@ public class PokemonPlayer extends Pokemon {
 
     @Override
     public String toString() {
-        return String.format("PLayer: %s", super.toString());
+        return String.format("Player: %s", super.toString());
     }
 }

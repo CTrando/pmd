@@ -1,13 +1,16 @@
 package com.mygdx.pmd.model;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pmd.enums.Direction;
+import com.mygdx.pmd.model.components.PositionComponent;
 import com.mygdx.pmd.model.entity.tile.Tile;
-import com.mygdx.pmd.system.RenderSystem;
 import com.mygdx.pmd.utils.Constants;
+import com.mygdx.pmd.utils.Mappers;
 
-public class Floor {
+public class Floor implements EntityListener {
 
     private Tile[][] tileBoard;
 
@@ -37,7 +40,8 @@ public class Floor {
         try {
             return tileBoard[(int) normalizePos.x][(int) normalizePos.y];
         } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException("Invalid position");
+            // Not exactly a tile position, give null
+            return null;
         }
     }
 
@@ -58,5 +62,33 @@ public class Floor {
         } catch (IndexOutOfBoundsException e) {
             return null;
         }
+    }
+
+    @Override
+    public void entityAdded(Entity entity) {
+        PositionComponent pc = Mappers.Position.get(entity);
+        if (pc == null) {
+            return;
+        }
+        Tile tile = getTile(pc.getPos());
+        if (tile == null) {
+            return;
+        }
+
+        tile.addEntity(entity);
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
+        PositionComponent pc = Mappers.Position.get(entity);
+        if (pc == null) {
+            return;
+        }
+        Tile tile = getTile(pc.getPos());
+        if (tile == null) {
+            return;
+        }
+
+        tile.removeEntity(entity);
     }
 }

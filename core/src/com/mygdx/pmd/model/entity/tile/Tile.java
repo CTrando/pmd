@@ -31,6 +31,10 @@ public class Tile extends Entity {
         return fEntities.remove(entity);
     }
 
+    public Set<Entity> getEntities() {
+        return fEntities;
+    }
+
     public boolean isEmpty() {
         return fEntities.isEmpty();
     }
