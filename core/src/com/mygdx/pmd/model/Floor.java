@@ -34,7 +34,6 @@ public class Floor {
 
     public Tile getTile(Vector2 pos) {
         Vector2 normalizePos = new Vector2(pos);
-        normalizePos.scl(1 / RenderSystem.PPM);
         try {
             return tileBoard[(int) normalizePos.x][(int) normalizePos.y];
         } catch (IndexOutOfBoundsException e) {

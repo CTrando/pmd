@@ -65,8 +65,8 @@ public class RenderSystem extends EntitySystem {
 
             Sprite sprite = rc.getSprite();
             Vector2 pos = pc.getPos();
-            float centerX = (pos.x - (sprite.getWidth() / 2)) / PPM;
-            float centerY = (pos.y - (sprite.getHeight() / 2)) / PPM;
+            float centerX = pos.x - (sprite.getWidth() / 2) / PPM;
+            float centerY = pos.y - (sprite.getHeight() / 2) / PPM;
             fBatch.draw(sprite, centerX, centerY, sprite.getWidth() / PPM, sprite.getHeight() / PPM);
         }
         fBatch.end();
@@ -80,7 +80,7 @@ public class RenderSystem extends EntitySystem {
         }
         Entity cameraEntity = fCameraEntities.first();
         PositionComponent cameraPc = Mappers.Position.get(cameraEntity);
-        Vector3 nextPos = (new Vector3(cameraPc.getPos(), 0)).scl(1 / PPM);
+        Vector3 nextPos = new Vector3(cameraPc.getPos(), 0);
         fViewport.getCamera().position.set(nextPos);
         fViewport.getCamera().update();
     }

@@ -20,7 +20,7 @@ public class Tile extends Entity {
         fy = y;
 
         add(new RenderComponent(AssetManager.getInstance().getSprite("bricktile")));
-        add(new PositionComponent(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE));
+        add(new PositionComponent(x, y));
     }
 
     public void addEntity(Entity entity) {

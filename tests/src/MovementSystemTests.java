@@ -11,6 +11,7 @@ import com.mygdx.pmd.system.PlayerInputSystem;
 import com.mygdx.pmd.utils.KeyInput;
 import com.mygdx.pmd.utils.Mappers;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -21,32 +22,54 @@ import static org.mockito.Mockito.doReturn;
 
 public class MovementSystemTests {
 
+    private Engine fEngine;
+    private Entity fEntity;
+
+    @Before
+    public void setup() {
+        fEngine = new Engine();
+        fEngine.addSystem(new MovementSystem());
+
+        fEntity = new Entity();
+        fEntity.add(new PositionComponent(new Vector2(0, 0)));
+        fEntity.add(new NameComponent("treeko"));
+        fEngine.addEntity(fEntity);
+    }
+
     @Test
     public void solidAnimationOnContinuousRightInput() {
         Floor floor = new Floor();
-        Engine engine = new Engine();
         KeyInput mockInput = Mockito.mock(KeyInput.class);
         doReturn(false).when(mockInput).pressed(anyInt());
         doReturn(true).when(mockInput).pressed(Input.Keys.RIGHT);
 
-        engine.addSystem(new InputSystem(mockInput));
-        engine.addSystem(new MovementSystem());
-        engine.addSystem(new PlayerInputSystem(floor));
+        fEngine.addSystem(new InputSystem(mockInput));
+        fEngine.addSystem(new PlayerInputSystem(floor));
 
-        Entity entity = new Entity();
-        entity.add(new InputControlledComponent());
-        entity.add(new PositionComponent(new Vector2(0, 0)));
-        entity.add(new DirectionComponent(Direction.right));
-        entity.add(new NameComponent("treeko"));
-        entity.add(new InputComponent(Collections.singletonList(Input.Keys.RIGHT)));
-        engine.addEntity(entity);
+        fEntity.add(new InputControlledComponent());
+        fEntity.add(new DirectionComponent(Direction.right));
+        fEntity.add(new InputComponent(Collections.singletonList(Input.Keys.RIGHT)));
 
         for(int i = 0; i < 120; i++) {
-            engine.update(.16f);
+            fEngine.update(.16f);
 
-            AnimationComponent ac = Mappers.Animation.get(entity);
+            AnimationComponent ac = Mappers.Animation.get(fEntity);
             Assert.assertNotNull(ac);
             Assert.assertEquals("walkRight", ac.getAnimationName());
         }
+    }
+
+    @Test
+    public void updatePositionOnMove() {
+        PositionComponent pc = Mappers.Position.get(fEntity);
+        Vector2 beforePos = new Vector2(pc.getPos());
+        fEntity.add(new MoveComponent(Direction.right, pc.getPos()));
+
+        for(int i = 0; i < 120; i++) {
+            fEngine.update(.16f);
+        }
+
+        Vector2 expected = beforePos.add(1, 0);
+        Assert.assertEquals(expected, pc.getPos());
     }
 }

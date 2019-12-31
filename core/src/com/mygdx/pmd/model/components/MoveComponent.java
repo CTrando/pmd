@@ -16,7 +16,8 @@ public class MoveComponent extends Component {
     private Direction fDirection;
 
     public MoveComponent(Direction direction, Vector2 curPos) {
-        this(direction, curPos, c -> {});
+        this(direction, curPos, c -> {
+        });
     }
 
     public MoveComponent(Direction direction, Vector2 curPos, Consumer<Component> onRemove) {
@@ -25,18 +26,21 @@ public class MoveComponent extends Component {
         fDirection = direction;
         fDest = new Vector2(curPos);
 
+        Vector2 x = new Vector2(1, 0);
+        Vector2 y = new Vector2(0, 1);
+
         switch (fDirection) {
             case up:
-                fDest.add(0, Constants.TILE_SIZE);
+                fDest.add(y);
                 break;
             case down:
-                fDest.add(0, -Constants.TILE_SIZE);
+                fDest.sub(y);
                 break;
             case left:
-                fDest.add(-Constants.TILE_SIZE, 0);
+                fDest.sub(x);
                 break;
             case right:
-                fDest.add(Constants.TILE_SIZE, 0);
+                fDest.add(x);
                 break;
             default:
                 break;
@@ -44,7 +48,8 @@ public class MoveComponent extends Component {
     }
 
     public MoveComponent(Vector2 dest) {
-        this(Direction.none, dest, c -> {});
+        this(Direction.none, dest, c -> {
+        });
     }
 
     public Direction getDirection() {
