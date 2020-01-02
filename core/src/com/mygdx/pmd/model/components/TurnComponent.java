@@ -14,8 +14,16 @@ enum TurnState {
 public class TurnComponent implements Component {
     private TurnState fState;
 
+    public TurnComponent(boolean start) {
+        if(start) {
+            fState = TurnState.IDLE;
+        } else {
+            fState = TurnState.END;
+        }
+    }
+
     public TurnComponent() {
-        fState = TurnState.END;
+        this(false);
     }
 
     public boolean turnEnded() {

@@ -30,13 +30,8 @@ public class MovementSystem extends EntitySystem {
             MoveComponent mc = Mappers.Movement.get(entity);
             PositionComponent pc = Mappers.Position.get(entity);
 
-            if (pc.getPos().equals(mc.getDest())) {
-                entity.remove(MoveComponent.class);
-                return;
-            }
-
             Vector2 x = new Vector2(1 / PPM, 0);
-            Vector2 y = new Vector2(0 , 1 / PPM);
+            Vector2 y = new Vector2(0, 1 / PPM);
 
             if (pc.getPos().x < mc.getDest().x) {
                 pc.getPos().add(x);
@@ -46,6 +41,11 @@ public class MovementSystem extends EntitySystem {
                 pc.getPos().add(y);
             } else if (pc.getPos().y > mc.getDest().y) {
                 pc.getPos().sub(y);
+            }
+
+            if (pc.getPos().equals(mc.getDest())) {
+                entity.remove(MoveComponent.class);
+                return;
             }
         }
     }

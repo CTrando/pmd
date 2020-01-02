@@ -23,9 +23,6 @@ public class InputSystemTests {
     public void setup() {
         Floor floor = new Floor();
         fEngine = new Engine();
-        fEngine.addSystem(new MovementSystem());
-        fEngine.addSystem(new PokemonInputSystem(floor));
-        fEngine.addSystem(new TurnSystem());
 
         fEntity = new Entity();
         fEntity.add(new PositionComponent(new Vector2(0, 0)));
@@ -33,6 +30,10 @@ public class InputSystemTests {
         fEntity.add(new NameComponent("treeko"));
         fEntity.add(new TurnComponent());
         fEngine.addEntity(fEntity);
+
+        fEngine.addSystem(new MovementSystem());
+        fEngine.addSystem(new PokemonInputSystem(floor));
+        fEngine.addSystem(new TurnSystem());
     }
 
     @Test

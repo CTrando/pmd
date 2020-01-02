@@ -39,7 +39,7 @@ public class DungeonScreen implements Screen {
         fEngine.addSystem(new RenderSystem(fBatch));
         fEngine.addSystem(new SequenceSystem());
         fEngine.addEntity(new PokemonPlayer());
-        fEngine.addEntity(new PokemonMob());
+        //fEngine.addEntity(new PokemonMob());
     }
 
     @Override

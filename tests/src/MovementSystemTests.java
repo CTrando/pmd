@@ -32,14 +32,15 @@ public class MovementSystemTests {
     @Before
     public void setup() {
         fEngine = new Engine();
-        fEngine.addSystem(new MovementSystem());
-        fEngine.addSystem(new TurnSystem());
 
         fEntity = new Entity();
         fEntity.add(new PositionComponent(new Vector2(0, 0)));
         fEntity.add(new NameComponent("treeko"));
         fEntity.add(new TurnComponent());
         fEngine.addEntity(fEntity);
+
+        fEngine.addSystem(new MovementSystem());
+        fEngine.addSystem(new TurnSystem());
     }
 
     @Test
@@ -81,6 +82,34 @@ public class MovementSystemTests {
             AnimationComponent ac = Mappers.Animation.get(fEntity);
             Assert.assertNotNull(ac);
             Assert.assertEquals("walkRight", ac.getAnimationName());
+        }
+    }
+
+    @Test
+    public void moveIsSeamless() {
+        Floor floor = new Floor();
+        KeyInput mockInput = Mockito.mock(KeyInput.class);
+        doReturn(false).when(mockInput).pressed(anyInt());
+        doReturn(true).when(mockInput).pressed(Input.Keys.RIGHT);
+
+        fEngine.addSystem(new InputSystem(mockInput));
+        fEngine.addSystem(new PlayerInputSystem());
+        fEngine.addSystem(new PokemonInputSystem(floor));
+
+        fEntity.add(new InputControlledComponent());
+        fEntity.add(new DirectionComponent(Direction.right));
+
+        Vector2 prev = new Vector2(Mappers.Position.get(fEntity).getPos());
+
+        // Just to get the movement component on
+        fEngine.update(.16f);
+        for (int i = 0; i < 64; i++) {
+            fEngine.update(.16f);
+
+            Vector2 cur = new Vector2(Mappers.Position.get(fEntity).getPos());
+            float dist = prev.dst(cur);
+            Assert.assertTrue(String.format("Distance between prev: %s and cur %s was %s", prev, cur, dist), dist > 0);
+            prev = cur;
         }
     }
 
