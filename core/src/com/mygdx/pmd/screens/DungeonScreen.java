@@ -8,6 +8,8 @@ import com.mygdx.pmd.model.entity.pokemon.PokemonMob;
 import com.mygdx.pmd.model.entity.pokemon.PokemonPlayer;
 import com.mygdx.pmd.model.Floor;
 import com.mygdx.pmd.system.*;
+import com.mygdx.pmd.system.input.PlayerInputSystem;
+import com.mygdx.pmd.system.input.PokemonInputSystem;
 
 public class DungeonScreen implements Screen {
     private final PMD fGame;
@@ -28,9 +30,11 @@ public class DungeonScreen implements Screen {
         fEngine.addEntityListener(fFloor);
 
         fEngine.addSystem(new AnimationSystem());
-        fEngine.addSystem(new PlayerInputSystem(fFloor));
+        fEngine.addSystem(new PlayerInputSystem());
+        fEngine.addSystem(new PokemonInputSystem(fFloor));
         fEngine.addSystem(new InputSystem());
         fEngine.addSystem(new MovementSystem());
+        fEngine.addSystem(new MobSystem());
         fEngine.addSystem(new RenderSystem(fBatch));
         fEngine.addSystem(new SequenceSystem());
         fEngine.addEntity(new PokemonPlayer());

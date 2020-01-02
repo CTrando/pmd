@@ -1,7 +1,10 @@
-package com.mygdx.pmd.system;
+package com.mygdx.pmd.system.input;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pmd.enums.Direction;
@@ -14,17 +17,33 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class PokemonInputSystem extends EntitySystem {
+public class PokemonInputSystem extends EntitySystem {
+    private ImmutableArray<Entity> fEntities;
     private Floor fFloor;
 
-    public PokemonInputSystem(Floor floor, int priority) {
-        super(priority);
+    public PokemonInputSystem(Floor floor) {
+        super(10);
         fFloor = floor;
     }
 
-    protected void update(Entity entity) {
-        handleFace(entity);
-        handleMove(entity);
+    @Override
+    public void addedToEngine(Engine engine) {
+        fEntities = engine.getEntitiesFor(
+                Family.all(InputComponent.class,
+                        PositionComponent.class,
+                        DirectionComponent.class,
+                        NameComponent.class)
+                        .exclude(InputLockComponent.class)
+                        .get());
+    }
+
+
+    @Override
+    public void update(float dt) {
+        for (Entity entity : fEntities) {
+            handleFace(entity);
+            handleMove(entity);
+        }
     }
 
     private void handleFace(Entity entity) {

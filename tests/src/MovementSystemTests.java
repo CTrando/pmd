@@ -7,7 +7,8 @@ import com.mygdx.pmd.model.Floor;
 import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.system.InputSystem;
 import com.mygdx.pmd.system.MovementSystem;
-import com.mygdx.pmd.system.PlayerInputSystem;
+import com.mygdx.pmd.system.input.PlayerInputSystem;
+import com.mygdx.pmd.system.input.PokemonInputSystem;
 import com.mygdx.pmd.utils.KeyInput;
 import com.mygdx.pmd.utils.Mappers;
 import org.junit.Assert;
@@ -44,11 +45,11 @@ public class MovementSystemTests {
         doReturn(true).when(mockInput).pressed(Input.Keys.RIGHT);
 
         fEngine.addSystem(new InputSystem(mockInput));
-        fEngine.addSystem(new PlayerInputSystem(floor));
+        fEngine.addSystem(new PlayerInputSystem());
+        fEngine.addSystem(new PokemonInputSystem(floor));
 
         fEntity.add(new InputControlledComponent());
         fEntity.add(new DirectionComponent(Direction.right));
-        fEntity.add(new InputComponent(Collections.singletonList(Input.Keys.RIGHT)));
 
         for(int i = 0; i < 120; i++) {
             fEngine.update(.16f);
