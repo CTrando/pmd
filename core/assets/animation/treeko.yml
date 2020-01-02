@@ -5,25 +5,25 @@ animations:
       - treekoright1
       - treekoright2
       - treekoright3
-    duration: .3
+    duration: .25
   walkLeft:
     sprites:
       - treekoleft1
       - treekoleft2
       - treekoleft3
-    duration: .15
+    duration: .25
   walkUp:
     sprites:
       - treekoup1
       - treekoup2
       - treekoup3
-    duration: .3
+    duration: .25
   walkDown:
     sprites:
       - treekodown1
       - treekodown2
       - treekodown3
-    duration: .3
+    duration: .25
   idleUp:
     sprites:
       - treekoupidle1

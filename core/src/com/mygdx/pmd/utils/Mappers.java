@@ -13,5 +13,5 @@ public class Mappers {
     public static ComponentMapper<PositionComponent> Position = ComponentMapper.getFor(PositionComponent.class);
     public static ComponentMapper<MoveComponent> Movement = ComponentMapper.getFor(MoveComponent.class);
     public static ComponentMapper<AnimationComponent> Animation = ComponentMapper.getFor(AnimationComponent.class);
-    public static ComponentMapper<CameraComponent> Camera = ComponentMapper.getFor(CameraComponent.class);
+    public static ComponentMapper<TurnComponent> Turn = ComponentMapper.getFor(TurnComponent.class);
 }

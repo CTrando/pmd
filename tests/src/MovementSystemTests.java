@@ -5,8 +5,11 @@ import com.mygdx.pmd.enums.Direction;
 import com.mygdx.pmd.model.entity.Entity;
 import com.mygdx.pmd.model.Floor;
 import com.mygdx.pmd.model.components.*;
+import com.mygdx.pmd.model.entity.pokemon.PokemonPlayer;
 import com.mygdx.pmd.system.InputSystem;
+import com.mygdx.pmd.system.MobSystem;
 import com.mygdx.pmd.system.MovementSystem;
+import com.mygdx.pmd.system.TurnSystem;
 import com.mygdx.pmd.system.input.PlayerInputSystem;
 import com.mygdx.pmd.system.input.PokemonInputSystem;
 import com.mygdx.pmd.utils.KeyInput;
@@ -30,10 +33,12 @@ public class MovementSystemTests {
     public void setup() {
         fEngine = new Engine();
         fEngine.addSystem(new MovementSystem());
+        fEngine.addSystem(new TurnSystem());
 
         fEntity = new Entity();
         fEntity.add(new PositionComponent(new Vector2(0, 0)));
         fEntity.add(new NameComponent("treeko"));
+        fEntity.add(new TurnComponent());
         fEngine.addEntity(fEntity);
     }
 
@@ -51,7 +56,26 @@ public class MovementSystemTests {
         fEntity.add(new InputControlledComponent());
         fEntity.add(new DirectionComponent(Direction.right));
 
-        for(int i = 0; i < 120; i++) {
+        for (int i = 0; i < 120; i++) {
+            fEngine.update(.16f);
+
+            AnimationComponent ac = Mappers.Animation.get(fEntity);
+            Assert.assertNotNull(ac);
+            Assert.assertEquals("walkRight", ac.getAnimationName());
+        }
+    }
+
+    @Test
+    public void solidAnimationOnContinuousRightInputMob() {
+        Floor floor = new Floor();
+
+        fEngine.addSystem(new MobSystem());
+        fEngine.addSystem(new PokemonInputSystem(floor));
+
+        fEntity.add(new MobComponent());
+        fEntity.add(new DirectionComponent(Direction.right));
+
+        for (int i = 0; i < 120; i++) {
             fEngine.update(.16f);
 
             AnimationComponent ac = Mappers.Animation.get(fEntity);
@@ -66,7 +90,7 @@ public class MovementSystemTests {
         Vector2 beforePos = new Vector2(pc.getPos());
         fEntity.add(new MoveComponent(Direction.right, pc.getPos()));
 
-        for(int i = 0; i < 120; i++) {
+        for (int i = 0; i < 120; i++) {
             fEngine.update(.16f);
         }
 

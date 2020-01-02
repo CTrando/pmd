@@ -29,7 +29,9 @@ public class PokemonInputSystem extends EntitySystem {
     @Override
     public void addedToEngine(Engine engine) {
         fEntities = engine.getEntitiesFor(
-                Family.all(InputComponent.class,
+                Family.all(
+                        TurnComponent.class,
+                        InputComponent.class,
                         PositionComponent.class,
                         DirectionComponent.class,
                         NameComponent.class)
@@ -41,6 +43,11 @@ public class PokemonInputSystem extends EntitySystem {
     @Override
     public void update(float dt) {
         for (Entity entity : fEntities) {
+            TurnComponent tc = Mappers.Turn.get(entity);
+            if (tc.turnEnded()) {
+                continue;
+            }
+
             handleFace(entity);
             handleMove(entity);
         }
@@ -63,6 +70,7 @@ public class PokemonInputSystem extends EntitySystem {
         NameComponent nc = Mappers.Name.get(entity);
         InputComponent ic = Mappers.Input.get(entity);
         DirectionComponent dc = Mappers.Direction.get(entity);
+        TurnComponent tc = Mappers.Turn.get(entity);
 
         // Don't move if pressing shift
         if (ic.pressed(Input.Keys.SHIFT_LEFT)) {
@@ -87,13 +95,13 @@ public class PokemonInputSystem extends EntitySystem {
             currentTile.removeEntity(entity);
             nextTile.addEntity(entity);
             entity.add(new MoveComponent(dir, pos, (c) -> {
-                // After moving set back to idle
                 entity.add(new AnimationComponent(nc.getName(), dir.format("idle")));
                 entity.remove(InputLockComponent.class);
             }));
             entity.add(new AnimationComponent(nc.getName(), dir.format("walk")));
             entity.add(new InputLockComponent());
             entity.remove(InputComponent.class);
+            tc.endTurn();
 
             // Only one key should be pressed at a time
             return;

@@ -3,11 +3,13 @@ package com.mygdx.pmd.model.entity.pokemon;
 import com.mygdx.pmd.enums.PokemonType;
 import com.mygdx.pmd.model.components.MobComponent;
 import com.mygdx.pmd.model.components.PositionComponent;
+import com.mygdx.pmd.model.components.TurnComponent;
 
 public class PokemonMob extends Pokemon {
 
     public PokemonMob() {
         super(PokemonType.TREEKO);
+        add(new TurnComponent());
         add(new MobComponent());
         add(new PositionComponent(1, 1));
     }

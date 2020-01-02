@@ -5,6 +5,7 @@ import com.mygdx.pmd.model.Floor;
 import com.mygdx.pmd.model.components.*;
 import com.mygdx.pmd.model.entity.Entity;
 import com.mygdx.pmd.system.MovementSystem;
+import com.mygdx.pmd.system.TurnSystem;
 import com.mygdx.pmd.system.input.PokemonInputSystem;
 import com.mygdx.pmd.utils.Mappers;
 import org.junit.Assert;
@@ -24,11 +25,13 @@ public class InputSystemTests {
         fEngine = new Engine();
         fEngine.addSystem(new MovementSystem());
         fEngine.addSystem(new PokemonInputSystem(floor));
+        fEngine.addSystem(new TurnSystem());
 
         fEntity = new Entity();
         fEntity.add(new PositionComponent(new Vector2(0, 0)));
         fEntity.add(new DirectionComponent());
         fEntity.add(new NameComponent("treeko"));
+        fEntity.add(new TurnComponent());
         fEngine.addEntity(fEntity);
     }
 

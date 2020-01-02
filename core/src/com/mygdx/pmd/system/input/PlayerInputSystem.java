@@ -21,6 +21,7 @@ public class PlayerInputSystem extends EntitySystem {
     public void addedToEngine(Engine engine) {
         fEntities = engine.getEntitiesFor(
                 Family.all(
+                        TurnComponent.class,
                         PlayerComponent.class,
                         InputComponent.class,
                         PositionComponent.class,
@@ -33,6 +34,11 @@ public class PlayerInputSystem extends EntitySystem {
     @Override
     public void update(float dt) {
         for (Entity entity : fEntities) {
+            TurnComponent tc = Mappers.Turn.get(entity);
+            if (tc.turnEnded()) {
+                continue;
+            }
+
             PositionComponent pc = Mappers.Position.get(entity);
             NameComponent nc = Mappers.Name.get(entity);
             InputComponent ic = Mappers.Input.get(entity);
