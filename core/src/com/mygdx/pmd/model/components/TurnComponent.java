@@ -1,33 +1,53 @@
 package com.mygdx.pmd.model.components;
 
-import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Entity.*;
+
+import com.badlogic.ashley.core.Component;
 
 /**
  * Created by Cameron on 4/16/2017.
  */
+enum TurnState {
+    END,
+    IDLE
+}
+
 public class TurnComponent implements Component {
-    private Turn turnState;
-    private Entity entity;
+    private TurnState fState;
 
-    public TurnComponent(Entity entity){
-        this.entity = entity;
-        this.turnState = Turn.COMPLETE;
+    public TurnComponent(boolean start) {
+        if(start) {
+            fState = TurnState.IDLE;
+        } else {
+            fState = TurnState.END;
+        }
     }
 
-    public boolean isTurnComplete(){
-        return turnState == Turn.COMPLETE;
+    public TurnComponent() {
+        this(false);
     }
 
-    public boolean isTurnWaiting() {
-        return turnState == Turn.WAITING;
+    public boolean turnEnded() {
+        return fState == TurnState.END;
     }
 
-    public Turn getTurnState() {
-        return turnState;
+    public void startTurn() {
+        switch (fState) {
+            case IDLE:
+                throw new IllegalStateException("Cannot start turn that has already start");
+            case END:
+                fState = TurnState.IDLE;
+                break;
+        }
     }
 
-    public void setTurnState(Turn turnState) {
-        this.turnState = turnState;
+    public void endTurn() {
+        switch (fState) {
+            case IDLE:
+                fState = TurnState.END;
+                break;
+            case END:
+                throw new IllegalStateException("Cannot end turn that has already ended");
+        }
     }
 }
+

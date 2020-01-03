@@ -1,7 +1,6 @@
 package com.mygdx.pmd.utils;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pmd.model.Entity.*;
 
 /**
  * Created by Cameron on 2/20/2017.

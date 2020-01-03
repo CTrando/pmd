@@ -1,7 +1,8 @@
-sourceCompatibility = 1.6
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 sourceSets.main.java.srcDirs = ["src/"]
 project.ext.mainClassName = "com.mygdx.pmd.desktop.DesktopLauncher"
-project.ext.assetsDir = new File("../android/assets")
+project.ext.assetsDir = new File("../core/assets")
 task run(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
     classpath = sourceSets.main.runtimeClasspath

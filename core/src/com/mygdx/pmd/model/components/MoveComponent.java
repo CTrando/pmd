@@ -1,160 +1,62 @@
 package com.mygdx.pmd.model.components;
 
-import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Entity.*;
-import com.mygdx.pmd.model.Tile.*;
-import com.mygdx.pmd.model.instructions.*;
+import com.badlogic.gdx.math.Vector2;
+import com.mygdx.pmd.enums.Direction;
+import com.mygdx.pmd.utils.Constants;
+
+import java.util.function.Consumer;
+
 
 /**
  * Created by Cameron on 4/16/2017.
  */
-public class MoveComponent implements Component {
-    private Entity entity;
-    private Tile[][] tileBoard;
+public class MoveComponent extends Component {
 
-    private boolean forcedMove;
-    private int speed;
+    private Vector2 fDest;
+    private Direction fDirection;
 
-    private PositionComponent pc;
-    private DirectionComponent dc;
-
-    private Tile nextTile;
-    //perhaps have facingTile calculated dynamically each time to avoid faulty variable storing
-    private Tile facingTile;
-    public Tile possibleNextTile;
-
-    public MoveComponent(Entity entity) {
-        this.entity = entity;
-        this.pc = entity.getComponent(PositionComponent.class);
-        this.dc = entity.getComponent(DirectionComponent.class);
-
-        tileBoard = entity.tileBoard;
+    public MoveComponent(Direction direction, Vector2 curPos) {
+        this(direction, curPos, c -> {
+        });
     }
 
-    public void move(int dx, int dy) {
-        pc.x += dx;
-        pc.y += dy;
-    }
+    public MoveComponent(Direction direction, Vector2 curPos, Consumer<Component> onRemove) {
+        super(onRemove);
 
-    public void forceMoveToTile(Tile nextTile, Direction direction) {
-        this.setNextTile(nextTile);
-        this.setFacingTile(nextTile);
+        fDirection = direction;
+        fDest = new Vector2(curPos);
 
-        entity.instructions.add(new MoveInstruction(entity, nextTile));
+        Vector2 x = new Vector2(1, 0);
+        Vector2 y = new Vector2(0, 1);
 
-        dc.setDirection(direction);
-        forcedMove = true;
-    }
-
-    public void moveToTile(Tile nextTile, int speed) {
-        if (nextTile == null || entity.equals(nextTile)) {
-            return;
-        }
-        
-        int y = pc.y;
-        int x = pc.x;
-                
-        if (y > nextTile.y && x > nextTile.x) {
-            move(-speed, -speed);
-        } else if (y < nextTile.y && x > nextTile.x) {
-            move(-speed, speed);
-        } else if (y < nextTile.y && x < nextTile.x) {
-            move(speed, speed);
-        } else if (y > nextTile.y && x < nextTile.x) {
-            move(speed, -speed);
-        } else if (y > nextTile.y) {
-            move(0, -speed);
-        } else if (y < nextTile.y) {
-            move(0, speed);
-        } else if (x < nextTile.x) {
-            move(speed, 0);
-        } else if (x > nextTile.x) {
-            move(-speed, 0);
+        switch (fDirection) {
+            case up:
+                fDest.add(y);
+                break;
+            case down:
+                fDest.sub(y);
+                break;
+            case left:
+                fDest.sub(x);
+                break;
+            case right:
+                fDest.add(x);
+                break;
+            default:
+                break;
         }
     }
 
-    public void setNextTile(Tile tile) {
-        if (tile == null) return;
-        this.nextTile = tile;
+    public MoveComponent(Vector2 dest) {
+        this(Direction.none, dest, c -> {
+        });
     }
 
-    public void setFacingTile(Direction d) {
-        try {
-            Tile currentTile = pc.getCurrentTile();
-            int curRow = currentTile.row;
-            int curCol = currentTile.col;
-
-            switch (d) {
-                case up:
-                    facingTile = tileBoard[curRow + 1][curCol];
-                    break;
-                case down:
-                    facingTile = tileBoard[curRow - 1][curCol];
-                    break;
-                case right:
-                    facingTile = tileBoard[curRow][curCol + 1];
-                    break;
-                case left:
-                    facingTile = tileBoard[curRow][curCol - 1];
-                    break;
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-        }
+    public Direction getDirection() {
+        return fDirection;
     }
 
-    public void randomizeLocation() {
-        Tile random = entity.floor.chooseUnoccupiedTile();
-
-        if (random.isLegalToMoveTo(entity)) {
-            placeAt(random);
-        } else randomizeLocation();
-    }
-
-    public void placeAt(Tile tile){
-        setNextTile(tile);
-
-        pc.removeFromCurrentTile();
-        addToTile(tile);
-        setFacingTile(dc.getDirection());
-
-        pc.setCurrentTile(tile);
-
-        possibleNextTile = null;
-    }
-
-    public void setFacingTile(Tile tile) {
-        facingTile = tile;
-    }
-
-    public void setSpeed(int speed){
-        this.speed = speed;
-    }
-
-    public Tile getNextTile(){
-        return nextTile;
-    }
-    
-    public Tile getFacingTile() {
-        return facingTile;
-    }
-
-    public void addToTile(Tile nextTile) {
-        nextTile.addEntity(entity);
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public boolean isLegalToMoveTo(Tile nextTile) {
-        return nextTile.isWalkable;
-    }
-
-    public boolean isForcedMove() {
-        return forcedMove;
-    }
-
-    public void setForcedMove(boolean forcedMove) {
-        this.forcedMove = forcedMove;
+    public Vector2 getDest() {
+        return fDest;
     }
 }

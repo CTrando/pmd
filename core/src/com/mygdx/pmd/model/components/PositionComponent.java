@@ -1,25 +1,41 @@
 package com.mygdx.pmd.model.components;
 
-import com.mygdx.pmd.model.Entity.*;
-import com.mygdx.pmd.model.Tile.*;
-import com.mygdx.pmd.utils.Constants;
+
+import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by Cameron on 4/17/2017.
  */
+
 public class PositionComponent implements Component {
+    private Vector2 fPos;
+
+    public PositionComponent(Vector2 pos) {
+        fPos = pos;
+    }
+
+    public PositionComponent(float x, float y) {
+        this(new Vector2(x, y));
+    }
+
+    public Vector2 getPos() {
+        return fPos;
+    }
+}
+
+/*
+public class PositionComponent {
 
     public int x;
     public int y;
     private Tile currentTile;
 
-    private Entity entity;
-
-    public PositionComponent(Entity entity){
+    public PositionComponent(TestEntity entity){
         this.entity = entity;
     }
 
-    public PositionComponent(Entity entity, int x, int y){
+    public PositionComponent(TestEntity entity, int x, int y){
         this.entity = entity;
         this.currentTile = entity.tileBoard[y/ Constants.TILE_SIZE][x/ Constants.TILE_SIZE];
         this.x = x;
@@ -41,3 +57,4 @@ public class PositionComponent implements Component {
         currentTile.removeEntity(entity);
     }
 }
+*/

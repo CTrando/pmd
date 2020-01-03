@@ -1,63 +1,54 @@
 package com.mygdx.pmd.model.components;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.mygdx.pmd.model.Entity.*;
-import com.mygdx.pmd.utils.PAnimation;
-
-import java.util.HashMap;
+import com.mygdx.pmd.utils.AssetManager;
 
 /**
  * Created by Cameron on 4/24/2017.
  * This will store the animations of each entity
  */
-public class AnimationComponent implements Component {
+public class AnimationComponent extends Component {
+    private String fAnimationName;
+    private boolean fLoop;
+    private float fStateTime;
+    private Animation<Sprite> fAnimation;
 
-    private Entity entity;
-    private HashMap<String, PAnimation> animationMap;
-    private PAnimation prevAnimation;
-    private PAnimation currentAnimation;
-
-    public AnimationComponent(Entity entity){
-        this.entity = entity;
-        this.animationMap = new HashMap<String, PAnimation>();
+    public AnimationComponent(String assetName, String animation, boolean loop) {
+        this(assetName, animation, AssetManager.getInstance(), loop);
     }
 
-    public boolean isAnimationFinished(){
-        return currentAnimation.isFinished();
+    public AnimationComponent(String assetName, String animation) {
+        this(assetName, animation, AssetManager.getInstance(), true);
     }
 
-    public PAnimation getCurrentAnimation() {
-        return currentAnimation;
+    public AnimationComponent(String asset, String animation, AssetManager assets, boolean loop) {
+        fAnimationName = animation;
+        fAnimation = assets.getAnimation(asset, animation);
+        fStateTime = 0;
+        fLoop = loop;
     }
 
-    public PAnimation getPrevAnimation() {
-        return prevAnimation;
+    public void addStateTime(float dt) {
+        fStateTime += dt;
     }
 
-    public void setCurrentAnimation(String animationKey){
-        this.prevAnimation = this.currentAnimation;
-        this.currentAnimation = getAnimation(animationKey);
+    public float getStateTime() {
+        return fStateTime;
     }
 
-    public void setCurrentAnimation(PAnimation currentAnimation) {
-        this.prevAnimation = this.currentAnimation;
-        this.currentAnimation = currentAnimation;
+    public Sprite getKeyFrame() {
+        return fAnimation.getKeyFrame(fStateTime, fLoop);
     }
 
-    public void putAnimation(String string, PAnimation animation){
-        animationMap.put(string, animation);
+    public boolean isFinished() {
+        if(fLoop) {
+            return false;
+        }
+        return fAnimation.isAnimationFinished(fStateTime);
     }
 
-    public PAnimation getAnimation(String string){
-        return animationMap.get(string);
-    }
-
-    public Sprite getCurrentSprite(){
-        if(currentAnimation == null) return null;
-        return currentAnimation.getCurrentSprite();
-    }
-
-    public void clearCurrentAnimation() {
-        currentAnimation.clear();
+    public String getAnimationName() {
+        return fAnimationName;
     }
 }

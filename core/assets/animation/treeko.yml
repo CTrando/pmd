@@ -1,0 +1,52 @@
+name: treeko
+animations:
+  walkRight:
+    sprites:
+      - treekoright1
+      - treekoright2
+      - treekoright3
+    duration: .25
+  walkLeft:
+    sprites:
+      - treekoleft1
+      - treekoleft2
+      - treekoleft3
+    duration: .25
+  walkUp:
+    sprites:
+      - treekoup1
+      - treekoup2
+      - treekoup3
+    duration: .25
+  walkDown:
+    sprites:
+      - treekodown1
+      - treekodown2
+      - treekodown3
+    duration: .25
+  idleUp:
+    sprites:
+      - treekoupidle1
+      - treekoupidle2
+      - treekoupidle3
+    duration: .3
+  idleDown:
+    sprites:
+      - treekodownidle1
+      - treekodownidle2
+      - treekodownidle3
+    duration: .3
+  idleRight:
+    sprites:
+      - treekorightidle1
+      - treekorightidle2
+      - treekorightidle3
+    duration: .3
+  idleLeft:
+    sprites:
+      - treekoleftidle1
+      - treekoleftidle2
+      - treekoleftidle3
+    duration: .3
+
+

@@ -1,17 +1,10 @@
 package com.mygdx.pmd.model.components;
 
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.g3d.particles.ParticleChannels;
-import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Entity.*;
-import com.mygdx.pmd.model.Entity.Projectile.*;
-import com.mygdx.pmd.utils.Constants;
-
-import static com.mygdx.pmd.screens.DungeonScreen.PPM;
 
 /**
  * Created by Cameron on 4/23/2017.
  */
+/*
 public class ProjectileRenderComponent extends RenderComponent {
 
     private Projectile projectile;
@@ -41,3 +34,4 @@ public class ProjectileRenderComponent extends RenderComponent {
         }
     }
 }
+*/

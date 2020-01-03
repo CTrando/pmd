@@ -1,7 +1,7 @@
 package com.mygdx.pmd.model.components;
 
-import com.mygdx.pmd.enumerations.*;
-import com.mygdx.pmd.model.Entity.*;
+import com.badlogic.ashley.core.Component;
+import com.mygdx.pmd.enums.*;
 
 /**
  * Created by Cameron on 4/16/2017.
@@ -9,10 +9,8 @@ import com.mygdx.pmd.model.Entity.*;
 public class ActionComponent implements Component {
 
     private Action actionState;
-    private Entity entity;
 
-    public ActionComponent(Entity entity) {
-        this.entity = entity;
+    public ActionComponent() {
         actionState = Action.IDLE;
     }
 
