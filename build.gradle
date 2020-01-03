@@ -30,10 +30,10 @@ project(":desktop") {
     apply plugin: "java"
 
     dependencies {
-        compile project(":core")
-        compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        implementation project(":core")
+        implementation "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
 }
 
@@ -41,9 +41,9 @@ project(":core") {
     apply plugin: "java"
 
     dependencies {
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-        compile "com.badlogicgames.ashley:ashley:1.7.3"
-        compile "org.yaml:snakeyaml:1.12"
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        implementation "com.badlogicgames.ashley:ashley:1.7.3"
+        implementation "org.yaml:snakeyaml:1.12"
     }
 }
 
@@ -51,8 +51,11 @@ project(":tests") {
     apply plugin: "java"
 
     dependencies {
-        compile project(':core')
-        compile "junit:junit:4+"
-        compile "org.mockito:mockito-core:2.1.0"
+        implementation project(':core')
+        implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        implementation "com.badlogicgames.ashley:ashley:1.7.3"
+        implementation "org.yaml:snakeyaml:1.12"
+        implementation "junit:junit:4+"
+        implementation "org.mockito:mockito-core:2.1.0"
     }
 }
