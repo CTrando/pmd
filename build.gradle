@@ -15,7 +15,7 @@ allprojects {
     version = '1.0'
     ext {
         appName = "pmd"
-        gdxVersion = '1.9.5'
+        gdxVersion = '1.9.10'
     }
 
     repositories {
@@ -34,8 +34,6 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.ashley:ashley:1.7.3"
-        compile "org.yaml:snakeyaml:1.12"
     }
 }
 
@@ -44,5 +42,7 @@ project(":core") {
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compile "com.badlogicgames.ashley:ashley:1.7.3"
+        compile "org.yaml:snakeyaml:1.12"
     }
 }
