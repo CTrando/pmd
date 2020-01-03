@@ -2,10 +2,9 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pmd.enums.Direction;
-import com.mygdx.pmd.model.entity.Entity;
 import com.mygdx.pmd.model.Floor;
 import com.mygdx.pmd.model.components.*;
-import com.mygdx.pmd.model.entity.pokemon.PokemonPlayer;
+import com.mygdx.pmd.model.entity.Entity;
 import com.mygdx.pmd.system.InputSystem;
 import com.mygdx.pmd.system.MobSystem;
 import com.mygdx.pmd.system.MovementSystem;
@@ -18,8 +17,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
