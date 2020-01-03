@@ -6,16 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.pmd.screens.DungeonScreen;
 import com.mygdx.pmd.utils.AssetManager;
-
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 /**
@@ -27,17 +20,15 @@ public class PMD extends Game {
     private final String ATLAS_LIST = "atlas.txt";
     private final String SFX_DIRECTORY = "sfx";
     private final String SFX_LIST = "sfx.txt";
-    public static HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
-    public static HashMap<Integer, AtomicBoolean> keys;
 
-    public static Screen dungeonScreen;
+    private Screen fDungeonScreen;
 
     @Override
     public void create() {
         this.loadAssets();
         //introScreen = new IntroScreen(this);
-        dungeonScreen = new DungeonScreen(this);
-        this.switchScreen(dungeonScreen);
+        fDungeonScreen = new DungeonScreen(this);
+        this.switchScreen(fDungeonScreen);
     }
 
     private void loadAssets() {
@@ -72,8 +63,7 @@ public class PMD extends Game {
         }
     }
 
-    //TODO add buffer screen system using stacks
-    public void switchScreen(Screen screen) {
+    private void switchScreen(Screen screen) {
         this.setScreen(screen);
     }
 }
