@@ -14,10 +14,16 @@ public class MoveComponent extends Component {
 
     private Vector2 fDest;
     private Direction fDirection;
+    private int fSpeed = 1;
 
     public MoveComponent(Direction direction, Vector2 curPos) {
         this(direction, curPos, c -> {
         });
+    }
+
+    public MoveComponent(Direction direction, Vector2 curPos, int speed, Consumer<Component> onRemove) {
+        this(direction, curPos, onRemove);
+        fSpeed = speed;
     }
 
     public MoveComponent(Direction direction, Vector2 curPos, Consumer<Component> onRemove) {
@@ -58,5 +64,9 @@ public class MoveComponent extends Component {
 
     public Vector2 getDest() {
         return fDest;
+    }
+
+    public int getSpeed() {
+        return fSpeed;
     }
 }

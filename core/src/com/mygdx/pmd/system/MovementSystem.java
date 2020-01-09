@@ -29,9 +29,10 @@ public class MovementSystem extends EntitySystem {
         for (Entity entity : fEntities) {
             MoveComponent mc = Mappers.Movement.get(entity);
             PositionComponent pc = Mappers.Position.get(entity);
+            int speed = mc.getSpeed();
 
-            Vector2 x = new Vector2(1 / PPM, 0);
-            Vector2 y = new Vector2(0, 1 / PPM);
+            Vector2 x = new Vector2(speed / PPM, 0);
+            Vector2 y = new Vector2(0, speed / PPM);
 
             if (pc.getPos().x < mc.getDest().x) {
                 pc.getPos().add(x);
