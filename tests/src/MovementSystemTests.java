@@ -18,6 +18,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.Arrays;
+
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 
@@ -123,4 +125,25 @@ public class MovementSystemTests {
         Vector2 expected = beforePos.add(1, 0);
         Assert.assertEquals(expected, pc.getPos());
     }
+
+    @Test
+    public void speedChangeOnKeyPress() {
+        PositionComponent pc = Mappers.Position.get(fEntity);
+        Vector2 beforePos = new Vector2(pc.getPos());
+
+        Floor floor = new Floor();
+        fEngine.addSystem(new PokemonInputSystem(floor));
+
+        fEntity.add(new InputComponent(Arrays.asList(Input.Keys.S, Input.Keys.RIGHT)));
+        fEntity.add(new DirectionComponent());
+        MoveComponent mc = Mappers.Movement.get(fEntity);
+
+        for (int i = 0; i < 5; i++) {
+            fEngine.update(.16f);
+        }
+
+        Vector2 expected = beforePos.add(1,0);
+        Assert.assertEquals(expected, pc.getPos());
+    }
+
 }

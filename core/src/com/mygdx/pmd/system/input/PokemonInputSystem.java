@@ -71,10 +71,15 @@ public class PokemonInputSystem extends EntitySystem {
         InputComponent ic = Mappers.Input.get(entity);
         DirectionComponent dc = Mappers.Direction.get(entity);
         TurnComponent tc = Mappers.Turn.get(entity);
+        int speed = 1;
 
         // Don't move if pressing shift
         if (ic.pressed(Input.Keys.SHIFT_LEFT)) {
             return;
+        }
+
+        if (ic.pressed(Input.Keys.S)) {
+            speed = 8;
         }
 
         Vector2 pos = pc.getPos();
@@ -94,7 +99,7 @@ public class PokemonInputSystem extends EntitySystem {
 
             currentTile.removeEntity(entity);
             nextTile.addEntity(entity);
-            entity.add(new MoveComponent(dir, pos, (c) -> {
+            entity.add(new MoveComponent(dir, pos, speed, (c) -> {
                 entity.add(new AnimationComponent(nc.getName(), dir.format("idle")));
                 entity.remove(InputLockComponent.class);
             }));
