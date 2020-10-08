@@ -27,6 +27,8 @@ classes
 .idea/gradle.xml
 .idea/libraries
 .gradle
+*.iml
+*.ipr
 
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml

@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.pmd.model.Floor;
 import com.mygdx.pmd.model.components.NameComponent;
 import com.mygdx.pmd.model.components.PositionComponent;
-import com.mygdx.pmd.model.components.TurnComponent;
 import com.mygdx.pmd.model.entity.tile.Tile;
 import com.mygdx.pmd.utils.Mappers;
 import org.junit.Assert;
